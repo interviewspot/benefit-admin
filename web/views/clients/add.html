@@ -1,0 +1,49 @@
+
+<div class="page page-table">
+    <div class="col-lg-6">
+        <section class="panel panel-default">
+            <div class="panel-heading">Add New Merchant</div>
+            <div class="panel-body">
+                <form role="form" id="merchants" name="merchants" action="/merchants/add" method="post">
+                    <div class="form-group">
+                        <label for="Company">Company </label>
+                        <input type="text" name="Company" id="Company" class="form-control" />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Store">Store</label>
+                        <input type="text" name="Store" id="Store" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Type">Type</label>
+                        <input type="text" name="Type" id="Type" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Cat">Cat</label>
+                        <input type="text" name="Users" id="Cat" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Outlets">Outlets</label>
+                        <input type="text" name="Outlets" id="Outlets" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label for="cs">CS</label>
+                        <input type="text" name="Users" id="CS" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Status</label>
+                        <div class="radio" id="status">
+                            <label>
+                                <input type="radio" name="status" id="opt1" value="1" checked="cheked">Live
+                                &nbsp; &nbsp; &nbsp; &nbsp;
+                                <input type="radio" name="status" id="opt2" value="2">Not Active
+                            </label>
+                        </div>
+                    </div>
+                    <input type="button" name="add-new-merchant" class="btn btn-primary text-center" value="Add New Merchant" />
+                </form>
+            </div>
+        </section>
+    </div>
+</div>
+

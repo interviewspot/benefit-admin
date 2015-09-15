@@ -96,9 +96,9 @@ angular.module('app.clients', ['ngSanitize'])
       ($scope) ->
           $scope.tabs = [{
               title: "Handbook",
-              content: '<div id="tab_handbook"></div><div class="col-lg-12">
+              content: '<div class="col-lg-12">
                             <div class="col-lg-10">
-                                <b>Employee Handbook</b>
+                                Employee Handbook
                             </div>
                             <div class="col-lg-2" style="float: right">
                              <form data-ng-submit="add_new_handbook()" class="add-new">
@@ -116,55 +116,35 @@ angular.module('app.clients', ['ngSanitize'])
                                     </thead>
                                 </table>
                             </div>
-                        </div></div>'
+                        </div>'
 
           }, {
               title: "Company Info",
-              content: 'Company Info'
+              content: '<div class="col-lg-12">
+                            <table class="table table-striped table-bordered table-hover">
+                                <tr>
+                                    <td>Section Title :</td>
+                                    <td>Forward</td>
+                                </tr>
+                                <tr>
+                                    <td>Status :</td>
+                                    <td>Active/Disabled</td>
+                                </tr>
+                                <tr>
+                                    <td>Section No :</td>
+                                    <td>1</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2"> <textarea class="textArea"></textarea></td>
+                                </tr>
+
+                            </table>
+                        </div>'
           }, {
               title: "Users",
               content: 'Users'
           }]
-          $scope.add_new_handbook = ->
-              alert(11)
-              return false
-
 
   ])
 
-.controller('tabsCreateHandbook', [
-      '$scope'
-      ($scope) ->
-          $scope.tabs = [{
-              title: "Handbook Info",
-              content: '<div id="tab_handbook"></div><div class="col-lg-12">
-                            <div class="col-lg-10">
-                                <b>Employee Handbook</b>
-                            </div>
-                            <div class="col-lg-2" style="float: right">
-                             <form data-ng-submit="add_new_handbook()" class="add-new">
-                                <a href="/#/clients/create-new-handbook" class="btn btn-primary text-center createEdit" >Create New</a>
-                             </form>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover">
-                                    <thead>
-                                    <tr>
-                                        <th>You have not created an employee handbook yet. Click on create to start creating a new Employee Handbook.</th>
-                                    </tr>
-                                    </thead>
-                                </table>
-                            </div>
-                        </div></div>'
 
-          }, {
-              title: "General Description",
-              content: 'General Description'
-          }, {
-              title: "Sections",
-              content: 'Sections'
-          }]
-
-  ])
