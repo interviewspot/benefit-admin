@@ -62,7 +62,7 @@ html {
             z-index: 11; // should be highter than top header
             position: static;
             float: left;
-            width: 220px;
+            width: 200px;
             background-color: $sidebar_bg;
             border-width: 0 1px 0 0;
             border-style: solid;
@@ -86,11 +86,12 @@ html {
             }
             &.nav-fixed {
                 position: fixed;
-                top: $header_height * 2;
+                top: $nav_top;
+                left: $nav_left;
                 bottom: 0;
                 float: none;
                 @media (min-width:$screen-sm) {
-                    top: $header_height;
+                    top: $nav_top;
                 }
             }
 

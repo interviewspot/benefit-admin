@@ -125,6 +125,6 @@ angular.module('app.task', [])
         )
 
         $scope.$watch('remainingCount', (newVal, oldVal) ->
-            $rootScope.$broadcast('taskRemaining:changed', newVal) 
+            $rootScope.$broadcast('taskRemaining:changed', newVal)
         )
 ])

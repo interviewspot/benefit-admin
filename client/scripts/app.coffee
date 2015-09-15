@@ -32,6 +32,8 @@ angular.module('app', [
     'app.chart.ctrls'
     'app.chart.directives'
     'app.page.ctrls'
+    'app.merchants'
+    'app.clients' #Khai bao app khi tao
 ])
     
 .config([
@@ -47,6 +49,8 @@ angular.module('app', [
             'pages/404', 'pages/500', 'pages/blank', 'pages/forgot-password', 'pages/invoice', 'pages/lock-screen', 'pages/profile', 'pages/signin', 'pages/signup'
             'mail/compose', 'mail/inbox', 'mail/single'
             'tasks/tasks'
+            'merchants/list-merchant', 'merchants/add', 'merchants/view', 'merchants/company', 'merchants/edit_company'
+            'clients/list-clients', 'clients/add', 'clients/view', 'clients/company', 'clients/edit_company','clients/create-new-handbook','clients/tab-view'
         ]
 
         setRoutes = (route) ->

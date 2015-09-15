@@ -10,6 +10,7 @@
   border: 1px solid transparent;
   border-radius: $panel-border-radius;
   @include box-shadow(0 1px 1px rgba(0,0,0,.05));
+  margin-top: 15px;
 }
 
 // Panel contents

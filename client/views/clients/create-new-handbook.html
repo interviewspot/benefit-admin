@@ -1,0 +1,124 @@
+<script type="text/javascript" src="../../bower_components/tinymce/tinymce.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        tinymce.init({
+            selector: ".textArea"
+        })
+
+    });
+</script>
+<div class="page page-table">
+    <div class="col-lg-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Create Employee Handbook
+            </div>
+
+            <div class="panel-body" data-ng-controller="tabsCreateHandbook">
+
+                <div class="col-lg-12">
+                    <tabset class="ui-tab">
+                        <tab heading="Handbook Info">
+                            <div class="tab-pane " id="company-info">
+                                <div class="col-lg-12">
+                                    <table class="table table-striped table-bordered table-hover">
+                                        <tr>
+                                            <td>Company Reg Biz Name :</td>
+                                            <td>Bullworks Pte Ltd</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Biz Reg No :</td>
+                                            <td>199452264G</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Address :</td>
+                                            <td>29A Seah Street, Singapore 556587</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Unit Number :</td>
+                                            <td>Entertainment, F&B</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Building Name :</td>
+                                            <td>Bullworks Pte Ltd</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Postal Code :</td>
+                                            <td>199452264G</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Handbook Title :</td>
+                                            <td>29A Seah Street, Singapore 556587</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Version :</td>
+                                            <td>Entertainment, F&B</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Year :</td>
+                                            <td>Entertainment, F&B</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Language :</td>
+                                            <td>Entertainment, F&B</td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </tab>
+                        <tab heading="General Description">
+                            <div class="tab-pane " id="general-description">
+                                <div class="col-lg-12">
+                                    <table class="table table-striped table-bordered table-hover">
+                                        <tr>
+                                            <td>Current Logo :</td>
+                                            <td><img id="mainImage" name="mainImage" src="../../images/assets/upload_image.jpg" height="50" width="50"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Upload New Logo :</td>
+                                            <td><input type="file" id="uploadMainImage" name="uploadMainImage" /></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2"> <textarea class="textArea"></textarea></td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </tab>
+                        <tab heading="Sections">
+                            <div class="tab-pane " id="sections">
+                                <div class="col-lg-12">
+                                    <table class="table table-striped table-bordered table-hover">
+                                        <tr>
+                                            <td>Section Title :</td>
+                                            <td>Forward</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Status :</td>
+                                            <td>Active/Disabled</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Section No :</td>
+                                            <td>1</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2"> <textarea class="textArea"></textarea></td>
+                                        </tr>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </tab>
+
+                    </tabset>
+                </div>
+            </div>
+
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+</div>
+</div>

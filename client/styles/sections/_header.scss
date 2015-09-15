@@ -3,8 +3,8 @@
     // @media (min-width:$screen-sm) {
     //     height: $header_height;
     // }
-    background-color: $header_container_bg;
-
+    background-color: $reverse;
+    height: 90px;
     > .top-header {
         // shared
         a {
@@ -95,7 +95,7 @@
         .dropdown-menu.panel {
             padding: 0;
             white-space: nowrap;
-            
+
             .panel-heading,
             .panel-footer {
                 padding: 10px 15px;
@@ -121,13 +121,18 @@
             width: 100%;
             padding: 50px 0 0;
             @media (min-width: $screen-sm) {
-                padding: 0 0 0 220px;
+                padding: 20px 20px 20px 220px;
             }
 
             > ul {
                 margin-bottom: 0;
             }
-
+            span {
+                display: block;
+                line-height: 15px;
+                list-style-type: none;
+                font-size: 12px;
+            }
             // 
             .nav-left,
             .nav-right {
@@ -138,7 +143,7 @@
                     float: left;
                     &.nav-profile {
                         > a {
-                            padding: 10px 15px;
+                            padding: 10px 10px;
                         }
                         .hidden-xs {
                             padding-right: 8px;
@@ -147,7 +152,7 @@
                             width: 18px;
                             font-size: 16px;
                             margin-right: 5px;
-                        } 
+                        }
                     }
 
                     > .toggle-min {
@@ -238,6 +243,9 @@
                     background-color: transparent;
                 }
             }
+            .login-name{
+                padding-top: 15px;
+            }
         }
 
         // 
@@ -262,7 +270,16 @@
             }
         }
 
-
+        //
+        .header-horizon{
+            background-color: #CFAE79;
+            height: 15px;
+            width: 100%;
+            margin-top: 50px;
+        }
+        .login_name{
+            padding-top: 15px;
+        }
     }
 
 }

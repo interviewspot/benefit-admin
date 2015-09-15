@@ -510,7 +510,7 @@ angular.module('app.chart.ctrls', [])
                 spotColor: false
                 minSpotColor: false
                 maxSpotColor: false
-                width: '100%';
+                width: '100%'
                 height: '150px';
 
         # sparkline page
@@ -554,7 +554,7 @@ angular.module('app.chart.ctrls', [])
                 spotColor: false
                 minSpotColor: false
                 maxSpotColor: false
-                width: '100%';
+                width: '100%'
                 height: '150px';
 
         $scope.largeChart2 =
@@ -563,7 +563,7 @@ angular.module('app.chart.ctrls', [])
                 type: 'bar'
                 barColor: $scope.color.success
                 barWidth: 10
-                width: '100%';
+                width: '100%'
                 height: '150px';
 
         $scope.largeChart3 =
@@ -571,6 +571,6 @@ angular.module('app.chart.ctrls', [])
             options:
                 type: 'pie'
                 sliceColors: [$scope.color.primary, $scope.color.success, $scope.color.info, $scope.color.infoAlt, $scope.color.warning, $scope.color.danger]
-                width: '150px';
+                width: '150px'
                 height: '150px';
 ])

@@ -39,7 +39,7 @@
 
                 <section  data-ng-cloak>
                     <ul class="task-list list-unstyled">
-                        <li data-ng-repeat="task in tasks | filter:statusFilter track by $index" 
+                        <li data-ng-repeat="task in tasks | filter:statusFilter track by $index"
                             data-ng-class="{completed: task.completed, editing: task == editedTask}">
                             <span class="view">
                                 <input type="checkbox"
@@ -65,31 +65,8 @@
                     </ul>
                 </section>
 
-                <footer class="task-footer">
-                    <ul class="list-inline clearfix">
-                        <li class="first-item">
-                            <input type="checkbox"
-                                   id="toggle-all"
-                                   data-ng-model="allChecked"
-                                   data-ng-change="markAll(allChecked)">
-                            <label for="toggle-all">Mark all as done</label>
-                        </li>
-                        <li class="text-center">
-                            <span>
-                                <strong>{{remainingCount}}</strong>
-                                <span class="text-muted"
-                                      data-ng-pluralize count="remainingCount"
-                                      when="{one: 'item left', other: 'items left'}"></span>
-                            </span>                            
-                        </li>
-                        <li class="text-right">
-                            <span class="clear-completed"
-                                  data-ng-click="clearCompleted()"
-                                  data-ng-show="remainingCount < tasks.length">Clear completed ({{tasks.length - remainingCount}})</span>                            
-                        </li>
-                    </ul>
-                </footer>
-                
+
+
             </section>
         </div>
     </div>
