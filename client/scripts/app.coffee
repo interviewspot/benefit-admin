@@ -4,6 +4,8 @@ angular.module('app', [
     # Angular modules
     'ngRoute'
     'ngAnimate'
+    'ngResource'
+    'hateoas'
 
     # 3rd Party Modules
     'ui.bootstrap'
