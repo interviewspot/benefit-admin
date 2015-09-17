@@ -67,7 +67,13 @@ angular.module('app.clients', [])
               $scope.select($scope.currentPage)
           init()
 
+          # show preview
+          $scope.showPreview = false
 
+          # show collapse
+          $scope.isForward = false
+          $scope.isTerm = false
+          $scope.isCode = false
   ])
 
 .controller('tabsClientCtrl', [

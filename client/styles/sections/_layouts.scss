@@ -31,10 +31,7 @@ html {
             z-index: 10;
 
             & + .main-container {
-                padding-top: $header_height * 2;
-                @media (min-width:$screen-sm) {
-                    padding-top: $header_height;
-                }
+                padding-top: 105px;
             }
         }
 
