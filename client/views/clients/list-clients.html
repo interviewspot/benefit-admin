@@ -87,9 +87,11 @@
                                     </tbody>
                                 </table>
                                 <!-- END : TBL -->
-                                <div class="bnf-edito">
-                                    editor
-                                </div>
+                                <form method="post">
+                                    <div class="bnf-editor" id="editor_1" tinyeditor>
+                                        <p>We have specially prepared this Handbook to explain and help you better understand Magenta’s Human Resource policies, compensation and benefits programs, as well as our corporate rules and regulations.</p>
+                                    </div>
+                                </form>
                                 <!-- END : EDITOR -->
                             </tab>
                             <!-- END: TAB -->
@@ -98,33 +100,71 @@
                                     <div class="item-preview" ng-show="!showPreview">
                                         <div class="col-md-8 col-sm-8 col-xs-6">
                                             <span class="cap-note" ng-click="showPreview = !showPreview">Preview</span>
-                                            <table class="table tbl">
-                                                <tbody>
-                                                    <tr>
-                                                        <td class="td-20 td-bold">Section Title:</td>
-                                                        <td>
-                                                            Forward
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="td-20 td-bold">Status:</td>
-                                                        <td>
-                                                            Active/Disabled
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="td-20 td-bold">Section No:</td>
-                                                        <td>
-                                                            1
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                            <!-- END : TBL -->
-                                            <div class="bnf-edito">
-                                                editor
+                                            <div class="sec-itm" ng-show="!isForward">
+                                                <table class="table tbl">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="td-20 td-bold">Section Title:</td>
+                                                            <td>
+                                                                Forward
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="td-20 td-bold">Status:</td>
+                                                            <td>
+                                                                Active/Disabled
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="td-20 td-bold">Section No:</td>
+                                                            <td>
+                                                                1
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <!-- END : TBL -->
+                                                <form method="post">
+                                                    <div class="bnf-editor" id="editor_2" tinyeditor>
+                                                        <p>Can be left blank if nothing to be written in this section</p>
+                                                    </div>
+                                                </form>
+                                                <!-- END : EDITOR -->
                                             </div>
-                                            <!-- END : EDITOR -->
+                                            <!-- END : FORWARD -->
+                                            <div class="sec-itm" ng-show="isOurCpny">
+                                                <table class="table tbl">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td class="td-20 td-bold">Section Title:</td>
+                                                            <td>
+                                                                About Company
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="td-20 td-bold">Status:</td>
+                                                            <td>
+                                                                Active/Disabled
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td class="td-20 td-bold">Section No:</td>
+                                                            <td>
+                                                                1
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <!-- END : TBL -->
+                                                <form method="post">
+                                                    <div class="bnf-editor" id="editor_3" tinyeditor>
+                                                        <p>Things about this section will be written here, this may include images</p>
+                                                    </div>
+                                                </form>
+                                                <!-- END : EDITOR -->
+                                                <!-- END : EDITOR -->
+                                            </div>
+                                            <!-- END : About Company -->
                                         </div>
                                         <div class="col-md-4 col-sm-4 col-xs-6">
                                             <table class="table tbl tbl-small">

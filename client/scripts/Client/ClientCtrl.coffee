@@ -74,6 +74,10 @@ angular.module('app.clients', [])
           $scope.isForward = false
           $scope.isTerm = false
           $scope.isCode = false
+
+          # show block section hand book
+          $scope.isForward = false
+          $scope.isOurCpny = false
   ])
 
 .controller('tabsClientCtrl', [

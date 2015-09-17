@@ -83,3 +83,20 @@ angular.module('app.directives', [])
     }
 ])
 
+# used tinymce editor
+.directive('tinyeditor', [ ->
+    return {
+        restrict: 'AE'
+        link: (scope, ele, attrs) ->
+            tinymce.init
+                selector: '#' + $(ele).attr('id')
+                height : 300
+                plugins: [
+                     "autolink link image lists charmap hr anchor",
+                     "searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+                     "table template textcolor"
+                ]
+                menubar: "table tools"
+                toolbar: "styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor"
+    }
+])

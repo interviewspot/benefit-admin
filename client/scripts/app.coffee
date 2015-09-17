@@ -35,7 +35,8 @@ angular.module('app', [
     'app.chart.directives'
     'app.page.ctrls'
     'app.merchants'
-    'app.clients' #Khai bao app khi tao
+    'app.clients'
+    #Khai bao app khi tao
 ])
     
 .config([
