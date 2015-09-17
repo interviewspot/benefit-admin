@@ -11,3 +11,161 @@
         margin: 0;
     }
 }
+.ttl-page {
+	text-transform: uppercase;
+	font-size: 20px;
+    margin: 0 0 20px 0;
+}
+h2.ttl-tab {
+	text-transform: uppercase;
+	font-size: 16px;
+    margin: 15px 0 20px 0;
+    border-bottom: 1px solid #ddd;
+    span {
+    	background-color: #fff;
+    	padding-right: 10px;
+    }
+}
+.red {
+	color: red;
+}
+.text-center {
+	text-align: center;
+}
+.td-20 {
+	width: 20%;
+}
+.td-bold {
+	font-weight: bold;
+}
+.table {
+	border-bottom: 1px solid #ddd;
+	td {
+		vertical-align: middle !important;
+		border-right: 1px solid #ddd;
+		position: relative;
+		&:first-child {
+			border-left: 1px solid #ddd;
+		}
+	}
+	&.tbl-small {
+		font-size: 12px;
+		tr.tr-hover {
+			&:hover {
+			    background-color: #CFAE79;
+			    cursor: pointer;
+			    color: #fff;
+			    .tbl-remove {
+			    	@include opacity(1);
+			    	@include transform(scale(1,1));
+			    }
+			}
+		}
+	}
+}
+.tbl-remove {
+	@include opacity(0);
+	@include transition(all 0.2s linear);
+	@include transform(scale(0,0));
+	@include border-radius(50%);
+	width: 20px;
+	height: 20px;
+	display: inline-block;
+	background-color: #fff;
+	position: absolute;
+	text-align: center;
+	line-height: 20px;
+	right: 5px;
+	top: 10px;
+	i {
+		color: #000;
+		font-size: 14px;
+	}
+}
+.client-tabs {
+	position: relative;
+}
+.cap-note {
+	background-color: #CFAE79;
+	color: #fff;
+	@include border-radius(4px);
+	padding: 2px 15px;
+	position: absolute;
+	top: -50px;
+    right: 15px;
+    cursor: pointer;
+    &:hover {
+    	background-color: #9A7F53;
+    }
+}
+.section-control {
+	text-align: center;
+	a {
+		display: inline-block;
+		background-color: #bbb;
+		@include border-radius(4px);
+		margin: 0 10px;
+	    padding: 5px 15px;
+    	color: #fff;
+    	cursor: pointer;
+    	@include transition(all 0.2s linear);
+    	&:hover {
+    		background-color: #999;
+    	}
+	}
+}
+.clp-title {
+	background-color: #bbb;
+	padding: 5px 10px;
+	margin-bottom: 2px;
+	color: #fff;
+	cursor: pointer;
+	@include transition(all 0.2s linear);
+	&:hover {
+		background-color: #999;
+	}
+}
+.clp-content {
+	padding-top: 15px;
+	padding-left: 15px;
+	padding-bottom: 15px;
+	p {
+		span {
+			font-weight: bold;
+		}
+	}
+}
+.ttl-prv {
+	font-size: 14px;
+	margin: 10px 0;
+	font-weight: bold;
+}
+.ver-prv {
+	display: block;
+	text-decoration: underline;
+	margin-bottom: 10px;
+}
+.prv-desc {
+	margin-bottom: 10px;	
+}
+/* CSS OVERIDE BOOTSTRAP */
+.tab-pane {
+	padding: 15px 0;
+}
+.lv1 {
+	> .nav-tabs {
+		background-color: #f9f9f9;
+		> li {
+			> a {
+				@include border-radius(0px);
+				font-weight: bold;
+				font-size: 16px;
+			}
+		}
+	}
+}
+.lv2 {
+	.nav-tabs {
+		background: none;
+	}
+}
