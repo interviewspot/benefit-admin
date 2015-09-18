@@ -78,6 +78,12 @@ angular.module('app.clients', [])
           # show block section hand book
           $scope.isForward = false
           $scope.isOurCpny = false
+
+          # show create new handbook
+          $scope.isCreateNew = false
+
+          # manage clients
+          $scope.isEditClients = false
   ])
 
 .controller('tabsClientCtrl', [
