@@ -16,7 +16,11 @@
                         <th class="text-center">Actions</th>
                     </tr>
                     <tr>
-                        <td class="text-center">Magenta Pte Ltd</td>
+                        <td class="text-center">
+                            <a ng-click="isEditClients = !isEditClients">
+                                Magenta Pte Ltd
+                            </a>
+                        </td>
                         <td class="text-center">Live</td>
                         <td class="text-center">HR Advisory</td>
                         <td class="text-center">
@@ -29,14 +33,18 @@
                             Astrid
                         </td>
                         <td class="text-center td-manage">
-                            <i class="fa fa-edit" title="Edit" ng-click="isEditClients = !isEditClients"></i>
                             <i class="fa fa-check" title="Active"></i>
+                            <i class="fa fa-edit" title="Edit" ng-click="isEditClients = !isEditClients"></i>
                             <i class="fa fa-sign-in" title="Assign CS"></i>
                             <i class="fa fa-trash-o" title="Remove"></i>
                         </td>
                     </tr>
                     <tr>
-                        <td class="text-center">BSI Group</td>
+                        <td class="text-center">
+                            <a ng-click="isEditClients = !isEditClients">
+                                BSI Group
+                            </a>
+                        </td>
                         <td class="text-center">Live</td>
                         <td class="text-center">Banking</td>
                         <td class="text-center">
@@ -49,14 +57,18 @@
                             Astrid
                         </td>
                         <td class="text-center td-manage">
-                            <i class="fa fa-edit" title="Edit" ng-click="isEditClients = !isEditClients"></i>
                             <i class="fa fa-times" title="De-Active"></i>
+                            <i class="fa fa-edit" title="Edit" ng-click="isEditClients = !isEditClients"></i>
                             <i class="fa fa-sign-in" title="Assign CS"></i>
                             <i class="fa fa-trash-o" title="Remove"></i>
                         </td>
                     </tr>
                     <tr>
-                        <td class="text-center">Yang Kee </td>
+                        <td class="text-center">
+                            <a ng-click="isEditClients = !isEditClients">
+                                Yang Kee 
+                            </a>
+                        </td>
                         <td class="text-center">Live</td>
                         <td class="text-center">Logistics</td>
                         <td class="text-center">
@@ -69,14 +81,18 @@
                             George
                         </td>
                         <td class="text-center td-manage">
-                            <i class="fa fa-edit" title="Edit" ng-click="isEditClients = !isEditClients"></i>
                             <i class="fa fa-check" title="Active"></i>
+                            <i class="fa fa-edit" title="Edit" ng-click="isEditClients = !isEditClients"></i>
                             <i class="fa fa-sign-in" title="Assign CS"></i>
                             <i class="fa fa-trash-o" title="Remove"></i>
                         </td>
                     </tr>
                     <tr>
-                        <td class="text-center">Fastflow</td>
+                        <td class="text-center">
+                            <a ng-click="isEditClients = !isEditClients">
+                                Fastflow
+                            </a>
+                        </td>
                         <td class="text-center">Live</td>
                         <td class="text-center">Logistics</td>
                         <td class="text-center">
@@ -89,8 +105,8 @@
                             Not Assigned
                         </td>
                         <td class="text-center td-manage">
-                            <i class="fa fa-edit" title="Edit" ng-click="isEditClients = !isEditClients"></i>
                             <i class="fa fa-check" title="Active"></i>
+                            <i class="fa fa-edit" title="Edit" ng-click="isEditClients = !isEditClients"></i>
                             <i class="fa fa-sign-in" title="Assign CS"></i>
                             <i class="fa fa-trash-o" title="Remove"></i>
                         </td>
@@ -100,7 +116,10 @@
         </div>
         <!-- END : CLIENTS LIST -->
         <div class="clients_edit"  ng-show="isEditClients">
-            <h1 class="ttl-page">Magenta Consulting Pte Ltd</h1>
+            <h1 class="ttl-page">
+                Magenta Consulting Pte Ltd
+                <span class="sp-sts green">Active</span>
+            </h1>
             <section class="panel panel-default table-dynamic">
                 <div class="panel-body">
                     <tabset class="client-tabs lv1">
@@ -192,7 +211,12 @@
                                             </tr>
                                             <tr>
                                                 <td class="text-center">
-                                                    <input type="file" name="" placeholder="Upload...">
+                                                    <div class="fileUpload">
+                                                        <span>Upload New Image</span>
+                                                        <div style="height: 0px; width: 0px; overflow: hidden;">
+                                                            <input type="file" name="userfile" class="fileToUpload">
+                                                        </div>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -203,7 +227,113 @@
                         </tab>
                         <!-- END: TAB -->
                         <tab heading="Users">
-                            <p>Demo Users</p>
+                            <div class="user-list">
+                                <p>Total No.  User: <strong> 240</strong></p>
+                                <p class="user-sts">
+                                    <span class="active">Active</span>
+                                    <span>Un-Active</span>
+                                    <span>De-Active</span>
+                                </p>
+                                <span class="cap-note">Add new user</span>
+                                <table class="table tbl">
+                                    <tbody>
+                                        <tr>
+                                            <th class="text-center">Date Added</th>
+                                            <th class="text-center">First name</th>
+                                            <th class="text-center">Last Name</th>
+                                            <th class="text-center">Email</th>
+                                            <th class="text-center">Contact No.</th>
+                                            <th class="text-center">Verification Code</th>
+                                            <th class="text-center">Employee Class</th>
+                                            <th class="text-center">Actions</th>
+                                        </tr>
+                                        <tr>
+                                            <td  class="text-center">29 June 2015  3:45pm</td>
+                                            <td  class="text-center">Astrid</td>
+                                            <td  class="text-center">Tan</td>
+                                            <td  class="text-center">a.magenta@magenta.com</td>
+                                            <td  class="text-center">Null</td>
+                                            <td  class="text-center">Awre5442d</td>
+                                            <td  class="text-center">Management</td>
+                                            <td class="td-manage text-center">
+                                                <i class="fa fa-check"></i>
+                                                <i class="fa fa-edit"></i>
+                                                <i class="fa fa-trash-o"></i>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td  class="text-center">29 June 2015  3:45pm</td>
+                                            <td  class="text-center">John</td>
+                                            <td  class="text-center">Wayne</td>
+                                            <td  class="text-center">a.magenta@magenta.com</td>
+                                            <td  class="text-center">Null</td>
+                                            <td  class="text-center">lHGhahg123</td>
+                                            <td  class="text-center">Management</td>
+                                            <td class="td-manage text-center">
+                                                <i class="fa fa-times"></i>
+                                                <i class="fa fa-edit"></i>
+                                                <i class="fa fa-trash-o"></i>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td  class="text-center">29 June 2015  3:45pm</td>
+                                            <td  class="text-center">Astrid</td>
+                                            <td  class="text-center">Tan</td>
+                                            <td  class="text-center">a.magenta@magenta.com</td>
+                                            <td  class="text-center">Null</td>
+                                            <td  class="text-center">Awre5442d</td>
+                                            <td  class="text-center">Management</td>
+                                            <td class="td-manage text-center">
+                                                <i class="fa fa-check"></i>
+                                                <i class="fa fa-edit"></i>
+                                                <i class="fa fa-trash-o"></i>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td  class="text-center">29 June 2015  3:45pm</td>
+                                            <td  class="text-center">John</td>
+                                            <td  class="text-center">Wayne</td>
+                                            <td  class="text-center">a.magenta@magenta.com</td>
+                                            <td  class="text-center">Null</td>
+                                            <td  class="text-center">lHGhahg123</td>
+                                            <td  class="text-center">Management</td>
+                                            <td class="td-manage text-center">
+                                                <i class="fa fa-times"></i>
+                                                <i class="fa fa-edit"></i>
+                                                <i class="fa fa-trash-o"></i>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td  class="text-center">29 June 2015  3:45pm</td>
+                                            <td  class="text-center">Astrid</td>
+                                            <td  class="text-center">Tan</td>
+                                            <td  class="text-center">a.magenta@magenta.com</td>
+                                            <td  class="text-center">Null</td>
+                                            <td  class="text-center">Awre5442d</td>
+                                            <td  class="text-center">Management</td>
+                                            <td class="td-manage text-center">
+                                                <i class="fa fa-check"></i>
+                                                <i class="fa fa-edit"></i>
+                                                <i class="fa fa-trash-o"></i>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td  class="text-center">29 June 2015  3:45pm</td>
+                                            <td  class="text-center">John</td>
+                                            <td  class="text-center">Wayne</td>
+                                            <td  class="text-center">a.magenta@magenta.com</td>
+                                            <td  class="text-center">Null</td>
+                                            <td  class="text-center">lHGhahg123</td>
+                                            <td  class="text-center">Management</td>
+                                            <td class="td-manage text-center">
+                                                <i class="fa fa-times"></i>
+                                                <i class="fa fa-edit"></i>
+                                                <i class="fa fa-trash-o"></i>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </tab>
                         <!-- END: TAB -->
                         <tab heading="Handbook">
@@ -330,7 +460,12 @@
                                                 <tr>
                                                     <td class="td-20 td-bold">Upload New Logo:</td>
                                                     <td>
-                                                        <input type="file" name=""  placeholder="Upload...">
+                                                        <div class="fileUpload">
+                                                        <span>Upload...</span>
+                                                        <div style="height: 0px; width: 0px; overflow: hidden;">
+                                                            <input type="file" name="userfile" class="fileToUpload">
+                                                        </div>
+                                                    </div>
                                                     </td>
                                                 </tr>
                                             </tbody>

@@ -15,6 +15,18 @@
 	text-transform: uppercase;
 	font-size: 20px;
     margin: 0 0 20px 0;
+    .sp-sts {
+		text-transform: capitalize;
+		font-size: 12px;
+		margin-left: 20px;
+		padding: 1px 10px;
+		color: #fff;
+		vertical-align: 2px;
+		@include border-radius(4px);
+		&.green {
+			background-color: #73AD42;
+		}
+    }
 }
 h2.ttl-tab {
 	text-transform: uppercase;
@@ -95,6 +107,10 @@ h2.ttl-tab {
         &:hover {
             color: #CFAE79
         }
+        &:first-child {
+        	border-right: 1px solid #ddd;
+        	padding-right: 7px;
+        }
     }
 }
 .td-logo {
@@ -152,7 +168,7 @@ h2.ttl-tab {
 		background-color: #bbb;
 		@include border-radius(4px);
 		margin: 0 10px;
-	    padding: 5px 15px;
+	    padding: 5px 10px;
     	color: #fff;
     	cursor: pointer;
     	@include transition(all 0.2s linear);
@@ -210,6 +226,79 @@ h2.ttl-tab {
         th {
             background-color: #ddd;
         }
+        a {
+        	cursor: pointer;
+        	color: #767676;
+        	&:hover {
+        		color: #CFAE79;
+        	}
+        }
+    }
+}
+.user-list {
+	position: relative;
+	p {
+		margin-bottom: 0;
+	}
+	.user-sts {
+		span {
+			display: inline-block;
+			border-right: 1px solid #ddd;
+			margin-right: 10px;
+			padding-right: 10px;
+			cursor: pointer;
+			&:last-child {
+				border-right: none;
+				margin-right: 0;
+				padding-right: 0;
+			}
+			&:hover, &.active {
+				text-decoration: underline;
+				font-weight: bold;
+			}
+		}
+	}
+	.cap-note {
+		top: 15px;
+		right: 0;
+	}
+	.table {
+		margin-top: 20px;
+		th {
+            background-color: #ddd;
+        }
+	}
+}
+/* CSS OVERRIDE UPLOAD FILE */
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    background-color: #bbb;
+    color: #000;
+    font-weight: 300;
+    text-align: center;
+    display: inline-block;
+    padding: 5px 16px;
+    @include border-radius(20px);
+    @include transition(all 0.2s linear);
+    cursor: pointer;
+    vertical-align: -15px;
+    &:hover {
+    	background-color: #999;
+    }
+    span {
+    	color: #fff;
+    	font-size: 12px;
+    }
+    .fileToUpload {
+		position: absolute;
+		top: 0;
+		right: 0;
+		margin: 0;
+		padding: 0;
+		font-size: 20px;
+		cursor: pointer;
+		@include opacity(0);
     }
 }
 /* CSS OVERIDE BOOTSTRAP */
