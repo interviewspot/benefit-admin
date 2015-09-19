@@ -4,7 +4,7 @@
         <div class="clients_list" ng-show="!isEditClients">
             <h1 class="ttl-page">Manage Clients</h1>
             <span class="cap-note" ng-click="isEditClients = !isEditClients">Add New Clients</span>
-            <table class="table tbl">
+            <table class="table tbl tbl-bg">
                 <tbody>
                     <tr>
                         <th class="text-center">Company</th>
@@ -227,15 +227,15 @@
                         </tab>
                         <!-- END: TAB -->
                         <tab heading="Users">
-                            <div class="user-list">
+                            <div class="user-list" ng-show="!isEditUser && !isNewUser">
                                 <p>Total No.  User: <strong> 240</strong></p>
                                 <p class="user-sts">
                                     <span class="active">Active</span>
                                     <span>Un-Active</span>
                                     <span>De-Active</span>
                                 </p>
-                                <span class="cap-note">Add new user</span>
-                                <table class="table tbl">
+                                <span class="cap-note" ng-click="isNewUser = !isNewUser">Add new user</span>
+                                <table class="table tbl tbl-bg">
                                     <tbody>
                                         <tr>
                                             <th class="text-center">Date Added</th>
@@ -256,9 +256,9 @@
                                             <td  class="text-center">Awre5442d</td>
                                             <td  class="text-center">Management</td>
                                             <td class="td-manage text-center">
-                                                <i class="fa fa-check"></i>
-                                                <i class="fa fa-edit"></i>
-                                                <i class="fa fa-trash-o"></i>
+                                                <i class="fa fa-check" title="Active"></i>
+                                                <i class="fa fa-edit" title="Edit" ng-click="isEditUser = !isEditUser"></i>
+                                                <i class="fa fa-trash-o" title="Remove"></i>
                                             </td>
                                         </tr>
                                         <tr>
@@ -270,9 +270,9 @@
                                             <td  class="text-center">lHGhahg123</td>
                                             <td  class="text-center">Management</td>
                                             <td class="td-manage text-center">
-                                                <i class="fa fa-times"></i>
-                                                <i class="fa fa-edit"></i>
-                                                <i class="fa fa-trash-o"></i>
+                                                <i class="fa fa-times" title="De-Active"></i>
+                                                <i class="fa fa-edit" title="Edit" ng-click="isEditUser = !isEditUser"></i>
+                                                <i class="fa fa-trash-o" title="Remove"></i>
                                             </td>
                                         </tr>
                                         <tr>
@@ -284,9 +284,9 @@
                                             <td  class="text-center">Awre5442d</td>
                                             <td  class="text-center">Management</td>
                                             <td class="td-manage text-center">
-                                                <i class="fa fa-check"></i>
-                                                <i class="fa fa-edit"></i>
-                                                <i class="fa fa-trash-o"></i>
+                                                <i class="fa fa-check" title="Active"></i>
+                                                <i class="fa fa-edit" title="Edit" ng-click="isEditUser = !isEditUser"></i>
+                                                <i class="fa fa-trash-o" title="Remove"></i>
                                             </td>
                                         </tr>
                                         <tr>
@@ -298,9 +298,9 @@
                                             <td  class="text-center">lHGhahg123</td>
                                             <td  class="text-center">Management</td>
                                             <td class="td-manage text-center">
-                                                <i class="fa fa-times"></i>
-                                                <i class="fa fa-edit"></i>
-                                                <i class="fa fa-trash-o"></i>
+                                                <i class="fa fa-times" title="De-Active"></i>
+                                                <i class="fa fa-edit" title="Edit" ng-click="isEditUser = !isEditUser"></i>
+                                                <i class="fa fa-trash-o" title="Remove"></i>
                                             </td>
                                         </tr>
                                         <tr>
@@ -312,9 +312,9 @@
                                             <td  class="text-center">Awre5442d</td>
                                             <td  class="text-center">Management</td>
                                             <td class="td-manage text-center">
-                                                <i class="fa fa-check"></i>
-                                                <i class="fa fa-edit"></i>
-                                                <i class="fa fa-trash-o"></i>
+                                                <i class="fa fa-check" title="Active"></i>
+                                                <i class="fa fa-edit" title="Edit" ng-click="isEditUser = !isEditUser"></i>
+                                                <i class="fa fa-trash-o" title="Remove"></i>
                                             </td>
                                         </tr>
                                         <tr>
@@ -326,14 +326,288 @@
                                             <td  class="text-center">lHGhahg123</td>
                                             <td  class="text-center">Management</td>
                                             <td class="td-manage text-center">
-                                                <i class="fa fa-times"></i>
-                                                <i class="fa fa-edit"></i>
-                                                <i class="fa fa-trash-o"></i>
+                                                <i class="fa fa-times" title="De-Active"></i>
+                                                <i class="fa fa-edit" title="Edit" ng-click="isEditUser = !isEditUser"></i>
+                                                <i class="fa fa-trash-o" title="Remove"></i>
                                             </td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
+                            <!-- END : USER LIST -->
+                            <div class="user-edit" ng-show="isEditUser">
+                                <h2 class="ttl-tab">
+                                    <span>Users > Joan Yan</span>
+                                </h2>
+                                <div class="control-button">
+                                    <span>Edit</span>
+                                    <span>Delete</span>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <table class="table tbl">
+                                            <tbody>
+                                                <tr>
+                                                    <th class="td-30">First Name <span class="red">*</span></th>
+                                                    <td>Joan</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="td-30">Last Name</th>
+                                                    <td>Yan</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="td-30">Email <span class="red">*</span></th>
+                                                    <td>Joan.yan@mint.com</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="td-30">Contact</th>
+                                                    <td>998554565</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="td-30">Employee Class</th>
+                                                    <td>Workmen</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="td-30">Function</th>
+                                                    <td>Waitress</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="td-30">Birthday</th>
+                                                    <td>03 May 1990</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="td-30">NRIC No.</th>
+                                                    <td>13 Jun 2016</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- END: COL -->
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <table class="table tbl">
+                                            <tbody>
+                                                <tr>
+                                                    <th class="td-30">Date Added</th>
+                                                    <td>12 Jun 2015</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="td-30">De-activated Date</th>
+                                                    <td>13 Jun 2016</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="td-30">Birthday</th>
+                                                    <td>03 May 1990</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="td-30">App Status</th>
+                                                    <td><span class="red">De-activated</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="td-30">Verification Code</th>
+                                                    <td>XXEOOKm1923</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="td-30">Redemptions</th>
+                                                    <td>25</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="td-30">Est. Savings</th>
+                                                    <td>s$600</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="td-30">Medical Card ID</th>
+                                                    <td>3325-44556-45</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- END: COL -->
+                                    <div class="col-xs-12 user-history">
+                                        <h2 class="ttl-tab">
+                                            <span>Redemption History</span>
+                                        </h2>
+                                        <table class="table tbl tbl-bg">
+                                            <tbody>
+                                                <tr>
+                                                    <th class="text-center">Date/Time</th>
+                                                    <th>Merchant</th>
+                                                    <th>Item</th>
+                                                    <th>Location</th>
+                                                    <th>Category</th>
+                                                    <th>Est. Value</th>
+                                                    <th>Ref </th>
+                                                </tr>
+                                                <tr>
+                                                    <td>4 Sep 2015  3:45pm</td>
+                                                    <td>Long Long ago far away bar</td>
+                                                    <td>Happy Hour</td>
+                                                    <td>99 Hong Kong Road</td>
+                                                    <td>F&B</td>
+                                                    <td>S$20</td>
+                                                    <td>244eefee</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>24 Jul 2015  5:12pm</td>
+                                                    <td>Pollywooks</td>
+                                                    <td>Free Admission</td>
+                                                    <td>Nex Mall, Serangoon</td>
+                                                    <td>Kids</td>
+                                                    <td>S$18</td>
+                                                    <td>Seff55448</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- END: HISTORY -->
+                                </div>
+                            </div>
+                            <!-- END : USER EDIT -->
+                            <div class="users-create" ng-show="isNewUser && !isUserUpload">
+                                <h2 class="ttl-tab">
+                                    <span>Users > Add new user</span>
+                                </h2>
+                                <form class="frm-adduser">
+                                    <table class="table tbl">
+                                        <tbody>
+                                            <tr>
+                                                <th class="td-30">First Name <span class="red">*</span></th>
+                                                <td>
+                                                    <input type="text" name="txt-firstname" value="Joan" class="ipt-user">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="td-30">Last Name</th>
+                                                <td>
+                                                    <input type="text" name="txt-lastname" value="Yan" class="ipt-user">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="td-30">Email <span class="red">*</span></th>
+                                                <td>
+                                                    <input type="email" name="txt-email" value="Joan.yan@mint.com" class="ipt-user">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="td-30">Contact</th>
+                                                <td>
+                                                    <input type="text" name="txt-contact" value="998554565" class="ipt-user">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="td-30">Employee Class</th>
+                                                <td>
+                                                    <input type="text" name="txt-employee" value="Workmen" class="ipt-user">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="td-30">Function</th>
+                                                <td>
+                                                    <input type="text" name="txt-function" value="Waitress" class="ipt-user">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="td-30">Birthday</th>
+                                                <td>
+                                                    <input type="text" name="txt-birthday" value="03 May 1990" class="ipt-user">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="td-30">NRIC No.</th>
+                                                <td>
+                                                <input type="text" name="txt-nric" value="13 Jun 2016" class="ipt-user">
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <p class="text-right">
+                                        <button type="submit" class="btn btn-add">add</button>
+                                    </p>
+                                </form>
+                                <!-- END : FORM -->
+                                <div class="add-upload">
+                                    <h2 class="ttl-tab">
+                                        <span>Upload Excel File</span>
+                                    </h2>
+                                    <div class="blk-upload">
+                                        <label>Browse For File:</label>
+                                        <span class="cls-file">No file selected</span>
+                                        <div class="fileUpload">
+                                            <span>Browse...</span>
+                                            <div style="height: 0px; width: 0px; overflow: hidden;">
+                                                <input type="file" name="userfile" class="fileToUpload">
+                                            </div>
+                                        </div>
+                                        <a class="btn-add btn" ng-click="isUserUpload = !isUserUpload">add</a>
+                                    </div>
+                                    <p>If you require the Excel format for mass uploading, please <a href="#">click here</a> to download the template</p>
+                                </div>
+                            </div>
+                            <!-- END : ADD USER -->
+                            <div class="confirm-upload" ng-show="isUserUpload">
+                                <h2 class="ttl-tab">
+                                    <span>Confirm Details For Upload</span>
+                                </h2>
+                                <div class="control-button">
+                                    <span>Cancel</span>
+                                    <span class="cfirm">Confirm</span>
+                                </div>
+                                <p>Total No.  Entries: <strong> 04</strong></p>
+                                <table class="table tbl">
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-center">F.Name</td>
+                                            <td class="text-center">L.Name</td>
+                                            <td class="text-center">Email</td>
+                                            <td class="text-center">Contact No.</td>
+                                            <td class="text-center">Emp Class</td>
+                                            <td class="text-center">Funct</td>
+                                            <td class="text-center">Bday</td>
+                                            <td class="text-center">NRIC</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">Vera</td>
+                                            <td class="text-center">Tan</td>
+                                            <td class="text-center">a.magenta@magenta.com</td>
+                                            <td class="text-center">9879878</td>
+                                            <td class="text-center">Executive</td>
+                                            <td class="text-center">Sales</td>
+                                            <td class="text-center">25/03/81</td>
+                                            <td class="text-center">Null</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">Kenneth</td>
+                                            <td class="text-center">Yap</td>
+                                            <td class="text-center">a.magenta@magenta.com</td>
+                                            <td class="text-center">Null</td>
+                                            <td class="text-center">Null</td>
+                                            <td class="text-center">Null</td>
+                                            <td class="text-center">25/03/81</td>
+                                            <td class="text-center">Null</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">Wayne</td>
+                                            <td class="text-center">Ng</td>
+                                            <td class="text-center">a.magenta@magenta.com</td>
+                                            <td class="text-center">Null</td>
+                                            <td class="text-center">Null</td>
+                                            <td class="text-center">Null</td>
+                                            <td class="text-center">25/03/81</td>
+                                            <td class="text-center">Null</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">Linda</td>
+                                            <td class="text-center">Leong</td>
+                                            <td class="text-center">a.magenta@magenta.com</td>
+                                            <td class="text-center">Null</td>
+                                            <td class="text-center">Null</td>
+                                            <td class="text-center">Null</td>
+                                            <td class="text-center">25/03/81</td>
+                                            <td class="text-center">Null</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- END: CONFIRM UPLOAD -->
                         </tab>
                         <!-- END: TAB -->
                         <tab heading="Handbook">
@@ -341,7 +615,8 @@
                                 <h2 class="ttl-tab">
                                     <span>Employee Handbook</span>
                                 </h2>
-                                <span class="cap-note" ng-click="isCreateNew = !isCreateNew">Create New</span>
+                                <span class="cap-note" ng-click="isCreateNew = !isCreateNew">       Create New
+                                </span>
                                 <table class="table tbl">
                                     <tbody>
                                         <tr>

@@ -84,6 +84,11 @@ angular.module('app.clients', [])
 
           # manage clients
           $scope.isEditClients = false
+
+          # manage users
+          $scope.isEditUser = false
+          $scope.isNewUser = false
+          $scope.isUserUpload = false
   ])
 
 .controller('tabsClientCtrl', [
