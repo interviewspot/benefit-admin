@@ -113,6 +113,31 @@
                     </tr>
                 </tbody>
             </table>
+            <footer class="table-footer">
+                <div class="row">
+                    <div class="col-md-6 page-num-info">
+                <span>
+                    Show
+                    <select data-ng-model="numPerPage"
+                            data-ng-options="num for num in numPerPageOpt"
+                            data-ng-change="onNumPerPageChange()">
+                    </select>
+                    entries per page
+                </span>
+                    </div>
+                    <div class="col-md-6 text-right pagination-container">
+                        <pagination class="pagination-sm"
+                                    ng-model="currentPage"
+                                    total-items="filteredStores.length"
+                                    max-size="4"
+                                    ng-change="select(currentPage)"
+                                    items-per-page="numPerPage"
+                                    rotate="false"
+                                    boundary-links="true"></pagination>
+                    </div>
+                </div>
+            </footer>
+            <!-- END : PAGINATION -->
         </div>
         <!-- END : CLIENTS LIST -->
         <div class="clients_edit"  ng-show="isEditClients">
@@ -333,6 +358,31 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                                <footer class="table-footer">
+                                    <div class="row">
+                                        <div class="col-md-6 page-num-info">
+                                    <span>
+                                        Show
+                                        <select data-ng-model="numPerPage"
+                                                data-ng-options="num for num in numPerPageOpt"
+                                                data-ng-change="onNumPerPageChange()">
+                                        </select>
+                                        entries per page
+                                    </span>
+                                        </div>
+                                        <div class="col-md-6 text-right pagination-container">
+                                            <pagination class="pagination-sm"
+                                                        ng-model="currentPage"
+                                                        total-items="filteredStores.length"
+                                                        max-size="4"
+                                                        ng-change="select(currentPage)"
+                                                        items-per-page="numPerPage"
+                                                        rotate="false"
+                                                        boundary-links="true"></pagination>
+                                        </div>
+                                    </div>
+                                </footer>
+                                <!-- END : PAGINATION -->
                             </div>
                             <!-- END : USER LIST -->
                             <div class="user-edit" ng-show="isEditUser">
@@ -543,13 +593,16 @@
                                 </div>
                             </div>
                             <!-- END : ADD USER -->
-                            <div class="confirm-upload" ng-show="isUserUpload">
+                            <div class="confirm-upload" ng-show="isUserUpload && !isDetailUpload">
                                 <h2 class="ttl-tab">
                                     <span>Confirm Details For Upload</span>
                                 </h2>
                                 <div class="control-button">
                                     <span>Cancel</span>
-                                    <span class="cfirm">Confirm</span>
+                                    <span class="cfirm" 
+                                            ng-click="isDetailUpload = !isDetailUpload">
+                                        Confirm
+                                    </span>
                                 </div>
                                 <p>Total No.  Entries: <strong> 04</strong></p>
                                 <table class="table tbl">
@@ -606,8 +659,171 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                                <footer class="table-footer">
+                                    <div class="row">
+                                        <div class="col-md-6 page-num-info">
+                                    <span>
+                                        Show
+                                        <select data-ng-model="numPerPage"
+                                                data-ng-options="num for num in numPerPageOpt"
+                                                data-ng-change="onNumPerPageChange()">
+                                        </select>
+                                        entries per page
+                                    </span>
+                                        </div>
+                                        <div class="col-md-6 text-right pagination-container">
+                                            <pagination class="pagination-sm"
+                                                        ng-model="currentPage"
+                                                        total-items="filteredStores.length"
+                                                        max-size="4"
+                                                        ng-change="select(currentPage)"
+                                                        items-per-page="numPerPage"
+                                                        rotate="false"
+                                                        boundary-links="true"></pagination>
+                                        </div>
+                                    </div>
+                                </footer>
+                                <!-- END : PAGINATION -->
                             </div>
                             <!-- END: CONFIRM UPLOAD -->
+                            <div class="detail-upload" ng-show="isDetailUpload">
+                                <h2 class="ttl-tab">
+                                    <span>Details Of New User(s) Added</span>
+                                </h2>
+                                <span class="cap-note"
+                                      data-toggle="modal" 
+                                      data-target="#modalMessage">       
+                                    Send Mail
+                                </span>
+                                <p>Total No.  Entries: <strong> 04</strong></p>
+                                <table class="table tbl">
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-center">F.Name</td>
+                                            <td class="text-center">L.Name</td>
+                                            <td class="text-center">Email</td>
+                                            <td class="text-center">Contact No.</td>
+                                            <td class="text-center">Veri Code</td>
+                                            <td class="text-center">Emp Class</td>
+                                            <td class="text-center">Funct</td>
+                                            <td class="text-center">Bday</td>
+                                            <td class="text-center">NRIC</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">Vera</td>
+                                            <td class="text-center">Tan</td>
+                                            <td class="text-center">a.magenta@magenta.com</td>
+                                            <td class="text-center">9879878</td>
+                                            <td class="text-center">E#vfr4f5</td>
+                                            <td class="text-center">Executive</td>
+                                            <td class="text-center">Sales</td>
+                                            <td class="text-center">25/03/81</td>
+                                            <td class="text-center">Null</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">Kenneth</td>
+                                            <td class="text-center">Yap</td>
+                                            <td class="text-center">a.magenta@magenta.com</td>
+                                            <td class="text-center">Null</td>
+                                            <td class="text-center">G553245</td>
+                                            <td class="text-center">Null</td>
+                                            <td class="text-center">Null</td>
+                                            <td class="text-center">25/03/81</td>
+                                            <td class="text-center">Null</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">Wayne</td>
+                                            <td class="text-center">Ng</td>
+                                            <td class="text-center">a.magenta@magenta.com</td>
+                                            <td class="text-center">Null</td>
+                                            <td class="text-center">#%verrf3</td>
+                                            <td class="text-center">Null</td>
+                                            <td class="text-center">Null</td>
+                                            <td class="text-center">25/03/81</td>
+                                            <td class="text-center">Null</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">Linda</td>
+                                            <td class="text-center">Leong</td>
+                                            <td class="text-center">a.magenta@magenta.com</td>
+                                            <td class="text-center">Null</td>
+                                            <td class="text-center">23423fff</td>
+                                            <td class="text-center">Null</td>
+                                            <td class="text-center">Null</td>
+                                            <td class="text-center">25/03/81</td>
+                                            <td class="text-center">Null</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <footer class="table-footer">
+                                    <div class="row">
+                                        <div class="col-md-6 page-num-info">
+                                    <span>
+                                        Show
+                                        <select data-ng-model="numPerPage"
+                                                data-ng-options="num for num in numPerPageOpt"
+                                                data-ng-change="onNumPerPageChange()">
+                                        </select>
+                                        entries per page
+                                    </span>
+                                        </div>
+                                        <div class="col-md-6 text-right pagination-container">
+                                            <pagination class="pagination-sm"
+                                                        ng-model="currentPage"
+                                                        total-items="filteredStores.length"
+                                                        max-size="4"
+                                                        ng-change="select(currentPage)"
+                                                        items-per-page="numPerPage"
+                                                        rotate="false"
+                                                        boundary-links="true"></pagination>
+                                        </div>
+                                    </div>
+                                </footer>
+                                <!-- END : PAGINATION -->
+                                <div id="modalMessage" class="modal fade" role="dialog">
+                                    <div class="modal-dialog">
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">Message</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>
+                                                    Would like to send all employees their verification code now? By clicking “Yes” the system will send an automated email to everyone you just added.
+                                                </p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-cancel" data-dismiss="modal">Cancel</button>
+                                                <button type="button" 
+                                                        class="btn btn-add"
+                                                        data-toggle="modal"
+                                                        data-target="#modalThankyou"
+                                                        data-dismiss="modal">Yes</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- END : MODAL MESSAGE-->
+                                <div id="modalThankyou" class="modal fade" role="dialog">
+                                    <div class="modal-dialog">
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">Message</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>
+                                                    Alright! We are currently working on it and sending the verifications out to your employees. We will drop you a mail – once we are done!
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- END : MODAL MESSAGE-->
+                            </div>
+                            <!-- END: DETAIL UPLOAD -->
                         </tab>
                         <!-- END: TAB -->
                         <tab heading="Handbook">
@@ -664,6 +880,31 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                                <footer class="table-footer">
+                                    <div class="row">
+                                        <div class="col-md-6 page-num-info">
+                                    <span>
+                                        Show
+                                        <select data-ng-model="numPerPage"
+                                                data-ng-options="num for num in numPerPageOpt"
+                                                data-ng-change="onNumPerPageChange()">
+                                        </select>
+                                        entries per page
+                                    </span>
+                                        </div>
+                                        <div class="col-md-6 text-right pagination-container">
+                                            <pagination class="pagination-sm"
+                                                        ng-model="currentPage"
+                                                        total-items="filteredStores.length"
+                                                        max-size="4"
+                                                        ng-change="select(currentPage)"
+                                                        items-per-page="numPerPage"
+                                                        rotate="false"
+                                                        boundary-links="true"></pagination>
+                                        </div>
+                                    </div>
+                                </footer>
+                                <!-- END : PAGINATION -->
                             </div>
                             <!-- END: HANDBOOK LIST -->
                             <div class="create_handbook" ng-show="isCreateNew">

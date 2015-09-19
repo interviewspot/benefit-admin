@@ -56,7 +56,7 @@ html {
 
         > .nav-container {
             display: none;
-            z-index: 11; // should be highter than top header
+            z-index: 0; // should be highter than top header
             position: static;
             float: left;
             width: 200px;

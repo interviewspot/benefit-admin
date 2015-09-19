@@ -314,6 +314,16 @@ h2.ttl-tab {
     	border: 1px solid #999;
     }
 }
+.btn-cancel {
+	background-color: #bbb;
+	text-transform: uppercase;
+	color: #fff;
+	@include transition(all 0.2s linear);
+	&:hover {
+		background-color: #999;
+		color: #fff;
+	}
+}
 .btn-add {
 	background-color: #CFAE79;
 	text-transform: uppercase;
@@ -334,10 +344,37 @@ h2.ttl-tab {
 		margin-bottom: 5px;
 	}
 }
-.confirm-upload {
+.confirm-upload, .detail-upload {
 	position: relative;
-	p {
-		margin-bottom: 0;
+}
+.detail-upload {
+	.cap-note {
+	    top: -10px;
+    	right: 0;
+	}
+}
+/* CSS MODAL */
+#modalMessage, #modalThankyou {
+	.modal-body, .modal-footer {
+		text-align: center;
+	}
+}
+/* CSS MERCHANT PAGE */
+.merchant-list {
+	position: relative;
+	.cap-note {
+		top: 10px;
+		right: 0;
+	}
+}
+.td-control {
+	a {
+		display: inline-block;
+		margin-right: 7px;
+		&:first-child {
+			border-right: 1px solid #ddd;
+			padding-right: 7px;
+		}
 	}
 }
 /* CSS OVERRIDE UPLOAD FILE */
