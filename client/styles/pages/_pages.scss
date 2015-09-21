@@ -362,6 +362,41 @@ h2.ttl-tab {
     	right: 0;
 	}
 }
+.ctc-itm {
+    margin-bottom: 15px;
+    h2 {
+        border-bottom: 1px solid #ccc;
+        background-color: #ddd;
+        text-transform: uppercase;
+        padding: 5px 0 5px 10px;
+        margin: 0 0 10px 0;
+        font-size: 24px;
+        border-top: 1px solid #ccc;
+        font-weight: bold;
+    }
+    .ctc-content {
+        border-bottom: 1px solid #ccc;
+        text-indent: 15px;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        &:last-child {
+            padding-bottom: 0;
+            margin-bottom: 0;
+            border-bottom: none;
+        }
+        h3 {
+            margin: 0 ;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        p {
+            margin-bottom: 1px;
+            &.ctc-add {
+                margin-bottom: 15px;
+            }
+        }
+    }
+}
 /* CSS MODAL */
 #modalMessage, #modalThankyou {
 	.modal-body, .modal-footer {
