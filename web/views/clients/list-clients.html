@@ -1,202 +1,1205 @@
 <!--data-ng-controller="listclientController" Call controller in scripts/client-->
 <div class="col-lg-12">
     <div class="page page-table" data-ng-controller="clientCtrl">
-        <section class="panel panel-default table-dynamic">
-            <div class="panel-heading">Manager Clients</div>
-            <div class="panel-body">
-                <div class="table-filters">
-                    <div class="row">
-                        <div class="col-sm-4 col-xs-6">
-                            <form>
-                                <input type="text"
-                                       placeholder="Search"
-                                       class="form-control"
-                                       data-ng-model="searchKeywords"
-                                       data-ng-keyup="search()">
-                            </form>
-                        </div>
-                        <!--<div class="col-sm-3 col-xs-6 filter-result-info">-->
-                        <!--<span>-->
-                        <!--Showing {{filteredStores.length}}/{{stores.length}} entries-->
-                        <!--</span>              -->
-                        <!--</div>-->
-                        <div class="col-sm-2 col-xs-6">
-                            <form data-ng-submit="add()" class="add-client">
-                                <input type="button" name="add" class="btn btn-primary text-center" value="Add New Clients" data-toggle="modal" data-target="#myModal"/>
-                                <!--<a href="#/clients/add" class="btn btn-primary text-center">Add New client</a>-->
-                            </form>
-                            <!--Start content add company-->
-                            <div id="myModal" class="modal fade" role="dialog">
-                                <div class="modal-dialog">
-                                    <!-- Modal content-->
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">Add New Clients</h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="panel-body">
-                                                <form role="form" id="clients" name="clients" action="/clients/add" method="post">
-                                                    <div class="form-group">
-                                                        <label for="Company">Company </label>
-                                                        <input type="text" name="Company" id="Company" class="form-control" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>Status</label>
-                                                        <div class="radio" id="status">
-                                                            <label>
-                                                                <input type="radio" name="status" id="opt1" value="1" checked="cheked">Live
-                                                                &nbsp; &nbsp; &nbsp; &nbsp;
-                                                                <input type="radio" name="status" id="opt2" value="2">Not Active
-                                                            </label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="Type">Industry</label>
-                                                        <input type="text" name="Type" id="Type" class="form-control" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="Cat">Users</label>
-                                                        <input type="text" name="Users" id="Cat" class="form-control" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="Outlets">Est saving</label>
-                                                        <input type="text" name="Outlets" id="Outlets" class="form-control" />
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label for="cs">CS</label>
-                                                        <input type="text" name="Users" id="CS" class="form-control" />
-                                                    </div>
-
-                                                    <input type="button" name="add-new-client" class="btn btn-primary text-center" value="Add New Clients" />
-                                                </form>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <!--End content add company-->
-                        </div>
-                    </div>
-                </div>
-
-                <table class="table table-bordered table-striped table-responsive">
-                    <thead>
+        <div class="clients_list" ng-show="!isEditClients">
+            <h1 class="ttl-page">Manage Clients</h1>
+            <span class="cap-note" ng-click="isEditClients = !isEditClients">Add New Clients</span>
+            <table class="table tbl tbl-bg table-hover">
+                <tbody>
                     <tr>
-                        <th>
-                            <div class="th">
-                                Company
-                            </div>
-                        </th>
-                        <th>
-                            <div class="th">
-                                Status
-                            </div>
-                        </th>
-                        <th>
-                            <div class="th">
-                                Industry
-                            </div>
-                        </th>
-                        <th>
-                            <div class="th">
-                                Users
-                            </div>
-                        </th>
-                        <th>
-                            <div class="th">
-                                Est Savings
-                            </div>
-                        </th>
-                        <th>
-                            <div class="th">
-                                CS
-                            </div>
-                        </th>
-                        <th>
-                            <div class="th">
-                                Actions
-                            </div>
-                        </th>
+                        <th class="text-center">Company</th>
+                        <th class="text-center">Status</th>
+                        <th class="text-center">Industry</th>
+                        <th class="text-center">Users</th>
+                        <th class="text-center">Est Savings</th>
+                        <th class="text-center">CS</th>
+                        <th class="text-center">Actions</th>
                     </tr>
-                    </thead>
-                    <tbody>
-                    <tr data-ng-repeat="store in currentPageStores">
-                        <td>{{store.company}}</td>
-                        <td>{{store.status}}</td>
-                        <td>{{store.industry}}</td>
-                        <td>{{store.users}}</td>
-                        <td>{{store.estsaving}}</td>
-                        <td>{{store.cs}}</td>
-                        <td>
-                            <li class="dropdown" dropdown style="list-style-type: none;">
-                                <a href="javascript:;" class="dropdown-toggle" dropdown-toggle ng-disabled="disabled" style="text-decoration: underline">{{store.action}}</a>
-                                <ul class="dropdown-menu with-arrow">
-                                    <li>
-                                        <a href="#/clients/view">
-                                            <span data-i18n="View"></span>
-                                        </a>
-                                    </li>
-                                    <!--<li>-->
-                                        <!--<a href="#/tasks/tasks">-->
-                                            <!--<span data-i18n="Edit"></span>-->
-                                        <!--</a>-->
-                                    <!--</li>-->
-                                    <!--<li>-->
-                                        <!--<a href="#/pages/lock-screen">-->
-                                            <!--<span data-i18n="De-Activate"></span>-->
-                                        <!--</a>-->
-                                    <!--</li>-->
-                                    <!--<li>-->
-                                        <!--<a href="#/pages/signin">-->
-                                            <!--<span data-i18n="Assign CS"></span>-->
-                                        <!--</a>-->
-                                    <!--</li>-->
-                                    <!--<li>-->
-                                        <!--<a href="#/pages/signin">-->
-                                            <!--<span data-i18n="Delete Account"></span>-->
-                                        <!--</a>-->
-                                    <!--</li>-->
-                                </ul>
-                            </li>
-
+                    <tr>
+                        <td class="text-center">
+                            <a ng-click="isEditClients = !isEditClients">
+                                Magenta Pte Ltd
+                            </a>
+                        </td>
+                        <td class="text-center">Live</td>
+                        <td class="text-center">HR Advisory</td>
+                        <td class="text-center">
+                            35
+                        </td>
+                        <td class="text-center">
+                            $2,500
+                        </td>
+                        <td class="text-center">
+                            Astrid
+                        </td>
+                        <td class="text-center td-manage">
+                            <i class="fa fa-check" title="Active"></i>
+                            <i class="fa fa-edit" title="Edit" ng-click="isEditClients = !isEditClients"></i>
+                            <i class="fa fa-sign-in" title="Assign CS"></i>
+                            <i class="fa fa-trash-o" title="Remove"></i>
                         </td>
                     </tr>
-                    </tbody>
-                </table>
-
-                <footer class="table-footer">
-                    <div class="row">
-                        <div class="col-md-6 page-num-info">
-                    <span>
-                        Show
-                        <select data-ng-model="numPerPage"
-                                data-ng-options="num for num in numPerPageOpt"
-                                data-ng-change="onNumPerPageChange()">
-                        </select>
-                        entries per page
-                    </span>
-                        </div>
-                        <div class="col-md-6 text-right pagination-container">
-                            <pagination class="pagination-sm"
-                                        ng-model="currentPage"
-                                        total-items="filteredStores.length"
-                                        max-size="4"
-                                        ng-change="select(currentPage)"
-                                        items-per-page="numPerPage"
-                                        rotate="false"
-                                        boundary-links="true"></pagination>
-                        </div>
+                    <tr>
+                        <td class="text-center">
+                            <a ng-click="isEditClients = !isEditClients">
+                                BSI Group
+                            </a>
+                        </td>
+                        <td class="text-center">Live</td>
+                        <td class="text-center">Banking</td>
+                        <td class="text-center">
+                            245
+                        </td>
+                        <td class="text-center">
+                            $35,000
+                        </td>
+                        <td class="text-center">
+                            Astrid
+                        </td>
+                        <td class="text-center td-manage">
+                            <i class="fa fa-times" title="De-Active"></i>
+                            <i class="fa fa-edit" title="Edit" ng-click="isEditClients = !isEditClients"></i>
+                            <i class="fa fa-sign-in" title="Assign CS"></i>
+                            <i class="fa fa-trash-o" title="Remove"></i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">
+                            <a ng-click="isEditClients = !isEditClients">
+                                Yang Kee
+                            </a>
+                        </td>
+                        <td class="text-center">Live</td>
+                        <td class="text-center">Logistics</td>
+                        <td class="text-center">
+                            220
+                        </td>
+                        <td class="text-center">
+                            $5,000
+                        </td>
+                        <td class="text-center">
+                            George
+                        </td>
+                        <td class="text-center td-manage">
+                            <i class="fa fa-check" title="Active"></i>
+                            <i class="fa fa-edit" title="Edit" ng-click="isEditClients = !isEditClients"></i>
+                            <i class="fa fa-sign-in" title="Assign CS"></i>
+                            <i class="fa fa-trash-o" title="Remove"></i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-center">
+                            <a ng-click="isEditClients = !isEditClients">
+                                Fastflow
+                            </a>
+                        </td>
+                        <td class="text-center">Live</td>
+                        <td class="text-center">Logistics</td>
+                        <td class="text-center">
+                            125
+                        </td>
+                        <td class="text-center">
+                            $8,000
+                        </td>
+                        <td class="text-center">
+                            Not Assigned
+                        </td>
+                        <td class="text-center td-manage">
+                            <i class="fa fa-check" title="Active"></i>
+                            <i class="fa fa-edit" title="Edit" ng-click="isEditClients = !isEditClients"></i>
+                            <i class="fa fa-sign-in" title="Assign CS"></i>
+                            <i class="fa fa-trash-o" title="Remove"></i>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <footer class="table-footer">
+                <div class="row">
+                    <div class="col-md-6 page-num-info">
+                <span>
+                    Show
+                    <select data-ng-model="numPerPage"
+                            data-ng-options="num for num in numPerPageOpt"
+                            data-ng-change="onNumPerPageChange()">
+                    </select>
+                    entries per page
+                </span>
                     </div>
-                </footer>
-
-            </div>
-
-        </section>
+                    <div class="col-md-6 text-right pagination-container">
+                        <pagination class="pagination-sm"
+                                    ng-model="currentPage"
+                                    total-items="filteredStores.length"
+                                    max-size="4"
+                                    ng-change="select(currentPage)"
+                                    items-per-page="numPerPage"
+                                    rotate="false"
+                                    boundary-links="true"></pagination>
+                    </div>
+                </div>
+            </footer>
+            <!-- END : PAGINATION -->
+        </div>
+        <!-- END : CLIENTS LIST -->
+        <div class="clients_edit"  ng-show="isEditClients">
+            <h1 class="ttl-page">
+                Magenta Consulting Pte Ltd
+                <span class="sp-sts green">Active</span>
+            </h1>
+            <section class="panel panel-default table-dynamic">
+                <div class="panel-body">
+                    <tabset class="client-tabs lv1">
+                        <tab heading="Company Info">
+                            <div class="row">
+                                <div class="col-md-8 col-sm-8 col-xs-12 cpn-left">
+                                    <p class="clearfix">
+                                        <span class="bt-edit">Edit</span>
+                                    </p>
+                                    <table class="table tbl ng-scope">
+                                        <tbody>
+                                            <tr>
+                                                <td class="td-30">Company Reg Biz Name <span class="red">*</span>:</td>
+                                                <td>Magenta Consulting Pte Ltd</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="td-30">Biz Reg No.</td>
+                                                <td>199452264G</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="td-30">Address:</td>
+                                                <td>8 Burn Road</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="td-30">Unit Number:</td>
+                                                <td>#12-11</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="td-30">Building Name:</td>
+                                                <td>Trivex</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="td-30">Postal Code:</td>
+                                                <td>369977</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="td-30">Business Type</td>
+                                                <td>HR Consultancy, Corporate Services</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="td-30">Office Number</td>
+                                                <td>65587895</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="td-30">Admin User Email</td>
+                                                <td>
+                                                    Kenneth@magenta-consultancy.com
+                                                    <span class="rs-pass">Reset password</span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="td-30">Admin Contact No.</td>
+                                                <td>96854457</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="td-30">Client Since</td>
+                                                <td>29 Jan 2014</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="td-30">Package Type</td>
+                                                <td>Basic - $10/User/Month</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <!-- END: TABLE -->
+                                    <h2 class="ttl-tab">
+                                        <span>About Company</span>
+                                    </h2>
+                                    <form method="post">
+                                        <div class="bnf-editor" id="editor_4" tinyeditor>
+                                            <p>Magenta is the colour of the highest order, connected with spirituality, mediation, and letting go. It is an agent for change, for the clearing out of old attitudes and obsessions, and for making a break with the past. Consistent with the qualities associated with the colour ‘Magenta’, the Human Resource Consulting Services of Magenta Consulting Services is delivered in the highest order possible. We are your agent for change – for the enhancement of the present and a lead into the future – via our innovative approach to the human capital solutions we offer.</p>
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- END : COL LEFT -->
+                                <div class="col-md-4 col-sm-4 col-xs-12 cpn-right">
+                                    <table class="table tbl">
+                                        <tbody>
+                                            <tr>
+                                                <th class="text-center">
+                                                    Company Logo
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center td-logo">
+                                                    <img src="images/logo-demo.png" alt=""/>
+                                                    <i class="fa fa-times"></i>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">
+                                                    <div class="fileUpload">
+                                                        <span>Upload New Image</span>
+                                                        <div style="height: 0px; width: 0px; overflow: hidden;">
+                                                            <input type="file" name="userfile" class="fileToUpload">
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- END : COL RIGHT -->
+                            </div>
+                        </tab>
+                        <!-- END: TAB -->
+                        <tab heading="Users">
+                            <div class="user-list" ng-show="!isEditUser && !isNewUser">
+                                <p>Total No.  User: <strong> 240</strong></p>
+                                <p class="user-sts">
+                                    <span class="active">Active</span>
+                                    <span>Un-Active</span>
+                                    <span>De-Active</span>
+                                </p>
+                                <span class="cap-note" ng-click="isNewUser = !isNewUser">Add new user</span>
+                                <table class="table tbl tbl-bg table-hover">
+                                    <tbody>
+                                        <tr>
+                                            <th class="text-center">Date Added</th>
+                                            <th class="text-center">First name</th>
+                                            <th class="text-center">Last Name</th>
+                                            <th class="text-center">Email</th>
+                                            <th class="text-center">Contact No.</th>
+                                            <th class="text-center">Verification Code</th>
+                                            <th class="text-center">Employee Class</th>
+                                            <th class="text-center">Actions</th>
+                                        </tr>
+                                        <tr>
+                                            <td  class="text-center">29 June 2015  3:45pm</td>
+                                            <td  class="text-center">Astrid</td>
+                                            <td  class="text-center">Tan</td>
+                                            <td  class="text-center">a.magenta@magenta.com</td>
+                                            <td  class="text-center">Null</td>
+                                            <td  class="text-center">Awre5442d</td>
+                                            <td  class="text-center">Management</td>
+                                            <td class="td-manage text-center">
+                                                <i class="fa fa-check" title="Active"></i>
+                                                <i class="fa fa-edit" title="Edit" ng-click="isEditUser = !isEditUser"></i>
+                                                <i class="fa fa-trash-o" title="Remove"></i>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td  class="text-center">29 June 2015  3:45pm</td>
+                                            <td  class="text-center">John</td>
+                                            <td  class="text-center">Wayne</td>
+                                            <td  class="text-center">a.magenta@magenta.com</td>
+                                            <td  class="text-center">Null</td>
+                                            <td  class="text-center">lHGhahg123</td>
+                                            <td  class="text-center">Management</td>
+                                            <td class="td-manage text-center">
+                                                <i class="fa fa-times" title="De-Active"></i>
+                                                <i class="fa fa-edit" title="Edit" ng-click="isEditUser = !isEditUser"></i>
+                                                <i class="fa fa-trash-o" title="Remove"></i>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td  class="text-center">29 June 2015  3:45pm</td>
+                                            <td  class="text-center">Astrid</td>
+                                            <td  class="text-center">Tan</td>
+                                            <td  class="text-center">a.magenta@magenta.com</td>
+                                            <td  class="text-center">Null</td>
+                                            <td  class="text-center">Awre5442d</td>
+                                            <td  class="text-center">Management</td>
+                                            <td class="td-manage text-center">
+                                                <i class="fa fa-check" title="Active"></i>
+                                                <i class="fa fa-edit" title="Edit" ng-click="isEditUser = !isEditUser"></i>
+                                                <i class="fa fa-trash-o" title="Remove"></i>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td  class="text-center">29 June 2015  3:45pm</td>
+                                            <td  class="text-center">John</td>
+                                            <td  class="text-center">Wayne</td>
+                                            <td  class="text-center">a.magenta@magenta.com</td>
+                                            <td  class="text-center">Null</td>
+                                            <td  class="text-center">lHGhahg123</td>
+                                            <td  class="text-center">Management</td>
+                                            <td class="td-manage text-center">
+                                                <i class="fa fa-times" title="De-Active"></i>
+                                                <i class="fa fa-edit" title="Edit" ng-click="isEditUser = !isEditUser"></i>
+                                                <i class="fa fa-trash-o" title="Remove"></i>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td  class="text-center">29 June 2015  3:45pm</td>
+                                            <td  class="text-center">Astrid</td>
+                                            <td  class="text-center">Tan</td>
+                                            <td  class="text-center">a.magenta@magenta.com</td>
+                                            <td  class="text-center">Null</td>
+                                            <td  class="text-center">Awre5442d</td>
+                                            <td  class="text-center">Management</td>
+                                            <td class="td-manage text-center">
+                                                <i class="fa fa-check" title="Active"></i>
+                                                <i class="fa fa-edit" title="Edit" ng-click="isEditUser = !isEditUser"></i>
+                                                <i class="fa fa-trash-o" title="Remove"></i>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td  class="text-center">29 June 2015  3:45pm</td>
+                                            <td  class="text-center">John</td>
+                                            <td  class="text-center">Wayne</td>
+                                            <td  class="text-center">a.magenta@magenta.com</td>
+                                            <td  class="text-center">Null</td>
+                                            <td  class="text-center">lHGhahg123</td>
+                                            <td  class="text-center">Management</td>
+                                            <td class="td-manage text-center">
+                                                <i class="fa fa-times" title="De-Active"></i>
+                                                <i class="fa fa-edit" title="Edit" ng-click="isEditUser = !isEditUser"></i>
+                                                <i class="fa fa-trash-o" title="Remove"></i>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <footer class="table-footer">
+                                    <div class="row">
+                                        <div class="col-md-6 page-num-info">
+                                    <span>
+                                        Show
+                                        <select data-ng-model="numPerPage"
+                                                data-ng-options="num for num in numPerPageOpt"
+                                                data-ng-change="onNumPerPageChange()">
+                                        </select>
+                                        entries per page
+                                    </span>
+                                        </div>
+                                        <div class="col-md-6 text-right pagination-container">
+                                            <pagination class="pagination-sm"
+                                                        ng-model="currentPage"
+                                                        total-items="filteredStores.length"
+                                                        max-size="4"
+                                                        ng-change="select(currentPage)"
+                                                        items-per-page="numPerPage"
+                                                        rotate="false"
+                                                        boundary-links="true"></pagination>
+                                        </div>
+                                    </div>
+                                </footer>
+                                <!-- END : PAGINATION -->
+                            </div>
+                            <!-- END : USER LIST -->
+                            <div class="user-edit" ng-show="isEditUser">
+                                <h2 class="ttl-tab">
+                                    <span>Users > Joan Yan</span>
+                                </h2>
+                                <div class="control-button">
+                                    <span>Edit</span>
+                                    <span>Delete</span>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <table class="table tbl">
+                                            <tbody>
+                                                <tr>
+                                                    <th class="td-30">First Name <span class="red">*</span></th>
+                                                    <td>Joan</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="td-30">Last Name</th>
+                                                    <td>Yan</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="td-30">Email <span class="red">*</span></th>
+                                                    <td>Joan.yan@mint.com</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="td-30">Contact</th>
+                                                    <td>998554565</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="td-30">Employee Class</th>
+                                                    <td>Workmen</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="td-30">Function</th>
+                                                    <td>Waitress</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="td-30">Birthday</th>
+                                                    <td>03 May 1990</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="td-30">NRIC No.</th>
+                                                    <td>13 Jun 2016</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- END: COL -->
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <table class="table tbl">
+                                            <tbody>
+                                                <tr>
+                                                    <th class="td-30">Date Added</th>
+                                                    <td>12 Jun 2015</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="td-30">De-activated Date</th>
+                                                    <td>13 Jun 2016</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="td-30">Birthday</th>
+                                                    <td>03 May 1990</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="td-30">App Status</th>
+                                                    <td><span class="red">De-activated</span></td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="td-30">Verification Code</th>
+                                                    <td>XXEOOKm1923</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="td-30">Redemptions</th>
+                                                    <td>25</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="td-30">Est. Savings</th>
+                                                    <td>s$600</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="td-30">Medical Card ID</th>
+                                                    <td>3325-44556-45</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- END: COL -->
+                                    <div class="col-xs-12 user-history">
+                                        <h2 class="ttl-tab">
+                                            <span>Redemption History</span>
+                                        </h2>
+                                        <table class="table tbl tbl-bg">
+                                            <tbody>
+                                                <tr>
+                                                    <th class="text-center">Date/Time</th>
+                                                    <th>Merchant</th>
+                                                    <th>Item</th>
+                                                    <th>Location</th>
+                                                    <th>Category</th>
+                                                    <th>Est. Value</th>
+                                                    <th>Ref </th>
+                                                </tr>
+                                                <tr>
+                                                    <td>4 Sep 2015  3:45pm</td>
+                                                    <td>Long Long ago far away bar</td>
+                                                    <td>Happy Hour</td>
+                                                    <td>99 Hong Kong Road</td>
+                                                    <td>F&B</td>
+                                                    <td>S$20</td>
+                                                    <td>244eefee</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>24 Jul 2015  5:12pm</td>
+                                                    <td>Pollywooks</td>
+                                                    <td>Free Admission</td>
+                                                    <td>Nex Mall, Serangoon</td>
+                                                    <td>Kids</td>
+                                                    <td>S$18</td>
+                                                    <td>Seff55448</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <!-- END: HISTORY -->
+                                </div>
+                            </div>
+                            <!-- END : USER EDIT -->
+                            <div class="users-create" ng-show="isNewUser && !isUserUpload">
+                                <h2 class="ttl-tab">
+                                    <span>Users > Add new user</span>
+                                </h2>
+                                <form class="frm-adduser">
+                                    <table class="table tbl">
+                                        <tbody>
+                                            <tr>
+                                                <th class="td-30">First Name <span class="red">*</span></th>
+                                                <td>
+                                                    <input type="text" name="txt-firstname" value="Joan" class="ipt-user">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="td-30">Last Name</th>
+                                                <td>
+                                                    <input type="text" name="txt-lastname" value="Yan" class="ipt-user">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="td-30">Email <span class="red">*</span></th>
+                                                <td>
+                                                    <input type="email" name="txt-email" value="Joan.yan@mint.com" class="ipt-user">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="td-30">Contact</th>
+                                                <td>
+                                                    <input type="text" name="txt-contact" value="998554565" class="ipt-user">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="td-30">Employee Class</th>
+                                                <td>
+                                                    <input type="text" name="txt-employee" value="Workmen" class="ipt-user">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="td-30">Function</th>
+                                                <td>
+                                                    <input type="text" name="txt-function" value="Waitress" class="ipt-user">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="td-30">Birthday</th>
+                                                <td>
+                                                    <input type="text" name="txt-birthday" value="03 May 1990" class="ipt-user">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th class="td-30">NRIC No.</th>
+                                                <td>
+                                                <input type="text" name="txt-nric" value="13 Jun 2016" class="ipt-user">
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <p class="text-right">
+                                        <button type="submit" class="btn btn-add">add</button>
+                                    </p>
+                                </form>
+                                <!-- END : FORM -->
+                                <div class="add-upload">
+                                    <h2 class="ttl-tab">
+                                        <span>Upload Excel File</span>
+                                    </h2>
+                                    <div class="blk-upload">
+                                        <label>Browse For File:</label>
+                                        <span class="cls-file">No file selected</span>
+                                        <div class="fileUpload">
+                                            <span>Browse...</span>
+                                            <div style="height: 0px; width: 0px; overflow: hidden;">
+                                                <input type="file" name="userfile" class="fileToUpload">
+                                            </div>
+                                        </div>
+                                        <a class="btn-add btn" ng-click="isUserUpload = !isUserUpload">add</a>
+                                    </div>
+                                    <p>If you require the Excel format for mass uploading, please <a href="#">click here</a> to download the template</p>
+                                </div>
+                            </div>
+                            <!-- END : ADD USER -->
+                            <div class="confirm-upload" ng-show="isUserUpload && !isDetailUpload">
+                                <h2 class="ttl-tab">
+                                    <span>Confirm Details For Upload</span>
+                                </h2>
+                                <div class="control-button">
+                                    <span>Cancel</span>
+                                    <span class="cfirm"
+                                            ng-click="isDetailUpload = !isDetailUpload">
+                                        Confirm
+                                    </span>
+                                </div>
+                                <p>Total No.  Entries: <strong> 04</strong></p>
+                                <table class="table tbl table-hover">
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-center">F.Name</td>
+                                            <td class="text-center">L.Name</td>
+                                            <td class="text-center">Email</td>
+                                            <td class="text-center">Contact No.</td>
+                                            <td class="text-center">Emp Class</td>
+                                            <td class="text-center">Funct</td>
+                                            <td class="text-center">Bday</td>
+                                            <td class="text-center">NRIC</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">Vera</td>
+                                            <td class="text-center">Tan</td>
+                                            <td class="text-center">a.magenta@magenta.com</td>
+                                            <td class="text-center">9879878</td>
+                                            <td class="text-center">Executive</td>
+                                            <td class="text-center">Sales</td>
+                                            <td class="text-center">25/03/81</td>
+                                            <td class="text-center">Null</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">Kenneth</td>
+                                            <td class="text-center">Yap</td>
+                                            <td class="text-center">a.magenta@magenta.com</td>
+                                            <td class="text-center">Null</td>
+                                            <td class="text-center">Null</td>
+                                            <td class="text-center">Null</td>
+                                            <td class="text-center">25/03/81</td>
+                                            <td class="text-center">Null</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">Wayne</td>
+                                            <td class="text-center">Ng</td>
+                                            <td class="text-center">a.magenta@magenta.com</td>
+                                            <td class="text-center">Null</td>
+                                            <td class="text-center">Null</td>
+                                            <td class="text-center">Null</td>
+                                            <td class="text-center">25/03/81</td>
+                                            <td class="text-center">Null</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">Linda</td>
+                                            <td class="text-center">Leong</td>
+                                            <td class="text-center">a.magenta@magenta.com</td>
+                                            <td class="text-center">Null</td>
+                                            <td class="text-center">Null</td>
+                                            <td class="text-center">Null</td>
+                                            <td class="text-center">25/03/81</td>
+                                            <td class="text-center">Null</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <footer class="table-footer">
+                                    <div class="row">
+                                        <div class="col-md-6 page-num-info">
+                                    <span>
+                                        Show
+                                        <select data-ng-model="numPerPage"
+                                                data-ng-options="num for num in numPerPageOpt"
+                                                data-ng-change="onNumPerPageChange()">
+                                        </select>
+                                        entries per page
+                                    </span>
+                                        </div>
+                                        <div class="col-md-6 text-right pagination-container">
+                                            <pagination class="pagination-sm"
+                                                        ng-model="currentPage"
+                                                        total-items="filteredStores.length"
+                                                        max-size="4"
+                                                        ng-change="select(currentPage)"
+                                                        items-per-page="numPerPage"
+                                                        rotate="false"
+                                                        boundary-links="true"></pagination>
+                                        </div>
+                                    </div>
+                                </footer>
+                                <!-- END : PAGINATION -->
+                            </div>
+                            <!-- END: CONFIRM UPLOAD -->
+                            <div class="detail-upload" ng-show="isDetailUpload">
+                                <h2 class="ttl-tab">
+                                    <span>Details Of New User(s) Added</span>
+                                </h2>
+                                <span class="cap-note"
+                                      data-toggle="modal"
+                                      data-target="#modalMessage">
+                                    Send Mail
+                                </span>
+                                <p>Total No.  Entries: <strong> 04</strong></p>
+                                <table class="table tbl table-hover">
+                                    <tbody>
+                                        <tr>
+                                            <td class="text-center">F.Name</td>
+                                            <td class="text-center">L.Name</td>
+                                            <td class="text-center">Email</td>
+                                            <td class="text-center">Contact No.</td>
+                                            <td class="text-center">Veri Code</td>
+                                            <td class="text-center">Emp Class</td>
+                                            <td class="text-center">Funct</td>
+                                            <td class="text-center">Bday</td>
+                                            <td class="text-center">NRIC</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">Vera</td>
+                                            <td class="text-center">Tan</td>
+                                            <td class="text-center">a.magenta@magenta.com</td>
+                                            <td class="text-center">9879878</td>
+                                            <td class="text-center">E#vfr4f5</td>
+                                            <td class="text-center">Executive</td>
+                                            <td class="text-center">Sales</td>
+                                            <td class="text-center">25/03/81</td>
+                                            <td class="text-center">Null</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">Kenneth</td>
+                                            <td class="text-center">Yap</td>
+                                            <td class="text-center">a.magenta@magenta.com</td>
+                                            <td class="text-center">Null</td>
+                                            <td class="text-center">G553245</td>
+                                            <td class="text-center">Null</td>
+                                            <td class="text-center">Null</td>
+                                            <td class="text-center">25/03/81</td>
+                                            <td class="text-center">Null</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">Wayne</td>
+                                            <td class="text-center">Ng</td>
+                                            <td class="text-center">a.magenta@magenta.com</td>
+                                            <td class="text-center">Null</td>
+                                            <td class="text-center">#%verrf3</td>
+                                            <td class="text-center">Null</td>
+                                            <td class="text-center">Null</td>
+                                            <td class="text-center">25/03/81</td>
+                                            <td class="text-center">Null</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">Linda</td>
+                                            <td class="text-center">Leong</td>
+                                            <td class="text-center">a.magenta@magenta.com</td>
+                                            <td class="text-center">Null</td>
+                                            <td class="text-center">23423fff</td>
+                                            <td class="text-center">Null</td>
+                                            <td class="text-center">Null</td>
+                                            <td class="text-center">25/03/81</td>
+                                            <td class="text-center">Null</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <footer class="table-footer">
+                                    <div class="row">
+                                        <div class="col-md-6 page-num-info">
+                                    <span>
+                                        Show
+                                        <select data-ng-model="numPerPage"
+                                                data-ng-options="num for num in numPerPageOpt"
+                                                data-ng-change="onNumPerPageChange()">
+                                        </select>
+                                        entries per page
+                                    </span>
+                                        </div>
+                                        <div class="col-md-6 text-right pagination-container">
+                                            <pagination class="pagination-sm"
+                                                        ng-model="currentPage"
+                                                        total-items="filteredStores.length"
+                                                        max-size="4"
+                                                        ng-change="select(currentPage)"
+                                                        items-per-page="numPerPage"
+                                                        rotate="false"
+                                                        boundary-links="true"></pagination>
+                                        </div>
+                                    </div>
+                                </footer>
+                                <!-- END : PAGINATION -->
+                                <div id="modalMessage" class="modal fade" role="dialog">
+                                    <div class="modal-dialog">
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">Message</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>
+                                                    Would like to send all employees their verification code now? By clicking “Yes” the system will send an automated email to everyone you just added.
+                                                </p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-cancel" data-dismiss="modal">Cancel</button>
+                                                <button type="button"
+                                                        class="btn btn-add"
+                                                        data-toggle="modal"
+                                                        data-target="#modalThankyou"
+                                                        data-dismiss="modal">Yes</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- END : MODAL MESSAGE-->
+                                <div id="modalThankyou" class="modal fade" role="dialog">
+                                    <div class="modal-dialog">
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">Message</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>
+                                                    Alright! We are currently working on it and sending the verifications out to your employees. We will drop you a mail – once we are done!
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- END : MODAL MESSAGE-->
+                            </div>
+                            <!-- END: DETAIL UPLOAD -->
+                        </tab>
+                        <!-- END: TAB -->
+                        <tab heading="Handbook">
+                            <div class="handbook_list" ng-show="!isCreateNew">
+                                <h2 class="ttl-tab">
+                                    <span>Employee Handbook</span>
+                                </h2>
+                                <span class="cap-note" ng-click="isCreateNew = !isCreateNew">       Create New
+                                </span>
+                                <table class="table tbl table-hover">
+                                    <tbody>
+                                        <tr>
+                                            <th class="text-center">Version</th>
+                                            <th class="text-center">Last Modified</th>
+                                            <th class="text-center">Language</th>
+                                            <th class="text-center">Published</th>
+                                            <th class="text-center">Manage</th>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">1.4.1</td>
+                                            <td class="text-center">12 Jun 2015</td>
+                                            <td class="text-center">English</td>
+                                            <td class="text-center">
+                                                <input type="checkbox" name="handbook_chk" checked=checked id="chk_hb_1"/>
+                                            </td>
+                                            <td class="text-center td-manage">
+                                                <i class="fa fa-edit" title="Edit Handbook"></i>
+                                                <i class="fa fa-trash-o" title="Remove Handbook"></i>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">1.3.1</td>
+                                            <td class="text-center">05 Apr 2014</td>
+                                            <td class="text-center">Chinese</td>
+                                            <td class="text-center">
+                                                <input type="checkbox" name="handbook_chk" checked=checked id="chk_hb_2"/>
+                                            </td>
+                                            <td class="text-center td-manage">
+                                                <i class="fa fa-edit" title="Edit Handbook"></i>
+                                                <i class="fa fa-trash-o" title="Remove Handbook"></i>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="text-center">1.2.1</td>
+                                            <td class="text-center">12 Jun 2015</td>
+                                            <td class="text-center">English</td>
+                                            <td class="text-center">
+                                                <input type="checkbox" name="handbook_chk" id="chk_hb_3"/>
+                                            </td>
+                                            <td class="text-center td-manage">
+                                                <i class="fa fa-edit" title="Edit Handbook"></i>
+                                                <i class="fa fa-trash-o" title="Remove Handbook"></i>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <footer class="table-footer">
+                                    <div class="row">
+                                        <div class="col-md-6 page-num-info">
+                                    <span>
+                                        Show
+                                        <select data-ng-model="numPerPage"
+                                                data-ng-options="num for num in numPerPageOpt"
+                                                data-ng-change="onNumPerPageChange()">
+                                        </select>
+                                        entries per page
+                                    </span>
+                                        </div>
+                                        <div class="col-md-6 text-right pagination-container">
+                                            <pagination class="pagination-sm"
+                                                        ng-model="currentPage"
+                                                        total-items="filteredStores.length"
+                                                        max-size="4"
+                                                        ng-change="select(currentPage)"
+                                                        items-per-page="numPerPage"
+                                                        rotate="false"
+                                                        boundary-links="true"></pagination>
+                                        </div>
+                                    </div>
+                                </footer>
+                                <!-- END : PAGINATION -->
+                            </div>
+                            <!-- END: HANDBOOK LIST -->
+                            <div class="create_handbook" ng-show="isCreateNew">
+                                <h2 class="ttl-tab">
+                                    <span>Create Employee Handbook</span>
+                                </h2>
+                                <tabset class="client-tabs lv2">
+                                    <tab heading="Handbook Info">
+                                        <table class="table tbl">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="td-20">Company Reg Biz Name <span class="red">*</span>:</td>
+                                                    <td>Magenta Consulting Pte Ltd</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="td-20">Biz Reg No.</td>
+                                                    <td>199452264G</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="td-20">Address:</td>
+                                                    <td>8 Burn Road</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="td-20">Unit Number:</td>
+                                                    <td>#12-11</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="td-20">Building Name:</td>
+                                                    <td>Trivex</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="td-20">Postal Code:</td>
+                                                    <td>369977</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="td-20">&nbsp;</td>
+                                                    <td>&nbsp;</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="td-20">Handbook Title:</td>
+                                                    <td>Magenta Consulting Employee Handbook</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="td-20">Version:</td>
+                                                    <td>1.4</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="td-20">Year:</td>
+                                                    <td>2015</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="td-20">Language:</td>
+                                                    <td>English</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <!-- END : TBL -->
+                                    </tab>
+                                    <!-- END: TAB -->
+                                    <tab heading="General Description">
+                                        <table class="table tbl">
+                                            <tbody>
+                                                <tr>
+                                                    <td class="td-20 td-bold">Current Logo:</td>
+                                                    <td>
+                                                        <img src="../images/logo-demo.png" alt="">
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="td-20 td-bold">Upload New Logo:</td>
+                                                    <td>
+                                                        <div class="fileUpload">
+                                                        <span>Upload...</span>
+                                                        <div style="height: 0px; width: 0px; overflow: hidden;">
+                                                            <input type="file" name="userfile" class="fileToUpload">
+                                                        </div>
+                                                    </div>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <!-- END : TBL -->
+                                        <form method="post">
+                                            <div class="bnf-editor" id="editor_1" tinyeditor>
+                                                <p>We have specially prepared this Handbook to explain and help you better understand Magenta’s Human Resource policies, compensation and benefits programs, as well as our corporate rules and regulations.</p>
+                                            </div>
+                                        </form>
+                                        <!-- END : EDITOR -->
+                                    </tab>
+                                    <!-- END: TAB -->
+                                    <tab heading="Sections">
+                                        <div class="row">
+                                            <div class="item-preview" ng-show="!showPreview">
+                                                <div class="col-md-8 col-sm-8 col-xs-6">
+                                                    <span class="cap-note" ng-click="showPreview = !showPreview">Preview</span>
+                                                    <div class="sec-itm" ng-show="!isForward">
+                                                        <table class="table tbl">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td class="td-20 td-bold">Section Title:</td>
+                                                                    <td>
+                                                                        Forward
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="td-20 td-bold">Status:</td>
+                                                                    <td>
+                                                                        Active/Disabled
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="td-20 td-bold">Section No:</td>
+                                                                    <td>
+                                                                        1
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <!-- END : TBL -->
+                                                        <form method="post">
+                                                            <div class="bnf-editor" id="editor_2" tinyeditor>
+                                                                <p>Can be left blank if nothing to be written in this section</p>
+                                                            </div>
+                                                        </form>
+                                                        <!-- END : EDITOR -->
+                                                    </div>
+                                                    <!-- END : FORWARD -->
+                                                    <div class="sec-itm" ng-show="isOurCpny">
+                                                        <table class="table tbl">
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td class="td-20 td-bold">Section Title:</td>
+                                                                    <td>
+                                                                        About Company
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="td-20 td-bold">Status:</td>
+                                                                    <td>
+                                                                        Active/Disabled
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="td-20 td-bold">Section No:</td>
+                                                                    <td>
+                                                                        1
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <!-- END : TBL -->
+                                                        <form method="post">
+                                                            <div class="bnf-editor" id="editor_3" tinyeditor>
+                                                                <p>Things about this section will be written here, this may include images</p>
+                                                            </div>
+                                                        </form>
+                                                        <!-- END : EDITOR -->
+                                                        <!-- END : EDITOR -->
+                                                    </div>
+                                                    <!-- END : About Company -->
+                                                </div>
+                                                <div class="col-md-4 col-sm-4 col-xs-6">
+                                                    <table class="table tbl tbl-small">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="text-center td-bold" colspan="3">
+                                                                    Handbook Contents
+                                                                </td>
+                                                            </tr>
+                                                            <tr class="tr-hover">
+                                                                <td class="td-20 ">Section 1</td>
+                                                                <td colspan="2">
+                                                                    Forward
+                                                                    <span class="tbl-remove">
+                                                                        <i class="fa fa-trash-o"></i>
+                                                                    </span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr class="tr-hover">
+                                                                <td class="td-20 ">Section 2</td>
+                                                                <td colspan="2">
+                                                                    About Company
+                                                                    <span class="tbl-remove">
+                                                                        <i class="fa fa-trash-o"></i>
+                                                                    </span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr class="tr-hover">
+                                                                <td class="td-20 ">Subsection</td>
+                                                                <td>2.1</td>
+                                                                <td>
+                                                                    Our Background
+                                                                    <span class="tbl-remove">
+                                                                        <i class="fa fa-trash-o"></i>
+                                                                    </span>
+                                                                </td>
+                                                            </tr>
+                                                            <tr class="tr-hover">
+                                                                <td class="td-20 ">Subsection</td>
+                                                                <td>2.2</td>
+                                                                <td>
+                                                                    Philosophy & Commitment
+                                                                    <span class="tbl-remove">
+                                                                        <i class="fa fa-trash-o"></i>
+                                                                    </span>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <!-- END : TBL -->
+                                                    <div class="section-control">
+                                                        <a>
+                                                            Add Sub-Section
+                                                        </a>
+                                                        <a>
+                                                            Add New Section
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- END : ITEM -->
+                                            <div class="item-preview" ng-show="showPreview">
+                                                <div class="col-xs-12">
+                                                    <span class="cap-note" ng-click="showPreview = !showPreview">Exit Preview</span>
+                                                    <div class="prv-logo">
+                                                        <img src="images/logo-demo.png" alt="">
+                                                    </div>
+                                                    <h3 class="ttl-prv">
+                                                        Magenta Consulting Employee Handbook
+                                                    </h3>
+                                                    <span class="ver-prv">Version 1.4,  16 June 2015, English Version</span>
+                                                    <div class="prv-desc">We have specially prepared this Handbook to explain and help you better understand Bullwork’s Human Resource policies, compensation and benefits programs, as well as our corporate rules and regulations.</div>
+                                                    <div class="clp-title" ng-click="isForward = !isForward">
+                                                        1. Forward
+                                                    </div>
+                                                    <div class="clp-content" collapse="!isForward">
+                                                        Demo Forward 1
+                                                    </div>
+                                                    <div class="clp-title" ng-click="isTerms = !isTerms">
+                                                        2. Terms & Conditions of Employment
+                                                    </div>
+                                                    <div class="clp-content" collapse="!isTerms">
+                                                        Demo Terms & Conditions of Employment
+                                                    </div>
+                                                    <div class="clp-title" ng-click="isCode = !isCode">
+                                                        3. Code Of Conduct
+                                                    </div>
+                                                    <div class="clp-content" collapse="isCode">
+                                                        <p>
+                                                            <span>3.1 - Attendance & Punctuality </span>
+                                                        </p>
+                                                        <p>Absenteeism and tardiness place a burden on other employees and the Company. You are expected to observe punctuality and regularity of attendance at the workplace. Should you be unable to report for work within the first 15 minutes of the start time, your Supervisor must be notified in advance.</p>
+                                                        <p>
+                                                            <span>3.2 - Personal Appearance </span>
+                                                        </p>
+                                                        <p>
+                                                            <span>3.3 - Personal Property</span>
+                                                        </p>
+                                                        <p>
+                                                            <span>3.4 - Confidentiality </span>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- END : ITEM -->
+                                        </div>
+                                    </tab>
+                                    <!-- END: TAB -->
+                                </tabset>
+                            </div>
+                            <!-- END: BLOCK CREATE -->
+                        </tab>
+                        <!-- END: TAB -->
+                        <tab heading="Policies">
+                            <p>Demo Policies</p>
+                        </tab>
+                        <!-- END: TAB -->
+                        <tab heading="Insurance">
+                            <p>Demo Insurance</p>
+                        </tab>
+                        <!-- END: TAB -->
+                        <tab heading="Healthcare">
+                            <p>Demo Healthcare</p>
+                        </tab>
+                        <!-- END: TAB -->
+                        <tab heading="iMerchant">
+                            <p>Demo iMerchant</p>
+                        </tab>
+                        <!-- END: TAB -->
+                    </tabset>
+                    <!-- END : TAB -->
+                </div>
+            </section>
+        </div>
+        <!-- END : CLIENTS EDIT-->
 
     </div>
 </div>
