@@ -56,13 +56,17 @@
                         </thead>
                         <tbody>
                         <tr data-ng-repeat="store in currentPageStores">
-                            <td>{{store.company}}</td>
-                            <td>{{store.store}}</td>
-                            <td>{{store.type}}</td>
-                            <td>{{store.cat}}</td>
-                            <td>{{store.outlets}}</td>
-                            <td>{{store.cs}}</td>
-                            <td>{{store.status}}</td>
+                            <td class="text-center">
+                                <a href="#/merchants/view" title="{{store.company}}">
+                                    {{store.company}}
+                                </a>
+                            </td>
+                            <td class="text-center">{{store.store}}</td>
+                            <td class="text-center">{{store.type}}</td>
+                            <td class="text-center">{{store.cat}}</td>
+                            <td class="text-center">{{store.outlets}}</td>
+                            <td class="text-center">{{store.cs}}</td>
+                            <td class="text-center">{{store.status}}</td>
                             <td class="td-control text-center">
                                 <a href="#/pages/lock-screen" title="De-Active">
                                     <i class="fa fa-times"></i>

@@ -246,10 +246,6 @@ h2.ttl-tab {
     .table  {
         a {
         	cursor: pointer;
-        	color: #767676;
-        	&:hover {
-        		color: #CFAE79;
-        	}
         }
     }
 }
@@ -379,10 +375,21 @@ h2.ttl-tab {
         text-indent: 15px;
         padding-bottom: 10px;
         margin-bottom: 10px;
+        position: relative;
         &:last-child {
             padding-bottom: 0;
             margin-bottom: 0;
             border-bottom: none;
+        }
+        i {
+            font-size: 18px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            cursor: pointer;
+            &:hover {
+                color: #000;
+            }
         }
         h3 {
             margin: 0 ;
@@ -397,6 +404,25 @@ h2.ttl-tab {
         }
     }
 }
+.frm-create-ctact {
+    .ipt {
+        width: 100%;
+        border: 1px solid #ddd;
+        @include border-radius(4px);
+        padding: 5px;
+        outline: none;
+        @include transition(all 0.2s linear);
+        &:focus {
+            border: 1px solid #999;
+        }
+    }
+    .btn-submit {
+        outline: none;
+    }
+    .frm-itm {
+        margin-bottom: 15px;
+    }
+}
 /* CSS MODAL */
 #modalMessage, #modalThankyou {
 	.modal-body, .modal-footer {
@@ -407,7 +433,7 @@ h2.ttl-tab {
 .merchant-list {
 	position: relative;
 	.cap-note {
-		top: 10px;
+		top: 0;
 		right: 0;
 	}
 }
@@ -415,10 +441,14 @@ h2.ttl-tab {
 	a {
 		display: inline-block;
 		margin-right: 7px;
+        color: #333;
 		&:first-child {
 			border-right: 1px solid #ddd;
 			padding-right: 7px;
 		}
+        &:hover {
+            color: #000;
+        }
 	}
 }
 .merchant-ctent {
@@ -505,6 +535,7 @@ h2.ttl-tab {
 				@include border-radius(0px);
 				font-weight: bold;
 				font-size: 16px;
+                color: #333;
 			}
 		}
 	}
@@ -512,5 +543,10 @@ h2.ttl-tab {
 .lv2 {
 	.nav-tabs {
 		background: none;
+        > li {
+			> a {
+                color: #333;
+            }
+        }
 	}
 }

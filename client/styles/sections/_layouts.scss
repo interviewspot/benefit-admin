@@ -31,7 +31,7 @@ html {
             z-index: 10;
 
             & + .main-container {
-                padding-top: 105px;
+                padding-top: 85px;
             }
         }
 
@@ -83,13 +83,10 @@ html {
             }
             &.nav-fixed {
                 position: fixed;
-                top: $nav_top;
+                top: 85px;
                 left: $nav_left;
                 bottom: 0;
                 float: none;
-                @media (min-width:$screen-sm) {
-                    top: $nav_top;
-                }
             }
 
 
