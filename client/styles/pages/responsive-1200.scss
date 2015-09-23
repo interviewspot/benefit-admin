@@ -1,0 +1,19 @@
+@media (max-width: 1200px) {
+	.lv1 {
+		> .nav-tabs {
+			> li {
+				> a {
+					font-size: 14px;
+					padding: 10px;
+				}
+			}
+		}
+	}
+	.section-control {
+		a {
+			&:first-child {
+				margin-bottom: 10px;
+			}
+		}
+	}
+}

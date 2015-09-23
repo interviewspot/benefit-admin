@@ -60,6 +60,9 @@ h2.ttl-tab {
 .td-15 {
     width: 15%;
 }
+.td-18 {
+    width: 18%;
+}
 .td-30 {
     width: 30%;
 }
@@ -79,6 +82,25 @@ h2.ttl-tab {
         background-color: #999;
         color: #fff;
     }
+}
+.pagination-container {
+	.pagination {
+		margin: 0;
+	}
+}
+.txt-ipt {
+	width: 100%;
+	outline: none;
+	border: 1px solid #ddd;
+	@include border-radius(4px);
+	padding: 5px;
+	&:focus {
+		border: 1px solid #999;
+	}
+	&.txt_disabled {
+		background: none;
+		border: none;
+	}
 }
 .rs-pass {
     margin-left: 10px;

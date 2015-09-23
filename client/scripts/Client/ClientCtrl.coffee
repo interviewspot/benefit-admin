@@ -90,6 +90,15 @@ angular.module('app.clients', [])
           $scope.isNewUser = false
           $scope.isUserUpload = false
           $scope.isDetailUpload = false
+
+          # function edit
+          $scope.clients_edit = "Edit"
+          $scope.CheckDisabled = ->
+            $scope.isDisable = !$scope.isDisable
+            if $scope.isDisable
+              $scope.clients_edit = "Update"
+            else 
+              $scope.clients_edit = "Edit"
   ])
 
 .controller('tabsClientCtrl', [
