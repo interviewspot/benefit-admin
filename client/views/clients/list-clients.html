@@ -3,7 +3,9 @@
     <div class="page page-table" data-ng-controller="clientCtrl">
         <div class="clients_list" ng-show="!isEditClients">
             <h1 class="ttl-page">Manage Clients</h1>
-            <span class="cap-note" ng-click="isEditClients = !isEditClients">Add New Clients</span>
+            <span class="cap-note"
+                  data-toggle="modal"
+                  data-target="#createClients" >Add New Clients</span>
             <table class="table tbl tbl-bg table-hover">
                 <tbody>
                     <tr>
@@ -32,9 +34,10 @@
                         <td class="text-center">
                             Astrid
                         </td>
-                        <td class="text-center td-manage">
+                        <td class="text-center td-manage td-15">
                             <i class="fa fa-check" title="Active"></i>
-                            <i class="fa fa-edit" title="Edit" ng-click="isEditClients = !isEditClients"></i>
+                            <i class="fa fa-eye" title="View" ng-click="isEditClients = !isEditClients"></i>
+                            <i class="fa fa-edit" title="Edit"></i>
                             <i class="fa fa-sign-in" title="Assign CS"></i>
                             <i class="fa fa-trash-o" title="Remove"></i>
                         </td>
@@ -58,7 +61,8 @@
                         </td>
                         <td class="text-center td-manage">
                             <i class="fa fa-times" title="De-Active"></i>
-                            <i class="fa fa-edit" title="Edit" ng-click="isEditClients = !isEditClients"></i>
+                            <i class="fa fa-eye" title="View" ng-click="isEditClients = !isEditClients"></i>
+                            <i class="fa fa-edit" title="Edit"></i>
                             <i class="fa fa-sign-in" title="Assign CS"></i>
                             <i class="fa fa-trash-o" title="Remove"></i>
                         </td>
@@ -80,9 +84,10 @@
                         <td class="text-center">
                             George
                         </td>
-                        <td class="text-center td-manage">
+                        <td class="text-center td-manage td-15">
                             <i class="fa fa-check" title="Active"></i>
-                            <i class="fa fa-edit" title="Edit" ng-click="isEditClients = !isEditClients"></i>
+                            <i class="fa fa-eye" title="View" ng-click="isEditClients = !isEditClients"></i>
+                            <i class="fa fa-edit" title="Edit"></i>
                             <i class="fa fa-sign-in" title="Assign CS"></i>
                             <i class="fa fa-trash-o" title="Remove"></i>
                         </td>
@@ -104,9 +109,10 @@
                         <td class="text-center">
                             Not Assigned
                         </td>
-                        <td class="text-center td-manage">
+                        <td class="text-center td-manage td-15">
                             <i class="fa fa-check" title="Active"></i>
-                            <i class="fa fa-edit" title="Edit" ng-click="isEditClients = !isEditClients"></i>
+                            <i class="fa fa-eye" title="View" ng-click="isEditClients = !isEditClients"></i>
+                            <i class="fa fa-edit" title="Edit"></i>
                             <i class="fa fa-sign-in" title="Assign CS"></i>
                             <i class="fa fa-trash-o" title="Remove"></i>
                         </td>
@@ -138,6 +144,63 @@
                 </div>
             </footer>
             <!-- END : PAGINATION -->
+            <div id="createClients" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Create New Clients</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form class="frm_create_clients modal_frm" name="frm_create_clients">
+                                <p>
+                                    <label>Company:</label>
+                                    <input type="text"
+                                           class="ipt"
+                                           name="txt-company"/>
+                                </p>
+                                <p>
+                                    <label>Status:</label>
+                                    <label>Status:</label>
+                                    <select class="ipt">
+                                        <option value="Live">Live</option>
+                                        <option value="Active">Not Active</option>
+                                    </select>
+                                </p>
+                                <p>
+                                    <label>Industry:</label>
+                                    <input type="text"
+                                           class="ipt"
+                                           name="txt-industry">
+                                </p>
+                                <p>
+                                    <label>Users:</label>
+                                    <input type="number"
+                                           class="ipt"
+                                           name="txt-users">
+                                </p>
+                                <p>
+                                    <label>Est Savings:</label>
+                                    <input type="text"
+                                           class="ipt"
+                                           name="txt-est">
+                                </p>
+                                <p>
+                                    <label>CS:</label>
+                                    <input type="text"
+                                           class="ipt"
+                                           name="txt-cs">
+                                </p>
+                                <p class="text-center">
+                                    <button class="btn btn-create btn-primary">CREATE</button>
+                                </p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END : MODAL CREATE CLIENTS-->
         </div>
         <!-- END : CLIENTS LIST -->
         <div class="clients_edit"  ng-show="isEditClients">
@@ -1181,7 +1244,7 @@
                                                         <h2 class="ttl-tab">
                                                             <span>Create New Contact</span>
                                                         </h2>
-                                                        <form class="frm-create-ctact" name="frm-contact">
+                                                        <form class="frm-create-ctact modal_frm" name="frm-contact">
                                                             <div class="row">
                                                                 <div class="col-md-4 col-sm-4 col-xs-12 frm-itm">
                                                                     <label>Fullname:</label>
@@ -1460,7 +1523,7 @@
                                                         <h4 class="modal-title">Edit Contact</h4>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <form class="frm_edit_contact" name="frm_edit_contact">
+                                                        <form class="frm_edit_contact modal_frm" name="frm_edit_contact">
                                                             <p>
                                                                 <label>Fullname:</label>
                                                                 <input type="text"
@@ -1499,7 +1562,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- END : MODAL MESSAGE-->
+                                        <!-- END : MODAL EDIT CONTACT-->
                                     </tab>
                                     <!-- END: TAB -->
                                 </tabset>

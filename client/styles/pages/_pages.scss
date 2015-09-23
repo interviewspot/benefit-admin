@@ -57,6 +57,9 @@ h2.ttl-tab {
 .td-20 {
 	width: 20%;
 }
+.td-15 {
+    width: 15%;
+}
 .td-30 {
     width: 30%;
 }
@@ -121,6 +124,9 @@ h2.ttl-tab {
         &:first-child {
         	border-right: 1px solid #ddd;
         	padding-right: 7px;
+        }
+        &.fa-times {
+            width: 24px;
         }
     }
 }
@@ -426,17 +432,6 @@ h2.ttl-tab {
     }
 }
 .frm-create-ctact {
-    .ipt {
-        width: 100%;
-        border: 1px solid #ddd;
-        @include border-radius(4px);
-        padding: 5px;
-        outline: none;
-        @include transition(all 0.2s linear);
-        &:focus {
-            border: 1px solid #999;
-        }
-    }
     .btn-submit {
         outline: none;
         display: block;
@@ -446,7 +441,7 @@ h2.ttl-tab {
         margin-bottom: 10px;
     }
 }
-.frm_edit_contact {
+.modal_frm {
     .ipt {
         width: 100%;
         border: 1px solid #ddd;
@@ -598,4 +593,7 @@ h2.ttl-tab {
             }
         }
 	}
+}
+.pagination > .active > a, .pagination > .active > a:hover, .pagination > .active > a:focus, .pagination > .active > span, .pagination > .active > span:hover, .pagination > .active > span:focus {
+    z-index: 0;
 }
