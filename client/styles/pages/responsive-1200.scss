@@ -16,4 +16,17 @@
 			}
 		}
 	}
+    .cap-note {
+        top: 0;
+    }
+    .blk-preview {
+        margin-top: 40px;
+    }
+}
+@media (max-width: 1024px) {
+    .tbl-1024 {
+        .table {
+            width: 1000px;
+        }
+    }
 }

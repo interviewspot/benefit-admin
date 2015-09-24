@@ -6,7 +6,7 @@
             <span class="cap-note"
                   data-toggle="modal"
                   data-target="#createClients" >Add New Clients</span>
-            <table class="table tbl tbl-bg table-hover">
+            <table class="table tbl tbl-bg table-hover table-striped">
                 <tbody>
                     <tr>
                         <th class="text-center">Company</th>
@@ -218,7 +218,7 @@
                                         <span class="bt-edit" 
                                             ng-click="CheckDisabled()">{{clients_edit}}</span>
                                     </p>
-                                    <table class="table tbl ng-scope">
+                                    <table class="table tbl table-striped">
                                         <tbody>
                                             <tr>
                                                 <td class="td-30">Company Reg Biz Name <span class="red">*</span>:</td>
@@ -357,7 +357,7 @@
                                 </div>
                                 <!-- END : COL LEFT -->
                                 <div class="col-md-4 col-sm-4 col-xs-12 cpn-right">
-                                    <table class="table tbl">
+                                    <table class="table tbl table-striped">
                                         <tbody>
                                             <tr>
                                                 <th class="text-center">
@@ -396,104 +396,106 @@
                                     <span>De-Active</span>
                                 </p>
                                 <span class="cap-note" ng-click="isNewUser = !isNewUser">Add new user</span>
-                                <table class="table tbl tbl-bg table-hover">
-                                    <tbody>
-                                        <tr>
-                                            <th class="text-center">Date Added</th>
-                                            <th class="text-center">First name</th>
-                                            <th class="text-center">Last Name</th>
-                                            <th class="text-center">Email</th>
-                                            <th class="text-center">Contact No.</th>
-                                            <th class="text-center">Verification Code</th>
-                                            <th class="text-center">Employee Class</th>
-                                            <th class="text-center">Actions</th>
-                                        </tr>
-                                        <tr>
-                                            <td  class="text-center">29 June 2015  3:45pm</td>
-                                            <td  class="text-center">Astrid</td>
-                                            <td  class="text-center">Tan</td>
-                                            <td  class="text-center">a.magenta@magenta.com</td>
-                                            <td  class="text-center">Null</td>
-                                            <td  class="text-center">Awre5442d</td>
-                                            <td  class="text-center">Management</td>
-                                            <td class="td-manage text-center">
-                                                <i class="fa fa-check" title="Active"></i>
-                                                <i class="fa fa-edit" title="Edit" ng-click="isEditUser = !isEditUser"></i>
-                                                <i class="fa fa-trash-o" title="Remove"></i>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td  class="text-center">29 June 2015  3:45pm</td>
-                                            <td  class="text-center">John</td>
-                                            <td  class="text-center">Wayne</td>
-                                            <td  class="text-center">a.magenta@magenta.com</td>
-                                            <td  class="text-center">Null</td>
-                                            <td  class="text-center">lHGhahg123</td>
-                                            <td  class="text-center">Management</td>
-                                            <td class="td-manage text-center">
-                                                <i class="fa fa-times" title="De-Active"></i>
-                                                <i class="fa fa-edit" title="Edit" ng-click="isEditUser = !isEditUser"></i>
-                                                <i class="fa fa-trash-o" title="Remove"></i>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td  class="text-center">29 June 2015  3:45pm</td>
-                                            <td  class="text-center">Astrid</td>
-                                            <td  class="text-center">Tan</td>
-                                            <td  class="text-center">a.magenta@magenta.com</td>
-                                            <td  class="text-center">Null</td>
-                                            <td  class="text-center">Awre5442d</td>
-                                            <td  class="text-center">Management</td>
-                                            <td class="td-manage text-center">
-                                                <i class="fa fa-check" title="Active"></i>
-                                                <i class="fa fa-edit" title="Edit" ng-click="isEditUser = !isEditUser"></i>
-                                                <i class="fa fa-trash-o" title="Remove"></i>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td  class="text-center">29 June 2015  3:45pm</td>
-                                            <td  class="text-center">John</td>
-                                            <td  class="text-center">Wayne</td>
-                                            <td  class="text-center">a.magenta@magenta.com</td>
-                                            <td  class="text-center">Null</td>
-                                            <td  class="text-center">lHGhahg123</td>
-                                            <td  class="text-center">Management</td>
-                                            <td class="td-manage text-center">
-                                                <i class="fa fa-times" title="De-Active"></i>
-                                                <i class="fa fa-edit" title="Edit" ng-click="isEditUser = !isEditUser"></i>
-                                                <i class="fa fa-trash-o" title="Remove"></i>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td  class="text-center">29 June 2015  3:45pm</td>
-                                            <td  class="text-center">Astrid</td>
-                                            <td  class="text-center">Tan</td>
-                                            <td  class="text-center">a.magenta@magenta.com</td>
-                                            <td  class="text-center">Null</td>
-                                            <td  class="text-center">Awre5442d</td>
-                                            <td  class="text-center">Management</td>
-                                            <td class="td-manage text-center">
-                                                <i class="fa fa-check" title="Active"></i>
-                                                <i class="fa fa-edit" title="Edit" ng-click="isEditUser = !isEditUser"></i>
-                                                <i class="fa fa-trash-o" title="Remove"></i>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td  class="text-center">29 June 2015  3:45pm</td>
-                                            <td  class="text-center">John</td>
-                                            <td  class="text-center">Wayne</td>
-                                            <td  class="text-center">a.magenta@magenta.com</td>
-                                            <td  class="text-center">Null</td>
-                                            <td  class="text-center">lHGhahg123</td>
-                                            <td  class="text-center">Management</td>
-                                            <td class="td-manage text-center">
-                                                <i class="fa fa-times" title="De-Active"></i>
-                                                <i class="fa fa-edit" title="Edit" ng-click="isEditUser = !isEditUser"></i>
-                                                <i class="fa fa-trash-o" title="Remove"></i>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <div class="table-responsive tbl-1024">
+                                    <table class="table tbl tbl-bg table-hover table-striped">
+                                        <tbody>
+                                            <tr>
+                                                <th class="text-center">Date Added</th>
+                                                <th class="text-center">First name</th>
+                                                <th class="text-center">Last Name</th>
+                                                <th class="text-center">Email</th>
+                                                <th class="text-center">Contact No.</th>
+                                                <th class="text-center">Verification Code</th>
+                                                <th class="text-center">Employee Class</th>
+                                                <th class="text-center td-15">Actions</th>
+                                            </tr>
+                                            <tr>
+                                                <td  class="text-center">29 June 2015  3:45pm</td>
+                                                <td  class="text-center">Astrid</td>
+                                                <td  class="text-center">Tan</td>
+                                                <td  class="text-center">a.magenta@magenta.com</td>
+                                                <td  class="text-center">Null</td>
+                                                <td  class="text-center">Awre5442d</td>
+                                                <td  class="text-center">Management</td>
+                                                <td class="td-manage text-center td-15">
+                                                    <i class="fa fa-check" title="Active"></i>
+                                                    <i class="fa fa-edit" title="Edit" ng-click="isEditUser = !isEditUser"></i>
+                                                    <i class="fa fa-trash-o" title="Remove"></i>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td  class="text-center">29 June 2015  3:45pm</td>
+                                                <td  class="text-center">John</td>
+                                                <td  class="text-center">Wayne</td>
+                                                <td  class="text-center">a.magenta@magenta.com</td>
+                                                <td  class="text-center">Null</td>
+                                                <td  class="text-center">lHGhahg123</td>
+                                                <td  class="text-center">Management</td>
+                                                <td class="td-manage text-center td-15">
+                                                    <i class="fa fa-times" title="De-Active"></i>
+                                                    <i class="fa fa-edit" title="Edit" ng-click="isEditUser = !isEditUser"></i>
+                                                    <i class="fa fa-trash-o" title="Remove"></i>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td  class="text-center">29 June 2015  3:45pm</td>
+                                                <td  class="text-center">Astrid</td>
+                                                <td  class="text-center">Tan</td>
+                                                <td  class="text-center">a.magenta@magenta.com</td>
+                                                <td  class="text-center">Null</td>
+                                                <td  class="text-center">Awre5442d</td>
+                                                <td  class="text-center">Management</td>
+                                                <td class="td-manage text-center td-15">
+                                                    <i class="fa fa-check" title="Active"></i>
+                                                    <i class="fa fa-edit" title="Edit" ng-click="isEditUser = !isEditUser"></i>
+                                                    <i class="fa fa-trash-o" title="Remove"></i>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td  class="text-center">29 June 2015  3:45pm</td>
+                                                <td  class="text-center">John</td>
+                                                <td  class="text-center">Wayne</td>
+                                                <td  class="text-center">a.magenta@magenta.com</td>
+                                                <td  class="text-center">Null</td>
+                                                <td  class="text-center">lHGhahg123</td>
+                                                <td  class="text-center">Management</td>
+                                                <td class="td-manage text-center td-15">
+                                                    <i class="fa fa-times" title="De-Active"></i>
+                                                    <i class="fa fa-edit" title="Edit" ng-click="isEditUser = !isEditUser"></i>
+                                                    <i class="fa fa-trash-o" title="Remove"></i>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td  class="text-center">29 June 2015  3:45pm</td>
+                                                <td  class="text-center">Astrid</td>
+                                                <td  class="text-center">Tan</td>
+                                                <td  class="text-center">a.magenta@magenta.com</td>
+                                                <td  class="text-center">Null</td>
+                                                <td  class="text-center">Awre5442d</td>
+                                                <td  class="text-center">Management</td>
+                                                <td class="td-manage text-center td-15">
+                                                    <i class="fa fa-check" title="Active"></i>
+                                                    <i class="fa fa-edit" title="Edit" ng-click="isEditUser = !isEditUser"></i>
+                                                    <i class="fa fa-trash-o" title="Remove"></i>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td  class="text-center">29 June 2015  3:45pm</td>
+                                                <td  class="text-center">John</td>
+                                                <td  class="text-center">Wayne</td>
+                                                <td  class="text-center">a.magenta@magenta.com</td>
+                                                <td  class="text-center">Null</td>
+                                                <td  class="text-center">lHGhahg123</td>
+                                                <td  class="text-center">Management</td>
+                                                <td class="td-manage text-center td-15">
+                                                    <i class="fa fa-times" title="De-Active"></i>
+                                                    <i class="fa fa-edit" title="Edit" ng-click="isEditUser = !isEditUser"></i>
+                                                    <i class="fa fa-trash-o" title="Remove"></i>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                                 <footer class="table-footer">
                                     <div class="row">
                                         <div class="col-md-6 page-num-info">
@@ -531,7 +533,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <table class="table tbl">
+                                        <table class="table tbl table-striped">
                                             <tbody>
                                                 <tr>
                                                     <th class="td-30">First Name <span class="red">*</span></th>
@@ -570,7 +572,7 @@
                                     </div>
                                     <!-- END: COL -->
                                     <div class="col-md-6 col-sm-6 col-xs-12">
-                                        <table class="table tbl">
+                                        <table class="table tbl table-striped">
                                             <tbody>
                                                 <tr>
                                                     <th class="td-30">Date Added</th>
@@ -612,7 +614,7 @@
                                         <h2 class="ttl-tab">
                                             <span>Redemption History</span>
                                         </h2>
-                                        <table class="table tbl tbl-bg">
+                                        <table class="table tbl tbl-bg table-striped">
                                             <tbody>
                                                 <tr>
                                                     <th class="text-center">Date/Time</th>
@@ -653,7 +655,7 @@
                                     <span>Users > Add new user</span>
                                 </h2>
                                 <form class="frm-adduser">
-                                    <table class="table tbl">
+                                    <table class="table tbl table-striped">
                                         <tbody>
                                             <tr>
                                                 <th class="td-30">First Name <span class="red">*</span></th>
@@ -741,7 +743,7 @@
                                     </span>
                                 </div>
                                 <p>Total No.  Entries: <strong> 04</strong></p>
-                                <table class="table tbl table-hover">
+                                <table class="table tbl table-hover table-striped">
                                     <tbody>
                                         <tr>
                                             <td class="text-center">F.Name</td>
@@ -832,65 +834,67 @@
                                     Send Mail
                                 </span>
                                 <p>Total No.  Entries: <strong> 04</strong></p>
-                                <table class="table tbl table-hover">
-                                    <tbody>
-                                        <tr>
-                                            <td class="text-center">F.Name</td>
-                                            <td class="text-center">L.Name</td>
-                                            <td class="text-center">Email</td>
-                                            <td class="text-center">Contact No.</td>
-                                            <td class="text-center">Veri Code</td>
-                                            <td class="text-center">Emp Class</td>
-                                            <td class="text-center">Funct</td>
-                                            <td class="text-center">Bday</td>
-                                            <td class="text-center">NRIC</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">Vera</td>
-                                            <td class="text-center">Tan</td>
-                                            <td class="text-center">a.magenta@magenta.com</td>
-                                            <td class="text-center">9879878</td>
-                                            <td class="text-center">E#vfr4f5</td>
-                                            <td class="text-center">Executive</td>
-                                            <td class="text-center">Sales</td>
-                                            <td class="text-center">25/03/81</td>
-                                            <td class="text-center">Null</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">Kenneth</td>
-                                            <td class="text-center">Yap</td>
-                                            <td class="text-center">a.magenta@magenta.com</td>
-                                            <td class="text-center">Null</td>
-                                            <td class="text-center">G553245</td>
-                                            <td class="text-center">Null</td>
-                                            <td class="text-center">Null</td>
-                                            <td class="text-center">25/03/81</td>
-                                            <td class="text-center">Null</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">Wayne</td>
-                                            <td class="text-center">Ng</td>
-                                            <td class="text-center">a.magenta@magenta.com</td>
-                                            <td class="text-center">Null</td>
-                                            <td class="text-center">#%verrf3</td>
-                                            <td class="text-center">Null</td>
-                                            <td class="text-center">Null</td>
-                                            <td class="text-center">25/03/81</td>
-                                            <td class="text-center">Null</td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-center">Linda</td>
-                                            <td class="text-center">Leong</td>
-                                            <td class="text-center">a.magenta@magenta.com</td>
-                                            <td class="text-center">Null</td>
-                                            <td class="text-center">23423fff</td>
-                                            <td class="text-center">Null</td>
-                                            <td class="text-center">Null</td>
-                                            <td class="text-center">25/03/81</td>
-                                            <td class="text-center">Null</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <div class="table-responsive tbl-1024">
+                                    <table class="table tbl table-hover table-striped">
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-center">F.Name</td>
+                                                <td class="text-center">L.Name</td>
+                                                <td class="text-center">Email</td>
+                                                <td class="text-center">Contact No.</td>
+                                                <td class="text-center">Veri Code</td>
+                                                <td class="text-center">Emp Class</td>
+                                                <td class="text-center">Funct</td>
+                                                <td class="text-center">Bday</td>
+                                                <td class="text-center">NRIC</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">Vera</td>
+                                                <td class="text-center">Tan</td>
+                                                <td class="text-center">a.magenta@magenta.com</td>
+                                                <td class="text-center">9879878</td>
+                                                <td class="text-center">E#vfr4f5</td>
+                                                <td class="text-center">Executive</td>
+                                                <td class="text-center">Sales</td>
+                                                <td class="text-center">25/03/81</td>
+                                                <td class="text-center">Null</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">Kenneth</td>
+                                                <td class="text-center">Yap</td>
+                                                <td class="text-center">a.magenta@magenta.com</td>
+                                                <td class="text-center">Null</td>
+                                                <td class="text-center">G553245</td>
+                                                <td class="text-center">Null</td>
+                                                <td class="text-center">Null</td>
+                                                <td class="text-center">25/03/81</td>
+                                                <td class="text-center">Null</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">Wayne</td>
+                                                <td class="text-center">Ng</td>
+                                                <td class="text-center">a.magenta@magenta.com</td>
+                                                <td class="text-center">Null</td>
+                                                <td class="text-center">#%verrf3</td>
+                                                <td class="text-center">Null</td>
+                                                <td class="text-center">Null</td>
+                                                <td class="text-center">25/03/81</td>
+                                                <td class="text-center">Null</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="text-center">Linda</td>
+                                                <td class="text-center">Leong</td>
+                                                <td class="text-center">a.magenta@magenta.com</td>
+                                                <td class="text-center">Null</td>
+                                                <td class="text-center">23423fff</td>
+                                                <td class="text-center">Null</td>
+                                                <td class="text-center">Null</td>
+                                                <td class="text-center">25/03/81</td>
+                                                <td class="text-center">Null</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                                 <footer class="table-footer">
                                     <div class="row">
                                         <div class="col-md-6 page-num-info">
@@ -969,7 +973,7 @@
                                 </h2>
                                 <span class="cap-note" ng-click="isCreateNew = !isCreateNew">       Create New
                                 </span>
-                                <table class="table tbl table-hover">
+                                <table class="table tbl table-hover table-striped">
                                     <tbody>
                                         <tr>
                                             <th class="text-center">Version</th>
@@ -1049,7 +1053,7 @@
                                 </h2>
                                 <tabset class="client-tabs lv2">
                                     <tab heading="Handbook Info">
-                                        <table class="table tbl">
+                                        <table class="table tbl table-striped">
                                             <tbody>
                                                 <tr>
                                                     <td class="td-20">Company Reg Biz Name <span class="red">*</span>:</td>
@@ -1101,7 +1105,7 @@
                                     </tab>
                                     <!-- END: TAB -->
                                     <tab heading="General Description">
-                                        <table class="table tbl">
+                                        <table class="table tbl table-striped">
                                             <tbody>
                                                 <tr>
                                                     <td class="td-20 td-bold">Current Logo:</td>
@@ -1135,9 +1139,12 @@
                                         <div class="row">
                                             <div class="item-preview" ng-show="!showPreview">
                                                 <div class="col-md-8 col-sm-8 col-xs-6">
-                                                    <span class="cap-note" ng-click="showPreview = !showPreview">Preview</span>
-                                                    <div class="sec-itm" ng-show="!isForward">
-                                                        <table class="table tbl">
+                                                    <span class="cap-note"
+                                                          ng-click="showPreview = !showPreview">
+                                                        Preview
+                                                    </span>
+                                                    <div class="sec-itm blk-preview" ng-show="!isForward">
+                                                        <table class="table tbl table-striped">
                                                             <tbody>
                                                                 <tr>
                                                                     <td class="td-20 td-bold">Section Title:</td>
@@ -1169,7 +1176,7 @@
                                                     </div>
                                                     <!-- END : FORWARD -->
                                                     <div class="sec-itm" ng-show="isOurCpny">
-                                                        <table class="table tbl">
+                                                        <table class="table tbl table-striped">
                                                             <tbody>
                                                                 <tr>
                                                                     <td class="td-20 td-bold">Section Title:</td>
@@ -1203,7 +1210,7 @@
                                                     <!-- END : About Company -->
                                                 </div>
                                                 <div class="col-md-4 col-sm-4 col-xs-6">
-                                                    <table class="table tbl tbl-small">
+                                                    <table class="table tbl tbl-small table-striped">
                                                         <tbody>
                                                             <tr>
                                                                 <td class="text-center td-bold" colspan="3">

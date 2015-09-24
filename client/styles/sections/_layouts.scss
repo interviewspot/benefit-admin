@@ -84,7 +84,7 @@ html {
             &.nav-fixed {
                 position: fixed;
                 top: 85px;
-                left: $nav_left;
+                left: 0;
                 bottom: 0;
                 float: none;
             }
@@ -97,9 +97,7 @@ html {
             min-height: 100%;
             margin-left: 0;
             // @include transition(none);
-            @media (min-width:$screen-sm) {
-                margin-left: 220px;
-            }
+            margin-left: 200px;
         }
 
     }

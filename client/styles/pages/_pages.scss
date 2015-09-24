@@ -3,7 +3,7 @@
 }
 
 .page {
-    padding: 15px;
+    padding: 15px 0;
 }
 
 .page-form-ele {
@@ -218,6 +218,7 @@ h2.ttl-tab {
     	@include transition(all 0.2s linear);
     	&:hover {
     		background-color: #999;
+            color: #fff;
     	}
 	}
 }
@@ -441,9 +442,7 @@ h2.ttl-tab {
                 margin-bottom: 15px;
             }
         }
-    }
-    &:hover {
-        .ctc-content {
+        &:hover {
             .ctc-control {
                 i {
                     @include opacity(1);
