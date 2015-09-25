@@ -36,6 +36,7 @@ angular.module('app', [
     'app.page.ctrls'
     'app.merchants'
     'app.clients'
+    'app.client.services'
     #Khai bao app khi tao
 ])
     

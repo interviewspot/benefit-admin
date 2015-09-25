@@ -1,0 +1,171 @@
+<div class="col-md-8 col-sm-8 col-xs-12 cpn-left">
+    <p class="clearfix">
+        <span class="bt-edit"
+            ng-click="CheckDisabled()">{{clients_edit}}</span>
+    </p>
+    <table class="table tbl table-striped">
+        <tbody>
+            <tr>
+                <td class="td-30">Company Reg Biz Name <span class="red">*</span>:</td>
+                <td>
+                    <input type="text"
+                        value="Magenta Consulting Pte Ltd"
+                        class="txt-ipt"
+                        ng-disabled="!isDisable"
+                        ng-class="{txt_disabled : !isDisable}">
+                </td>
+            </tr>
+            <tr>
+                <td class="td-30">Biz Reg No.</td>
+                <td>
+                    <input type="text"
+                        value="199452264G"
+                        class="txt-ipt"
+                        ng-disabled="!isDisable"
+                        ng-class="{txt_disabled : !isDisable}">
+                </td>
+            </tr>
+            <tr>
+                <td class="td-30">Address:</td>
+                <td>
+                    <input type="text"
+                        value="8 Burn Road"
+                        class="txt-ipt"
+                        ng-disabled="!isDisable"
+                        ng-class="{txt_disabled : !isDisable}">
+                </td>
+            </tr>
+            <tr>
+                <td class="td-30">Unit Number:</td>
+                <td>
+                    <input type="text"
+                        value="#12-11"
+                        class="txt-ipt"
+                        ng-disabled="!isDisable"
+                        ng-class="{txt_disabled : !isDisable}">
+                </td>
+            </tr>
+            <tr>
+                <td class="td-30">Building Name:</td>
+                <td>
+                    <input type="text"
+                        value="Trivex"
+                        class="txt-ipt"
+                        ng-disabled="!isDisable"
+                        ng-class="{txt_disabled : !isDisable}">
+                </td>
+            </tr>
+            <tr>
+                <td class="td-30">Postal Code:</td>
+                <td>
+                    <input type="text"
+                        value="369977"
+                        class="txt-ipt"
+                        ng-disabled="!isDisable"
+                        ng-class="{txt_disabled : !isDisable}">
+                </td>
+            </tr>
+            <tr>
+                <td class="td-30">Business Type</td>
+                <td>
+                    <input type="text"
+                        value="HR Consultancy, Corporate Services"
+                        class="txt-ipt"
+                        ng-disabled="!isDisable"
+                        ng-class="{txt_disabled : !isDisable}">
+                </td>
+            </tr>
+            <tr>
+                <td class="td-30">Office Number</td>
+                <td>
+                    <input type="text"
+                        value="65587895"
+                        class="txt-ipt"
+                        ng-disabled="!isDisable"
+                        ng-class="{txt_disabled : !isDisable}">
+                </td>
+            </tr>
+            <tr>
+                <td class="td-30">Admin User Email</td>
+                <td>
+                    <input type="text"
+                        value="Kenneth@magenta-consultancy.com"
+                        class="txt-ipt"
+                        ng-disabled="!isDisable"
+                        ng-class="{txt_disabled : !isDisable}">
+                    <span
+                        ng-class="{hide : isDisable}"
+                        class="rs-pass">Reset password</span>
+                </td>
+            </tr>
+            <tr>
+                <td class="td-30">Admin Contact No.</td>
+                <td>
+                    <input type="text"
+                        value="96854457"
+                        class="txt-ipt"
+                        ng-disabled="!isDisable"
+                        ng-class="{txt_disabled : !isDisable}">
+                </td>
+            </tr>
+            <tr>
+                <td class="td-30">Client Since</td>
+                <td>
+                    <input type="text"
+                        value="29 Jan 2014"
+                        class="txt-ipt"
+                        ng-disabled="!isDisable"
+                        ng-class="{txt_disabled : !isDisable}">
+                </td>
+            </tr>
+            <tr>
+                <td class="td-30">Package Type</td>
+                <td>
+                    <input type="text"
+                        value="Basic - $10/User/Month"
+                        class="txt-ipt"
+                        ng-disabled="!isDisable"
+                        ng-class="{txt_disabled : !isDisable}">
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- END: TABLE -->
+    <h2 class="ttl-tab">
+        <span>About Company</span>
+    </h2>
+    <form method="post">
+        <div class="bnf-editor" id="editor_4" tinyeditor>
+            <p>Magenta is the colour of the highest order, connected with spirituality, mediation, and letting go. It is an agent for change, for the clearing out of old attitudes and obsessions, and for making a break with the past. Consistent with the qualities associated with the colour ‘Magenta’, the Human Resource Consulting Services of Magenta Consulting Services is delivered in the highest order possible. We are your agent for change – for the enhancement of the present and a lead into the future – via our innovative approach to the human capital solutions we offer.</p>
+        </div>
+    </form>
+</div>
+<!-- END : COL LEFT -->
+<div class="col-md-4 col-sm-4 col-xs-12 cpn-right">
+    <table class="table tbl table-striped">
+        <tbody>
+            <tr>
+                <th class="text-center">
+                    Company Logo
+                </th>
+            </tr>
+            <tr>
+                <td class="text-center td-logo">
+                    <img src="images/logo-demo.png" alt=""/>
+                    <i class="fa fa-times"></i>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-center">
+                    <div class="fileUpload">
+                        <span>Upload New Image</span>
+                        <div style="height: 0px; width: 0px; overflow: hidden;">
+                            <input type="file" name="userfile" class="fileToUpload">
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<!-- END : COL RIGHT -->

@@ -3,102 +3,123 @@
 angular.module('app.clients', [])
 
 .controller('clientCtrl', [
-      '$scope', '$filter'
-      ($scope, $filter) ->
-# filter
-          $scope.stores = [
-              {id: 1, company: 'BullWorks Pte Ltd', status: 'nverser', industry: 'AAA', users: 'Euro', estsaving: 'None', cs: 2,action: "Manage", }
-              {id: 2, company: 'BullWorks Pte Ltd', status: 'nverser', industry: 'AAA', users: 'Euro', estsaving: 'None', cs: 2,action: "Manage", }
-              {id: 3, company: 'BullWorks Pte Ltd', status: 'nverser', industry: 'AAA', users: 'Euro', estsaving: 'None', cs: 2 ,action: "Manage", }
-          ]
-          $scope.searchKeywords = ''
-          $scope.filteredStores = []
+    '$scope', '$filter' , 'fetchTabData',
+    ($scope, $filter, fetchTabData) ->
+    # filter
+      $scope.stores = [
+          {id: 1, company: 'BullWorks Pte Ltd', status: 'nverser', industry: 'AAA', users: 'Euro', estsaving: 'None', cs: 2,action: "Manage", }
+          {id: 2, company: 'BullWorks Pte Ltd', status: 'nverser', industry: 'AAA', users: 'Euro', estsaving: 'None', cs: 2,action: "Manage", }
+          {id: 3, company: 'BullWorks Pte Ltd', status: 'nverser', industry: 'AAA', users: 'Euro', estsaving: 'None', cs: 2 ,action: "Manage", }
+      ]
+      $scope.searchKeywords = ''
+      $scope.filteredStores = []
+      $scope.row = ''
+
+      $scope.select = (page) ->
+          start = (page - 1) * $scope.numPerPage
+          end = start + $scope.numPerPage
+          $scope.currentPageStores = $scope.filteredStores.slice(start, end)
+      # console.log start
+      # console.log end
+      # console.log $scope.currentPageStores
+
+      # on page change: change numPerPage, filtering string
+      $scope.onFilterChange = ->
+          $scope.select(1)
+          $scope.currentPage = 1
           $scope.row = ''
 
-          $scope.select = (page) ->
-              start = (page - 1) * $scope.numPerPage
-              end = start + $scope.numPerPage
-              $scope.currentPageStores = $scope.filteredStores.slice(start, end)
-          # console.log start
-          # console.log end
-          # console.log $scope.currentPageStores
-
-          # on page change: change numPerPage, filtering string
-          $scope.onFilterChange = ->
-              $scope.select(1)
-              $scope.currentPage = 1
-              $scope.row = ''
-
-          $scope.onNumPerPageChange = ->
-              $scope.select(1)
-              $scope.currentPage = 1
-
-          $scope.onOrderChange = ->
-              $scope.select(1)
-              $scope.currentPage = 1
-
-
-          $scope.search = ->
-              $scope.filteredStores = $filter('filter')($scope.stores, $scope.searchKeywords)
-              $scope.onFilterChange()
-
-          # orderBy
-          $scope.order = (rowName)->
-              if $scope.row == rowName
-                  return
-              $scope.row = rowName
-              $scope.filteredStores = $filter('orderBy')($scope.stores, rowName)
-              # console.log $scope.filteredStores
-              $scope.onOrderChange()
-
-          # pagination
-          $scope.numPerPageOpt = [3, 5, 10, 20]
-          $scope.numPerPage = $scope.numPerPageOpt[2]
+      $scope.onNumPerPageChange = ->
+          $scope.select(1)
           $scope.currentPage = 1
-          $scope.currentPageStores = []
-          #CREATE NEW HANDBOOK
-#          test = (x) ->
-#              y = 10
-#              z = x + y
-#          alert test 5
-          # init
-          init = ->
-              $scope.search()
-              $scope.select($scope.currentPage)
-          init()
 
-          # show preview
-          $scope.showPreview = false
+      $scope.onOrderChange = ->
+          $scope.select(1)
+          $scope.currentPage = 1
 
-          # show collapse
-          $scope.isForward = false
-          $scope.isTerm = false
-          $scope.isCode = false
 
-          # show block section hand book
-          $scope.isForward = false
-          $scope.isOurCpny = false
+      $scope.search = ->
+          $scope.filteredStores = $filter('filter')($scope.stores, $scope.searchKeywords)
+          $scope.onFilterChange()
 
-          # show create new handbook
-          $scope.isCreateNew = false
+      # orderBy
+      $scope.order = (rowName)->
+          if $scope.row == rowName
+              return
+          $scope.row = rowName
+          $scope.filteredStores = $filter('orderBy')($scope.stores, rowName)
+          # console.log $scope.filteredStores
+          $scope.onOrderChange()
 
-          # manage clients
-          $scope.isEditClients = false
+      # pagination
+      $scope.numPerPageOpt = [3, 5, 10, 20]
+      $scope.numPerPage = $scope.numPerPageOpt[2]
+      $scope.currentPage = 1
+      $scope.currentPageStores = []
+      #CREATE NEW HANDBOOK
+    #          test = (x) ->
+    #              y = 10
+    #              z = x + y
+    #          alert test 5
+      # init
+      init = ->
+          $scope.search()
+          $scope.select($scope.currentPage)
+      init()
 
-          # manage users
-          $scope.isEditUser = false
-          $scope.isNewUser = false
-          $scope.isUserUpload = false
-          $scope.isDetailUpload = false
+      # show preview
+      $scope.showPreview = false
 
-          # function edit
+      # show collapse
+      $scope.isForward = false
+      $scope.isTerm = false
+      $scope.isCode = false
+
+      # show block section hand book
+      $scope.isForward = false
+      $scope.isOurCpny = false
+
+      # show create new handbook
+      $scope.isCreateNew = false
+
+      # manage clients
+      $scope.isEditClients = false
+
+      # manage users
+      $scope.isEditUser = false
+      $scope.isNewUser = false
+      $scope.isUserUpload = false
+      $scope.isDetailUpload = false
+
+      # function edit
+      $scope.clients_edit = "Edit"
+      $scope.CheckDisabled = ->
+        $scope.isDisable = !$scope.isDisable
+        if $scope.isDisable
+          $scope.clients_edit = "Update"
+        else
           $scope.clients_edit = "Edit"
-          $scope.CheckDisabled = ->
-            $scope.isDisable = !$scope.isDisable
-            if $scope.isDisable
-              $scope.clients_edit = "Update"
-            else 
-              $scope.clients_edit = "Edit"
+
+      # tabs config
+      $scope.tabConfig = [
+        id: 'cpn'
+        baseUrl : 'views/clients/tab_company.html'
+#        baseUrl: 'http://localhost:3000/testData'
+      ,
+        id: 'usr'
+        baseUrl : 'views/clients/tab_user.html'
+      ]
+
+      # watch index tab
+#      $scope.$watch 'dataIndex' , (newValue, oldValue) ->
+#        if newValue
+
+
+      $scope.selectTab = (tabIndex) ->
+            $scope.selectedTabIndex = tabIndex
+            fetchTabData.tabFetchDataByIndex $scope.tabConfig[tabIndex]
+            .then  (res) ->
+                $scope.tabData = res.response;
   ])
 
 .controller('tabsClientCtrl', [
