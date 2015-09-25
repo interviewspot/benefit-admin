@@ -100,3 +100,39 @@ angular.module('app.directives', [])
                 toolbar: "styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image | print preview media fullpage | forecolor backcolor"
     }
 ])
+
+# delete item
+.directive('deleteitem', [ ->
+    return {
+        restrict: 'AE'
+        link: (scope, ele, atts) ->
+            $this_e =   $(ele)
+
+            $this_e.on('click', ->
+                $a_del  =   $(this)
+                $tr     =   $a_del.closest('tr')
+                aconfirm =   confirm "Are you sure ?"
+                
+                if aconfirm == true
+                    $tr.remove()
+            )
+    }
+])
+
+# delete contact
+.directive('deletecontact', [ ->
+    return {
+        restrict: 'AE'
+        link: (scope, ele, atts) ->
+            $this_e =   $(ele)
+
+            $this_e.on('click', ->
+                $a_del  =   $(this)
+                $tr     =   $a_del.closest('.ctc-content')
+                aconfirm =   confirm "Are you sure ?"
+                
+                if aconfirm == true
+                    $tr.remove()
+            )
+    }
+])

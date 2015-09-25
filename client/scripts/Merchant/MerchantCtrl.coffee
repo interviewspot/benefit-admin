@@ -84,7 +84,39 @@ angular.module('app.merchants', [])
               $scope.select($scope.currentPage)
           init()
 
+          # tabs config
+          $scope.tabConfig = [
+            id: 'cpi'
+            baseUrl : 'views/merchants/tab_company.html'
+          ,
+            id: 'ol'
+            baseUrl : 'views/merchants/tab_outlet.html'
+          ,
+            id: 'of'
+            baseUrl : 'views/merchants/tab_offer.html'
+          ,
+            id: 'rp'
+            baseUrl : 'views/merchants/tab_report.html'
+          ,
+            id: 'cpa'
+            baseUrl : 'views/merchants/tab_compaign.html'
+          ,          
+          ]
 
+          $scope.selectTab = (tabIndex) ->
+            $scope.selectedTabIndex = tabIndex
+            fetchTabData.tabFetchDataByIndex $scope.tabConfig[tabIndex]
+            .then  (res) ->
+                $scope.tabData = res.response;
+
+          # function edit
+          $scope.merchants_edit = "Edit"
+          $scope.CheckDisabled = ->
+            $scope.isDisable = !$scope.isDisable
+            if $scope.isDisable
+              $scope.merchants_edit = "Update"
+            else
+              $scope.merchants_edit = "Edit"
   ])
 
 .controller('TabsMerchantCtrl', [

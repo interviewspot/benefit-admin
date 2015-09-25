@@ -104,22 +104,51 @@ angular.module('app.clients', [])
       $scope.tabConfig = [
         id: 'cpn'
         baseUrl : 'views/clients/tab_company.html'
-#        baseUrl: 'http://localhost:3000/testData'
       ,
         id: 'usr'
         baseUrl : 'views/clients/tab_user.html'
+      ,
+        id: 'hb'
+        baseUrl : 'views/clients/tab_handbook.html'
+      ,
+        id: 'po' 
+        baseUrl : 'views/clients/tab_policy.html'
+      ,
+        id: 'is' 
+        baseUrl : 'views/clients/tab_insurance.html'
+      ,
+        id: 'ht' 
+        baseUrl : 'views/clients/tab_healthcare.html'
+      ,
+        id: 'ic' 
+        baseUrl : 'views/clients/tab_imerchant.html'
       ]
 
-      # watch index tab
-#      $scope.$watch 'dataIndex' , (newValue, oldValue) ->
-#        if newValue
-
-
       $scope.selectTab = (tabIndex) ->
-            $scope.selectedTabIndex = tabIndex
-            fetchTabData.tabFetchDataByIndex $scope.tabConfig[tabIndex]
-            .then  (res) ->
-                $scope.tabData = res.response;
+        $scope.selectedTabIndex = tabIndex
+        fetchTabData.tabFetchDataByIndex $scope.tabConfig[tabIndex]
+        .then  (res) ->
+            $scope.tabData = res.response;
+
+      # tabs child config
+      $scope.tabChildConfig = [
+        id : 'hi'
+        baseUrl : 'views/clients/tab_handbook_info.html'
+      ,
+        id : 'hg' 
+        baseUrl : 'views/clients/tab_handbook_general.html'
+      ,
+        id : 'hs' 
+        baseUrl : 'views/clients/tab_handbook_section.html'
+      ,
+        id : 'hc' 
+        baseUrl : 'views/clients/tab_handbook_contact.html'
+      ]
+      $scope.selectTabChild = (tabIndex) ->
+        $scope.selectedTabIndex = tabIndex
+        fetchTabData.tabFetchDataByIndex $scope.tabChildConfig[tabIndex]
+        .then  (res) ->
+            $scope.tabData = res.response;
   ])
 
 .controller('tabsClientCtrl', [

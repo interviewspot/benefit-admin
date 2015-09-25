@@ -1,0 +1,244 @@
+<div class="tab-pane " id="company2">
+    <div class="merchant-views-wrap">
+        <div class="row">
+            <div class="col-md-8 col-sm-8 col-xs-12 cpn-left">
+                <p class="clearfix">
+                    <span class="bt-edit" data-toggle="modal" data-target="#myModal">Edit</span>
+                </p>
+                <table class="table table-striped table-bordered tbl">
+                    <tr>
+                        <td class="td-30">Company Reg Biz Name:</td>
+                        <td>Bullworks Pte Ltd</td>
+                    </tr>
+                    <tr>
+                        <td class="td-30">Biz Reg No.</td>
+                        <td>199452264G</td>
+                    </tr>
+                    <tr>
+                        <td class="td-30">Office Location</td>
+                        <td>29A Seah Street, Singapore 556587</td>
+                    </tr>
+                    <tr>
+                        <td class="td-30">Business Type</td>
+                        <td>Entertainment, F&B</td>
+                    </tr>
+                    <tr>
+                        <td class="td-30">Head Office Number
+                        </td>
+                        <td>65587895</td>
+                    </tr>
+                    <tr>
+                        <td class="td-30">Billing Address </td>
+                        <td>29A Seah Street, Singapore 556587</td>
+                    </tr>
+                    <tr>
+                        <td class="td-30">Admin User Email</td>
+                        <td>Chris.ho@emint.com
+                            <span class="rs-pass">
+                                                            Reset Email
+                                                        </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td-30">Reservation Email </td>
+                        <td>reserve@emint.com</td>
+                    </tr>
+                    <tr>
+                        <td class="td-30">User Contact No.</td>
+                        <td>96854457</td>
+                    </tr>
+                    <tr>
+                        <td class="td-30">Client Since </td>
+                        <td>29 Jan 2014</td>
+                    </tr>
+                    <tr>
+                        <td class="td-30">Office Hours</td>
+                        <td>8:30am – 6pm (Mon – Fri) Closed on Sat and Sunday</td>
+                    </tr>
+                    <tr>
+                        <td class="td-30">Redemption Password
+                            <br/> (4-Digits) </td>
+                        <td> 4421
+                            <span class="rs-pass">
+                                                            Set New Password
+                                                        </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td-30">Merchant ID
+                            <br/> (System Generated)</td>
+                        <td>20152905001</td>
+                    </tr>
+                </table>
+                <h2 class="ttl-tab">
+                                                <span>About Company</span>
+                                            </h2>
+                <form method="post">
+                    <div class="bnf-editor" id="editor_5" tinyeditor>
+                        <p>Mr Punch Public House is a gastropub offering a good selection of beers, cocktails and alcoholic drinks alongside a European-inspired sharing menu.</p>
+                    </div>
+                </form>
+                <!--Start content edit company-->
+                <div id="myModal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Edit Company Info</h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="panel-body">
+                                    <form role="form" id="merchants" name="merchants" action="/merchants/add" method="post">
+                                        <div class="form-group">
+                                            <label for="Company">Company Reg Biz Name</label>
+                                            <input type="text" name="Company" id="Company" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Big">Big reg No</label>
+                                            <input type="text" name="Big" id="Big" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Officce">Officce Location</label>
+                                            <input type="text" name="Officce" id="Officce" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Business">Business Type</label>
+                                            <input type="text" name="Business" id="Business" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Head">Head Office Number</label>
+                                            <input type="text" name="Head" id="Head" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Billing">Billing Address</label>
+                                            <input type="text" name="Billing" id="Billing" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="AdminUserEmail">Admin User Email</label>
+                                            <input type="text" name="AdminUserEmail" id="AdminUserEmail" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ReservationEmail">Reservation Email</label>
+                                            <input type="text" name="ReservationEmail" id="ReservationEmail" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="UserContact">User Contact No.</label>
+                                            <input type="text" name="UserContact" id="UserContact" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="ClientSince">Client Since</label>
+                                            <input type="text" name="ClientSince" id="ClientSince" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="OfficeHours">Office Hours:</label>
+                                            <input type="text" name="OfficeHours" id="OfficeHours" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="Password">Redemption Password(4-Digits)</label>
+                                            <input type="text" name="Password" id="Password" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="MerchantID">Merchant ID(System Generated)</label>
+                                            <input type="text" name="MerchantID" id="MerchantID" class="form-control" />
+                                        </div>
+                                        <input type="button" name="edit-company-info" class="btn btn-primary text-center" value="Save" />
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--End content edit company-->
+            </div>
+            <!-- END : LEFT -->
+            <div class="col-md-4 col-sm-4 col-xs-12 cpm-right">
+                <table class="table tbl tbl-upload">
+                    <tbody>
+                        <tr>
+                            <th class="text-center">
+                                Company Logo
+                            </th>
+                        </tr>
+                        <tr>
+                            <td class="text-center td-logo">
+                                <img src="images/logo-demo.png" alt="">
+                                <i class="fa fa-times"></i>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <div class="fileUpload">
+                                    <span>Upload New Image</span>
+                                    <div style="height: 0px; width: 0px; overflow: hidden;">
+                                        <input type="file" name="userfile" class="fileToUpload">
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- END : UPLOADS -->
+                <table class="table tbl tbl-upload">
+                    <tbody>
+                        <tr>
+                            <th class="text-center">
+                                (MaBanner Images x 5 images)
+                            </th>
+                        </tr>
+                        <tr>
+                            <td class="text-center td-logo">
+                                <img src="images/logo-demo.png" alt="">
+                                <i class="fa fa-times"></i>
+                                <span class="ups-name">Mr Punch Café Interior</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center td-logo">
+                                <img src="images/logo-demo.png" alt="">
+                                <i class="fa fa-times"></i>
+                                <span class="ups-name">Mr Punch Café Interior</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center td-logo">
+                                <img src="images/logo-demo.png" alt="">
+                                <i class="fa fa-times"></i>
+                                <span class="ups-name">Mr Punch Café Interior</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center td-logo">
+                                <img src="images/logo-demo.png" alt="">
+                                <i class="fa fa-times"></i>
+                                <span class="ups-name">Mr Punch Café Interior</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center td-logo">
+                                <img src="images/logo-demo.png" alt="">
+                                <i class="fa fa-times"></i>
+                                <span class="ups-name">Mr Punch Café Interior</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <div class="fileUpload">
+                                    <span>Upload New Image</span>
+                                    <div style="height: 0px; width: 0px; overflow: hidden;">
+                                        <input type="file" name="userfile" class="fileToUpload">
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- END : RIGHT -->
+        </div>
+    </div>
+    <!-- END -->
+</div>
