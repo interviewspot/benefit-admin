@@ -3,8 +3,8 @@
 angular.module('app.clients', [])
 
 .controller('clientCtrl', [
-    '$scope', '$filter' , 'fetchTabData',
-    ($scope, $filter, fetchTabData) ->
+    '$scope', '$filter' , 'fetchTabData', 'fakeData',
+    ($scope, $filter, fetchTabData, fakeData) ->
     # filter
       $scope.stores = [
           {id: 1, company: 'BullWorks Pte Ltd', status: 'nverser', industry: 'AAA', users: 'Euro', estsaving: 'None', cs: 2,action: "Manage", }
@@ -81,12 +81,18 @@ angular.module('app.clients', [])
 
       # show create new handbook
       $scope.isCreateNew = false
+      $scope.fnCreateNew = ->
+        $scope.isCreateNew = !$scope.isCreateNew
 
       # manage clients
       $scope.isEditClients = false
+      $scope.fnEditClients = ->
+        $scope.isEditClients = !$scope.isEditClients
 
       # manage users
       $scope.isEditUser = false
+      $scope.fnEditUser = ->
+        $scope.isEditUser = !$scope.isEditUser
       $scope.isNewUser = false
       $scope.isUserUpload = false
       $scope.isDetailUpload = false
@@ -149,6 +155,13 @@ angular.module('app.clients', [])
         fetchTabData.tabFetchDataByIndex $scope.tabChildConfig[tabIndex]
         .then  (res) ->
             $scope.tabData = res.response;
+
+      # fakedata clients page
+      fakeDT = fakeData.clients_data
+      $scope.clients_list = fakeDT.clients_list
+      $scope.dt_tab_company = fakeDT.clients_tab_company[0]
+      $scope.dt_tab_user_list = fakeDT.clients_tab_user_list
+      $scope.dt_tab_handbook_list = fakeDT.clients_tab_handbook_list
   ])
 
 .controller('tabsClientCtrl', [

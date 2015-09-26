@@ -2,7 +2,7 @@
     <h2 class="ttl-tab">
         <span>Employee Handbook</span>
     </h2>
-    <span class="cap-note" ng-click="isCreateNew = !isCreateNew">       
+    <span class="cap-note" >       
         Create New
     </span>
     <table class="table tbl table-hover table-striped">
@@ -14,39 +14,20 @@
                 <th class="text-center">Published</th>
                 <th class="text-center">Manage</th>
             </tr>
-            <tr>
-                <td class="text-center">1.4.1</td>
-                <td class="text-center">12 Jun 2015</td>
-                <td class="text-center">English</td>
+            <tr ng-repeat="hb_list in dt_tab_handbook_list">
+                <td class="text-center">{{hb_list.version}}</td>
+                <td class="text-center">{{hb_list.last_modified}}</td>
+                <td class="text-center">{{hb_list.language}}</td>
                 <td class="text-center">
-                    <input type="checkbox" name="handbook_chk" checked=checked id="chk_hb_1" />
+                    <input type="checkbox" 
+                        name="handbook_chk" 
+                        id="{{hb_list.id}}" 
+                        ng-checked="hb_list.public"/>
                 </td>
                 <td class="text-center td-manage">
-                    <i class="fa fa-edit" title="Edit Handbook"></i>
-                    <i class="fa fa-trash-o" title="Remove Handbook"  deleteitem></i>
-                </td>
-            </tr>
-            <tr>
-                <td class="text-center">1.3.1</td>
-                <td class="text-center">05 Apr 2014</td>
-                <td class="text-center">Chinese</td>
-                <td class="text-center">
-                    <input type="checkbox" name="handbook_chk" checked=checked id="chk_hb_2" />
-                </td>
-                <td class="text-center td-manage">
-                    <i class="fa fa-edit" title="Edit Handbook"></i>
-                    <i class="fa fa-trash-o" title="Remove Handbook"  deleteitem></i>
-                </td>
-            </tr>
-            <tr>
-                <td class="text-center">1.2.1</td>
-                <td class="text-center">12 Jun 2015</td>
-                <td class="text-center">English</td>
-                <td class="text-center">
-                    <input type="checkbox" name="handbook_chk" id="chk_hb_3" />
-                </td>
-                <td class="text-center td-manage">
-                    <i class="fa fa-edit" title="Edit Handbook"></i>
+                    <i class="fa fa-edit" 
+                        title="Edit Handbook"
+                        ng-click="fnCreateNew()"></i>
                     <i class="fa fa-trash-o" title="Remove Handbook"  deleteitem></i>
                 </td>
             </tr>

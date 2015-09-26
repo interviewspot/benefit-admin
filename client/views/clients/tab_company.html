@@ -9,7 +9,7 @@
                 <td class="td-30">Company Reg Biz Name <span class="red">*</span>:</td>
                 <td>
                     <input type="text"
-                        value="Magenta Consulting Pte Ltd"
+                        value="{{dt_tab_company.company_name}}"
                         class="txt-ipt"
                         ng-disabled="!isDisable"
                         ng-class="{txt_disabled : !isDisable}">
@@ -19,7 +19,7 @@
                 <td class="td-30">Biz Reg No.</td>
                 <td>
                     <input type="text"
-                        value="199452264G"
+                        value="{{dt_tab_company.company_no}}"
                         class="txt-ipt"
                         ng-disabled="!isDisable"
                         ng-class="{txt_disabled : !isDisable}">
@@ -29,7 +29,7 @@
                 <td class="td-30">Address:</td>
                 <td>
                     <input type="text"
-                        value="8 Burn Road"
+                        value="{{dt_tab_company.address}}"
                         class="txt-ipt"
                         ng-disabled="!isDisable"
                         ng-class="{txt_disabled : !isDisable}">
@@ -39,7 +39,7 @@
                 <td class="td-30">Unit Number:</td>
                 <td>
                     <input type="text"
-                        value="#12-11"
+                        value="{{dt_tab_company.unit_number}}"
                         class="txt-ipt"
                         ng-disabled="!isDisable"
                         ng-class="{txt_disabled : !isDisable}">
@@ -49,7 +49,7 @@
                 <td class="td-30">Building Name:</td>
                 <td>
                     <input type="text"
-                        value="Trivex"
+                        value="{{dt_tab_company.building_name}}"
                         class="txt-ipt"
                         ng-disabled="!isDisable"
                         ng-class="{txt_disabled : !isDisable}">
@@ -59,7 +59,7 @@
                 <td class="td-30">Postal Code:</td>
                 <td>
                     <input type="text"
-                        value="369977"
+                        value="{{dt_tab_company.postal_code}}"
                         class="txt-ipt"
                         ng-disabled="!isDisable"
                         ng-class="{txt_disabled : !isDisable}">
@@ -69,7 +69,7 @@
                 <td class="td-30">Business Type</td>
                 <td>
                     <input type="text"
-                        value="HR Consultancy, Corporate Services"
+                        value="{{dt_tab_company.business_type}}"
                         class="txt-ipt"
                         ng-disabled="!isDisable"
                         ng-class="{txt_disabled : !isDisable}">
@@ -79,7 +79,7 @@
                 <td class="td-30">Office Number</td>
                 <td>
                     <input type="text"
-                        value="65587895"
+                        value="{{dt_tab_company.office_number}}"
                         class="txt-ipt"
                         ng-disabled="!isDisable"
                         ng-class="{txt_disabled : !isDisable}">
@@ -89,7 +89,7 @@
                 <td class="td-30">Admin User Email</td>
                 <td>
                     <input type="text"
-                        value="Kenneth@magenta-consultancy.com"
+                        value="{{dt_tab_company.adm_email}}"
                         class="txt-ipt"
                         ng-disabled="!isDisable"
                         ng-class="{txt_disabled : !isDisable}">
@@ -102,7 +102,7 @@
                 <td class="td-30">Admin Contact No.</td>
                 <td>
                     <input type="text"
-                        value="96854457"
+                        value="{{dt_tab_company.adm_no}}"
                         class="txt-ipt"
                         ng-disabled="!isDisable"
                         ng-class="{txt_disabled : !isDisable}">
@@ -112,7 +112,7 @@
                 <td class="td-30">Client Since</td>
                 <td>
                     <input type="text"
-                        value="29 Jan 2014"
+                        value="{{dt_tab_company.client_since}}"
                         class="txt-ipt"
                         ng-disabled="!isDisable"
                         ng-class="{txt_disabled : !isDisable}">
@@ -122,7 +122,7 @@
                 <td class="td-30">Package Type</td>
                 <td>
                     <input type="text"
-                        value="Basic - $10/User/Month"
+                        value="{{dt_tab_company.package_type}}"
                         class="txt-ipt"
                         ng-disabled="!isDisable"
                         ng-class="{txt_disabled : !isDisable}">
@@ -136,7 +136,7 @@
     </h2>
     <form method="post">
         <div class="bnf-editor" id="editor_4" tinyeditor>
-            <p>Magenta is the colour of the highest order, connected with spirituality, mediation, and letting go. It is an agent for change, for the clearing out of old attitudes and obsessions, and for making a break with the past. Consistent with the qualities associated with the colour ‘Magenta’, the Human Resource Consulting Services of Magenta Consulting Services is delivered in the highest order possible. We are your agent for change – for the enhancement of the present and a lead into the future – via our innovative approach to the human capital solutions we offer.</p>
+            {{dt_tab_company.about_company}}
         </div>
     </form>
 </div>
@@ -151,7 +151,7 @@
             </tr>
             <tr>
                 <td class="text-center td-logo">
-                    <img src="images/logo-demo.png" alt=""/>
+                    <img src="{{dt_tab_company.logo}}" alt=""/>
                     <i class="fa fa-times"></i>
                 </td>
             </tr>

@@ -10,7 +10,7 @@
         <table class="table tbl tbl-bg table-hover table-striped">
             <tbody>
                 <tr>
-                    <th class="text-center">Date Added</th>
+                    <th class="text-center td-18">Date Added</th>
                     <th class="text-center">First name</th>
                     <th class="text-center">Last Name</th>
                     <th class="text-center">Email</th>
@@ -19,87 +19,25 @@
                     <th class="text-center">Employee Class</th>
                     <th class="text-center td-15">Actions</th>
                 </tr>
-                <tr>
-                    <td  class="text-center">29 June 2015  3:45pm</td>
-                    <td  class="text-center">Astrid</td>
-                    <td  class="text-center">Tan</td>
-                    <td  class="text-center">a.magenta@magenta.com</td>
-                    <td  class="text-center">Null</td>
-                    <td  class="text-center">Awre5442d</td>
-                    <td  class="text-center">Management</td>
+                <tr ng-repeat="us_list in dt_tab_user_list">
+                    <td  class="text-center td-18">{{us_list.data_add}}</td>
+                    <td  class="text-center">
+                        <a ng-click="fnEditUser()">
+                            {{us_list.firstname}}
+                        </a>
+                    </td>
+                    <td  class="text-center">
+                        <a ng-click="fnEditUser()">
+                            {{us_list.lastname}}
+                        </a>
+                    </td>
+                    <td  class="text-center">{{us_list.email}}</td>
+                    <td  class="text-center">{{us_list.contact_no}}</td>
+                    <td  class="text-center">{{us_list.veri_code}}</td>
+                    <td  class="text-center">{{us_list.employ_cls}}</td>
                     <td class="td-manage text-center td-15">
                         <i class="fa fa-check" title="Active"></i>
-                        <i class="fa fa-edit" title="Edit" ng-click="isEditUser = !isEditUser"></i>
-                        <i class="fa fa-trash-o" title="Remove" deleteitem></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td  class="text-center">29 June 2015  3:45pm</td>
-                    <td  class="text-center">John</td>
-                    <td  class="text-center">Wayne</td>
-                    <td  class="text-center">a.magenta@magenta.com</td>
-                    <td  class="text-center">Null</td>
-                    <td  class="text-center">lHGhahg123</td>
-                    <td  class="text-center">Management</td>
-                    <td class="td-manage text-center td-15">
-                        <i class="fa fa-times" title="De-Active"></i>
-                        <i class="fa fa-edit" title="Edit" ng-click="isEditUser = !isEditUser"></i>
-                        <i class="fa fa-trash-o" title="Remove" deleteitem></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td  class="text-center">29 June 2015  3:45pm</td>
-                    <td  class="text-center">Astrid</td>
-                    <td  class="text-center">Tan</td>
-                    <td  class="text-center">a.magenta@magenta.com</td>
-                    <td  class="text-center">Null</td>
-                    <td  class="text-center">Awre5442d</td>
-                    <td  class="text-center">Management</td>
-                    <td class="td-manage text-center td-15">
-                        <i class="fa fa-check" title="Active"></i>
-                        <i class="fa fa-edit" title="Edit" ng-click="isEditUser = !isEditUser"></i>
-                        <i class="fa fa-trash-o" title="Remove" deleteitem></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td  class="text-center">29 June 2015  3:45pm</td>
-                    <td  class="text-center">John</td>
-                    <td  class="text-center">Wayne</td>
-                    <td  class="text-center">a.magenta@magenta.com</td>
-                    <td  class="text-center">Null</td>
-                    <td  class="text-center">lHGhahg123</td>
-                    <td  class="text-center">Management</td>
-                    <td class="td-manage text-center td-15">
-                        <i class="fa fa-times" title="De-Active"></i>
-                        <i class="fa fa-edit" title="Edit" ng-click="isEditUser = !isEditUser"></i>
-                        <i class="fa fa-trash-o" title="Remove" deleteitem></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td  class="text-center">29 June 2015  3:45pm</td>
-                    <td  class="text-center">Astrid</td>
-                    <td  class="text-center">Tan</td>
-                    <td  class="text-center">a.magenta@magenta.com</td>
-                    <td  class="text-center">Null</td>
-                    <td  class="text-center">Awre5442d</td>
-                    <td  class="text-center">Management</td>
-                    <td class="td-manage text-center td-15">
-                        <i class="fa fa-check" title="Active"></i>
-                        <i class="fa fa-edit" title="Edit" ng-click="isEditUser = !isEditUser"></i>
-                        <i class="fa fa-trash-o" title="Remove" deleteitem></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td  class="text-center">29 June 2015  3:45pm</td>
-                    <td  class="text-center">John</td>
-                    <td  class="text-center">Wayne</td>
-                    <td  class="text-center">a.magenta@magenta.com</td>
-                    <td  class="text-center">Null</td>
-                    <td  class="text-center">lHGhahg123</td>
-                    <td  class="text-center">Management</td>
-                    <td class="td-manage text-center td-15">
-                        <i class="fa fa-times" title="De-Active"></i>
-                        <i class="fa fa-edit" title="Edit" ng-click="isEditUser = !isEditUser"></i>
+                        <i class="fa fa-edit" title="Edit" ng-click="fnEditUser()"></i>
                         <i class="fa fa-trash-o" title="Remove" deleteitem></i>
                     </td>
                 </tr>

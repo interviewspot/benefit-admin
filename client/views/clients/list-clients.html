@@ -17,102 +17,27 @@
                         <th class="text-center">CS</th>
                         <th class="text-center">Actions</th>
                     </tr>
-                    <tr>
+                    <tr ng-repeat="client in clients_list">
                         <td class="text-center">
-                            <a ng-click="isEditClients = !isEditClients">
-                                Magenta Pte Ltd
+                            <a ng-click="fnEditClients()">
+                                {{client.company}}
                             </a>
                         </td>
-                        <td class="text-center">Live</td>
-                        <td class="text-center">HR Advisory</td>
+                        <td class="text-center">{{client.status}}</td>
+                        <td class="text-center">{{client.industry}}</td>
                         <td class="text-center">
-                            35
+                            {{client.user}}
                         </td>
                         <td class="text-center">
-                            $2,500
+                            {{client.est_savings}}
                         </td>
                         <td class="text-center">
-                            Astrid
+                            {{client.cs}}
                         </td>
                         <td class="text-center td-manage">
                             <i class="fa fa-check" title="Active"></i>
-                            <i class="fa fa-eye" title="View" ng-click="isEditClients = !isEditClients"></i>
-                            <i class="fa fa-edit" title="Edit" ng-click="isEditClients = !isEditClients"></i>
-                            <i class="fa fa-sign-in" title="Assign CS"></i>
-                            <i class="fa fa-trash-o" deleteitem title="Remove"></i>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="text-center">
-                            <a ng-click="isEditClients = !isEditClients">
-                                BSI Group
-                            </a>
-                        </td>
-                        <td class="text-center">Live</td>
-                        <td class="text-center">Banking</td>
-                        <td class="text-center">
-                            245
-                        </td>
-                        <td class="text-center">
-                            $35,000
-                        </td>
-                        <td class="text-center">
-                            Astrid
-                        </td>
-                        <td class="text-center td-manage">
-                            <i class="fa fa-times" title="De-Active"></i>
-                            <i class="fa fa-eye" title="View" ng-click="isEditClients = !isEditClients"></i>
-                            <i class="fa fa-edit" title="Edit" ng-click="isEditClients = !isEditClients"></i>
-                            <i class="fa fa-sign-in" title="Assign CS"></i>
-                            <i class="fa fa-trash-o" deleteitem title="Remove"></i>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="text-center">
-                            <a ng-click="isEditClients = !isEditClients">
-                                Yang Kee 
-                            </a>
-                        </td>
-                        <td class="text-center">Live</td>
-                        <td class="text-center">Logistics</td>
-                        <td class="text-center">
-                            220
-                        </td>
-                        <td class="text-center">
-                            $5,000
-                        </td>
-                        <td class="text-center">
-                            George
-                        </td>
-                        <td class="text-center td-manage">
-                            <i class="fa fa-check" title="Active"></i>
-                            <i class="fa fa-eye" title="View" ng-click="isEditClients = !isEditClients"></i>
-                            <i class="fa fa-edit" title="Edit" ng-click="isEditClients = !isEditClients"></i>
-                            <i class="fa fa-sign-in" title="Assign CS"></i>
-                            <i class="fa fa-trash-o" deleteitem title="Remove"></i>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="text-center">
-                            <a ng-click="isEditClients = !isEditClients">
-                                Fastflow
-                            </a>
-                        </td>
-                        <td class="text-center">Live</td>
-                        <td class="text-center">Logistics</td>
-                        <td class="text-center">
-                            125
-                        </td>
-                        <td class="text-center">
-                            $8,000
-                        </td>
-                        <td class="text-center">
-                            Not Assigned
-                        </td>
-                        <td class="text-center td-manage">
-                            <i class="fa fa-check" title="Active"></i>
-                            <i class="fa fa-eye" title="View" ng-click="isEditClients = !isEditClients"></i>
-                            <i class="fa fa-edit" title="Edit" ng-click="isEditClients = !isEditClients"></i>
+                            <i class="fa fa-eye" title="View" ng-click="fnEditClients()"></i>
+                            <i class="fa fa-edit" title="Edit" ng-click="fnEditClients()"></i>
                             <i class="fa fa-sign-in" title="Assign CS"></i>
                             <i class="fa fa-trash-o" deleteitem title="Remove"></i>
                         </td>
