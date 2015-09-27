@@ -303,45 +303,15 @@
                 <td class="text-center">Bday</td>
                 <td class="text-center">NRIC</td>
             </tr>
-            <tr>
-                <td class="text-center">Vera</td>
-                <td class="text-center">Tan</td>
-                <td class="text-center">a.magenta@magenta.com</td>
-                <td class="text-center">9879878</td>
-                <td class="text-center">Executive</td>
-                <td class="text-center">Sales</td>
-                <td class="text-center">25/03/81</td>
-                <td class="text-center">Null</td>
-            </tr>
-            <tr>
-                <td class="text-center">Kenneth</td>
-                <td class="text-center">Yap</td>
-                <td class="text-center">a.magenta@magenta.com</td>
-                <td class="text-center">Null</td>
-                <td class="text-center">Null</td>
-                <td class="text-center">Null</td>
-                <td class="text-center">25/03/81</td>
-                <td class="text-center">Null</td>
-            </tr>
-            <tr>
-                <td class="text-center">Wayne</td>
-                <td class="text-center">Ng</td>
-                <td class="text-center">a.magenta@magenta.com</td>
-                <td class="text-center">Null</td>
-                <td class="text-center">Null</td>
-                <td class="text-center">Null</td>
-                <td class="text-center">25/03/81</td>
-                <td class="text-center">Null</td>
-            </tr>
-            <tr>
-                <td class="text-center">Linda</td>
-                <td class="text-center">Leong</td>
-                <td class="text-center">a.magenta@magenta.com</td>
-                <td class="text-center">Null</td>
-                <td class="text-center">Null</td>
-                <td class="text-center">Null</td>
-                <td class="text-center">25/03/81</td>
-                <td class="text-center">Null</td>
+            <tr ng-repeat="upload in clients_tab_user_uploads">
+                <td class="text-center">{{upload.firstname}}</td>
+                <td class="text-center">{{upload.lastname}}</td>
+                <td class="text-center">{{upload.email}}</td>
+                <td class="text-center">{{upload.contact_no}}</td>
+                <td class="text-center">{{upload.employ_cls}}</td>
+                <td class="text-center">{{upload.funct}}</td>
+                <td class="text-center">{{upload.birthday}}</td>
+                <td class="text-center">{{upload.nric}}</td>
             </tr>
         </tbody>
     </table>
@@ -396,49 +366,16 @@
                     <td class="text-center">Bday</td>
                     <td class="text-center">NRIC</td>
                 </tr>
-                <tr>
-                    <td class="text-center">Vera</td>
-                    <td class="text-center">Tan</td>
-                    <td class="text-center">a.magenta@magenta.com</td>
-                    <td class="text-center">9879878</td>
-                    <td class="text-center">E#vfr4f5</td>
-                    <td class="text-center">Executive</td>
-                    <td class="text-center">Sales</td>
-                    <td class="text-center">25/03/81</td>
-                    <td class="text-center">Null</td>
-                </tr>
-                <tr>
-                    <td class="text-center">Kenneth</td>
-                    <td class="text-center">Yap</td>
-                    <td class="text-center">a.magenta@magenta.com</td>
-                    <td class="text-center">Null</td>
-                    <td class="text-center">G553245</td>
-                    <td class="text-center">Null</td>
-                    <td class="text-center">Null</td>
-                    <td class="text-center">25/03/81</td>
-                    <td class="text-center">Null</td>
-                </tr>
-                <tr>
-                    <td class="text-center">Wayne</td>
-                    <td class="text-center">Ng</td>
-                    <td class="text-center">a.magenta@magenta.com</td>
-                    <td class="text-center">Null</td>
-                    <td class="text-center">#%verrf3</td>
-                    <td class="text-center">Null</td>
-                    <td class="text-center">Null</td>
-                    <td class="text-center">25/03/81</td>
-                    <td class="text-center">Null</td>
-                </tr>
-                <tr>
-                    <td class="text-center">Linda</td>
-                    <td class="text-center">Leong</td>
-                    <td class="text-center">a.magenta@magenta.com</td>
-                    <td class="text-center">Null</td>
-                    <td class="text-center">23423fff</td>
-                    <td class="text-center">Null</td>
-                    <td class="text-center">Null</td>
-                    <td class="text-center">25/03/81</td>
-                    <td class="text-center">Null</td>
+                <tr ng-repeat="dt_upload in clients_user_upload_detail">
+                    <td class="text-center">{{dt_upload.firstname}}</td>
+                    <td class="text-center">{{dt_upload.lastname}}</td>
+                    <td class="text-center">{{dt_upload.email}}</td>
+                    <td class="text-center">{{dt_upload.contact_no}}</td>
+                    <td class="text-center">{{dt_upload.veri_code}}</td>
+                    <td class="text-center">{{dt_upload.employ_cls}}</td>
+                    <td class="text-center">{{dt_upload.funct}}</td>
+                    <td class="text-center">{{dt_upload.birthday}}</td>
+                    <td class="text-center">{{dt_upload.nric}}</td>
                 </tr>
             </tbody>
         </table>

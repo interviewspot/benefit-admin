@@ -175,6 +175,108 @@ angular.module('app.client.services', [])
                     'employ_cls': 'Management'
                 }
             ]
+            clients_tab_user_uploads : [
+                {
+                    'id' : 1
+                    'firstname' : 'Vera'
+                    'lastname' : 'Tan'
+                    'email' : 'a.magenta@magenta.com'
+                    'contact_no' : '9879878'
+                    'employ_cls' : 'Executive'
+                    'funct' : 'Sales'
+                    'birthday' : '25/03/81'
+                    'nric' : 'Null'
+                }
+            ,
+                {
+                    'id' : 2
+                    'firstname' : 'Kenneth'
+                    'lastname' : 'Yap'
+                    'email' : 'a.magenta@magenta.com'
+                    'contact_no' : '936687'
+                    'employ_cls' : 'Management'
+                    'funct' : 'Marketing'
+                    'birthday' : '20/06/85'
+                    'nric' : 'Null'
+                }
+            ,
+                {
+                    'id' : 3
+                    'firstname' : 'Wayne'
+                    'lastname' : 'Ng'
+                    'email' : 'a.magenta@magenta.com'
+                    'contact_no' : '8728763'
+                    'employ_cls' : 'Executive'
+                    'funct' : 'Sales'
+                    'birthday' : '25/03/81'
+                    'nric' : 'Null'
+                }
+            ,
+                {
+                    'id' : 4
+                    'firstname' : 'Linda'
+                    'lastname' : 'Leong'
+                    'email' : 'a.magenta@magenta.com'
+                    'contact_no' : '765127'
+                    'employ_cls' : 'Management'
+                    'funct' : 'Marketing'
+                    'birthday' : '20/06/85'
+                    'nric' : 'Null'
+                }
+            ]
+            clients_user_upload_detail : [
+                {
+                    'id' : 1
+                    'firstname' : 'Vera'
+                    'lastname' : 'Tan'
+                    'email' : 'a.magenta@magenta.com'
+                    'contact_no' : '9879878'
+                    'veri_code' : 'E#vfr4f5'
+                    'employ_cls' : 'Executive'
+                    'funct' : 'Sales'
+                    'birthday' : '25/03/81'
+                    'nric' : 'Null'
+                }
+            ,
+                {
+                    'id' : 2
+                    'firstname' : 'Kenneth'
+                    'lastname' : 'Yap'
+                    'email' : 'a.magenta@magenta.com'
+                    'contact_no' : '936687'
+                    'veri_code' : 'G553245'
+                    'employ_cls' : 'Management'
+                    'funct' : 'Marketing'
+                    'birthday' : '20/06/85'
+                    'nric' : 'Null'
+                }
+            ,
+                {
+                    'id' : 3
+                    'firstname' : 'Wayne'
+                    'lastname' : 'Ng'
+                    'email' : 'a.magenta@magenta.com'
+                    'contact_no' : '8728763'
+                    'veri_code' : '#%verrf3'
+                    'employ_cls' : 'Executive'
+                    'funct' : 'Sales'
+                    'birthday' : '25/03/81'
+                    'nric' : 'Null'
+                }
+            ,
+                {
+                    'id' : 4
+                    'firstname' : 'Linda'
+                    'lastname' : 'Leong'
+                    'email' : 'a.magenta@magenta.com'
+                    'contact_no' : '765127'
+                    'veri_code' : '%323@32'
+                    'employ_cls' : 'Management'
+                    'funct' : 'Marketing'
+                    'birthday' : '20/06/85'
+                    'nric' : 'Null'
+                }
+            ]
             clients_tab_handbook_list : [
                 {
                     'id'            : 'chk_hb_1'
