@@ -76,7 +76,7 @@
         <span>Users > Joan Yan</span>
     </h2>
     <div class="control-button">
-        <span>Edit</span>
+        <span ng-click="CheckDisabled()">{{clients_edit}}</span>
         <span>Delete</span>
     </div>
     <div class="row">
@@ -85,35 +85,69 @@
                 <tbody>
                     <tr>
                         <th class="td-30">First Name <span class="red">*</span></th>
-                        <td>Joan</td>
+                        <td>
+                            <input type="text"
+                                value="{{clients_user_detail.firstname}}"
+                                class="txt-ipt"
+                                ng-disabled="!isDisable"
+                                ng-class="{txt_disabled : !isDisable}">
+                        </td>
                     </tr>
                     <tr>
                         <th class="td-30">Last Name</th>
-                        <td>Yan</td>
+                        <td><input type="text"
+                                value="{{clients_user_detail.lastname}}"
+                                class="txt-ipt"
+                                ng-disabled="!isDisable"
+                                ng-class="{txt_disabled : !isDisable}"></td>
                     </tr>
                     <tr>
                         <th class="td-30">Email <span class="red">*</span></th>
-                        <td>Joan.yan@mint.com</td>
+                        <td><input type="text"
+                                value="{{clients_user_detail.email}}"
+                                class="txt-ipt"
+                                ng-disabled="!isDisable"
+                                ng-class="{txt_disabled : !isDisable}"></td>
                     </tr>
                     <tr>
                         <th class="td-30">Contact</th>
-                        <td>998554565</td>
+                        <td><input type="text"
+                                value="{{clients_user_detail.contact}}"
+                                class="txt-ipt"
+                                ng-disabled="!isDisable"
+                                ng-class="{txt_disabled : !isDisable}"></td>
                     </tr>
                     <tr>
                         <th class="td-30">Employee Class</th>
-                        <td>Workmen</td>
+                        <td><input type="text"
+                                value="{{clients_user_detail.employ_cls}}"
+                                class="txt-ipt"
+                                ng-disabled="!isDisable"
+                                ng-class="{txt_disabled : !isDisable}"></td>
                     </tr>
                     <tr>
                         <th class="td-30">Function</th>
-                        <td>Waitress</td>
+                        <td><input type="text"
+                                value="{{clients_user_detail.function}}"
+                                class="txt-ipt"
+                                ng-disabled="!isDisable"
+                                ng-class="{txt_disabled : !isDisable}"></td>
                     </tr>
                     <tr>
                         <th class="td-30">Birthday</th>
-                        <td>03 May 1990</td>
+                        <td><input type="text"
+                                value="{{clients_user_detail.birthday}}"
+                                class="txt-ipt"
+                                ng-disabled="!isDisable"
+                                ng-class="{txt_disabled : !isDisable}"></td>
                     </tr>
                     <tr>
                         <th class="td-30">NRIC No.</th>
-                        <td>13 Jun 2016</td>
+                        <td><input type="text"
+                                value="{{clients_user_detail.nric}}"
+                                class="txt-ipt"
+                                ng-disabled="!isDisable"
+                                ng-class="{txt_disabled : !isDisable}"></td>
                     </tr>
                 </tbody>
             </table>
@@ -124,35 +158,69 @@
                 <tbody>
                     <tr>
                         <th class="td-30">Date Added</th>
-                        <td>12 Jun 2015</td>
+                        <td><input type="text"
+                                value="{{clients_user_detail.date_add}}"
+                                class="txt-ipt"
+                                ng-disabled="!isDisable"
+                                ng-class="{txt_disabled : !isDisable}"></td>
                     </tr>
                     <tr>
                         <th class="td-30">De-activated Date</th>
-                        <td>13 Jun 2016</td>
+                        <td><input type="text"
+                                value="{{clients_user_detail.date_end}}"
+                                class="txt-ipt"
+                                ng-disabled="!isDisable"
+                                ng-class="{txt_disabled : !isDisable}"></td>
                     </tr>
                     <tr>
                         <th class="td-30">Birthday</th>
-                        <td>03 May 1990</td>
+                        <td><input type="text"
+                                value="{{clients_user_detail.birthday}}"
+                                class="txt-ipt"
+                                ng-disabled="!isDisable"
+                                ng-class="{txt_disabled : !isDisable}"></td>
                     </tr>
                     <tr>
                         <th class="td-30">App Status</th>
-                        <td><span class="red">De-activated</span></td>
+                        <td>
+                            <input type="text"
+                                value="{{clients_user_detail.app_status}}"
+                                class="txt-ipt"
+                                ng-disabled="!isDisable"
+                                ng-class="{txt_disabled : !isDisable}">
+                        </td>
                     </tr>
                     <tr>
                         <th class="td-30">Verification Code</th>
-                        <td>XXEOOKm1923</td>
+                        <td><input type="text"
+                                value="{{clients_user_detail.veri_code}}"
+                                class="txt-ipt"
+                                ng-disabled="!isDisable"
+                                ng-class="{txt_disabled : !isDisable}"></td>
                     </tr>
                     <tr>
                         <th class="td-30">Redemptions</th>
-                        <td>25</td>
+                        <td><input type="text"
+                                value="{{clients_user_detail.redemptions}}"
+                                class="txt-ipt"
+                                ng-disabled="!isDisable"
+                                ng-class="{txt_disabled : !isDisable}"></td>
                     </tr>
                     <tr>
                         <th class="td-30">Est. Savings</th>
-                        <td>s$600</td>
+                        <td><input type="text"
+                                value="{{clients_user_detail.est_saving}}"
+                                class="txt-ipt"
+                                ng-disabled="!isDisable"
+                                ng-class="{txt_disabled : !isDisable}"></td>
                     </tr>
                     <tr>
                         <th class="td-30">Medical Card ID</th>
-                        <td>3325-44556-45</td>
+                        <td><input type="text"
+                                value="{{clients_user_detail.card_id}}"
+                                class="txt-ipt"
+                                ng-disabled="!isDisable"
+                                ng-class="{txt_disabled : !isDisable}"></td>
                     </tr>
                 </tbody>
             </table>
@@ -173,23 +241,14 @@
                         <th>Est. Value</th>
                         <th>Ref </th>
                     </tr>
-                    <tr>
-                        <td>4 Sep 2015  3:45pm</td>
-                        <td>Long Long ago far away bar</td>
-                        <td>Happy Hour</td>
-                        <td>99 Hong Kong Road</td>
-                        <td>F&B</td>
-                        <td>S$20</td>
-                        <td>244eefee</td>
-                    </tr>
-                    <tr>
-                        <td>24 Jul 2015  5:12pm</td>
-                        <td>Pollywooks</td>
-                        <td>Free Admission</td>
-                        <td>Nex Mall, Serangoon</td>
-                        <td>Kids</td>
-                        <td>S$18</td>
-                        <td>Seff55448</td>
+                    <tr ng-repeat="redemption in clients_user_redemptions_list">
+                        <td>{{redemption.date}}</td>
+                        <td>{{redemption.merchant}}</td>
+                        <td>{{redemption.item}}</td>
+                        <td>{{redemption.location}}</td>
+                        <td>{{redemption.category}}</td>
+                        <td>{{redemption.est_save}}</td>
+                        <td>{{redemption.ref}}</td>
                     </tr>
                 </tbody>
             </table>

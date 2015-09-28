@@ -222,6 +222,46 @@ angular.module('app.client.services', [])
                     'nric' : 'Null'
                 }
             ]
+            clients_user_detail : {
+                "id" : 1
+                "firstname" : "Joan"
+                "lastname"  : "Yan"
+                "email"     : "Joan.yan@mint.com"
+                "contact"   : "998554565"
+                "employ_cls": "Workmen"
+                "function"  : "Waitress"
+                "birthday"  : "03 May 1990"
+                "nric"      : "13 Jun 2016"
+                "date_add"  : "12 Jun 2015"
+                "date_end"  : "13 Jun 2016"
+                "app_status": "De-activated"
+                "veri_code" : "XXEOOKm1923"
+                "redemptions" : "25"
+                "est_saving" : "s$600"
+                "card_id"   : "3325-44556-45"
+            }
+            clients_user_redemptions_list : [
+                {
+                    "id" : 1
+                    "date" : "4 Sep 2015 3:45pm"
+                    "merchant" : "Long Long ago far away bar"
+                    "item" : "Happy Hour"
+                    "location" : "99 Hong Kong Road"
+                    "category" : "F&B"
+                    "est_save" : "s$20"
+                    "ref"   : "244eefee"
+                }
+                {
+                    "id" : 2
+                    "date" : "24 Jul 2015 5:12pm"
+                    "merchant" : "Pollywooks"
+                    "item" : "Free Admission"
+                    "location" : "Nex Mall, Serangoon"
+                    "category" : "Kids"
+                    "est_save" : "s$18"
+                    "ref"   : "Seff55448"
+                }
+            ]
             clients_user_upload_detail : [
                 {
                     'id' : 1

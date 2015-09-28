@@ -166,6 +166,8 @@ angular.module('app.clients', [])
       $scope.dt_tab_user_list = fakeDT.clients_tab_user_list
       $scope.clients_tab_user_uploads = fakeDT.clients_tab_user_uploads
       $scope.clients_user_upload_detail = fakeDT.clients_user_upload_detail
+      $scope.clients_user_detail = fakeDT.clients_user_detail
+      $scope.clients_user_redemptions_list = fakeDT.clients_user_redemptions_list
       $scope.dt_tab_handbook_list = fakeDT.clients_tab_handbook_list
       $scope.dt_tab_handbook_info = fakeDT.clients_tab_handbook_info
       $scope.clients_tab_handbook_general = fakeDT.clients_tab_handbook_general
