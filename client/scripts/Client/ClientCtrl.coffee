@@ -83,6 +83,9 @@ angular.module('app.clients', [])
       $scope.isCreateNew = false
       $scope.fnCreateNew = ->
         $scope.isCreateNew = !$scope.isCreateNew
+      $scope.isEditHandbook = false
+      $scope.fnEditHandbook = ->
+        $scope.isEditHandbook = !$scope.isEditHandbook
 
       # manage clients
       $scope.isEditClients = false
@@ -159,11 +162,14 @@ angular.module('app.clients', [])
       # fakedata clients page
       fakeDT = fakeData.clients_data
       $scope.clients_list = fakeDT.clients_list
-      $scope.dt_tab_company = fakeDT.clients_tab_company[0]
+      $scope.dt_tab_company = fakeDT.clients_tab_company
       $scope.dt_tab_user_list = fakeDT.clients_tab_user_list
       $scope.clients_tab_user_uploads = fakeDT.clients_tab_user_uploads
       $scope.clients_user_upload_detail = fakeDT.clients_user_upload_detail
       $scope.dt_tab_handbook_list = fakeDT.clients_tab_handbook_list
+      $scope.dt_tab_handbook_info = fakeDT.clients_tab_handbook_info
+      $scope.clients_tab_handbook_general = fakeDT.clients_tab_handbook_general
+      $scope.clients_tab_handbook_section = fakeDT.clients_tab_handbook_section
   ])
 
 .controller('tabsClientCtrl', [

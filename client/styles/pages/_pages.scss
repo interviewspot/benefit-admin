@@ -342,6 +342,9 @@ h2.ttl-tab {
 		}
 	}
 }
+.lb-block {
+    display: block;
+}
 .ipt-user {
 	width: 100%;
     border: 1px solid #ddd;
@@ -476,6 +479,9 @@ h2.ttl-tab {
         &:focus {
             border: 1px solid #999;
         }
+    }
+    input[type="radio"] {
+        vertical-align: -2px;
     }
 }
 .blk-create {

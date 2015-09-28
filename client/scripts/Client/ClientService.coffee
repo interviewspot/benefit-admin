@@ -67,25 +67,23 @@ angular.module('app.client.services', [])
                     'cs' : 'Not Assigned'
                 }
             ]
-            clients_tab_company : [
-                {
-                    'id' : 1
-                    'company_name' : 'Magenta Consulting Pte Ltd'
-                    'company_no'   : '199452264G'
-                    'address'      : '8 Burn Road' 
-                    'unit_number'  : '#12-11'
-                    'building_name': 'Trivex'
-                    'postal_code'  : '369977'
-                    'business_type': 'HR Consultancy, Corporate Services'
-                    'office_number': '65587895'
-                    'adm_email'    : 'Kenneth@magenta-consultancy.com'
-                    'adm_no'       : '96854457'
-                    'client_since' : '29 Jan 2014'
-                    'package_type' : 'Basic - $10/User/Month'
-                    'about_company': 'Magenta is the colour of the highest order, connected with spirituality, mediation, and letting go. It is an agent for change, for the clearing out of old attitudes and obsessions, and for making a break with the past. Consistent with the qualities associated with the colour ‘Magenta’, the Human Resource Consulting Services of Magenta Consulting Services is delivered in the highest order possible. We are your agent for change – for the enhancement of the present and a lead into the future – via our innovative approach to the human capital solutions we offer.kdf'
-                    'logo'         : 'images/logo-demo.png'
-                }
-            ]
+            clients_tab_company : {
+                'id' : 1
+                'company_name' : 'Magenta Consulting Pte Ltd'
+                'company_no'   : '199452264G'
+                'address'      : '8 Burn Road'
+                'unit_number'  : '#12-11'
+                'building_name': 'Trivex'
+                'postal_code'  : '369977'
+                'business_type': 'HR Consultancy, Corporate Services'
+                'office_number': '65587895'
+                'adm_email'    : 'Kenneth@magenta-consultancy.com'
+                'adm_no'       : '96854457'
+                'client_since' : '29 Jan 2014'
+                'package_type' : 'Basic - $10/User/Month'
+                'about_company': 'Magenta is the colour of the highest order, connected with spirituality, mediation, and letting go. It is an agent for change, for the clearing out of old attitudes and obsessions, and for making a break with the past. Consistent with the qualities associated with the colour ‘Magenta’, the Human Resource Consulting Services of Magenta Consulting Services is delivered in the highest order possible. We are your agent for change – for the enhancement of the present and a lead into the future – via our innovative approach to the human capital solutions we offer.kdf'
+                'logo'         : 'images/logo-demo.png'
+            }
             clients_tab_user_list : [
                 {
                     'id' : 1
@@ -302,6 +300,31 @@ angular.module('app.client.services', [])
                     'public'        :  false
                 }
             ]
+            clients_tab_handbook_info : {
+                "id"           : 1
+                "company_name" : "Magenta Consulting Pte Ltd"
+                "company_no"   : "199452264G"
+                "address"      : "8 Burn Road"
+                "unit_number"  : "#12-11"
+                "building_name": "Trivex"
+                "postal_code"  : "369977"
+                "handbook_ttl" : "Magenta Consulting Employee Handbook"
+                "version"      : "1.4"
+                "year"         : "2015"
+                "language"     : "English"
+            }
+            clients_tab_handbook_general : {
+                "id" : 1
+                "logo" : "../images/logo-demo.png"
+                "content" : "We have specially prepared this Handbook to explain and help you better understand Magenta’s Human Resource policies, compensation and benefits programs, as well as our corporate rules and regulations."
+            }
+            clients_tab_handbook_section : {
+                "id" : 1
+                "section_title" : "Forward"
+                "status" : "Active/Disabled"
+                "section_no" : 1
+                "content" : "Can be left blank if nothing to be written in this section"
+            }
         }
     }
 ])
