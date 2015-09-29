@@ -3,8 +3,8 @@
 angular.module('app.clients', [])
 
 .controller('clientCtrl', [
-    '$scope', '$filter' , 'fetchTabData', 'fakeData', 'HateoasInterface',
-    ($scope, $filter, fetchTabData, fakeData, HateoasInterface) ->
+    '$scope', '$filter' , 'fetchTabData', 'fakeData', 'HateoasInterface', '$location',
+    ($scope, $filter, fetchTabData, fakeData, HateoasInterface, $location) ->
     # filter
       $scope.stores = [
           {id: 1, company: 'BullWorks Pte Ltd', status: 'nverser', industry: 'AAA', users: 'Euro', estsaving: 'None', cs: 2,action: "Manage", }
@@ -92,15 +92,21 @@ angular.module('app.clients', [])
 
       # manage clients
       $scope.isEditClients = false
-      $scope.fnEditClients = (client) ->
-        $scope.isEditClients = !$scope.isEditClients
-        if !client.status
-          client.status = 'Active'
-        $scope.clientDetail = client
-        console.log($scope.clientDetail._links.handbook)
-        fetchTabData.fetchLinkData $scope.clientDetail._links.handbook.href
-          .then  (data) ->
-            $scope.dt_tab_handbook_list = fakeDT.clients_tab_handbook_list
+
+      params = $location.search()
+      console.log(params)
+      fetchTabData.fetchClient params.id
+      .then  (data) ->
+        $scope.clientDetail = data
+      #$scope.fnEditClients = (client) ->
+        #$scope.isEditClients = !$scope.isEditClients
+        #if !client.status
+        #  client.status = 'Active'
+        #$scope.clientDetail = client
+        #console.log($scope.clientDetail._links.handbook)
+        #fetchTabData.fetchLinkData $scope.clientDetail._links.handbook.href
+        #  .then  (data) ->
+        #    $scope.dt_tab_handbook_list = fakeDT.clients_tab_handbook_list
 
 
       # manage users

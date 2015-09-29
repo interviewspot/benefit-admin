@@ -41,8 +41,8 @@ angular.module('app', [
 ])
     
 .config([
-    '$routeProvider', 'HateoasInterceptorProvider', 'HateoasInterfaceProvider', '$sceDelegateProvider',
-    ($routeProvider, HateoasInterceptorProvider, HateoasInterfaceProvider, $sceDelegateProvider) ->
+    '$routeProvider', 'HateoasInterceptorProvider', 'HateoasInterfaceProvider', '$sceDelegateProvider', '$httpProvider',
+    ($routeProvider, HateoasInterceptorProvider, HateoasInterfaceProvider, $sceDelegateProvider, $httpProvider) ->
 
         routes = [
             'dashboard'
@@ -54,7 +54,8 @@ angular.module('app', [
             'mail/compose', 'mail/inbox', 'mail/single'
             'tasks/tasks'
             'merchants/list-merchant', 'merchants/add', 'merchants/view', 'merchants/company', 'merchants/edit_company'
-            'clients/list-clients', 'clients/add', 'clients/view', 'clients/company', 'clients/edit_company','clients/create-new-handbook','clients/tab-view'
+            'clients/list-clients', 'clients/add', 'clients/view', 'clients/company', 'clients/edit_company','clients/create-new-handbook','clients/tab-view',
+            'clients/client'
         ]
 
         setRoutes = (route) ->
@@ -77,5 +78,10 @@ angular.module('app', [
         #HateoasInterfaceProvider.setLinksKey("_links")
         #HateoasInterfaceProvider.setHalEmbedded("_embedded")
         #$sceDelegateProvider.resourceUrlWhitelist(['self', /^https?:\/\/api.sg\-benefits.com/])
-        $sceDelegateProvider.resourceUrlWhitelist(['self', 'https://api.sg\-benefits.com/**', 'https://api.sg-benefits.com/organisations/1/handbooks/1'])
+
+        $httpProvider.defaults.headers.common = {}
+        $httpProvider.defaults.headers.post = {}
+        $httpProvider.defaults.headers.put = {}
+        $httpProvider.defaults.headers.patch = {}
+        $sceDelegateProvider.resourceUrlWhitelist(['self', 'https://api.sg\-benefits.com/**', 'https://api.sg-benefits.com/organisations/1'])
 ])

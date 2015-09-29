@@ -36,6 +36,29 @@ angular.module('app.client.services', [])
                     d.reject(error)
             )
             d.promise
+        fetchClient: (id) ->
+            d = $q.defer()
+            $.ajax({
+                type: 'GET',
+                url: 'https://api.sg-benefits.com/organisations/' + id,
+                dataType: 'json',
+                headers: {
+                    'x-username': 'kenneth.yap@ap.magenta-consulting.com', 'x-password': 'p@ssword',
+                    'Access-Control-Allow-Methods': 'GET, PUT, POST, OPTIONS'
+                }
+            }).done((res) ->
+                d.resolve(res)
+            )
+            #$http({
+            #    method: 'GET'
+            #    url: 'https://api.sg-benefits.com/organisations/' + id
+            #    headers: { 'x-username': 'kenneth.yap@ap.magenta-consulting.com', 'x-password': 'p@ssword' }
+            #})
+            #.then (res) ->
+            #    d.resolve(res)
+            #, (error) ->
+            #    d.reject(error)
+            d.promise
         fetchLinkData: (linkURL) ->
             d = $q.defer()
             Resource = $resource(linkURL, {}, {
