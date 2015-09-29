@@ -2,7 +2,7 @@
 
 angular.module('app.client.services', [])
 
-.factory('fetchTabData', [ '$http', '$q', ($http, $q) ->
+.factory('fetchTabData', [ '$http', '$q', '$resource', ($http, $q, $resource) ->
     return {
         tabFetchDataByIndex : (tabConfig) ->
             d = $q.defer()
@@ -20,9 +20,40 @@ angular.module('app.client.services', [])
                 d.reject(error)
 
             d.promise
+        fetchMainData: (tabConfig) ->
+            d = $q.defer()
+            User = $resource('https://api.sg-benefits.com/organisations', {}, {
+                    get:{
+                        method:"GET",
+                        headers: { 'x-username': 'kenneth.yap@ap.magenta-consulting.com', 'x-password': 'p@ssword' }
+                    }
+                }
+            )
+            User.get({}, (data, getResponseHeaders) ->
+                if data
+                    d.resolve(data)
+                else
+                    d.reject(error)
+            )
+            d.promise
+        fetchLinkData: (linkURL) ->
+            d = $q.defer()
+            Resource = $resource(linkURL, {}, {
+                    get:{
+                        method:"GET",
+                        headers: { 'x-username': 'kenneth.yap@ap.magenta-consulting.com', 'x-password': 'p@ssword' }
+                    }
+                }
+            )
+            Resource.get({}, (data, getResponseHeaders) ->
+                if data
+                    d.resolve(data)
+                else
+                    d.reject(error)
+            )
+            d.promise
     }
 ])
-
 .factory('fakeData', [ '$http', '$q', ($http, $q) ->
     return {
         clients_data : {

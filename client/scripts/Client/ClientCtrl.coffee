@@ -3,8 +3,8 @@
 angular.module('app.clients', [])
 
 .controller('clientCtrl', [
-    '$scope', '$filter' , 'fetchTabData', 'fakeData',
-    ($scope, $filter, fetchTabData, fakeData) ->
+    '$scope', '$filter' , 'fetchTabData', 'fakeData', 'HateoasInterface',
+    ($scope, $filter, fetchTabData, fakeData, HateoasInterface) ->
     # filter
       $scope.stores = [
           {id: 1, company: 'BullWorks Pte Ltd', status: 'nverser', industry: 'AAA', users: 'Euro', estsaving: 'None', cs: 2,action: "Manage", }
@@ -65,6 +65,9 @@ angular.module('app.clients', [])
       init = ->
           $scope.search()
           $scope.select($scope.currentPage)
+          fetchTabData.fetchMainData "0"
+          .then  (data) ->
+            $scope.clients_list = data._embedded.items
       init()
 
       # show preview
@@ -89,8 +92,16 @@ angular.module('app.clients', [])
 
       # manage clients
       $scope.isEditClients = false
-      $scope.fnEditClients = ->
+      $scope.fnEditClients = (client) ->
         $scope.isEditClients = !$scope.isEditClients
+        if !client.status
+          client.status = 'Active'
+        $scope.clientDetail = client
+        console.log($scope.clientDetail._links.handbook)
+        fetchTabData.fetchLinkData $scope.clientDetail._links.handbook.href
+          .then  (data) ->
+            $scope.dt_tab_handbook_list = fakeDT.clients_tab_handbook_list
+
 
       # manage users
       $scope.isEditUser = false
@@ -133,6 +144,7 @@ angular.module('app.clients', [])
         baseUrl : 'views/clients/tab_imerchant.html'
       ]
 
+
       $scope.selectTab = (tabIndex) ->
         $scope.selectedTabIndex = tabIndex
         fetchTabData.tabFetchDataByIndex $scope.tabConfig[tabIndex]
@@ -161,7 +173,7 @@ angular.module('app.clients', [])
 
       # fakedata clients page
       fakeDT = fakeData.clients_data
-      $scope.clients_list = fakeDT.clients_list
+      #$scope.clients_list = fakeDT.clients_list
       $scope.dt_tab_company = fakeDT.clients_tab_company
       $scope.dt_tab_user_list = fakeDT.clients_tab_user_list
       $scope.clients_tab_user_uploads = fakeDT.clients_tab_user_uploads

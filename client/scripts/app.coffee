@@ -41,8 +41,8 @@ angular.module('app', [
 ])
     
 .config([
-    '$routeProvider'
-    ($routeProvider) ->
+    '$routeProvider', 'HateoasInterceptorProvider', 'HateoasInterfaceProvider', '$sceDelegateProvider',
+    ($routeProvider, HateoasInterceptorProvider, HateoasInterfaceProvider, $sceDelegateProvider) ->
 
         routes = [
             'dashboard'
@@ -72,4 +72,10 @@ angular.module('app', [
             .when('/', { redirectTo: '/merchants/list-merchant'} )
             .when('/404', { templateUrl: 'views/pages/404.html'} )
             .otherwise( redirectTo: '/404' )
+
+        #HateoasInterceptorProvider.transformAllResponses()
+        #HateoasInterfaceProvider.setLinksKey("_links")
+        #HateoasInterfaceProvider.setHalEmbedded("_embedded")
+        #$sceDelegateProvider.resourceUrlWhitelist(['self', /^https?:\/\/api.sg\-benefits.com/])
+        $sceDelegateProvider.resourceUrlWhitelist(['self', 'https://api.sg\-benefits.com/**', 'https://api.sg-benefits.com/organisations/1/handbooks/1'])
 ])

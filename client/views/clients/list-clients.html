@@ -19,8 +19,8 @@
                     </tr>
                     <tr ng-repeat="client in clients_list">
                         <td class="text-center">
-                            <a ng-click="fnEditClients()">
-                                {{client.company}}
+                            <a ng-click="fnEditClients(client)">
+                                {{client.name}}
                             </a>
                         </td>
                         <td class="text-center">{{client.status}}</td>
@@ -129,8 +129,8 @@
         <!-- END : CLIENTS LIST -->
         <div class="clients_edit"  ng-show="isEditClients">
             <h1 class="ttl-page">
-                Magenta Consulting Pte Ltd
-                <span class="sp-sts green">Active</span>
+                {{clientDetail.name}}
+                <span class="sp-sts green">{{clientDetail.status}}</span>
             </h1>
             <section class="panel panel-default table-dynamic">
                 <div class="panel-body">
