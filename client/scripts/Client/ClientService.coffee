@@ -1,7 +1,9 @@
 'use strict';
 
 angular.module('app.client.services', [])
-
+.factory('fetchUrl', ($resource) ->
+    return $resource(linkURL, {})
+)
 .factory('fetchTabData', [ '$http', '$q', '$resource', ($http, $q, $resource) ->
     return {
         tabFetchDataByIndex : (tabConfig) ->
@@ -22,14 +24,14 @@ angular.module('app.client.services', [])
             d.promise
         fetchMainData: (tabConfig) ->
             d = $q.defer()
-            User = $resource('https://api.sg-benefits.com/organisations', {}, {
+            Clients = $resource('https://api.sg-benefits.com/organisations', {}, {
                     get:{
                         method:"GET",
                         headers: { 'x-username': 'kenneth.yap@ap.magenta-consulting.com', 'x-password': 'p@ssword' }
                     }
                 }
             )
-            User.get({}, (data, getResponseHeaders) ->
+            Clients.get({}, (data, getResponseHeaders) ->
                 if data
                     d.resolve(data)
                 else
@@ -38,28 +40,21 @@ angular.module('app.client.services', [])
             d.promise
         fetchClient: (id) ->
             d = $q.defer()
-            $.ajax({
-                type: 'GET',
-                url: 'https://api.sg-benefits.com/organisations/' + id,
-                dataType: 'json',
-                headers: {
-                    'x-username': 'kenneth.yap@ap.magenta-consulting.com', 'x-password': 'p@ssword',
-                    'Access-Control-Allow-Methods': 'GET, PUT, POST, OPTIONS'
+            Client = $resource('https://api.sg-benefits.com/organisations/' + id, {}, {
+                    get:{
+                        method:"GET",
+                        headers: { 'x-username': 'kenneth.yap@ap.magenta-consulting.com', 'x-password': 'p@ssword' }
+                    }
                 }
-            }).done((res) ->
-                d.resolve(res)
             )
-            #$http({
-            #    method: 'GET'
-            #    url: 'https://api.sg-benefits.com/organisations/' + id
-            #    headers: { 'x-username': 'kenneth.yap@ap.magenta-consulting.com', 'x-password': 'p@ssword' }
-            #})
-            #.then (res) ->
-            #    d.resolve(res)
-            #, (error) ->
-            #    d.reject(error)
+            Client.get({}, (data, getResponseHeaders) ->
+                if data
+                    d.resolve(data)
+                else
+                    d.reject(error)
+            )
             d.promise
-        fetchLinkData: (linkURL) ->
+        fetchUrl: (linkURL) ->
             d = $q.defer()
             Resource = $resource(linkURL, {}, {
                     get:{

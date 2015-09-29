@@ -3,8 +3,8 @@
 angular.module('app.clients', [])
 
 .controller('clientCtrl', [
-    '$scope', '$filter' , 'fetchTabData', 'fakeData', 'HateoasInterface', '$location',
-    ($scope, $filter, fetchTabData, fakeData, HateoasInterface, $location) ->
+    '$scope', '$filter' , 'fetchTabData', 'fakeData', 'HateoasInterface', '$location', '$resource',
+    ($scope, $filter, fetchTabData, fakeData, HateoasInterface, $location, $resource) ->
     # filter
       $scope.stores = [
           {id: 1, company: 'BullWorks Pte Ltd', status: 'nverser', industry: 'AAA', users: 'Euro', estsaving: 'None', cs: 2,action: "Manage", }
@@ -67,7 +67,21 @@ angular.module('app.clients', [])
           $scope.select($scope.currentPage)
           fetchTabData.fetchMainData "0"
           .then  (data) ->
-            $scope.clients_list = data._embedded.items
+            $scope.clients_list = data.items
+            # console.log(data.items[0])
+            # data.items[0].resource("handbook")
+          Client = $resource('https://api.sg-benefits.com/organisations/1/handbooks/1')
+          Client.get (u, getResponseHeaders) ->
+           console.log(u)
+           u.title = 'test 1'
+           u.$save (u, putResponseHeaders) ->
+             console.log(putResponseHeaders)
+
+            # card = data._embedded.items[0]
+            # card.name = "Magenta Consulting Pte Ltd"
+            # Magenta Consulting Pte Ltd
+            # non GET methods are mapped onto the instances
+            # card.$save()
       init()
 
       # show preview
@@ -94,37 +108,29 @@ angular.module('app.clients', [])
       $scope.isEditClients = false
 
       params = $location.search()
-      console.log(params)
-      fetchTabData.fetchClient params.id
-      .then  (data) ->
-        $scope.clientDetail = data
-      #$scope.fnEditClients = (client) ->
-        #$scope.isEditClients = !$scope.isEditClients
-        #if !client.status
-        #  client.status = 'Active'
-        #$scope.clientDetail = client
-        #console.log($scope.clientDetail._links.handbook)
-        #fetchTabData.fetchLinkData $scope.clientDetail._links.handbook.href
-        #  .then  (data) ->
-        #    $scope.dt_tab_handbook_list = fakeDT.clients_tab_handbook_list
-
+      if params.id
+        fetchTabData.fetchClient params.id
+        .then  (data) ->
+          $scope.clientDetail = data
 
       # manage users
       $scope.isEditUser = false
       $scope.fnEditUser = ->
         $scope.isEditUser = !$scope.isEditUser
+
       $scope.isNewUser = false
       $scope.isUserUpload = false
       $scope.isDetailUpload = false
 
       # function edit
       $scope.clients_edit = "Edit"
-      $scope.CheckDisabled = ->
+      $scope.editClient = ->
         $scope.isDisable = !$scope.isDisable
         if $scope.isDisable
           $scope.clients_edit = "Update"
         else
           $scope.clients_edit = "Edit"
+
 
       # tabs config
       $scope.tabConfig = [

@@ -74,14 +74,12 @@ angular.module('app', [
             .when('/404', { templateUrl: 'views/pages/404.html'} )
             .otherwise( redirectTo: '/404' )
 
-        #HateoasInterceptorProvider.transformAllResponses()
-        #HateoasInterfaceProvider.setLinksKey("_links")
-        #HateoasInterfaceProvider.setHalEmbedded("_embedded")
-        #$sceDelegateProvider.resourceUrlWhitelist(['self', /^https?:\/\/api.sg\-benefits.com/])
-
-        $httpProvider.defaults.headers.common = {}
-        $httpProvider.defaults.headers.post = {}
-        $httpProvider.defaults.headers.put = {}
-        $httpProvider.defaults.headers.patch = {}
-        $sceDelegateProvider.resourceUrlWhitelist(['self', 'https://api.sg\-benefits.com/**', 'https://api.sg-benefits.com/organisations/1'])
+        HateoasInterceptorProvider.transformAllResponses()
+        HateoasInterfaceProvider.setLinksKey("_links")
+        HateoasInterfaceProvider.setHalEmbedded("_embedded")
+        $sceDelegateProvider.resourceUrlWhitelist(['self', 'https://api.sg-benefits.com/**'])
+        $httpProvider.defaults.headers.common = {
+            'x-username': 'kenneth.yap@ap.magenta-consulting.com'
+            'x-password': 'p@ssword'
+        }
 ])

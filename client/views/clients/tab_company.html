@@ -1,7 +1,7 @@
 <div class="col-md-8 col-sm-8 col-xs-12 cpn-left">
     <p class="clearfix">
         <span class="bt-edit"
-            ng-click="CheckDisabled()">{{clients_edit}}</span>
+            ng-click="editClient()">{{clients_edit}}</span>
     </p>
     <table class="table tbl table-striped">
         <tbody>
@@ -9,7 +9,7 @@
                 <td class="td-30">Company Reg Biz Name <span class="red">*</span>:</td>
                 <td>
                     <input type="text"
-                        value="{{dt_tab_company.company_name}}"
+                        value="{{clientDetail.name}}"
                         class="txt-ipt"
                         ng-disabled="!isDisable"
                         ng-class="{txt_disabled : !isDisable}">
@@ -19,7 +19,7 @@
                 <td class="td-30">Biz Reg No.</td>
                 <td>
                     <input type="text"
-                        value="{{dt_tab_company.company_no}}"
+                        value="{{clientDetail.reg_no}}"
                         class="txt-ipt"
                         ng-disabled="!isDisable"
                         ng-class="{txt_disabled : !isDisable}">
@@ -29,7 +29,7 @@
                 <td class="td-30">Address:</td>
                 <td>
                     <input type="text"
-                        value="{{dt_tab_company.address}}"
+                        value="{{clientDetail.billing_address}}"
                         class="txt-ipt"
                         ng-disabled="!isDisable"
                         ng-class="{txt_disabled : !isDisable}">
@@ -39,7 +39,7 @@
                 <td class="td-30">Unit Number:</td>
                 <td>
                     <input type="text"
-                        value="{{dt_tab_company.unit_number}}"
+                        value="{{clientDetail.code}}"
                         class="txt-ipt"
                         ng-disabled="!isDisable"
                         ng-class="{txt_disabled : !isDisable}">
@@ -49,7 +49,7 @@
                 <td class="td-30">Building Name:</td>
                 <td>
                     <input type="text"
-                        value="{{dt_tab_company.building_name}}"
+                        value="{{clientDetail.building_name}}"
                         class="txt-ipt"
                         ng-disabled="!isDisable"
                         ng-class="{txt_disabled : !isDisable}">
@@ -59,7 +59,7 @@
                 <td class="td-30">Postal Code:</td>
                 <td>
                     <input type="text"
-                        value="{{dt_tab_company.postal_code}}"
+                        value="{{clientDetail.postal_code}}"
                         class="txt-ipt"
                         ng-disabled="!isDisable"
                         ng-class="{txt_disabled : !isDisable}">
@@ -69,7 +69,7 @@
                 <td class="td-30">Business Type</td>
                 <td>
                     <input type="text"
-                        value="{{dt_tab_company.business_type}}"
+                        value="{{clientDetail.business_type}}"
                         class="txt-ipt"
                         ng-disabled="!isDisable"
                         ng-class="{txt_disabled : !isDisable}">
@@ -79,7 +79,7 @@
                 <td class="td-30">Office Number</td>
                 <td>
                     <input type="text"
-                        value="{{dt_tab_company.office_number}}"
+                        value="{{clientDetail.head_office_no}}"
                         class="txt-ipt"
                         ng-disabled="!isDisable"
                         ng-class="{txt_disabled : !isDisable}">
@@ -89,7 +89,7 @@
                 <td class="td-30">Admin User Email</td>
                 <td>
                     <input type="text"
-                        value="{{dt_tab_company.adm_email}}"
+                        value="{{clientDetail.reservation_email}}"
                         class="txt-ipt"
                         ng-disabled="!isDisable"
                         ng-class="{txt_disabled : !isDisable}">
@@ -102,7 +102,7 @@
                 <td class="td-30">Admin Contact No.</td>
                 <td>
                     <input type="text"
-                        value="{{dt_tab_company.adm_no}}"
+                        value="{{clientDetail.user_contact_no}}"
                         class="txt-ipt"
                         ng-disabled="!isDisable"
                         ng-class="{txt_disabled : !isDisable}">
@@ -112,7 +112,7 @@
                 <td class="td-30">Client Since</td>
                 <td>
                     <input type="text"
-                        value="{{dt_tab_company.client_since}}"
+                        value="{{clientDetail.client_since}}"
                         class="txt-ipt"
                         ng-disabled="!isDisable"
                         ng-class="{txt_disabled : !isDisable}">
@@ -122,7 +122,7 @@
                 <td class="td-30">Package Type</td>
                 <td>
                     <input type="text"
-                        value="{{dt_tab_company.package_type}}"
+                        value="{{clientDetail.package_type}}"
                         class="txt-ipt"
                         ng-disabled="!isDisable"
                         ng-class="{txt_disabled : !isDisable}">
@@ -136,7 +136,7 @@
     </h2>
     <form method="post">
         <div class="bnf-editor" id="editor_4" tinyeditor>
-            {{dt_tab_company.about_company}}
+            {{clientDetail.about_company}}
         </div>
     </form>
 </div>
@@ -151,7 +151,7 @@
             </tr>
             <tr>
                 <td class="text-center td-logo">
-                    <img src="{{dt_tab_company.logo}}" alt=""/>
+                    <img src="{{clientDetail.logo}}" alt=""/>
                     <i class="fa fa-times"></i>
                 </td>
             </tr>
