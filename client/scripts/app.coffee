@@ -16,6 +16,7 @@ angular.module('app', [
     'ngMap'
     'ngTagsInput'
     'duScroll'
+    'ui.tinymce'
 
     # Custom modules
     'app.constant'
