@@ -30,9 +30,10 @@
                         ng-checked="hb_list.public"/>
                 </td>
                 <td class="text-center td-manage">
+                    <a href="#/clients/{{clientDetail.id}}/handbooks/{{hb_list.id}}">
                     <i class="fa fa-edit" 
-                        title="Edit Handbook"
-                        ng-click="fnEditHandbook()"></i>
+                        title="Edit Handbook"></i>
+                    </a>
                     <i class="fa fa-trash-o" title="Remove Handbook"  deleteitem></i>
                 </td>
             </tr>
