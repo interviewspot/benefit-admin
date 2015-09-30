@@ -3,8 +3,8 @@
 angular.module('app.clients', [])
 
 .controller('clientCtrl', [
-    '$scope', '$filter' , 'fetchTabData', 'fakeData', 'HateoasInterface', '$location', '$resource',
-    ($scope, $filter, fetchTabData, fakeData, HateoasInterface, $location, $resource) ->
+    '$scope', '$filter' , 'fetchTabData', 'fakeData', '$location', 'clientService'
+    ($scope, $filter, fetchTabData, fakeData, $location, clientService) ->
     # filter
       $scope.stores = [
           {id: 1, company: 'BullWorks Pte Ltd', status: 'nverser', industry: 'AAA', users: 'Euro', estsaving: 'None', cs: 2,action: "Manage", }
@@ -65,23 +65,20 @@ angular.module('app.clients', [])
       init = ->
           $scope.search()
           $scope.select($scope.currentPage)
-          fetchTabData.fetchMainData "0"
-          .then  (data) ->
-            $scope.clients_list = data.items
-            # console.log(data.items[0])
-            # data.items[0].resource("handbook")
-          Client = $resource('https://api.sg-benefits.com/organisations/1/handbooks/1')
-          Client.get (u, getResponseHeaders) ->
-           console.log(u)
-           u.title = 'test 1'
-           u.$save (u, putResponseHeaders) ->
-             console.log(putResponseHeaders)
+          # fetchTabData.fetchMainData "0"
+          # .then  (data) ->
+          #   $scope.clients_list = data.items
+          
+          clientService.query {}, (clientData, getResponseHeaders) ->
+            $scope.clients_list = clientData.items
 
-            # card = data._embedded.items[0]
-            # card.name = "Magenta Consulting Pte Ltd"
-            # Magenta Consulting Pte Ltd
-            # non GET methods are mapped onto the instances
-            # card.$save()
+          # Client = $resource('https://api.sg-benefits.com/organisations/1/handbooks/1')
+          # Client.get (u, getResponseHeaders) ->
+          #   console.log(u)
+          #   u.title = 'test 1'
+          #   u.$save (u, putResponseHeaders) ->
+          #     console.log(putResponseHeaders)
+
       init()
 
       # show preview
@@ -109,9 +106,13 @@ angular.module('app.clients', [])
 
       params = $location.search()
       if params.id
-        fetchTabData.fetchClient params.id
-        .then  (data) ->
+        clientService.get {org_id:params.id}, (data, getResponseHeaders) ->
           $scope.clientDetail = data
+
+      $scope.$watch('clientDetail', (newValue, oldValue) ->
+        console.log(newValue)
+        console.log(oldValue)
+      )
 
       # manage users
       $scope.isEditUser = false
@@ -125,6 +126,7 @@ angular.module('app.clients', [])
       # function edit
       $scope.clients_edit = "Edit"
       $scope.editClient = ->
+        console.log($scope.clientDetail)
         $scope.isDisable = !$scope.isDisable
         if $scope.isDisable
           $scope.clients_edit = "Update"

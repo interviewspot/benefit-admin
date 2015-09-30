@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 angular.module('app', [
     # Angular modules
@@ -18,6 +18,7 @@ angular.module('app', [
     'duScroll'
 
     # Custom modules
+    'app.constant'
     'app.controllers'
     'app.directives'
     'app.localization'
@@ -37,6 +38,7 @@ angular.module('app', [
     'app.merchants'
     'app.clients'
     'app.client.services'
+    'app.handbook.services'
     #Khai bao app khi tao
 ])
     
