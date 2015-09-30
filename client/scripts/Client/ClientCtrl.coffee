@@ -124,7 +124,12 @@ angular.module('app.clients', [])
         else
           $scope.clients_edit = "Edit"
           clientService.update {org_id:params.id}, $scope.clientDetail
-            
+
+      # menu active
+      $scope.isActive = (path) ->
+        if $location.path() == path
+          return 'active'
+
       # tabs config
       $scope.tabConfig = [
         id: 'cpn'
