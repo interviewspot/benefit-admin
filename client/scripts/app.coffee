@@ -79,6 +79,24 @@ angular.module('app', [
             .when('/clients/:clientId', { 
                 templateUrl: 'views/clients/client.html'
             })
+            .when('/clients/:clientId/handbooks', { 
+                templateUrl: 'views/clients/client-handbook.html'
+            })
+            .when('/clients/:clientId/user', { 
+                templateUrl: 'views/clients/client-user.html'
+            })
+            .when('/clients/:clientId/policies', { 
+                templateUrl: 'views/clients/client-policies.html'
+            })
+            .when('/clients/:clientId/insurance', { 
+                templateUrl: 'views/clients/client-insurance.html'
+            })
+            .when('/clients/:clientId/healthcare', { 
+                templateUrl: 'views/clients/client-healthcare.html'
+            })
+            .when('/clients/:clientId/imerchant', { 
+                templateUrl: 'views/clients/client-imerchant.html'
+            })
             .when('/clients/:clientId/handbooks/:handbookId', { 
                 templateUrl: 'views/handbooks/handbook.html'
                 controller: 'HandbookdetailCtrl'

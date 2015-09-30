@@ -4,37 +4,11 @@
         <span class="sp-sts green">{{clientDetail.status}}</span>
     </h1>
     <section class="panel panel-default table-dynamic">
-        <div class="panel-body">
-            <tabset class="client-tabs lv1">
-                <tab heading="Company Info" ng-click="selectTab(0)">
-                    <div class="row" ng-include="'views/clients/tab_company.html'"></div>
-                </tab>
-                <!-- END: TAB -->
-                <tab heading="Users" ng-click="selectTab(1)">
-                    <div ng-include="'views/clients/tab_user.html'"></div>
-                </tab>
-                <!-- END: TAB -->
-                <tab heading="Handbook" ng-click="selectTab(2)">
-                    <div ng-include="'views/handbooks/tab_details.html'"></div>
-                </tab>
-                <!-- END: TAB -->
-                <tab heading="Policies" ng-click="selectTab(3)">
-                    <div ng-include="'views/clients/tab_policy.html'"></div>
-                </tab>
-                <!-- END: TAB -->
-                <tab heading="Insurance" ng-click="selectTab(4)">
-                    <div ng-include="'views/clients/tab_insurance.html'"></div>
-                </tab>
-                <!-- END: TAB -->
-                <tab heading="Healthcare" ng-click="selectTab(5)">
-                    <div ng-include="'views/clients/tab_healthcare.html'"></div>
-                </tab>
-                <!-- END: TAB -->
-                <tab heading="iMerchant" ng-click="selectTab(6)">
-                    <div ng-include="'views/clients/tab_imerchant.html'"></div>
-                </tab>
-                <!-- END: TAB -->
-            </tabset>
+        <div class="panel-body lv1">
+            <ul class="nav nav-tabs" ng-include="'views/clients/menu-tab.html'">
+            </ul>
+            <!-- END : MENU -->
+            <div ng-include="'views/handbooks/tab_details.html'"></div>
             <!-- END : TAB -->
         </div>
     </section>
