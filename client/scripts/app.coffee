@@ -40,6 +40,7 @@ angular.module('app', [
     'app.clients'
     'app.client.services'
     'app.handbook.services'
+    'app.handbook.sections.services'
     #Khai bao app khi tao
 ])
     

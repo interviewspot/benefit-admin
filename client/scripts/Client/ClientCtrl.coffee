@@ -102,7 +102,6 @@ angular.module('app.clients', [])
           if data._links.handbook
             fetchHandbook.get(data._links.handbook).then  (res) ->
               $scope.handbooks = []
-              console.log res.data
               $scope.handbooks.push(res.data)
           $scope.clientDetail = data
 
@@ -160,16 +159,16 @@ angular.module('app.clients', [])
       # tabs child config
       $scope.tabChildConfig = [
         id : 'hi'
-        baseUrl : 'views/clients/tab_handbook_info.html'
+        baseUrl : 'views/handbooks/tab_handbook_info.html'
       ,
         id : 'hg' 
-        baseUrl : 'views/clients/tab_handbook_general.html'
+        baseUrl : 'views/handbooks/tab_handbook_general.html'
       ,
         id : 'hs' 
-        baseUrl : 'views/clients/tab_handbook_section.html'
+        baseUrl : 'views/handbooks/tab_handbook_section.html'
       ,
         id : 'hc' 
-        baseUrl : 'views/clients/tab_handbook_contact.html'
+        baseUrl : 'views/handbooks/tab_handbook_contact.html'
       ]
       $scope.selectTabChild = (tabIndex) ->
         $scope.selectedTabIndex = tabIndex

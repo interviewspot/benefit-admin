@@ -8,7 +8,7 @@
  # Controller of the transformApp
 ###
 angular.module 'app.controllers'
-.controller('HandbookdetailCtrl', [ '$scope', '$routeParams', 'handbookService', 'clientService', ($scope, $routeParams, handbookService, clientService) ->
+.controller('HandbookdetailCtrl', [ '$scope', '$routeParams', 'handbookService', 'clientService', 'sectionService', ($scope, $routeParams, handbookService, clientService, sectionService) ->
 	$scope.clientId = $routeParams.clientId
 	$scope.handbookId = $routeParams.handbookId
 
@@ -27,4 +27,8 @@ angular.module 'app.controllers'
 				updateData.handbook['organisation'] = $scope.clientId
 				handbookService.update {org_id:$scope.clientId, hand_id:$scope.handbookId}, updateData
 		), true
+
+	sectionService.query {org_id:$scope.clientId, hand_id:$scope.handbookId}, (data, getResponseHeaders) ->
+		console.log data
+		$scope.allSections = data
 ])
