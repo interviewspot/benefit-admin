@@ -13,6 +13,9 @@ angular.module('app.client.services', [])
             query:{
                 method:"GET",
                 action: config.path.baseURL + config.path.clients,
+            },
+            update:{
+                method:"PUT"
             }
     	}
 	)

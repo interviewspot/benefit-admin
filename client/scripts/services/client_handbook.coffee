@@ -13,10 +13,32 @@
 
 angular.module('app.handbook.services', [])
 
-.factory 'Handbook', ($resource) ->
-	return $resource mainConfig.path.baseURL + mainConfig.path.handbook, {organisation_id:1, handbook_id:1}, {
-		query: {
-			action: mainConfig.path.baseURL + mainConfig.path.handbooks
-			method: 'GET'
-		}
-	}
+.factory 'handbookService', ($resource, config) ->
+	service = $resource(config.path.baseURL + config.path.handbook, {}, {
+            query:{
+                method:"GET",
+                action: config.path.baseURL + config.path.handbooks,
+            },
+            update:{
+                method:"PUT"
+            }
+    	}
+	)
+	return service
+.factory('fetchHandbook', [ '$http', '$q', '$resource', ($http, $q, $resource) ->
+    return {
+        get : (url) ->
+            d = $q.defer()
+
+            $http({
+                method: 'GET',
+                url: url
+            })
+            .then (res) ->
+                d.resolve(res)
+            , (error) ->
+                d.reject(error)
+
+            d.promise
+    }
+])

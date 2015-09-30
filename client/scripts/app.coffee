@@ -74,6 +74,10 @@ angular.module('app', [
         $routeProvider
             .when('/', { redirectTo: '/merchants/list-merchant'} )
             .when('/404', { templateUrl: 'views/pages/404.html'} )
+            .when('/clients/:clientId/handbooks/:handbookId', { 
+                templateUrl: 'views/handbooks/details.html'
+                controller: 'HandbookdetailCtrl'
+            })
             .otherwise( redirectTo: '/404' )
 
         HateoasInterceptorProvider.transformAllResponses()

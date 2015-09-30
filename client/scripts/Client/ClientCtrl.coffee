@@ -3,8 +3,8 @@
 angular.module('app.clients', [])
 
 .controller('clientCtrl', [
-    '$scope', '$filter' , 'fetchTabData', 'fakeData', '$location', 'clientService'
-    ($scope, $filter, fetchTabData, fakeData, $location, clientService) ->
+    '$scope', '$filter' , 'fetchTabData', 'fakeData', '$location', 'clientService', 'fetchHandbook'
+    ($scope, $filter, fetchTabData, fakeData, $location, clientService, fetchHandbook) ->
     # filter
       $scope.stores = [
           {id: 1, company: 'BullWorks Pte Ltd', status: 'nverser', industry: 'AAA', users: 'Euro', estsaving: 'None', cs: 2,action: "Manage", }
@@ -71,7 +71,17 @@ angular.module('app.clients', [])
           
           clientService.query {}, (clientData, getResponseHeaders) ->
             $scope.clients_list = clientData.items
-
+          # Client = $resource('https://api.sg-benefits.com/organisations/1', {}, {
+          #   update: {
+          #     method: 'PUT'
+          #   }
+          # })
+          # updateClient = {
+          #   "organisation" : {
+          #     name: 'client 1'
+          #   }
+          # }
+          # Client.update({}, updateClient)
           # Client = $resource('https://api.sg-benefits.com/organisations/1/handbooks/1')
           # Client.get (u, getResponseHeaders) ->
           #   console.log(u)
@@ -107,12 +117,13 @@ angular.module('app.clients', [])
       params = $location.search()
       if params.id
         clientService.get {org_id:params.id}, (data, getResponseHeaders) ->
+          if data._links.handbook
+            fetchHandbook.get(data._links.handbook).then  (res) ->
+              $scope.handbooks = []
+              console.log res.data
+              $scope.handbooks.push(res.data)
           $scope.clientDetail = data
 
-      $scope.$watch('clientDetail', (newValue, oldValue) ->
-        console.log(newValue)
-        console.log(oldValue)
-      )
 
       # manage users
       $scope.isEditUser = false
@@ -126,14 +137,13 @@ angular.module('app.clients', [])
       # function edit
       $scope.clients_edit = "Edit"
       $scope.editClient = ->
-        console.log($scope.clientDetail)
         $scope.isDisable = !$scope.isDisable
         if $scope.isDisable
           $scope.clients_edit = "Update"
         else
           $scope.clients_edit = "Edit"
-
-
+          clientService.update {org_id:params.id}, $scope.clientDetail
+            
       # tabs config
       $scope.tabConfig = [
         id: 'cpn'
