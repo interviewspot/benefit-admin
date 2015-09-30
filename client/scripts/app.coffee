@@ -75,8 +75,11 @@ angular.module('app', [
         $routeProvider
             .when('/', { redirectTo: '/merchants/list-merchant'} )
             .when('/404', { templateUrl: 'views/pages/404.html'} )
+            .when('/clients/:clientId', { 
+                templateUrl: 'views/clients/client.html'
+            })
             .when('/clients/:clientId/handbooks/:handbookId', { 
-                templateUrl: 'views/handbooks/details.html'
+                templateUrl: 'views/handbooks/handbook.html'
                 controller: 'HandbookdetailCtrl'
             })
             .otherwise( redirectTo: '/404' )

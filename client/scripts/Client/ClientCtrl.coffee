@@ -3,8 +3,8 @@
 angular.module('app.clients', [])
 
 .controller('clientCtrl', [
-    '$scope', '$filter' , 'fetchTabData', 'fakeData', '$location', 'clientService', 'fetchHandbook'
-    ($scope, $filter, fetchTabData, fakeData, $location, clientService, fetchHandbook) ->
+    '$scope', '$filter' , 'fetchTabData', 'fakeData', '$location', 'clientService', 'fetchHandbook', '$routeParams'
+    ($scope, $filter, fetchTabData, fakeData, $location, clientService, fetchHandbook, $routeParams) ->
     # filter
       $scope.stores = [
           {id: 1, company: 'BullWorks Pte Ltd', status: 'nverser', industry: 'AAA', users: 'Euro', estsaving: 'None', cs: 2,action: "Manage", }
@@ -71,23 +71,6 @@ angular.module('app.clients', [])
           
           clientService.query {}, (clientData, getResponseHeaders) ->
             $scope.clients_list = clientData.items
-          # Client = $resource('https://api.sg-benefits.com/organisations/1', {}, {
-          #   update: {
-          #     method: 'PUT'
-          #   }
-          # })
-          # updateClient = {
-          #   "organisation" : {
-          #     name: 'client 1'
-          #   }
-          # }
-          # Client.update({}, updateClient)
-          # Client = $resource('https://api.sg-benefits.com/organisations/1/handbooks/1')
-          # Client.get (u, getResponseHeaders) ->
-          #   console.log(u)
-          #   u.title = 'test 1'
-          #   u.$save (u, putResponseHeaders) ->
-          #     console.log(putResponseHeaders)
 
       init()
 
@@ -114,9 +97,8 @@ angular.module('app.clients', [])
       # manage clients
       $scope.isEditClients = false
 
-      params = $location.search()
-      if params.id
-        clientService.get {org_id:params.id}, (data, getResponseHeaders) ->
+      if $routeParams.clientId
+        clientService.get {org_id:$routeParams.clientId}, (data, getResponseHeaders) ->
           if data._links.handbook
             fetchHandbook.get(data._links.handbook).then  (res) ->
               $scope.handbooks = []
