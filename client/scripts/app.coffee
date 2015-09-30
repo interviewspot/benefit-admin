@@ -58,7 +58,7 @@ angular.module('app', [
             'tasks/tasks'
             'merchants/list-merchant', 'merchants/add', 'merchants/view', 'merchants/company', 'merchants/edit_company'
             'clients/list-clients', 'clients/add', 'clients/view', 'clients/company', 'clients/edit_company','clients/create-new-handbook','clients/tab-view',
-            'clients/client'
+            'clients/client', 'clients/client-user', 'clients/client-handbook', 'clients/client-policies', 'clients/client-insurance', 'clients/client-healthcare', 'clients/client-imerchant'
         ]
 
         setRoutes = (route) ->

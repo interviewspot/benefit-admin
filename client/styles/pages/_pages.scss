@@ -597,6 +597,9 @@ h2.ttl-tab {
     	float: right;
 	}
 }
+.clients_edit {
+	padding: 15px;
+}
 /* CSS OVERIDE BOOTSTRAP */
 .tab-pane {
 	padding: 15px 0;
@@ -604,6 +607,7 @@ h2.ttl-tab {
 .lv1 {
 	> .nav-tabs {
 		background-color: #f9f9f9;
+		margin-bottom: 20px;
 		> li {
 			> a {
 				@include border-radius(0px);
