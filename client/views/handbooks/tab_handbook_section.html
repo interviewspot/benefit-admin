@@ -52,18 +52,27 @@
                     </td>
                 </tr>
 
-                <tr class="tr-hover" ng-repeat="section in allSections" ng-click="loadSection(section)">
-                    <td class="td-20 ">{{section.title}}</td>
-                    <td colspan="2" ng-if="section._links.children">
-                        <span ng-bind-html="section.description"></span>
-                        <span class="tbl-remove">
+                <tr class="tr-hover" ng-repeat="(key, section) in allSections">
+                    <!-- Parent section -->
+                    <td class="td-20 " ng-if="!section._links.parent">Section {{section.version}}</td>
+                    <td colspan="2" ng-if="!section._links.parent">
+                        <span ng-bind-html="section.title"></span>
+                        <span class="tbl-edit" ng-click="loadSection(section)">
+                            <i class="fa fa-pencil-square-o"></i>
+                        </span>
+                        <span class="tbl-remove" ng-click="deleteSection(section)">
                             <i class="fa fa-trash-o"></i>
                         </span>
                     </td>
+                    <!-- Child section -->
+                    <td class="td-20 " ng-if="section._links.parent">Subsection</td>
                     <td class="text-center" ng-if="section._links.parent">{{section.version}}</td>
                     <td ng-if="section._links.parent">
-                        <span ng-bind-html="section.description"></span>
-                        <span class="tbl-remove">
+                        <span ng-bind-html="section.title"></span>
+                        <span class="tbl-edit" ng-click="loadSection(section)">
+                            <i class="fa fa-pencil-square-o"></i>
+                        </span>
+                        <span class="tbl-remove" ng-click="deleteSection(section)">
                             <i class="fa fa-trash-o"></i>
                         </span>
                     </td>
