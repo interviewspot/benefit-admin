@@ -77,6 +77,9 @@ angular.module('app', [
         $routeProvider
             .when('/', { redirectTo: '/merchants/list-merchant'} )
             .when('/404', { templateUrl: 'views/pages/404.html'} )
+            .when('/clients/:clientId/handbooks/:handbookId', {
+                templateUrl: 'views/handbooks/handbook.html'
+            })
             .when('/clients/:clientId', { 
                 templateUrl: 'views/clients/client.html'
             })
@@ -98,10 +101,7 @@ angular.module('app', [
             .when('/clients/:clientId/imerchant', { 
                 templateUrl: 'views/clients/client-imerchant.html'
             })
-            .when('/clients/:clientId/handbooks/:handbookId', { 
-                templateUrl: 'views/handbooks/handbook.html'
-                controller: 'HandbookdetailCtrl'
-            })
+
             .otherwise( redirectTo: '/404' )
 
         HateoasInterceptorProvider.transformAllResponses()

@@ -4,7 +4,6 @@
                                                         Preview
                                                     </span>
         <div class="sec-itm blk-preview" ng-show="!isForward">
-            <form name="cateForm" class="form" ng-submit="submit()" ng-controller="SectionFormController">
                 <table class="table tbl table-striped">
                     <tbody>
                         <tr>
@@ -36,14 +35,12 @@
                     </tbody>
                 </table>
                 <!-- END : TBL -->
-            
-                <textarea ui-tinymce ng-model="formSection.description">{{formSection.description}}</textarea>
+                <div text-angular ng-model="formSection.description"></div>
+                <!-- <textarea ui-tinymce data-ng-model="formSection.description"></textarea> -->
+                <!-- END : EDITOR -->
                 <p class="tp-20">
-                    <a ng-click="submit()" class="save btn-brown"><i class="fa fa-save"></i>&nbsp;SAVE
-                    </a>
+                    <a ng-click="submitSection()" class="save btn-brown"><i class="fa fa-save"></i>&nbsp;SAVE</a>
                 </p>
-            </form>
-            <!-- END : EDITOR -->
         </div>
         <!-- END : FORWARD -->
     </div>
@@ -59,19 +56,18 @@
                 <tr class="tr-hover" ng-repeat="section in allSections" ng-click="loadSection(section)">
                     <td class="td-20 ">{{section.title}}</td>
                     <td colspan="2" ng-if="section._links.children">
-                        {{section.description}}
+                        <span ng-bind-html="section.description"></span>
                         <span class="tbl-remove">
                             <i class="fa fa-trash-o"></i>
                         </span>
                     </td>
-                    <td ng-if="section._links.parent">{{section.version}}</td>
+                    <td class="text-center" ng-if="section._links.parent">{{section.version}}</td>
                     <td ng-if="section._links.parent">
-                        {{section.description}}
+                        <span ng-bind-html="section.description"></span>
                         <span class="tbl-remove">
                             <i class="fa fa-trash-o"></i>
                         </span>
                     </td>
-
                 </tr>
                 
             </tbody>
