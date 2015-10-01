@@ -34,7 +34,7 @@ angular.module('app.handbook.sections.services', [])
             }
             saveChild:{
                 method:"POST"
-                action: config.path.baseURL + config.path.section_children
+                action: config.path.baseURL + config.path.sections
             }
     	}
 	)

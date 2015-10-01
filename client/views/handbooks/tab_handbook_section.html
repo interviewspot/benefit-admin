@@ -24,7 +24,7 @@
                                 <input type="text" ng-model="formSection.version" class="txt-ipt"/>
                             </td>
                         </tr>
-                        <tr ng-if="isCreateSubSection">
+                        <tr>
                             <td class="td-20 td-bold">Section Parent:</td>
                             <td>
                                 <select  ng-model="parentSelect" ng-change="changedValue(parentSelect)" 
@@ -53,72 +53,31 @@
                     <div class="t-td text-center t-ct">Handbook Contents</div>
                 </div>
             </div>
-            <div class="tbl-r sc-itm" ng-repeat="(key, section) in allSections">
+            <div class="tbl-r sc-itm" ng-repeat="(key, section) in allSections" ng-click="editSection(section)">
                 <div class="t-tr" ng-if="!section._links.parent">
-                    <div class="t-td t-3">Section {{key}}</div>
+                    <div class="t-td t-3">Section {{section.no}}</div>
                     <div class="t-td t-ct" ng-bind-html="section.title"></div>
-                    <span class="tbl-edit" ng-click="editSection(section)">
+                    <!-- <span class="tbl-edit" ng-click="editSection(section)">
                         <i class="fa fa-pencil-square-o"></i>
-                    </span>
+                    </span> -->
                     <span class="tbl-remove" ng-click="deleteSection(section)">
                         <i class="fa fa-trash-o"></i>
                     </span>
                 </div>
                 <div class="t-tr" ng-if="section._links.parent">
                     <div class="t-td t-3">Sub-section</div>
-                    <div class="t-td t-2">2.{{section._links.parent.id}}</div>
+                    <div class="t-td t-2">{{section.parent_no}}.{{section.no}}</div>
                     <div class="t-td t-ct" ng-bind-html="section.title"></div>
-                    <span class="tbl-edit" ng-click="editSection(section)">
+                    <!-- <span class="tbl-edit" >
                         <i class="fa fa-pencil-square-o"></i>
-                    </span>
+                    </span> -->
                     <span class="tbl-remove" ng-click="deleteSection(section)">
                         <i class="fa fa-trash-o"></i>
                     </span>
                 </div>
-
             </div>
-
-
         </div><!-- END: TBL-div -->
 
-        <!--
-        <table class="table tbl tbl-small table-striped">
-            <tbody>
-                <tr>
-                    <td class="text-center td-bold" colspan="3">
-                        Handbook Contents
-                    </td>
-                </tr>
-
-                <tr class="tr-hover" ng-repeat="(key, section) in allSections">
-
-                    <td class="td-20 " ng-if="!section._links.parent">Section {{section.version}}</td>
-                    <td colspan="2" ng-if="!section._links.parent">
-                        <span ng-bind-html="section.title"></span>
-                        <span class="tbl-edit" ng-click="editSection(section)">
-                            <i class="fa fa-pencil-square-o"></i>
-                        </span>
-                        <span class="tbl-remove" ng-click="deleteSection(section)">
-                            <i class="fa fa-trash-o"></i>
-                        </span>
-                    </td>
-
-                    <td class="td-20 " ng-if="section._links.parent">Subsection</td>
-                    <td class="text-center" ng-if="section._links.parent">{{section.version}}</td>
-                    <td ng-if="section._links.parent">
-                        <span ng-bind-html="section.title"></span>
-                        <span class="tbl-edit" ng-click="editSection(section)">
-                            <i class="fa fa-pencil-square-o"></i>
-                        </span>
-                        <span class="tbl-remove" ng-click="deleteSection(section)">
-                            <i class="fa fa-trash-o"></i>
-                        </span>
-                    </td>
-                </tr>
-                
-            </tbody>
-        </table>
-        END : TBL -->
         <div class="section-control">
             <a ng-click="createSubSction(true)">
                 Add Sub-Section
@@ -137,40 +96,19 @@
             <img src="images/logo-demo.png" alt="">
         </div>
         <h3 class="ttl-prv">
-            Magenta Consulting Employee Handbook
+            {{clientDetail.name}}
         </h3>
-        <span class="ver-prv">Version 1.4,  16 June 2015, English Version</span>
-        <div class="prv-desc">We have specially prepared this Handbook to explain and help you better understand Bullwork’s Human Resource policies, compensation and benefits programs, as well as our corporate rules and regulations.</div>
-        <div class="clp-title" ng-click="isForward = !isForward">
-            1. Forward
-        </div>
-        <div class="clp-content" collapse="!isForward">
-            Demo Forward 1
-        </div>
-        <div class="clp-title" ng-click="isTerms = !isTerms">
-            2. Terms & Conditions of Employment
-        </div>
-        <div class="clp-content" collapse="!isTerms">
-            Demo Terms & Conditions of Employment
-        </div>
-        <div class="clp-title" ng-click="isCode = !isCode">
-            3. Code Of Conduct
-        </div>
-        <div class="clp-content" collapse="isCode">
-            <p>
-                <span>3.1 - Attendance & Punctuality </span>
-            </p>
-            <p>Absenteeism and tardiness place a burden on other employees and the Company. You are expected to observe punctuality and regularity of attendance at the workplace. Should you be unable to report for work within the first 15 minutes of the start time, your Supervisor must be notified in advance.</p>
-            <p>
-                <span>3.2 - Personal Appearance </span>
-            </p>
-            <p>
-                <span>3.3 - Personal Property</span>
-            </p>
-            <p>
-                <span>3.4 - Confidentiality </span>
-            </p>
-        </div>
+        <span class="ver-prv">Version {{handbook.version}},  {{handbook.year}}, {{handbook.language}} Version</span>
+        <div class="prv-desc" ng-bind-html="handbook.description"></div>
+        <accordion close-others="oneAtATime">
+            <accordion-group heading="{{key + 1}}. {{section.title}}" ng-repeat="(key, section) in ungroupSections">
+                <span ng-bind-html="section.description" ng-if="section.children.length == 0"></span>
+                <div ng-if="section.children.length > 0 && child.id > 0" ng-repeat="(k, child) in section.children">
+                    <strong>{{key + 1}}.{{k + 1}} - {{child.title}}</strong>
+                    <span ng-bind-html="child.description"></span>
+                </div>
+            </accordion-group>
+        </accordion>
     </div>
 </div>
 <!-- END : ITEM -->

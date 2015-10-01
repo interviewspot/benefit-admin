@@ -19,11 +19,7 @@ angular.module('app.clients', [])
           start = (page - 1) * $scope.numPerPage
           end = start + $scope.numPerPage
           $scope.currentPageStores = $scope.filteredStores.slice(start, end)
-      # console.log start
-      # console.log end
-      # console.log $scope.currentPageStores
-
-      # on page change: change numPerPage, filtering string
+      
       $scope.onFilterChange = ->
           $scope.select(1)
           $scope.currentPage = 1
@@ -56,21 +52,13 @@ angular.module('app.clients', [])
       $scope.numPerPage = $scope.numPerPageOpt[2]
       $scope.currentPage = 1
       $scope.currentPageStores = []
-      #CREATE NEW HANDBOOK
-    #          test = (x) ->
-    #              y = 10
-    #              z = x + y
-    #          alert test 5
+      
       # init
       init = ->
           $scope.search()
           $scope.select($scope.currentPage)
-          # fetchTabData.fetchMainData "0"
-          # .then  (data) ->
-          #   $scope.clients_list = data.items
-          
           clientService.query {}, (clientData, getResponseHeaders) ->
-            $scope.clients_list = clientData.items
+            $scope.clients_list = clientData._embedded.items
 
       init()
 
@@ -100,7 +88,7 @@ angular.module('app.clients', [])
       if $routeParams.clientId
         clientService.get {org_id:$routeParams.clientId}, (data, getResponseHeaders) ->
           if data._links.handbook
-            fetchHandbook.get(data._links.handbook).then  (res) ->
+            fetchHandbook.get(data._links.handbook.href).then  (res) ->
               $scope.handbooks = []
               $scope.handbooks.push(res.data)
           $scope.clientDetail = data

@@ -27,10 +27,10 @@ angular.module 'app.controllers'
 				updateData.handbook['organisation'] = $scope.clientId
 				handbookService.update {org_id:$scope.clientId, hand_id:$scope.handbookId}, updateData
 		), true
-	loadSections = ->
+	$scope.loadSections = ->
 		sectionService.query {org_id:$scope.clientId, hand_id:$scope.handbookId}, (data, getResponseHeaders) ->
-			# $scope.allSections = orderSections(data)
-			$scope.allSections = data
+			$scope.ungroupSections = orderSections(data)
+			$scope.allSections = ungroupSection($scope.ungroupSections)
 			# console.log $scope.allSections[1].children
 			$scope.parentSection = []
 			for i in [0 .. data.length-1]
@@ -40,7 +40,7 @@ angular.module 'app.controllers'
 						title: data[i].title
 						_links: data[i]._links	
 					})
-	loadSections()
+	$scope.loadSections()
 
 	orderSections = (items) ->
 		newList = []
@@ -57,9 +57,19 @@ angular.module 'app.controllers'
 		for j, item of newList
 			newList[j].children = newList[j].children.sort(sectionCompare)
 		newList.sort(sectionCompare)
-
+		
 		return newList
-
+	ungroupSection = (items) ->
+		returnList = []
+		for j, item of items
+			item.no = parseInt(j)+1
+			returnList.push(item)
+			if item.children.length > 0
+				for k, child of item.children
+					child.parent_no = item.no
+					child.no = parseInt(k)+1
+					returnList.push(child)
+		return returnList
 	sectionCompare = (a,b) ->
 		if (a.version < b.version)
 			return -1;
@@ -82,6 +92,7 @@ angular.module 'app.controllers'
 			$scope.parentSelect = section._links.parent.id
 		else
 			$scope.isCreateSubSection = false
+			$scope.parentSelect = null
 		$scope.isUpdate = true
 	$scope.changedValue = (id) ->
     	$scope.parentSelect = id
@@ -89,6 +100,13 @@ angular.module 'app.controllers'
 	$scope.createSubSction = (isSub) ->
 		$scope.isUpdate = false
 		$scope.isCreateSubSection = isSub
+		$scope.formSection = {
+			description: ''
+			title: ''
+			version: ''
+			status: ''
+		}
+		$scope.parentSelect = null
 
 	$scope.formSection = {
 		description: ''
@@ -98,8 +116,8 @@ angular.module 'app.controllers'
 	}
 	#delete section function
 	$scope.deleteSection = (section) ->
-		sectionService.delete {org_id:$scope.clientId, hand_id:$scope.handbookId, section_id:section.id}
-		loadSections()
+		sectionService.delete {org_id:$scope.clientId, hand_id:$scope.handbookId, section_id:section.id}, (res)->
+			$scope.loadSections()
 
 	$scope.parentSelect = null
 	$scope.submitSection = () ->
@@ -112,18 +130,19 @@ angular.module 'app.controllers'
 				parent: $scope.parentSelect
 			}
 		}
-		console.log $scope.parentSelect
+
 		if $scope.formSection.status = 'Active'
 			sectionItem.section.active = true
 		else
 			sectionItem.section.active = false
 		if $scope.isUpdate == true
-			sectionService.update {org_id:$scope.clientId, hand_id:$scope.handbookId, section_id:$scope.formSection.id}, sectionItem
+			sectionService.update {org_id:$scope.clientId, hand_id:$scope.handbookId, section_id:$scope.formSection.id}, sectionItem, (res)->
+				$scope.loadSections()
 		else
 			if $scope.isCreateSubSection == true && $scope.isUpdate == false
-				sectionService.saveChild {org_id:$scope.clientId, hand_id:$scope.handbookId, section_id:$scope.formSection.id}, sectionItem
-				loadSections()
+				sectionService.saveChild {org_id:$scope.clientId, hand_id:$scope.handbookId}, (res)->
+	      			$scope.loadSections()
 			if $scope.isCreateSubSection == false && $scope.isUpdate == false
-				sectionService.save {org_id:$scope.clientId, hand_id:$scope.handbookId}, sectionItem
-				loadSections()
+				sectionService.save {org_id:$scope.clientId, hand_id:$scope.handbookId}, sectionItem, (res)->
+	      			$scope.loadSections()
 ])
