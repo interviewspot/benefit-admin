@@ -27,8 +27,9 @@
                         <tr ng-if="isCreateSubSection">
                             <td class="td-20 td-bold">Section Parent:</td>
                             <td>
-                                <select name="parent" id="parent" ng-model="parentSelect">
-                                    <option ng-repeat="option in parentSection" value="{{option.id}}">{{option.title}}</option>
+                                <select  ng-model="parentSelect" ng-change="changedValue(parentSelect)" 
+                                     data-ng-options="option.id as option.title for option in parentSection">
+                                    <option value="">Select Parent</option>
                                 </select>
                             </td>
                         </tr>
@@ -58,7 +59,7 @@
                     <td class="td-20 " ng-if="!section._links.parent">Section {{section.version}}</td>
                     <td colspan="2" ng-if="!section._links.parent">
                         <span ng-bind-html="section.title"></span>
-                        <span class="tbl-edit" ng-click="loadSection(section)">
+                        <span class="tbl-edit" ng-click="editSection(section)">
                             <i class="fa fa-pencil-square-o"></i>
                         </span>
                         <span class="tbl-remove" ng-click="deleteSection(section)">
@@ -70,13 +71,31 @@
                     <td class="text-center" ng-if="section._links.parent">{{section.version}}</td>
                     <td ng-if="section._links.parent">
                         <span ng-bind-html="section.title"></span>
-                        <span class="tbl-edit" ng-click="loadSection(section)">
+                        <span class="tbl-edit" ng-click="editSection(section)">
                             <i class="fa fa-pencil-square-o"></i>
                         </span>
                         <span class="tbl-remove" ng-click="deleteSection(section)">
                             <i class="fa fa-trash-o"></i>
                         </span>
                     </td>
+
+                    <!-- <td ng-if="section.children.length > 0">
+                        <table>
+                            <tr ng-if="child.id" ng-repeat="child in section.children">
+                                <td class="td-20 ">Subsection</td>
+                                <td class="text-center">{{child.version}}</td>
+                                <td>
+                                    <span ng-bind-html="child.title"></span>
+                                    <span class="tbl-edit" ng-click="editSection(child)">
+                                        <i class="fa fa-pencil-square-o"></i>
+                                    </span>
+                                    <span class="tbl-remove" ng-click="deleteSection(child)">
+                                        <i class="fa fa-trash-o"></i>
+                                    </span>
+                                </td>
+                            </tr>
+                        </table>
+                    </td> -->
                 </tr>
                 
             </tbody>

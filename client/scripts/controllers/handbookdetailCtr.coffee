@@ -29,11 +29,12 @@ angular.module 'app.controllers'
 		), true
 	loadSections = ->
 		sectionService.query {org_id:$scope.clientId, hand_id:$scope.handbookId}, (data, getResponseHeaders) ->
+			# $scope.allSections = orderSections(data)
 			$scope.allSections = data
-			console.log data
+			# console.log $scope.allSections[1].children
 			$scope.parentSection = []
 			for i in [0 .. data.length-1]
-				if data[i]._links.children && data[i]
+				if !data[i]._links.parent && data[i]
 					$scope.parentSection.push({
 						id: data[i].id
 						title: data[i].title
@@ -41,20 +42,50 @@ angular.module 'app.controllers'
 					})
 	loadSections()
 
+	orderSections = (items) ->
+		newList = []
+		for i in [0 .. items.length-1]
+			if !items[i]._links.parent
+				items[i].children = []
+				newList.push(items[i])
+		for i in [0 .. items.length-1]
+			if items[i]._links.parent
+				for j, item of newList
+					if newList[j].id == items[i]._links.parent.id
+						newList[j].children[items[i].version] = items[i]	
+
+		for j, item of newList
+			newList[j].children = newList[j].children.sort(sectionCompare)
+		newList.sort(sectionCompare)
+
+		return newList
+
+	sectionCompare = (a,b) ->
+		if (a.version < b.version)
+			return -1;
+		if (a.version > b.version)
+			return 1;
+		return 0;
+
+
 	$scope.isUpdate = false
 	$scope.isCreateSubSection = false
-	$scope.loadSection = (section) ->
+	$scope.editSection = (section) ->
 		if section.active = true
 			section.status = 'Active'
 		else
 			section.active = 'Disabled'
 		$scope.formSection = section
-		if section.children
-			$scope.isCreateSubSection = false
-		if section.parent
+
+		if section._links.parent
 			$scope.isCreateSubSection = true
+			$scope.parentSelect = section._links.parent.id
+		else
+			$scope.isCreateSubSection = false
 		$scope.isUpdate = true
-	$scope.isCreateSubSection = false
+	$scope.changedValue = (id) ->
+    	$scope.parentSelect = id
+    
 	$scope.createSubSction = (isSub) ->
 		$scope.isUpdate = false
 		$scope.isCreateSubSection = isSub
@@ -81,7 +112,7 @@ angular.module 'app.controllers'
 				parent: $scope.parentSelect
 			}
 		}
-		
+		console.log $scope.parentSelect
 		if $scope.formSection.status = 'Active'
 			sectionItem.section.active = true
 		else

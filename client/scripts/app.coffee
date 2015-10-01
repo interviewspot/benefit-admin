@@ -104,9 +104,9 @@ angular.module('app', [
 
             .otherwise( redirectTo: '/404' )
 
-        HateoasInterceptorProvider.transformAllResponses()
-        HateoasInterfaceProvider.setLinksKey("_links")
-        HateoasInterfaceProvider.setHalEmbedded("_embedded")
+        # HateoasInterceptorProvider.transformAllResponses()
+        # HateoasInterfaceProvider.setLinksKey("_links")
+        # HateoasInterfaceProvider.setHalEmbedded("_embedded")
         $sceDelegateProvider.resourceUrlWhitelist(['self', 'https://api.sg-benefits.com/**'])
         $httpProvider.defaults.headers.common = {
             'x-username': 'kenneth.yap@ap.magenta-consulting.com'
