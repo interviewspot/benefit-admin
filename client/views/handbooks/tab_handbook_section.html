@@ -4,32 +4,43 @@
                                                         Preview
                                                     </span>
         <div class="sec-itm blk-preview" ng-show="!isForward">
-            <table class="table tbl table-striped">
-                <tbody>
-                    <tr>
-                        <td class="td-20 td-bold">Section Title:</td>
-                        <td>
-                            <input type="text" value="{{clients_tab_handbook_section.section_title}}" class="txt-ipt"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="td-20 td-bold">Status:</td>
-                        <td>
-                           <input type="text" value="{{clients_tab_handbook_section.status}}" class="txt-ipt"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="td-20 td-bold">Section No:</td>
-                        <td>
-                            <input type="text" value="{{clients_tab_handbook_section.section_no}}" class="txt-ipt"/>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <!-- END : TBL -->
-            <form method="post">
-                <textarea ui-tinymce ng-model="tinymceModel2"></textarea>
+            <form name="cateForm" class="form" ng-submit="submit()" ng-controller="SectionFormController">
+                <table class="table tbl table-striped">
+                    <tbody>
+                        <tr>
+                            <td class="td-20 td-bold">Section Title:</td>
+                            <td>
+                                <input type="text" ng-model="formSection.title" class="txt-ipt"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td-20 td-bold">Status:</td>
+                            <td>
+                               <input type="text" ng-model="formSection.status" class="txt-ipt"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td-20 td-bold">Section No:</td>
+                            <td>
+                                <input type="text" ng-model="formSection.version" class="txt-ipt"/>
+                            </td>
+                        </tr>
+                        <tr ng-if="isCreateSubSection">
+                            <td class="td-20 td-bold">Section Parent:</td>
+                            <td>
+                                <select name="parent" id="parent" ng-model="parentSelect">
+                                    <option ng-repeat="option in parentSection" value="{{option.id}}">{{option.title}}</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- END : TBL -->
+            
+                <textarea ui-tinymce ng-model="formSection.description"></textarea>
+                <a ng-click="submit()" class="save"><i class="fa fa-save"></i>&nbsp;SAVE</a>
             </form>
+            
             <!-- END : EDITOR -->
         </div>
         <!-- END : FORWARD -->
@@ -42,54 +53,35 @@
                         Handbook Contents
                     </td>
                 </tr>
-                <tr class="tr-hover">
-                    <td class="td-20 ">Section 1</td>
-                    <td colspan="2">
-                        Forward
+
+                <tr class="tr-hover" ng-repeat="section in allSections" ng-click="loadSection(section)">
+                    <td class="td-20 ">{{section.title}}</td>
+                    <td colspan="2" ng-if="section._links.children">
+                        {{section.description}}
                         <span class="tbl-remove">
-                                                                        <i class="fa fa-trash-o"></i>
-                                                                    </span>
+                            <i class="fa fa-trash-o"></i>
+                        </span>
                     </td>
-                </tr>
-                <tr class="tr-hover">
-                    <td class="td-20 ">Section 2</td>
-                    <td colspan="2">
-                        About Company
+                    <td ng-if="section._links.parent">{{section.version}}</td>
+                    <td ng-if="section._links.parent">
+                        {{section.description}}
                         <span class="tbl-remove">
-                                                                        <i class="fa fa-trash-o"></i>
-                                                                    </span>
+                            <i class="fa fa-trash-o"></i>
+                        </span>
                     </td>
+
                 </tr>
-                <tr class="tr-hover">
-                    <td class="td-20 ">Subsection</td>
-                    <td>2.1</td>
-                    <td>
-                        Our Background
-                        <span class="tbl-remove">
-                                                                        <i class="fa fa-trash-o"></i>
-                                                                    </span>
-                    </td>
-                </tr>
-                <tr class="tr-hover">
-                    <td class="td-20 ">Subsection</td>
-                    <td>2.2</td>
-                    <td>
-                        Philosophy & Commitment
-                        <span class="tbl-remove">
-                                                                        <i class="fa fa-trash-o"></i>
-                                                                    </span>
-                    </td>
-                </tr>
+                
             </tbody>
         </table>
         <!-- END : TBL -->
         <div class="section-control">
-            <a>
-                                                            Add Sub-Section
-                                                        </a>
-            <a>
-                                                            Add New Section
-                                                        </a>
+            <a ng-click="createSubSction(true)">
+                Add Sub-Section
+            </a>
+            <a ng-click="createSubSction(false)">
+                Add New Section
+            </a>
         </div>
     </div>
 </div>
@@ -101,8 +93,8 @@
             <img src="images/logo-demo.png" alt="">
         </div>
         <h3 class="ttl-prv">
-                                                        Magenta Consulting Employee Handbook
-                                                    </h3>
+            Magenta Consulting Employee Handbook
+        </h3>
         <span class="ver-prv">Version 1.4,  16 June 2015, English Version</span>
         <div class="prv-desc">We have specially prepared this Handbook to explain and help you better understand Bullwork’s Human Resource policies, compensation and benefits programs, as well as our corporate rules and regulations.</div>
         <div class="clp-title" ng-click="isForward = !isForward">

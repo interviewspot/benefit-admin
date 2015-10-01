@@ -41,6 +41,7 @@ angular.module('app', [
     'app.client.services'
     'app.handbook.services'
     'app.handbook.sections.services'
+    'app.links.services'
     #Khai bao app khi tao
 ])
     
