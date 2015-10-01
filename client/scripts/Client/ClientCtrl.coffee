@@ -105,7 +105,6 @@ angular.module('app.clients', [])
               $scope.handbooks.push(res.data)
           $scope.clientDetail = data
 
-
       # manage users
       $scope.isEditUser = false
       $scope.fnEditUser = ->
@@ -181,6 +180,10 @@ angular.module('app.clients', [])
         .then  (res) ->
             $scope.tabData = res.response;
 
+      $scope.tinymceOptions = {
+        format: 'raw'
+        trusted: true
+      }
       # fakedata clients page
       fakeDT = fakeData.clients_data
       #$scope.clients_list = fakeDT.clients_list

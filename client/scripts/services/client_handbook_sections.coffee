@@ -27,6 +27,14 @@ angular.module('app.handbook.sections.services', [])
             },
             update:{
                 method:"PUT"
+            },
+            save:{
+                method:"POST"
+                action: config.path.baseURL + config.path.sections
+            }
+            saveChild:{
+                method:"POST"
+                action: config.path.baseURL + config.path.section_children
             }
     	}
 	)

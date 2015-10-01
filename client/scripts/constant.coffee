@@ -9,7 +9,7 @@ angular.module('app.constant', [])
             'handbook'   			: '/organisations/:org_id/handbooks/:hand_id'
             'sections'   			: '/organisations/:org_id/handbooks/:hand_id/sections'
             'section'    			: '/organisations/:org_id/handbooks/:hand_id/sections/:section_id'
-            'section_children'  	: '/organisations/:org_id/handbooks/:hand_id/sections/children'
+            'section_children'  	: '/organisations/:org_id/handbooks/:hand_id/sections/:section_id/children'
             'section_parent'    	: '/organisations/:org_id/handbooks/:hand_id/sections/parent'
         }
 	}
