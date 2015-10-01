@@ -654,3 +654,61 @@ h2.ttl-tab {
 .pagination > .active > a, .pagination > .active > a:hover, .pagination > .active > a:focus, .pagination > .active > span, .pagination > .active > span:hover, .pagination > .active > span:focus {
     z-index: 0;
 }
+/*------------------------*/
+/* TABLE DIV */
+.tbl-div {
+    border: 1px solid #ddd;
+    .tbl-r {
+        border-bottom: 1px solid #ddd;
+        &:nth-child(2n+1) {
+            background-color: #f9f9f9;
+        }
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+    .t-tr {
+        display: table;
+        width: 100%;
+        .t-td {
+            display: table-cell;
+            height: 40px;
+            vertical-align: middle;
+            font-size: 11px;
+            text-align: left;
+            border-right: 1px solid #ddd;
+            padding: 0 10px;
+            &.t-ct {
+                border-right: none;
+            }
+            &.t-3 {
+                width: 80px;
+            }
+            &.t-2 {
+                width: 40px;
+            }
+            &.text-center {
+                text-align: center;
+            }
+        }
+    }
+}
+
+.tbl-r.sc-itm {
+    cursor: pointer;
+    &:hover {
+        background-color: $brown;
+        color: #fff;
+        .tbl-remove, .tbl-edit {
+            @include opacity(1);
+            @include transform(scale(1,1));
+        }
+    }
+    .t-tr {
+        position: relative;
+    }
+}
+
+.sction-list {
+    margin-bottom: 20px;
+}

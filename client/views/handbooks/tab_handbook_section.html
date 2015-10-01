@@ -46,6 +46,42 @@
         <!-- END : FORWARD -->
     </div>
     <div class="col-md-4 col-sm-4 col-xs-6">
+        <!-- SECTION LIST -->
+        <div class="tbl-div sction-list">
+            <div class="tbl-r">
+                <div class="t-tr td-bold">
+                    <div class="t-td text-center t-ct">Handbook Contents</div>
+                </div>
+            </div>
+            <div class="tbl-r sc-itm" ng-repeat="(key, section) in allSections">
+                <div class="t-tr" ng-if="!section._links.parent">
+                    <div class="t-td t-3">Section {{key}}</div>
+                    <div class="t-td t-ct" ng-bind-html="section.title"></div>
+                    <span class="tbl-edit" ng-click="editSection(section)">
+                        <i class="fa fa-pencil-square-o"></i>
+                    </span>
+                    <span class="tbl-remove" ng-click="deleteSection(section)">
+                        <i class="fa fa-trash-o"></i>
+                    </span>
+                </div>
+                <div class="t-tr" ng-if="section._links.parent">
+                    <div class="t-td t-3">Sub-section</div>
+                    <div class="t-td t-2">2.{{section._links.parent.id}}</div>
+                    <div class="t-td t-ct" ng-bind-html="section.title"></div>
+                    <span class="tbl-edit" ng-click="editSection(section)">
+                        <i class="fa fa-pencil-square-o"></i>
+                    </span>
+                    <span class="tbl-remove" ng-click="deleteSection(section)">
+                        <i class="fa fa-trash-o"></i>
+                    </span>
+                </div>
+
+            </div>
+
+
+        </div><!-- END: TBL-div -->
+
+        <!--
         <table class="table tbl tbl-small table-striped">
             <tbody>
                 <tr>
@@ -55,7 +91,7 @@
                 </tr>
 
                 <tr class="tr-hover" ng-repeat="(key, section) in allSections">
-                    <!-- Parent section -->
+
                     <td class="td-20 " ng-if="!section._links.parent">Section {{section.version}}</td>
                     <td colspan="2" ng-if="!section._links.parent">
                         <span ng-bind-html="section.title"></span>
@@ -66,7 +102,7 @@
                             <i class="fa fa-trash-o"></i>
                         </span>
                     </td>
-                    <!-- Child section -->
+
                     <td class="td-20 " ng-if="section._links.parent">Subsection</td>
                     <td class="text-center" ng-if="section._links.parent">{{section.version}}</td>
                     <td ng-if="section._links.parent">
@@ -78,29 +114,11 @@
                             <i class="fa fa-trash-o"></i>
                         </span>
                     </td>
-
-                    <!-- <td ng-if="section.children.length > 0">
-                        <table>
-                            <tr ng-if="child.id" ng-repeat="child in section.children">
-                                <td class="td-20 ">Subsection</td>
-                                <td class="text-center">{{child.version}}</td>
-                                <td>
-                                    <span ng-bind-html="child.title"></span>
-                                    <span class="tbl-edit" ng-click="editSection(child)">
-                                        <i class="fa fa-pencil-square-o"></i>
-                                    </span>
-                                    <span class="tbl-remove" ng-click="deleteSection(child)">
-                                        <i class="fa fa-trash-o"></i>
-                                    </span>
-                                </td>
-                            </tr>
-                        </table>
-                    </td> -->
                 </tr>
                 
             </tbody>
         </table>
-        <!-- END : TBL -->
+        END : TBL -->
         <div class="section-control">
             <a ng-click="createSubSction(true)">
                 Add Sub-Section
