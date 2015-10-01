@@ -62,7 +62,12 @@ angular.module 'app.controllers'
 		else
 			section.active = 'Disabled'
 		$scope.formSection = section
+		console.log section
 	$scope.isCreateSubSection = false;
 	$scope.createSubSction = (isSub) ->
 		$scope.isCreateSubSection = isSub;
+])
+.controller('SectionFormController', [ '$scope', '$routeParams', 'handbookService', 'clientService', 'sectionService', 'linkServices', ($scope, $routeParams, handbookService, clientService, sectionService, linkServices) ->
+	$scope.submit = () ->
+		console.log formSection
 ])
