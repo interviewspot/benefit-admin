@@ -1,3 +1,18 @@
+.btn-brown {
+    background-color: #CFAE79;
+    color: #fff;
+    @include  border-radius(4px);
+    @include transition(all 0.2s linear);
+    padding: 5px 10px;
+    cursor: pointer;
+    &:hover {
+    	background-color: #9A7F53;
+    	color: #fff;
+    }
+}
+.tp-20 {
+	margin-top: 20px;
+}
 .non-display {
     display: none;
 }
@@ -496,6 +511,10 @@ h2.ttl-tab {
             margin-bottom: 5px;
         }
     }
+}
+.frm-create-ctact {
+	background-color: #eee;
+	padding: 15px;
 }
 /* CSS MODAL */
 #modalMessage, #modalThankyou {
