@@ -6,8 +6,15 @@
                 <form class="frm-create-ctact modal_frm" name="frm-contact">
                     <div class="row">
                         <div class="col-md-5 col-sm-5 col-xs-12 frm-itm">
-                            <label>Search by email:</label>
-                            <input type="tel" class="ipt txt-email" name="txt-email" />
+                            <div class="srch-em-wrap" mass-autocomplete>
+                                <label>Search by email:</label>
+                                <input type="tel"
+                                class="ipt txt-email"
+                                name="txt-email"
+                                mass-autocomplete-item="autocomplete_options"
+                                ng-model="dirty.value"
+                                ng-model-options="{ debounce: 500 }" />
+                            </div>
                         </div>
                         <div class="col-md-5 col-sm-5 col-xs-12 frm-itm">
                             <label>Title contact:</label>
@@ -45,7 +52,7 @@
                     <input type="checkbox" id="ctc-chk1" name="ctc-chk" />
                 </div>
                 <!-- END: CONTROL -->
-                <h3>{{contact.user.first_name}}</h3>
+                <h3>{{contact.user.first_name}}  {{contact.user.last_name}}</h3>
                 <p class="ctc-add">Singapore, {{contact.position.title}}</p>
                 <p>
                     <b>M:</b> +65 9108 6935
