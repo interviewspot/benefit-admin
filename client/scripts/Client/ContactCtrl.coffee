@@ -29,7 +29,6 @@ angular.module('app.contacts', [])
         $scope.selectedUser = null
         $scope.srch_users   =
             'email' : 0
-            'email_2' : 0
 
         $scope.searchMail = (term) ->
             d = $q.defer()
@@ -37,7 +36,9 @@ angular.module('app.contacts', [])
             results = {}
 
             fetchUsers.get(config.path.baseURL + config.path.users + '?search=user.email:%'+q+'%').then (res) ->
+
                 if res.data._embedded
+                    $scope.srch_users = {}
                     users = res.data._embedded.items
                     for i in [0...users.length]
                         item = users[i]
@@ -53,7 +54,7 @@ angular.module('app.contacts', [])
 ])
 .directive('keyboardPoster',
     ($parse, $timeout) ->
-        DELAY_TIME_BEFORE_POSTING = 500;
+        DELAY_TIME_BEFORE_POSTING = 1000;
         return (scope, elem, attrs) ->
             element = angular.element(elem)[0];
             currentTimeout = null;
