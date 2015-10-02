@@ -1,5 +1,5 @@
 'use strict'
-angular.module('app.clients', [])
+angular.module('app.contacts', [])
 # --------------------------------------------
 # Contact in Handbook TAB of Client
 #

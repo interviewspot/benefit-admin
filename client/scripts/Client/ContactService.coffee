@@ -11,7 +11,7 @@
 #   .service 'client.handbook', ->
     # AngularJS will instantiate a singleton by calling "new" on this function
 
-angular.module('app.client.services', [])
+angular.module('app.contacts.services', [])
 
 .factory 'ContactService', ($resource, config) ->
 	service = $resource(config.path.baseURL + config.path.handbook, {}, {
