@@ -6,14 +6,24 @@
                 <form class="frm-create-ctact modal_frm" name="frm-contact">
                     <div class="row">
                         <div class="col-md-5 col-sm-5 col-xs-12 frm-itm">
-                            <div class="srch-em-wrap" mass-autocomplete>
+                            <div class="srch-em-wrap">
+
                                 <label>Search by email:</label>
-                                <input type="tel"
+                                <input type="text"
                                 class="ipt txt-email"
                                 name="txt-email"
-                                mass-autocomplete-item="autocomplete_options"
-                                ng-model="dirty.value"
-                                ng-model-options="{ debounce: 500 }" />
+                                placeholder="Search by user's email"
+                                keyboard-poster
+                                post-function="searchMail"
+                                list="_users"
+                                />
+                                <datalist id="_users">
+                                    <select style="display: none;"
+                                        id="_select"
+                                        name="_select"
+                                        ng-model='selectedUser'
+                                        ng-options='k as v for (k,v) in srch_users'></select>
+                                </datalist>
                             </div>
                         </div>
                         <div class="col-md-5 col-sm-5 col-xs-12 frm-itm">
@@ -27,6 +37,13 @@
                     </div>
                 </form><!-- END: FORM -->
             </div>
+
+
+
+
+
+
+
             <!-- END: LEFT -->
             <div class="col-md-3 col-sm-3 col-xs-12 ctc-right">
                 <p>

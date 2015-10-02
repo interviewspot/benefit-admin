@@ -5,8 +5,8 @@ angular.module('app.contacts', [])
 # 1. manage list contacts
 # 2. Autocomplete email
 .controller('ContactCtrl', [
-    '$scope', '$filter' , 'fetchTabData', 'fakeData', '$location', '$routeParams', 'ContactService', 'fetchContact', 'SearchUsers', 'fetchUsers', 'config' ,
-    ($scope, $filter, fetchTabData, fakeData, $location, $routeParams, ContactService, fetchContact, SearchUsers, fetchUsers, config) ->
+    '$scope', '$filter' , 'fetchTabData', 'fakeData', '$location', '$routeParams', 'ContactService', 'fetchContact', 'SearchUsers', 'fetchUsers', 'config' , '$q',
+    ($scope, $filter, fetchTabData, fakeData, $location, $routeParams, ContactService, fetchContact, SearchUsers, fetchUsers, config, $q) ->
 
         # 1. manage list contacts
         if $routeParams.clientId
@@ -26,47 +26,52 @@ angular.module('app.contacts', [])
                 return
 
         # 2. Autocomplete email
-        $scope.dirty = {};
+        $scope.selectedUser = null
+        $scope.srch_users   =
+            'email' : 0
+            'email_2' : 0
 
-
-
-        states = []
-
-        suggest_state = (term) ->
-            # TODO update states
-            #.then (res)->
-               # states = res;
+        $scope.searchMail = (term) ->
             d = $q.defer()
             q = term.toLowerCase().trim()
-            results = []
+            results = {}
 
-            fetchUsers.get(config.path.baseURL + config.path.users + '?search=user.email:%'+q+'%').then  (res) ->
-
-                if res._embedded
-                    states = res._embedded.items
-                    # Find first 10 states that start with 'term'.
-                    for i in [0...states.length] when results.length < 10
-                        item = states[i]
-                        if (item.toLowerCase().indexOf(q) >= 0)
-                            results.push({
-                                label: item.email
-                                value: item.id
-                            })
+            fetchUsers.get(config.path.baseURL + config.path.users + '?search=user.email:%'+q+'%').then (res) ->
+                if res.data._embedded
+                    users = res.data._embedded.items
+                    for i in [0...users.length]
+                        item = users[i]
+                        results[item.email] = item.id
+                    $scope.srch_users = results
                     d.resolve(results)
                 else
-                    d.reject()
-
+                    return
+            , () ->
+                d.resolve(results)
             return d.promise
-
-        test (term)->
-            suggest_state(term).then (res)->
-                return res
-
-        $scope.autocomplete_options = {
-            suggest: test
-        }
-
-        console.log $scope.autocomplete_options.suggest
-
         return
 ])
+.directive('keyboardPoster',
+    ($parse, $timeout) ->
+        DELAY_TIME_BEFORE_POSTING = 500;
+        return (scope, elem, attrs) ->
+            element = angular.element(elem)[0];
+            currentTimeout = null;
+
+            element.oninput = () ->
+                model  = $parse(attrs.postFunction);
+                poster = model(scope);
+
+                if(currentTimeout)
+                    $timeout.cancel(currentTimeout)
+
+                currentTimeout = $timeout( () ->
+                    poster angular.element(element).val()
+                    return
+                , DELAY_TIME_BEFORE_POSTING)
+                return
+            return
+)
+
+
+
