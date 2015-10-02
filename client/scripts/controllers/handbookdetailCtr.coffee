@@ -17,17 +17,24 @@ angular.module 'app.controllers'
 
 	handbookService.get {org_id:$scope.clientId, hand_id:$scope.handbookId}, (data, getResponseHeaders) ->
 		$scope.handbook = data
-		$scope.$watch 'handbook', ((newVal, oldVal) ->
-			if newVal
-				updateData = {
-					handbook: newVal
-				}
-				delete updateData.handbook._links 
-				delete updateData.handbook.id
-				updateData.handbook['organisation'] = $scope.clientId
-				handbookService.update {org_id:$scope.clientId, hand_id:$scope.handbookId}, updateData
-		), true
-
+		# $scope.$watch 'handbook', ((newVal, oldVal) ->
+		# 	if newVal
+		# 		updateData = {
+		# 			handbook: newVal
+		# 		}
+		# 		delete updateData.handbook._links 
+		# 		delete updateData.handbook.id
+		# 		updateData.handbook['organisation'] = $scope.clientId
+		# 		handbookService.update {org_id:$scope.clientId, hand_id:$scope.handbookId}, updateData
+		# ), true
+	$scope.submitHandbookInfo = ->
+		updateData = {
+			handbook: $scope.handbook
+		}
+		delete updateData.handbook._links 
+		delete updateData.handbook.id
+		updateData.handbook['organisation'] = $scope.clientId
+		handbookService.update {org_id:$scope.clientId, hand_id:$scope.handbookId}, updateData
 	$scope.loadSections = ->
 		sectionService.query {org_id:$scope.clientId, hand_id:$scope.handbookId}, (data, getResponseHeaders) ->
 			$scope.ungroupSections = orderSections(data._embedded.items)
@@ -53,7 +60,7 @@ angular.module 'app.controllers'
 		for i in [0 .. items.length-1]
 			if items[i]._links.parent
 				for j, item of newList
-					if newList[j].id == items[i]._links.parent.id
+					if newList[j]._links.self.href == items[i]._links.parent.href
 						newList[j].children[items[i].version] = items[i]	
 
 		for j, item of newList
@@ -146,7 +153,7 @@ angular.module 'app.controllers'
 				$scope.loadSections()
 		else
 			if $scope.isCreateSubSection == true && $scope.isUpdate == false
-				sectionService.saveChild {org_id:$scope.clientId, hand_id:$scope.handbookId}, (res)->
+				sectionService.saveChild {org_id:$scope.clientId, hand_id:$scope.handbookId}, sectionItem, (res)->
 	      			$scope.loadSections()
 			if $scope.isCreateSubSection == false && $scope.isUpdate == false
 				sectionService.save {org_id:$scope.clientId, hand_id:$scope.handbookId}, sectionItem, (res)->
