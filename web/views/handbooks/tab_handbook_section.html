@@ -15,7 +15,10 @@
                         <tr>
                             <td class="td-20 td-bold">Status:</td>
                             <td>
-                               <input type="text" ng-model="formSection.status" class="txt-ipt"/>
+                                <!-- <input type="text" ng-model="formSection.active" class="txt-ipt"/> -->
+                                <label>
+                                    <input type="checkbox" ng-model="formSection.active"> Active / Deactive
+                                </label>
                             </td>
                         </tr>
                         <tr>
@@ -24,7 +27,7 @@
                                 <input type="text" ng-model="formSection.version" class="txt-ipt"/>
                             </td>
                         </tr>
-                        <tr>
+                        <tr ng-if="isCreateSubSection">
                             <td class="td-20 td-bold">Section Parent:</td>
                             <td>
                                 <select  ng-model="parentSelect" ng-change="changedValue(parentSelect)"
