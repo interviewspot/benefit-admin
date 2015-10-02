@@ -36,7 +36,7 @@ angular.module('app.contacts', [])
             # TODO update states
             #.then (res)->
                # states = res;
-            var d = $q.defer()
+            d = $q.defer()
             q = term.toLowerCase().trim()
             results = []
 
