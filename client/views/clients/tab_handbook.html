@@ -3,7 +3,8 @@
         <span>Employee Handbook</span>
     </h2>
     <span class="cap-note"
-        ng-click="fnCreateNew()">
+        ng-click="fnCreateNew()"
+        ng-if="handbooks.length == 0">
         Create New
     </span>
     <table class="table tbl table-hover table-striped">

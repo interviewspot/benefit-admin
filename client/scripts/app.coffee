@@ -63,7 +63,7 @@ angular.module('app', [
             'tasks/tasks'
             'merchants/list-merchant', 'merchants/add', 'merchants/view', 'merchants/company', 'merchants/edit_company'
             # CLIENT MANAGEMENT
-            'clients/list-clients',
+            # 'clients/index',
             'clients/add',
             'clients/view',
             'clients/company',
@@ -97,6 +97,9 @@ angular.module('app', [
             .when('/404', { templateUrl: 'views/pages/404.html'} )
 
         $routeProvider
+            .when('/clients', {
+                templateUrl: 'views/clients/index.html'
+            })
             .when('/clients/:clientId/handbooks/:handbookId', {
                 templateUrl: 'views/handbooks/handbook.html'
             })
