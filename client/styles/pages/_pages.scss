@@ -486,6 +486,13 @@ h2.ttl-tab {
     .frm-itm {
         margin-bottom: 10px;
     }
+    .srch-em-wrap {
+        position: relative;
+        .ac-container {
+            top: 55px !important;
+            left: 0 !important;
+        }
+    }
 }
 .modal_frm {
     .ipt {

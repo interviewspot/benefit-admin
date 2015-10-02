@@ -18,6 +18,7 @@ angular.module('app', [
     'duScroll'
     'ui.tinymce'
     'angular.filter'
+    'MassAutoComplete'
     
     # Custom modules
     'app.constant'

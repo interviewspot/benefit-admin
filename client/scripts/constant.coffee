@@ -12,6 +12,7 @@ angular.module('app.constant', [])
                 'section_children'      : '/organisations/:org_id/handbooks/:hand_id/sections/:section_id/children'
                 'section_parent'        : '/organisations/:org_id/handbooks/:hand_id/sections/parent'
                 'contacts'              : '/organisations/:org_id/positions'
+                'users'                 : '/users'
             }
         }
     )

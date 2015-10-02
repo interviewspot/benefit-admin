@@ -15,13 +15,29 @@ angular.module('app.contacts.services', [])
 
 .factory 'ContactService', ($resource, config) ->
     service = $resource(config.path.baseURL + config.path.contacts, {}, {
-            query:{
+            query:
                 method:"GET",
                 action: config.path.baseURL + config.path.contacts
                 isArray: true
-            }
             update:
                 method:"PUT"
+            save:
+                method:"POST"
+                action: config.path.baseURL + config.path.contacts
+
+        }
+    )
+    return service
+
+.factory 'SearchUsers', ($resource, config) ->
+    service = $resource(config.path.baseURL + config.path.users, {}, {
+            query:
+                method:"GET",
+                action: config.path.baseURL + config.path.users
+                #isArray: true
+            update:
+                method:"PUT"
+
         }
     )
     return service
@@ -30,15 +46,35 @@ angular.module('app.contacts.services', [])
     return {
         get : (url) ->
             d = $q.defer()
-
             $http({
-                method: 'GET',
+                method: 'GET'
                 url: url
             })
             .then (res) ->
                 d.resolve(res)
+                return
             , (error) ->
                 d.reject(error)
+                return
+
+            d.promise
+    }
+])
+
+.factory('fetchUsers', [ '$http', '$q', '$resource', ($http, $q, $resource) ->
+    return {
+        get : (url) ->
+            d = $q.defer()
+            $http({
+                method: 'GET'
+                url: url
+            })
+            .then (res) ->
+                d.resolve(res)
+                return
+            , (error) ->
+                d.reject(error)
+                return
 
             d.promise
     }
