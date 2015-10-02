@@ -1,0 +1,277 @@
+<div class="row" data-ng-controller="ContactCtrl">
+    <div class="col-xs-12 blk-create">
+        <div class="row">
+            <div class="col-md-9 col-sm-9 col-xs-12 ctc-left">
+                <h2 class="ttl-tab"><span>Create New Contact</span></h2>
+                <form class="frm-create-ctact modal_frm" name="frm-contact">
+                    <div class="row">
+                        <div class="col-md-4 col-sm-4 col-xs-12 frm-itm">
+                            <label>Fullname:</label>
+                            <input type="text" class="ipt txt-fullname" name="txt-fullname" />
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-12 frm-itm">
+                            <label>Address:</label>
+                            <input type="text" class="ipt txt-address" name="txt-address" />
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-12 frm-itm">
+                            <label>Mobile:</label>
+                            <input type="tel" class="ipt txt-mobile" name="txt-mobile" />
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-12 frm-itm">
+                            <label>Operate Mobile:</label>
+                            <input type="tel" class="ipt txt-operate" name="txt-operate" />
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-12 frm-itm">
+                            <label>Email:</label>
+                            <input type="tel" class="ipt txt-email" name="txt-email" />
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-12 text-center frm-itm">
+                            <label>&nbsp;</label>
+                            <button class="btn btn-submit btn-primary">CREATE</button>
+                        </div>
+                    </div>
+                </form><!-- END: FORM -->
+            </div>
+            <!-- END: LEFT -->
+            <div class="col-md-3 col-sm-3 col-xs-12 ctc-right">
+                <p>
+                    <strong>1</strong> chosen item(s)
+                </p>
+                <p>
+                    <a class="btn btn-primary btn-delete">DELETE</a>
+                </p>
+            </div>
+            <!-- END: RIGHT -->
+        </div>
+    </div>
+    <!-- END: CREATE CONTACT -->
+
+    <!-- START: LIST CONTACT -->
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="ctc-itm">
+            <h2>A</h2>
+            <div class="ctc-content">
+                <div class="ctc-control">
+                    <i class="fa fa-edit" data-toggle="modal" data-target="#editContact"></i>
+                    <i class="fa fa-trash-o" deletecontact></i>
+                    <input type="checkbox" id="ctc-chk1" name="ctc-chk" />
+                </div>
+                <!-- END: CONTROL -->
+                <h3>Astrid Wijaya</h3>
+                <p class="ctc-add">Singapore, Advisory, Research Consultant</p>
+                <p>
+                    <b>M:</b> +65 9108 6935
+                </p>
+                <p>
+                    <b>0:</b> +65 6720 3663
+                </p>
+                <p>
+                    <b>E:</b> astrid.wijaya@asia.magenta-consulting.com
+                </p>
+            </div>
+        </div>
+        <!-- END: ITEM -->
+        <div class="ctc-itm">
+            <h2>c</h2>
+            <div class="ctc-content">
+                <div class="ctc-control">
+                    <i class="fa fa-edit" data-toggle="modal" data-target="#editContact"></i>
+                    <i class="fa fa-trash-o" deletecontact></i>
+                    <input type="checkbox" id="ctc-chk2" name="ctc-chk" />
+                </div>
+                <!-- END: CONTROL -->
+                <h3>Catherine Choong</h3>
+                <p class="ctc-add">Singapore, Payroll, HR Executive</p>
+                <p>
+                    <b>M:</b> +65 9108 6935
+                </p>
+                <p>
+                    <b>0:</b> +65 6720 3663
+                </p>
+                <p>
+                    <b>E:</b> catherine.choong@sg.magenta-consulting.com
+                </p>
+            </div>
+        </div>
+        <!-- END: ITEM -->
+        <div class="ctc-itm">
+            <h2>k</h2>
+            <div class="ctc-content">
+                <div class="ctc-control">
+                    <i class="fa fa-edit" data-toggle="modal" data-target="#editContact"></i>
+                    <i class="fa fa-trash-o" deletecontact></i>
+                    <input type="checkbox" id="ctc-chk3" name="ctc-chk" />
+                </div>
+                <!-- END: CONTROL -->
+                <h3>Kenneth Yap</h3>
+                <p class="ctc-add">Singapore, Sales, Consultant</p>
+                <p>
+                    <b>M:</b> +65 9108 6935
+                </p>
+                <p>
+                    <b>0:</b> +65 6720 3663
+                </p>
+                <p>
+                    <b>E:</b> kenneth.yap@sg.magenta-consulting.com
+                </p>
+            </div>
+            <div class="ctc-content">
+                <div class="ctc-control">
+                    <i class="fa fa-edit" data-toggle="modal" data-target="#editContact"></i>
+                    <i class="fa fa-trash-o" deletecontact></i>
+                    <input type="checkbox" id="ctc-chk4" name="ctc-chk" />
+                </div>
+                <!-- END: CONTROL -->
+                <h3>Ken Loy</h3>
+                <p class="ctc-add">Singapore, Management, Managing Partner</p>
+                <p>
+                    <b>M:</b> +65 9108 6935
+                </p>
+                <p>
+                    <b>0:</b> +65 6720 3663
+                </p>
+                <p>
+                    <b>E:</b> ken.loy@sg.magenta-consulting.com
+                </p>
+            </div>
+        </div>
+        <!-- END: ITEM -->
+        <div class="ctc-itm">
+            <h2>m</h2>
+            <div class="ctc-content">
+                <div class="ctc-control">
+                    <i class="fa fa-edit" data-toggle="modal" data-target="#editContact"></i>
+                    <i class="fa fa-trash-o" deletecontact></i>
+                    <input type="checkbox" id="ctc-chk5" name="ctc-chk" />
+                </div>
+                <!-- END: CONTROL -->
+                <h3>Min Liang</h3>
+                <p class="ctc-add">Singapore, Payroll, HR Executive</p>
+                <p>
+                    <b>M:</b> +65 9108 6935
+                </p>
+                <p>
+                    <b>0:</b> +65 6720 3663
+                </p>
+                <p>
+                    <b>E:</b> min.liang@asia.magenta-consulting.com
+                </p>
+            </div>
+        </div>
+        <!-- END: ITEM -->
+    </div>
+    <!-- END: COL -->
+    <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="ctc-itm">
+            <h2>r</h2>
+            <div class="ctc-content">
+                <div class="ctc-control">
+                    <i class="fa fa-edit" data-toggle="modal" data-target="#editContact"></i>
+                    <i class="fa fa-trash-o" deletecontact></i>
+                    <input type="checkbox" id="ctc-chk6" name="ctc-chk" />
+                </div>
+                <!-- END: CONTROL -->
+                <h3>Raja Sundar</h3>
+                <p class="ctc-add">Singapore, Advisory, Research Consultant</p>
+                <p>
+                    <b>M:</b> +65 9108 6935
+                </p>
+                <p>
+                    <b>0:</b> +65 6720 3663
+                </p>
+                <p>
+                    <b>E:</b> raja.sundar@asia.magenta-consulting.com
+                </p>
+            </div>
+        </div>
+        <!-- END: ITEM -->
+        <div class="ctc-itm">
+            <h2>t</h2>
+            <div class="ctc-content">
+                <div class="ctc-control">
+                    <i class="fa fa-edit" data-toggle="modal" data-target="#editContact"></i>
+                    <i class="fa fa-trash-o" deletecontact></i>
+                    <input type="checkbox" id="ctc-chk7" name="ctc-chk" />
+                </div>
+                <!-- END: CONTROL -->
+                <h3>Tamil</h3>
+                <p class="ctc-add">Singapore, Advisory, Research Consultant</p>
+                <p>
+                    <b>M:</b> +65 9108 6935
+                </p>
+                <p>
+                    <b>0:</b> +65 6720 3663
+                </p>
+                <p>
+                    <b>E:</b> Tamil@asia.magenta-consulting.com
+                </p>
+            </div>
+        </div>
+        <!-- END: ITEM -->
+        <div class="ctc-itm">
+            <h2>v</h2>
+            <div class="ctc-content">
+                <div class="ctc-control">
+                    <i class="fa fa-edit" data-toggle="modal" data-target="#editContact"></i>
+                    <i class="fa fa-trash-o" deletecontact></i>
+                    <input type="checkbox" id="ctc-chk8" name="ctc-chk" />
+                </div>
+                <!-- END: CONTROL -->
+                <h3>Valerie</h3>
+                <p class="ctc-add">Singapore, Advisory, Research Consultant</p>
+                <p>
+                    <b>M:</b> +65 9108 6935
+                </p>
+                <p>
+                    <b>0:</b> +65 6720 3663
+                </p>
+                <p>
+                    <b>E:</b> Valerie@asia.magenta-consulting.com
+                </p>
+            </div>
+        </div>
+        <!-- END: ITEM -->
+    </div>
+    <!-- END: COL -->
+</div><!-- END: ROW -->
+
+<!-- MODAL: EDIT CONTACT -->
+<div id="editContact" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Edit Contact</h4>
+            </div>
+            <div class="modal-body">
+                <form class="frm_edit_contact modal_frm" name="frm_edit_contact">
+                    <p>
+                        <label>Fullname:</label>
+                        <input type="text" class="ipt txt-fullname" name="txt-fullname" />
+                    </p>
+                    <p>
+                        <label>Address:</label>
+                        <input type="text" class="ipt txt-address" name="txt-address">
+                    </p>
+                    <p>
+                        <label>Mobile:</label>
+                        <input type="tel" class="ipt txt-mobile" name="txt-mobile">
+                    </p>
+                    <p>
+                        <label>Operate Mobile:</label>
+                        <input type="tel" class="ipt txt-operate" name="txt-operate">
+                    </p>
+                    <p>
+                        <label>Email:</label>
+                        <input type="email" class="ipt txt-email" name="txt-email">
+                    </p>
+                    <p class="text-center">
+                        <button class="btn btn-update btn-primary">UPDATE</button>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END : MODAL EDIT CONTACT-->

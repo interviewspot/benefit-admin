@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Web Application</title>
+        <title>Benefit</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
         <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
         <link rel="stylesheet" href="bower_components/weather-icons/css/weather-icons.min.css">
         <!-- end Needs images -->
-
+        <link rel="stylesheet" href="bower_components/textAngular/src/textAngular.css">
             <link rel="stylesheet" href="styles/main.css">
 
     </head>
@@ -36,6 +36,35 @@
 
         <script src="scripts/ui.js"></script>
 
+        <!-- build:js({.tmp,app}) scripts/app.js -->
+        <script src="scripts/constant.js"></script>
         <script src="scripts/app.js"></script>
+        <script src="scripts/shared/main.js"></script>
+        <script src="scripts/shared/directives.js"></script>
+        <script src="scripts/shared/localize.js"></script>
+        <script src="scripts/shared/Nav.js"></script>
+        <script src="scripts/UI/UICtrl.js"></script>
+        <script src="scripts/UI/UIDirective.js"></script>
+        <script src="scripts/UI/UIService.js"></script>
+        <script src="scripts/Form/FormDirective.js"></script>
+        <script src="scripts/Form/FormCtrl.js"></script>
+        <script src="scripts/Form/FormValidation.js"></script>
+        <script src="scripts/Table/TableCtrl.js"></script>
+        <script src="scripts/UI/Map.js"></script>
+        <script src="scripts/Task/Task.js"></script>
+        <script src="scripts/Chart/ChartCtrl.js"></script>
+        <script src="scripts/Chart/ChartDirective.js"></script>
+        <script src="scripts/Page/PageCtrl.js"></script>
+        <script src="scripts/Merchant/MerchantCtrl.js"></script>
+        <!-- CLIENT MANAGE-->
+        <script src="scripts/Client/ClientCtrl.js"></script>
+        <script src="scripts/Client/ContactCtrl.js"></script>
+        <script src="scripts/Client/ContactService.js"></script>
+        <script src="scripts/controllers/handbookdetailCtr.js"></script>
+        <script src="scripts/services/links.js"></script>
+        <script src="scripts/services/client.js"></script>
+        <script src="scripts/services/client_handbook.js"></script>
+        <script src="scripts/services/client_handbook_sections.js"></script>
+        <!-- endbuild -->
     </body>
 </html>

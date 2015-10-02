@@ -15,9 +15,9 @@
                 <th class="text-center">Published</th>
                 <th class="text-center">Manage</th>
             </tr>
-            <tr ng-repeat="hb_list in dt_tab_handbook_list">
+            <tr ng-repeat="hb_list in handbooks">
                 <td class="text-center">
-                    <a ng-click="fnEditHandbook()">
+                    <a href="#/clients/{{clientDetail.id}}/handbooks/{{hb_list.id}}">
                         {{hb_list.version}}
                     </a>
                 </td>
@@ -30,9 +30,10 @@
                         ng-checked="hb_list.public"/>
                 </td>
                 <td class="text-center td-manage">
+                    <a href="#/clients/{{clientDetail.id}}/handbooks/{{hb_list.id}}">
                     <i class="fa fa-edit"
-                        title="Edit Handbook"
-                        ng-click="fnEditHandbook()"></i>
+                        title="Edit Handbook"></i>
+                    </a>
                     <i class="fa fa-trash-o" title="Remove Handbook"  deleteitem></i>
                 </td>
             </tr>
@@ -58,30 +59,6 @@
     <!-- END : PAGINATION -->
 </div>
 <!-- END: HANDBOOK LIST -->
-<div class="edit_handbook" ng-show="isEditHandbook">
-    <h2 class="ttl-tab">
-        <span>Edit Employee Handbook</span>
-    </h2>
-    <tabset class="client-tabs lv2">
-        <tab heading="Handbook Info" ng-click="selectTabChild(0)">
-            <div ng-include="'views/clients/tab_handbook_info.html'"></div>
-        </tab>
-        <!-- END: TAB -->
-        <tab heading="General Description" ng-click="selectTabChild(1)">
-            <div ng-include="'views/clients/tab_handbook_general.html'"></div>
-        </tab>
-        <!-- END: TAB -->
-        <tab heading="Sections" ng-click="selectTabChild(2)">
-            <div class="row" ng-include="'views/clients/tab_handbook_section.html'"></div>
-        </tab>
-        <!-- END: TAB -->
-        <tab heading="Contacts" ng-click="selectTabChild(3)">
-            <div ng-include="'views/clients/tab_handbook_contact.html'"></div>
-        </tab>
-        <!-- END: TAB -->
-    </tabset>
-</div>
-<!-- END: BLOCK EDIT -->
 <div class="create_handbook" ng-show="isCreateNew">
     <h2 class="ttl-tab">
         <span>Create Employee Handbook</span>
