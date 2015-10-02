@@ -30,16 +30,17 @@ angular.module 'app.controllers'
 
 	$scope.loadSections = ->
 		sectionService.query {org_id:$scope.clientId, hand_id:$scope.handbookId}, (data, getResponseHeaders) ->
-			$scope.ungroupSections = orderSections(data)
+			$scope.ungroupSections = orderSections(data._embedded.items)
 			$scope.allSections = ungroupSection($scope.ungroupSections)
+			sectionDatas = data._embedded.items
 			# console.log $scope.allSections[1].children
 			$scope.parentSection = []
-			for i in [0 .. data.length-1]
-				if !data[i]._links.parent && data[i]
+			for i in [0 .. sectionDatas.length-1]
+				if !sectionDatas[i]._links.parent && sectionDatas[i]
 					$scope.parentSection.push({
-						id: data[i].id
-						title: data[i].title
-						_links: data[i]._links	
+						id: sectionDatas[i].id
+						title: sectionDatas[i].title
+						_links: sectionDatas[i]._links
 					})
 	$scope.loadSections()
 

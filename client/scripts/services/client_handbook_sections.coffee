@@ -13,7 +13,7 @@ angular.module('app.handbook.sections.services', [])
             query:{
                 method:"GET"
                 action: config.path.baseURL + config.path.sections
-                isArray: true
+                # isArray: true
             },
             children:{
                 method:"GET",

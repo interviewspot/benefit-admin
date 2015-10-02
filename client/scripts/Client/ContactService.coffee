@@ -14,15 +14,18 @@
 angular.module('app.contacts.services', [])
 
 .factory 'ContactService', ($resource, config) ->
-	service = $resource(config.path.baseURL + config.path.handbook, {}, {
-            query:
+    service = $resource(config.path.baseURL + config.path.contacts, {}, {
+            query:{
                 method:"GET",
-                action: config.path.baseURL + config.path.handbooks
+                action: config.path.baseURL + config.path.contacts
+                isArray: true
+            }
             update:
                 method:"PUT"
-    	}
-	)
-	return service
+        }
+    )
+    return service
+
 .factory('fetchContact', [ '$http', '$q', '$resource', ($http, $q, $resource) ->
     return {
         get : (url) ->

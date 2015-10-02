@@ -17,6 +17,7 @@ angular.module('app', [
     'ngTagsInput'
     'duScroll'
     'ui.tinymce'
+    'angular.filter'
     
     # Custom modules
     'app.constant'
