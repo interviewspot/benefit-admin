@@ -27,6 +27,7 @@ angular.module 'app.controllers'
 				updateData.handbook['organisation'] = $scope.clientId
 				handbookService.update {org_id:$scope.clientId, hand_id:$scope.handbookId}, updateData
 		), true
+
 	$scope.loadSections = ->
 		sectionService.query {org_id:$scope.clientId, hand_id:$scope.handbookId}, (data, getResponseHeaders) ->
 			$scope.ungroupSections = orderSections(data)
@@ -59,6 +60,7 @@ angular.module 'app.controllers'
 		newList.sort(sectionCompare)
 		
 		return newList
+
 	ungroupSection = (items) ->
 		returnList = []
 		for j, item of items
@@ -70,6 +72,7 @@ angular.module 'app.controllers'
 					child.no = parseInt(k)+1
 					returnList.push(child)
 		return returnList
+
 	sectionCompare = (a,b) ->
 		if (a.version < b.version)
 			return -1;
@@ -94,6 +97,7 @@ angular.module 'app.controllers'
 			$scope.isCreateSubSection = false
 			$scope.parentSelect = null
 		$scope.isUpdate = true
+
 	$scope.changedValue = (id) ->
     	$scope.parentSelect = id
     
@@ -114,6 +118,7 @@ angular.module 'app.controllers'
 		version: ''
 		status: ''
 	}
+
 	#delete section function
 	$scope.deleteSection = (section) ->
 		sectionService.delete {org_id:$scope.clientId, hand_id:$scope.handbookId, section_id:section.id}, (res)->

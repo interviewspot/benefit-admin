@@ -1,10 +1,8 @@
-<div class="row">
+<div class="row" data-ng-controller="ContactCtrl">
     <div class="col-xs-12 blk-create">
         <div class="row">
             <div class="col-md-9 col-sm-9 col-xs-12 ctc-left">
-                <h2 class="ttl-tab">
-                                                            <span>Create New Contact</span>
-                                                        </h2>
+                <h2 class="ttl-tab"><span>Create New Contact</span></h2>
                 <form class="frm-create-ctact modal_frm" name="frm-contact">
                     <div class="row">
                         <div class="col-md-4 col-sm-4 col-xs-12 frm-itm">
@@ -32,7 +30,7 @@
                             <button class="btn btn-submit btn-primary">CREATE</button>
                         </div>
                     </div>
-                </form>
+                </form><!-- END: FORM -->
             </div>
             <!-- END: LEFT -->
             <div class="col-md-3 col-sm-3 col-xs-12 ctc-right">
@@ -47,6 +45,8 @@
         </div>
     </div>
     <!-- END: CREATE CONTACT -->
+
+    <!-- START: LIST CONTACT -->
     <div class="col-md-6 col-sm-6 col-xs-12">
         <div class="ctc-itm">
             <h2>A</h2>
@@ -233,7 +233,9 @@
         <!-- END: ITEM -->
     </div>
     <!-- END: COL -->
-</div>
+</div><!-- END: ROW -->
+
+<!-- MODAL: EDIT CONTACT -->
 <div id="editContact" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <!-- Modal content-->

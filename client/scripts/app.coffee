@@ -59,8 +59,21 @@ angular.module('app', [
             'mail/compose', 'mail/inbox', 'mail/single'
             'tasks/tasks'
             'merchants/list-merchant', 'merchants/add', 'merchants/view', 'merchants/company', 'merchants/edit_company'
-            'clients/list-clients', 'clients/add', 'clients/view', 'clients/company', 'clients/edit_company','clients/create-new-handbook','clients/tab-view',
-            'clients/client', 'clients/client-user', 'clients/client-handbook', 'clients/client-policies', 'clients/client-insurance', 'clients/client-healthcare', 'clients/client-imerchant'
+            # CLIENT MANAGEMENT
+            'clients/list-clients',
+            'clients/add',
+            'clients/view',
+            'clients/company',
+            'clients/edit_company',
+            'clients/create-new-handbook',
+            'clients/tab-view',
+            'clients/client',
+            'clients/client-user',
+            'clients/client-handbook',
+            'clients/client-policies',
+            'clients/client-insurance',
+            'clients/client-healthcare',
+            'clients/client-imerchant'
         ]
 
         setRoutes = (route) ->
@@ -74,9 +87,13 @@ angular.module('app', [
         routes.forEach( (route) ->
             setRoutes(route)
         )
+
+        # SET ROUTE MANUAL ---------------------------------------
         $routeProvider
             .when('/', { redirectTo: '/merchants/list-merchant'} )
             .when('/404', { templateUrl: 'views/pages/404.html'} )
+
+        $routeProvider
             .when('/clients/:clientId/handbooks/:handbookId', {
                 templateUrl: 'views/handbooks/handbook.html'
             })
