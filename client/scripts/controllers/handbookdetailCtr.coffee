@@ -53,7 +53,7 @@ angular.module 'app.controllers'
 		for i in [0 .. items.length-1]
 			if items[i]._links.parent
 				for j, item of newList
-					if newList[j].id == items[i]._links.parent.id
+					if newList[j]._links.self.href == items[i]._links.parent.href
 						newList[j].children[items[i].version] = items[i]	
 
 		for j, item of newList
@@ -146,7 +146,7 @@ angular.module 'app.controllers'
 				$scope.loadSections()
 		else
 			if $scope.isCreateSubSection == true && $scope.isUpdate == false
-				sectionService.saveChild {org_id:$scope.clientId, hand_id:$scope.handbookId}, (res)->
+				sectionService.saveChild {org_id:$scope.clientId, hand_id:$scope.handbookId}, sectionItem, (res)->
 	      			$scope.loadSections()
 			if $scope.isCreateSubSection == false && $scope.isUpdate == false
 				sectionService.save {org_id:$scope.clientId, hand_id:$scope.handbookId}, sectionItem, (res)->
