@@ -16,6 +16,7 @@
                                 keyboard-poster
                                 post-function="searchMail"
                                 list="_users"
+                                ng-model='contact.email'
                                 />
                                 <datalist id="_users">
                                     <select style="display: none;"
@@ -28,21 +29,15 @@
                         </div>
                         <div class="col-md-5 col-sm-5 col-xs-12 frm-itm">
                             <label>Title contact:</label>
-                            <input type="tel" class="ipt txt-title" name="txt-title" />
+                            <input type="tel" class="ipt txt-title" name="txt-title" ng-model='contact.title'/>
                         </div>
                         <div class="col-md-2 col-sm-2 col-xs-12 text-center frm-itm">
                             <label>&nbsp;</label>
-                            <button class="btn btn-submit btn-primary">CREATE</button>
+                            <button class="btn btn-submit btn-primary" ng-click="createContact()">CREATE</button>
                         </div>
                     </div>
                 </form><!-- END: FORM -->
             </div>
-
-
-
-
-
-
 
             <!-- END: LEFT -->
             <div class="col-md-3 col-sm-3 col-xs-12 ctc-right">
@@ -64,8 +59,8 @@
             <h2>{{i}}</h2>
             <div class="ctc-content" ng-repeat="contact in item">
                 <div class="ctc-control">
-                    <i class="fa fa-edit" data-toggle="modal" data-target="#editContact"></i>
-                    <i class="fa fa-trash-o" deletecontact></i>
+                    <i class="fa fa-edit" data-toggle="modal" data-target="#editContact" ng-click="editContact(contact)"></i>
+                    <i class="fa fa-trash-o" ng-click="deleteContact(contact)"></i>
                     <input type="checkbox" id="ctc-chk1" name="ctc-chk" />
                 </div>
                 <!-- END: CONTROL -->

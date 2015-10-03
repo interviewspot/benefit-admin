@@ -45,6 +45,7 @@ angular.module('app', [
     'app.links.services'
     'app.contacts'
     'app.contacts.services'
+    'app.handbooks'
     #Khai bao app khi tao
 ])
     
@@ -98,12 +99,15 @@ angular.module('app', [
 
         $routeProvider
             .when('/clients', {
-                templateUrl: 'views/clients/index.html'
+                templateUrl: 'views/clients/list-clients.html'
             })
             .when('/clients/:clientId/handbooks/:handbookId', {
                 templateUrl: 'views/handbooks/handbook.html'
             })
             .when('/clients/:clientId', { 
+                templateUrl: 'views/clients/client.html'
+            })
+            .when('/clients/:clientId/info', { 
                 templateUrl: 'views/clients/client.html'
             })
             .when('/clients/:clientId/handbooks', { 

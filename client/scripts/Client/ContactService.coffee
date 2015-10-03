@@ -58,6 +58,20 @@ angular.module('app.contacts.services', [])
                 return
 
             d.promise
+        delete : (url) ->
+            d = $q.defer()
+            $http({
+                method: 'DELETE'
+                url: url
+            })
+            .then (res) ->
+                d.resolve(res)
+                return
+            , (error) ->
+                d.reject(error)
+                return
+
+            d.promise
     }
 ])
 
