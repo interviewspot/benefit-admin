@@ -45971,76 +45971,174 @@ define("tinymce/ui/Throbber", [
 expose(["tinymce/dom/EventUtils","tinymce/dom/Sizzle","tinymce/Env","tinymce/util/Tools","tinymce/dom/DomQuery","tinymce/html/Styles","tinymce/dom/TreeWalker","tinymce/dom/Range","tinymce/html/Entities","tinymce/dom/DOMUtils","tinymce/dom/ScriptLoader","tinymce/AddOnManager","tinymce/dom/RangeUtils","tinymce/html/Node","tinymce/html/Schema","tinymce/html/SaxParser","tinymce/html/DomParser","tinymce/html/Writer","tinymce/html/Serializer","tinymce/dom/Serializer","tinymce/dom/TridentSelection","tinymce/util/VK","tinymce/dom/ControlSelection","tinymce/dom/BookmarkManager","tinymce/dom/Selection","tinymce/dom/ElementUtils","tinymce/Formatter","tinymce/UndoManager","tinymce/EnterKey","tinymce/ForceBlocks","tinymce/EditorCommands","tinymce/util/URI","tinymce/util/Class","tinymce/util/EventDispatcher","tinymce/ui/Selector","tinymce/ui/Collection","tinymce/ui/DomUtils","tinymce/ui/Control","tinymce/ui/Factory","tinymce/ui/KeyboardNavigation","tinymce/ui/Container","tinymce/ui/DragHelper","tinymce/ui/Scrollable","tinymce/ui/Panel","tinymce/ui/Movable","tinymce/ui/Resizable","tinymce/ui/FloatPanel","tinymce/ui/Window","tinymce/ui/MessageBox","tinymce/WindowManager","tinymce/util/Quirks","tinymce/util/Observable","tinymce/EditorObservable","tinymce/Shortcuts","tinymce/Editor","tinymce/util/I18n","tinymce/FocusManager","tinymce/EditorManager","tinymce/LegacyInput","tinymce/util/XHR","tinymce/util/JSON","tinymce/util/JSONRequest","tinymce/util/JSONP","tinymce/util/LocalStorage","tinymce/Compat","tinymce/ui/Layout","tinymce/ui/AbsoluteLayout","tinymce/ui/Tooltip","tinymce/ui/Widget","tinymce/ui/Button","tinymce/ui/ButtonGroup","tinymce/ui/Checkbox","tinymce/ui/ComboBox","tinymce/ui/ColorBox","tinymce/ui/PanelButton","tinymce/ui/ColorButton","tinymce/util/Color","tinymce/ui/ColorPicker","tinymce/ui/Path","tinymce/ui/ElementPath","tinymce/ui/FormItem","tinymce/ui/Form","tinymce/ui/FieldSet","tinymce/ui/FilePicker","tinymce/ui/FitLayout","tinymce/ui/FlexLayout","tinymce/ui/FlowLayout","tinymce/ui/FormatControls","tinymce/ui/GridLayout","tinymce/ui/Iframe","tinymce/ui/Label","tinymce/ui/Toolbar","tinymce/ui/MenuBar","tinymce/ui/MenuButton","tinymce/ui/ListBox","tinymce/ui/MenuItem","tinymce/ui/Menu","tinymce/ui/Radio","tinymce/ui/ResizeHandle","tinymce/ui/Spacer","tinymce/ui/SplitButton","tinymce/ui/StackLayout","tinymce/ui/TabPanel","tinymce/ui/TextBox","tinymce/ui/Throbber"]);
 })(this);
 ;
-
 /**
  * Binds a TinyMCE widget to <textarea> elements.
  */
 angular.module('ui.tinymce', [])
-    .value('uiTinymceConfig', {})
-    .directive('uiTinymce', ['uiTinymceConfig', function(uiTinymceConfig) {
+  .value('uiTinymceConfig', {})
+  .directive('uiTinymce', ['$rootScope', '$compile', '$timeout', '$window', '$sce', 'uiTinymceConfig', function($rootScope, $compile, $timeout, $window, $sce, uiTinymceConfig) {
     uiTinymceConfig = uiTinymceConfig || {};
     var generatedIds = 0;
+    var ID_ATTR = 'ui-tinymce';
+    if (uiTinymceConfig.baseUrl) {
+      tinymce.baseURL = uiTinymceConfig.baseUrl;
+    }
+
     return {
-        require: 'ngModel',
-        link: function(scope, elm, attrs, ngModel) {
-            var expression, options, tinyInstance;
-            // generate an ID if not present
-            if (!attrs.id) {
-                attrs.$set('id', 'uiTinymce' + generatedIds++);
+      require: ['ngModel', '^?form'],
+      link: function(scope, element, attrs, ctrls) {
+        if (!$window.tinymce) {
+          return;
+        }
+
+        var ngModel = ctrls[0],
+          form = ctrls[1] || null;
+
+        var expression, options, tinyInstance,
+          updateView = function(editor) {
+            var content = editor.getContent({format: options.format}).trim();
+            content = $sce.trustAsHtml(content);
+
+            ngModel.$setViewValue(content);
+            if (!$rootScope.$$phase) {
+              scope.$apply();
             }
-            options = {
-                // Update model when calling setContent (such as from the source editor popup)
-                setup: function(ed) {
-                    ed.on('init', function(args) {
-                        ngModel.$render();
-                    });
-                    // Update model on button click
-                    ed.on('ExecCommand', function(e) {
-                        ed.save();
-                        ngModel.$setViewValue(elm.val());
-                        if (!scope.$$phase) {
-                            scope.$apply();
-                        }
-                    });
-                    // Update model on keypress
-                    ed.on('KeyUp', function(e) {
-                        console.log(ed.isDirty());
-                        ed.save();
-                        ngModel.$setViewValue(elm.val());
-                        if (!scope.$$phase) {
-                            scope.$apply();
-                        }
-                    });
-                },
-                mode: 'exact',
-                elements: attrs.id
-            };
-            if (attrs.uiTinymce) {
-                expression = scope.$eval(attrs.uiTinymce);
-            } else {
-                expression = {};
-            }
-            angular.extend(options, uiTinymceConfig, expression);
-            setTimeout(function() {
-                tinymce.init(options);
+          };
+
+        // generate an ID
+        attrs.$set('id', ID_ATTR + '-' + generatedIds++);
+
+        expression = {};
+
+        angular.extend(expression, scope.$eval(attrs.uiTinymce));
+
+        options = {
+          // Update model when calling setContent
+          // (such as from the source editor popup)
+          setup: function(ed) {
+            ed.on('init', function() {
+              ngModel.$render();
+              ngModel.$setPristine();
+              if (form) {
+                form.$setPristine();
+              }
             });
 
+            // Update model on button click
+            ed.on('ExecCommand', function() {
+              ed.save();
+              updateView(ed);
+            });
 
-            ngModel.$render = function() {
-                if (!tinyInstance) {
-                    tinyInstance = tinymce.get(attrs.id);
-                }
-                if (tinyInstance) {
-                    tinyInstance.setContent(ngModel.$viewValue || '');
-                }
-            };
+            // Update model on change
+            ed.on('change', function(e) {
+              ed.save();
+              updateView(ed);
+            });
+
+            ed.on('blur', function() {
+              element[0].blur();
+            });
+
+            // Update model when an object has been resized (table, image)
+            ed.on('ObjectResized', function() {
+              ed.save();
+              updateView(ed);
+            });
+
+            ed.on('remove', function() {
+              element.remove();
+            });
+
+            if (expression.setup) {
+              expression.setup(ed, {
+                updateView: updateView
+              });
+            }
+          },
+          format: 'raw',
+          selector: '#' + attrs.id
+        };
+        // extend options with initial uiTinymceConfig and
+        // options from directive attribute value
+        angular.extend(options, uiTinymceConfig, expression);
+        // Wrapped in $timeout due to $tinymce:refresh implementation, requires
+        // element to be present in DOM before instantiating editor when
+        // re-rendering directive
+        $timeout(function() {
+          tinymce.init(options);
+        });
+
+        ngModel.$formatters.unshift(function(modelValue) {
+          return modelValue ? $sce.trustAsHtml(modelValue) : '';
+        });
+
+        ngModel.$parsers.unshift(function(viewValue) {
+          return viewValue ? $sce.getTrustedHtml(viewValue) : '';
+        });
+
+        ngModel.$render = function() {
+          ensureInstance();
+
+          var viewValue = ngModel.$viewValue ?
+            $sce.getTrustedHtml(ngModel.$viewValue) : '';
+
+          // instance.getDoc() check is a guard against null value
+          // when destruction & recreation of instances happen
+          if (tinyInstance &&
+            tinyInstance.getDoc()
+          ) {
+            tinyInstance.setContent(viewValue);
+            tinyInstance.fire('change');
+          }
+        };
+
+        attrs.$observe('disabled', function(disabled) {
+          if (disabled) {
+            ensureInstance();
+
+            if (tinyInstance) {
+              tinyInstance.getBody().setAttribute('contenteditable', false);
+            }
+          } else {
+            ensureInstance();
+
+            if (tinyInstance) {
+              tinyInstance.getBody().setAttribute('contenteditable', true);
+            }
+          }
+        });
+
+        // This block is because of TinyMCE not playing well with removal and
+        // recreation of instances, requiring instances to have different
+        // selectors in order to render new instances properly
+        scope.$on('$tinymce:refresh', function(e, id) {
+          var eid = attrs.id;
+          if (angular.isUndefined(id) || id === eid) {
+            var parentElement = element.parent();
+            var clonedElement = element.clone();
+            clonedElement.removeAttr('id');
+            clonedElement.removeAttr('style');
+            clonedElement.removeAttr('aria-hidden');
+            tinymce.execCommand('mceRemoveEditor', false, eid);
+            parentElement.append($compile(clonedElement)(scope));
+          }
+        });
+
+        scope.$on('$destroy', function() {
+          ensureInstance();
+
+          if (tinyInstance) {
+            tinyInstance.remove();
+            tinyInstance = null;
+          }
+        });
+
+        function ensureInstance() {
+          if (!tinyInstance) {
+            tinyInstance = tinymce.get(attrs.id);
+          }
         }
+      }
     };
-}]); 
-
-var myApp = angular.module('myApp', ['ui.tinymce']);
-function TestCtrl($scope, $http) {
-    $scope.from_one = {
-      from_one :'<strong>bold data in controller in from_one.js</strong>'
-    }
-};
+  }]);
