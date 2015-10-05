@@ -100,6 +100,7 @@ angular.module('app', [
             .when('/', { redirectTo: '/merchants/list-merchant'} )
             .when('/404', { templateUrl: 'views/pages/404.html'} )
 
+        # CLIENTS MANAGEMENT
         $routeProvider
             .when('/clients', {
                 templateUrl: 'views/clients/list-clients.html'
