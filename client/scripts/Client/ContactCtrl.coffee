@@ -59,8 +59,10 @@ angular.module('app.contacts', [])
             email: ''
             title: ''
         }
+
         $scope.srch_users   =
             'email' : 0
+
         $scope.createContact = ->
             newContact = {
                 "position": {
@@ -81,6 +83,7 @@ angular.module('app.contacts', [])
             fetchContact.delete contact.position._links.self.href
             .then (res) ->
                 init()
+
 
         # 5. submit contact form
         $scope.contact_submit = ()->
