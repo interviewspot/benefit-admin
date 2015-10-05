@@ -134,6 +134,8 @@ angular.module('app', [
         # HateoasInterceptorProvider.transformAllResponses()
         # HateoasInterfaceProvider.setLinksKey("_links")
         # HateoasInterfaceProvider.setHalEmbedded("_embedded")
+        # x-username: kenneth.yap@ap.magenta-consulting.com
+        # x-password: p@ssword
         $sceDelegateProvider.resourceUrlWhitelist(['self', 'https://api.sg-benefits.com/**'])
         $httpProvider.defaults.headers.common = {
             'x-username': 'kenneth.yap@ap.magenta-consulting.com'
