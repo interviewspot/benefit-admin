@@ -8,6 +8,7 @@ angular.module('app.handbooks', [])
     '$scope', '$routeParams', 'handbookService', 'clientService', 'sectionService', '$location',
     ($scope, $routeParams, handbookService, clientService, sectionService, $location) ->
 
+
         $scope.clientId = $routeParams.clientId
         $scope.handbookId = $routeParams.handbookId
 

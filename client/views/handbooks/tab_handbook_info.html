@@ -9,10 +9,8 @@
                     class="txt-ipt"
                     required =""
                     name="hb_title"
-                    ng-class="{txt_err : (frm_crt_handbook.hb_title.$invalid && frm_crt_handbook.hb_title.$touched)}"
                     />
                 </td>
-                {{frm_crt_handbook | json : 4}}
             </tr>
             <tr>
                 <td class="td-20">Version:</td>
@@ -22,8 +20,7 @@
                     required
                     ng-model="handbook.version"
                     name="hb_version"
-                    class="txt-ipt"
-                    ng-class="{txt_err : frm_crt_handbook.hb_version.$error.required}"/>
+                    class="txt-ipt"/>
                 </td>
             </tr>
             <tr>
@@ -34,8 +31,7 @@
                     required
                     ng-model="handbook.year"
                     name="hb_year"
-                    class="txt-ipt"
-                    ng-class="{txt_err : frm_crt_handbook.hb_year.$error.required}"/>
+                    class="txt-ipt"/>
                 </td>
             </tr>
             <tr>
@@ -45,19 +41,17 @@
                     required
                     ng-model="handbook.language"
                     name="hb_language"
-                    class="txt-ipt"
-                    ng-class="{txt_err : frm_crt_handbook.hb_language.$error.required}"/>
+                    class="txt-ipt"/>
                 </td>
             </tr>
 
         </tbody>
     </table>
 
-    <button
-    type="submit"
+    <a
     ng-click="submitHandbookInfo()"
     class="save btn-brown">
         <i class="fa fa-save"></i>&nbsp;SAVE
-    </button>
+    </a>
     <!-- END : TBL -->
 </form>
