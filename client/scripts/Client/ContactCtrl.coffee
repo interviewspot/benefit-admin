@@ -33,6 +33,8 @@ angular.module('app.contacts', [])
 
                 return
 
+        if $routeParams.clientId
+            init()
 
         # 2. Autocomplete email
         $scope.searchMail = (term) ->
@@ -64,8 +66,10 @@ angular.module('app.contacts', [])
             email: ''
             title: ''
         }
+
         $scope.srch_users   =
             'email' : 0
+
         $scope.createContact = ->
             newContact = {
                 "position": {
@@ -84,9 +88,6 @@ angular.module('app.contacts', [])
             fetchContact.delete contact.position._links.self.href
             .then (res) ->
                 init()
-
-        if $routeParams.clientId
-            init()
 
 ])
 .directive('keyboardPoster',
