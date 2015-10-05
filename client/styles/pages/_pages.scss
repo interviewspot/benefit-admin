@@ -8,6 +8,7 @@
 .btn-brown {
     background-color: #CFAE79;
     color: #fff;
+    border: none;
     @include  border-radius(4px);
     @include transition(all 0.2s linear);
     padding: 5px 10px;
@@ -23,7 +24,9 @@
 .non-display {
     display: none;
 }
-
+.text_error {
+    border: 1px solid red;
+}
 .page {
     padding: 15px 0;
 }
@@ -739,4 +742,10 @@ h2.ttl-tab {
 
 .sction-list {
     margin-bottom: 20px;
+}
+/* CSS MESSAGE*/
+.msg-update {
+    display: inline-block;
+    padding-left: 20px;
+    color: #CFAE79;
 }

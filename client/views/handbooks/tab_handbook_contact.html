@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-9 col-sm-9 col-xs-12 ctc-left">
                 <h2 class="ttl-tab"><span>Create New Contact</span></h2>
-                <form class="frm-create-ctact modal_frm" ng-submit="contact_submit()" name="frm_contact" novalidate>
+                <form class="frm-create-ctact modal_frm" ng-submit="createContact()" name="frm_contact" novalidate>
                     <div class="row">
                         <div class="col-md-5 col-sm-5 col-xs-12 frm-itm">
                             <div class="srch-em-wrap">
@@ -41,7 +41,7 @@
                         </div>
                         <div class="col-md-2 col-sm-2 col-xs-12 text-center frm-itm">
                             <label>&nbsp;</label>
-                            <button type="submit" class="btn btn-submit btn-primary" ng-click="createContact()">CREATE</button>
+                            <button type="submit" class="btn btn-submit btn-primary">CREATE</button>
                         </div>
                     </div>
                 </form><!-- END: FORM -->
@@ -93,7 +93,7 @@
 <!-- MODAL: EDIT CONTACT -->
 <!-- <div id="editContact" class="modal fade" role="dialog">
     <div class="modal-dialog">
-        
+
     </div>
 </div> -->
 <!-- END : MODAL EDIT CONTACT-->

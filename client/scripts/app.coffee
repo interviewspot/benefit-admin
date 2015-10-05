@@ -47,6 +47,8 @@ angular.module('app', [
     'app.contacts'
     'app.contacts.services'
     'app.handbooks'
+    'app.handbook_section'
+    'app.handbook_info'
     #Khai bao app khi tao
 ])
     

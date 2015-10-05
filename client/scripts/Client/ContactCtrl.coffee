@@ -64,6 +64,11 @@ angular.module('app.contacts', [])
         # 3. create contact
         $scope.selectedUser = null
         $scope.createContact = ->
+            angular.forEach $scope.frm_contact.$error.required, (field)->
+                field.$dirty = true
+            if $scope.frm_contact.$error.required.length
+                return false
+
             newContact = {
                 "position": {
                     "title": $scope.contact.title
@@ -132,6 +137,7 @@ angular.module('app.contacts', [])
                             count++
                             if count == $scope.totalSelected
                                 $scope.loadContactList()
+                                
         return
 ])
 .controller('ContactFormCtrl', [
@@ -142,7 +148,7 @@ angular.module('app.contacts', [])
             updateContact = {
                 "position": {
                     "title": contact.position.title
-                    "employee": contact.user.id
+                    "employee": $scope.srch_users[contact.user.email]
                     "active": true
                     "employer": $routeParams.clientId
                 }
@@ -150,7 +156,7 @@ angular.module('app.contacts', [])
             fetchContact.update(contact.position._links.self.href, updateContact).then  (res) ->
                 $scope.loadContactList()
                 $modalInstance.close()
-        $scope.cancel = -> 
+        $scope.cancel = ->
             $modalInstance.dismiss('cancel');
 ])
 # .controller('DeleteContactCtrl', [
@@ -162,7 +168,7 @@ angular.module('app.contacts', [])
 #             .then (res) ->
 #                 $scope.loadContactList()
 #                 $modalInstance.close()
-#         $scope.cancel = -> 
+#         $scope.cancel = ->
 #             $modalInstance.dismiss('cancel');
 # ])
 .directive('keyboardPoster',

@@ -1,15 +1,21 @@
-<div class="item-preview" ng-show="!showPreview">
+<div class="item-preview" ng-show="!showPreview" data-ng-controller="HandbookSectionCtrl">
     <div class="col-md-8 col-sm-8 col-xs-6">
         <span class="cap-note" ng-click="showPreview = !showPreview">
                                                         Preview
                                                     </span>
         <div class="sec-itm blk-preview" ng-show="!isForward">
+            <form name="frm_section" class="modal_frm" ng-submit="submitSection()" novalidate>
                 <table class="table tbl table-striped">
                     <tbody>
                         <tr>
                             <td class="td-20 td-bold">Section Title:</td>
                             <td>
-                                <input type="text" ng-model="formSection.title" class="txt-ipt"/>
+                                <input type="text"
+                                name="sec_title"
+                                ng-model="formSection.title"
+                                required=""
+                                class="txt-ipt ipt"
+                                ng-class='{txt_err : (frm_section.sec_title.$invalid && frm_section.sec_title.$dirty)}'/>
                             </td>
                         </tr>
                         <tr>
@@ -24,14 +30,23 @@
                         <tr>
                             <td class="td-20 td-bold">Section No:</td>
                             <td>
-                                <input type="text" ng-model="formSection.version" class="txt-ipt"/>
+                                <input
+                                type="text"
+                                ng-model="formSection.version"
+                                class="txt-ipt ipt"
+                                required=""
+                                name="sec_no"
+                                ng-class='{txt_err : (frm_section.sec_no.$invalid && frm_section.sec_no.$dirty)}'
+                                />
                             </td>
                         </tr>
-                        <tr ng-if="isCreateSubSection">
+                        <tr ng-show="isCreateSubSection">
                             <td class="td-20 td-bold">Section Parent:</td>
                             <td>
-                                <select  ng-model="parentSelect" ng-change="changedValue(parentSelect)" 
-                                     data-ng-options="option.id as option.title for option in parentSection">
+                                <select
+                                ng-model="parentSelect"
+                                ng-change="changedValue(parentSelect)"
+                                data-ng-options="option.id as option.title for option in parentSection">
                                     <option value="">Select Parent</option>
                                 </select>
                             </td>
@@ -39,12 +54,21 @@
                     </tbody>
                 </table>
                 <!-- END : TBL -->
-                <div text-angular ng-model="formSection.description"></div>
+                <div text-angular
+                ng-model="formSection.description"
+                ></div>
                 <!-- <textarea ui-tinymce data-ng-model="formSection.description"></textarea> -->
                 <!-- END : EDITOR -->
                 <p class="tp-20">
-                    <a ng-click="submitSection()" class="save btn-brown"><i class="fa fa-save"></i>&nbsp;&nbsp;SAVE SECTION</a>
+                    <button type="submit"
+                    class="save btn-brown">
+                        <i class="fa fa-save"></i>&nbsp;&nbsp;SAVE SECTION
+                    </button>
+                    <span class="msg-update">
+                        {{sectionUpdated}}
+                    </span>
                 </p>
+            </form>
         </div>
         <!-- END : FORWARD -->
     </div>
