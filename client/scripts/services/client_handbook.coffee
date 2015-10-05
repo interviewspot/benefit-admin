@@ -17,11 +17,14 @@ angular.module('app.handbook.services', [])
 	service = $resource(config.path.baseURL + config.path.handbook, {}, {
             query:{
                 method:"GET",
-                action: config.path.baseURL + config.path.handbooks,
+                # action: config.path.baseURL + config.path.handbooks,
             },
             update:{
                 method:"PUT"
             }
+            save:
+                method:"POST"
+                action: config.path.baseURL + config.path.handbooks
     	}
 	)
 	return service
@@ -38,6 +41,20 @@ angular.module('app.handbook.services', [])
                 d.resolve(res)
             , (error) ->
                 d.reject(error)
+
+            d.promise
+        delete : (url) ->
+            d = $q.defer()
+            $http({
+                method: 'DELETE'
+                url: url
+            })
+            .then (res) ->
+                d.resolve(res)
+                return
+            , (error) ->
+                d.reject(error)
+                return
 
             d.promise
     }

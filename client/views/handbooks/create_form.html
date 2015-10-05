@@ -1,0 +1,73 @@
+<div data-ng-controller="HandbookInfoCtrl" >
+<form name="frm_crt_handbook" novalidate ng-submit="submitCreateHandbook()">
+    <table class="table tbl table-striped">
+        <tbody>
+            <tr>
+                <td class="td-20">Handbook Title:</td>
+                <td>
+                    <input type="text"
+                    ng-model="handbook.title"
+                    class="txt-ipt"
+                    required =""
+                    name="hb_title"
+                    ng-class='{txt_err : (frm_crt_handbook.hb_title.$invalid && frm_crt_handbook.hb_title.$dirty)}'
+                    />
+                </td>
+            </tr>
+            <tr>
+                <td class="td-20">Version:</td>
+                <td>
+                    <input
+                    type="text"
+                    required
+                    ng-model="handbook.version"
+                    name="hb_version"
+                    class="txt-ipt"
+                    ng-class='{txt_err : (frm_crt_handbook.hb_version.$invalid && frm_crt_handbook.hb_version.$dirty)}'
+                    />
+                </td>
+            </tr>
+            <tr>
+                <td class="td-20">Year:</td>
+                <td>
+                    <input
+                    type="text"
+                    required
+                    ng-model="handbook.year"
+                    name="hb_year"
+                    class="txt-ipt"
+                    ng-class='{txt_err : (frm_crt_handbook.hb_year.$invalid && frm_crt_handbook.hb_year.$dirty)}'
+                    />
+                </td>
+            </tr>
+            <tr>
+                <td class="td-20">Language:</td>
+                <td>
+                    <input type="text"
+                    ng-model="handbook.language"
+                    name="hb_language"
+                    class="txt-ipt"
+                    />
+                </td>
+            </tr>
+            <tr>
+                <td class="td-20">Description:</td>
+                <td>
+                    <div text-angular ng-model="handbook.description"></div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <p>
+        <button
+        type="submit"
+        class="save btn-brown">
+            <i class="fa fa-save"></i>&nbsp;SAVE INFO
+        </button>
+        <span class="msg-update">
+            {{infoUpdated}}
+        </span>
+    </p>
+    <!-- END : TBL -->
+</form>
+</div>

@@ -33,32 +33,32 @@ angular.module('app.handbooks', [])
             handbookService.update {org_id:$scope.clientId, hand_id:$scope.handbookId}, updateData
 
             # update company info
-            updateData = {
-                children: {
-                    name: $scope.clientDetail.name
-                    code: $scope.clientDetail.code
-                    parent: null
-                    adminUser: null
-                    root: null
-                    location: null
-                    logo: null
-                    lft: null
-                    lvl: null
-                    rgt: null
-                    regNo: $scope.clientDetail.reg_no
-                    headOfficeNo: $scope.clientDetail.head_office_no
-                    billingAddress: $scope.clientDetail.billing_address
-                    reservationEmail: $scope.clientDetail.reservation_email
-                    userContactNo: $scope.clientDetail.user_contact_no
-                    clientSince: $scope.clientDetail.client_since
-                    officeHours: $scope.clientDetail.office_hours
-                    redemptionPassword: $scope.clientDetail.redemption_password
-                    aboutCompany: $scope.clientDetail.about_company
-                }
-            }
+            # updateData = {
+            #     children: {
+            #         name: $scope.clientDetail.name
+            #         code: $scope.clientDetail.code
+            #         parent: null
+            #         adminUser: null
+            #         root: null
+            #         location: null
+            #         logo: null
+            #         lft: null
+            #         lvl: null
+            #         rgt: null
+            #         regNo: $scope.clientDetail.reg_no
+            #         headOfficeNo: $scope.clientDetail.head_office_no
+            #         billingAddress: $scope.clientDetail.billing_address
+            #         reservationEmail: $scope.clientDetail.reservation_email
+            #         userContactNo: $scope.clientDetail.user_contact_no
+            #         clientSince: $scope.clientDetail.client_since
+            #         officeHours: $scope.clientDetail.office_hours
+            #         redemptionPassword: $scope.clientDetail.redemption_password
+            #         aboutCompany: $scope.clientDetail.about_company
+            #     }
+            # }
             # delete updateData._links 
             # delete updateData.id
-            clientService.update {org_id:$scope.clientId}, updateData
+            # clientService.update {org_id:$scope.clientId}, updateData
             # display message
             $scope.generalUpdated = 'Update Success'
             $timeout ()->

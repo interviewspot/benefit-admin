@@ -3,8 +3,8 @@
 angular.module('app.clients', [])
 
 .controller('clientCtrl', [
-    '$scope', '$filter' , 'fetchTabData', 'fakeData', '$location', 'clientService', 'fetchHandbook', '$routeParams'
-    ($scope, $filter, fetchTabData, fakeData, $location, clientService, fetchHandbook, $routeParams) ->
+    '$scope', '$filter' , 'fetchTabData', 'fakeData', '$location', 'clientService', 'fetchHandbook', '$routeParams', '$route'
+    ($scope, $filter, fetchTabData, fakeData, $location, clientService, fetchHandbook, $routeParams, $route) ->
     # filter
       $scope.stores = [
           {id: 1, company: 'BullWorks Pte Ltd', status: 'nverser', industry: 'AAA', users: 'Euro', estsaving: 'None', cs: 2,action: "Manage", }
@@ -117,6 +117,13 @@ angular.module('app.clients', [])
         if $location.path() == path
           return 'active'
 
+      # function delete handbook
+      $scope.deleteHandbook = (handbook) -> 
+        r = confirm("Do you want to delete \"" + handbook.title + "\"?")
+        if r == true
+          fetchHandbook.delete handbook._links.self.href
+          .then (res) ->
+            $route.reload()
       # tabs config
       $scope.tabConfig = [
         id: 'cpn'
@@ -172,6 +179,9 @@ angular.module('app.clients', [])
         format: 'raw'
         trusted: true
       }
+      $scope.isCreateHandbook = false
+      $scope.createNewVersion = ->
+        $scope.isCreateHandbook = not $scope.isCreateHandbook
       # fakedata clients page
       fakeDT = fakeData.clients_data
       #$scope.clients_list = fakeDT.clients_list
