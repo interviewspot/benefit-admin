@@ -37,6 +37,14 @@ angular.module('app.contacts', [])
             init()
 
         # 2. Autocomplete email
+        $scope.contact = {
+            email: ''
+            title: ''
+        }
+
+        $scope.srch_users   =
+            'email' : 0
+
         $scope.searchMail = (term) ->
             d = $q.defer()
             q = term.toLowerCase().trim()
@@ -62,14 +70,6 @@ angular.module('app.contacts', [])
 
         # 3. create contact
         $scope.selectedUser = null
-        $scope.contact = {
-            email: ''
-            title: ''
-        }
-
-        $scope.srch_users   =
-            'email' : 0
-
         $scope.createContact = ->
             newContact = {
                 "position": {
