@@ -16,20 +16,12 @@ angular.module('app.handbooks', [])
 
         handbookService.get {org_id:$scope.clientId, hand_id:$scope.handbookId}, (data, getResponseHeaders) ->
             $scope.handbook = data
-            # $scope.$watch 'handbook', ((newVal, oldVal) ->
-            #   if newVal
-            #       updateData = {
-            #           handbook: newVal
-            #       }
-            #       delete updateData.handbook._links 
-            #       delete updateData.handbook.id
-            #       updateData.handbook['organisation'] = $scope.clientId
-            #       handbookService.update {org_id:$scope.clientId, hand_id:$scope.handbookId}, updateData
-            # ), true
+
         $scope.isActive = (href) ->
             path = $location.path()
             if path.indexOf(href) is 0
               return 'active'
+
         $scope.submitHandbookInfo = ->
             updateData = {
                 handbook: $scope.handbook
