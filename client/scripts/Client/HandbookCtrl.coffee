@@ -16,7 +16,6 @@ angular.module('app.handbooks', [])
 
         handbookService.get {org_id:$scope.clientId, hand_id:$scope.handbookId}, (data, getResponseHeaders) ->
             $scope.handbook = data
-            console.log $scope.handbook
             # $scope.$watch 'handbook', ((newVal, oldVal) ->
             #   if newVal
             #       updateData = {

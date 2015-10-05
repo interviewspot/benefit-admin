@@ -34,7 +34,7 @@ angular.module('app.contacts', [])
             .then (res) ->
                 init()
         $scope.editContact = (contact) ->
-            
+            $scope.editcontact = contact
 
         # 2. Autocomplete email
         $scope.selectedUser = null
