@@ -8,13 +8,7 @@ angular.module('app.contacts', [])
     '$scope', '$filter' , 'fetchTabData', 'fakeData', '$location', '$routeParams', 'ContactService', 'fetchContact', 'SearchUsers', 'fetchUsers', 'config' , '$q',
     ($scope, $filter, fetchTabData, fakeData, $location, $routeParams, ContactService, fetchContact, SearchUsers, fetchUsers, config, $q) ->
 
-        # $scope.handbook = {}
 
-        # $scope.$watch () ->
-        #     $scope.handbook.title
-        # ,
-        #     (nv)->
-        #         console.log $scope.frm_crt_handbook.hb_title
 
         # 1. manage list contacts
         init = ->
@@ -65,7 +59,6 @@ angular.module('app.contacts', [])
             , () ->
                 d.resolve(results)
             return d.promise
-        return
 
 
         # 3. create contact
@@ -82,6 +75,8 @@ angular.module('app.contacts', [])
             ContactService.save {org_id:$routeParams.clientId}, newContact, (res)->
                 init()
 
+
+
         # 4.delete contact
         $scope.deleteContact = (contact) ->
             console.log contact.position._links.self.href
@@ -89,6 +84,14 @@ angular.module('app.contacts', [])
             .then (res) ->
                 init()
 
+
+        # 5. submit contact form
+        $scope.contact_submit = ()->
+            angular.forEach $scope.frm_contact.$error.required, (field)->
+                console.log field
+                field.$dirty = true
+
+        return
 ])
 .directive('keyboardPoster',
     ($parse, $timeout) ->

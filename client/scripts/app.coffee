@@ -18,6 +18,7 @@ angular.module('app', [
     'duScroll'
     'ui.tinymce'
     'angular.filter'
+    'ngTouch'
     
     # Custom modules
     'app.constant'

@@ -515,6 +515,9 @@ h2.ttl-tab {
         &:focus {
             border: 1px solid #999;
         }
+        &.txt_err {
+            border: 1px solid red;
+        }
     }
     input[type="radio"] {
         vertical-align: -2px;
