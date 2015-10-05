@@ -2,15 +2,19 @@
 angular.module('app.contacts', [])
 # --------------------------------------------
 # Contact in Handbook TAB of Client
-# 1. manage list contacts
-# 2. Autocomplete email
+# 1. Display list contacts
+# 2. Autocomplete search User by email
+# 3. Create a contact
+# 4. Edit contact : call modalbox
+# 5. Delete a contact item
+# 6. Count selected contact item
+# 7. Delete multi-selected contact
+# --------------------------------------------
 .controller('ContactCtrl', [
     '$scope', '$filter' , 'fetchTabData', 'fakeData', '$location', '$routeParams', 'ContactService', 'fetchContact', 'SearchUsers', 'fetchUsers', 'config' , '$q', '$modal',
     ($scope, $filter, fetchTabData, fakeData, $location, $routeParams, ContactService, fetchContact, SearchUsers, fetchUsers, config, $q, $modal) ->
 
-
-
-        # 1. manage list contacts
+        # 1. Display list contacts
         $scope.loadContactList = ->
             ContactService.get {org_id:$routeParams.clientId}, (data, getResponseHeaders) ->
                 if data._embedded.items.length
@@ -30,7 +34,7 @@ angular.module('app.contacts', [])
         if $routeParams.clientId
             $scope.loadContactList()
 
-        # 2. Autocomplete email
+        # 2. Autocomplete search User by email
         $scope.contact = {
             email: ''
             title: ''
@@ -61,50 +65,31 @@ angular.module('app.contacts', [])
             return d.promise
 
 
-        # 3. create contact
+        # 3. Create a contact
         $scope.selectedUser = null
         $scope.createContact = ->
+            # VALIDATE FRM
             angular.forEach $scope.frm_contact.$error.required, (field)->
                 field.$dirty = true
+
             if $scope.frm_contact.$error.required.length
                 return false
 
+            # PREPARE JSON DATA
             newContact = {
                 "position": {
-                    "title": $scope.contact.title
+                    "title"   : $scope.contact.title
                     "employee": $scope.srch_users[$scope.contact.email]
-                    "active": true
+                    "active"  : true
                     "employer": $routeParams.clientId
                 }
             }
+
+            # SEND API : SAVE
             ContactService.save {org_id:$routeParams.clientId}, newContact, (res)->
                 $scope.loadContactList()
 
-
-        # 4.delete contact
-        $scope.deleteContact = (contact) ->
-            r = confirm("Do you want to delete \"" + contact.position.title + "\"?")
-            if r == true
-                fetchContact.delete contact.position._links.self.href
-                .then (res) ->
-                    $scope.loadContactList()
-            # modalInstance = $modal.open {
-            #     templateUrl: 'views/handbooks/delete_contact.html'
-            #     controller: 'DeleteContactCtrl'
-            #     resolve: {
-            #         contact: ->
-            #             return contact
-            #     }
-            #     scope: $scope
-            # }
-
-        # 5. submit contact form
-        $scope.contact_submit = ()->
-            angular.forEach $scope.frm_contact.$error.required, (field)->
-                console.log field
-                field.$dirty = true
-
-        # 6. edit contact
+        # 4. Edit contact : call modalbox
         $scope.editContact = (contact) ->
             $scope.editcontact = contact
             modalInstance = $modal.open {
@@ -117,17 +102,33 @@ angular.module('app.contacts', [])
                 scope: $scope
             }
 
-        # 7. count selected item
+        # 5. Delete a contact item
+        $scope.deleteContact = (contact) ->
+            r = confirm("Do you want to delete \"" + contact.position.title + "\"?")
+            if r == true
+                fetchContact.delete contact.position._links.self.href
+                .then (res) ->
+                    $scope.loadContactList()
+
+
+        # 5. submit contact form
+#        $scope.contact_submit = () ->
+#            angular.forEach $scope.frm_contact.$error.required, (field)->
+#                field.$dirty = true
+
+
+
+        # 6. Count selected contact item
         $scope.totalSelected = 0
-        $scope.contactSelect = ->
+        $scope.contactSelect = () ->
             $scope.totalSelected = 0
             for i, item of $scope.contacts
                 if item.checked == true
                     $scope.totalSelected++
 
-        # 8. Delete selected contact
+        # 7. Delete multi-selected contact
         $scope.deleteSelectedContacts = ->
-            r = confirm("Do you want to delete all select contact?")
+            r = confirm("Do you want to delete all selected contacts ?")
             count = 0
             if r == true
                 for i, item of $scope.contacts
@@ -137,9 +138,12 @@ angular.module('app.contacts', [])
                             count++
                             if count == $scope.totalSelected
                                 $scope.loadContactList()
-                                
         return
+
 ])
+# ------------------------------------
+# EDIT CONTACT CTRL
+# in MODAL BOX
 .controller('ContactFormCtrl', [
     '$scope', '$routeParams', 'fetchContact', 'config', '$modalInstance', 'contact'
     ($scope, $routeParams, fetchContact, config, $modalInstance, contact) ->
@@ -159,18 +163,8 @@ angular.module('app.contacts', [])
         $scope.cancel = ->
             $modalInstance.dismiss('cancel');
 ])
-# .controller('DeleteContactCtrl', [
-#     '$scope', '$routeParams', 'fetchContact', 'config', '$modalInstance', 'contact'
-#     ($scope, $routeParams, fetchContact, config, $modalInstance, contact) ->
-#         $scope.contact = contact
-#         $scope.confirm = ->
-#             fetchContact.delete contact.position._links.self.href
-#             .then (res) ->
-#                 $scope.loadContactList()
-#                 $modalInstance.close()
-#         $scope.cancel = ->
-#             $modalInstance.dismiss('cancel');
-# ])
+# ------------------------------------
+# SEARCH SUGGEST USER by EMAIL Directive
 .directive('keyboardPoster',
     ($parse, $timeout) ->
         DELAY_TIME_BEFORE_POSTING = 1000;
