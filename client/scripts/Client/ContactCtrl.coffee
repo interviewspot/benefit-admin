@@ -4,7 +4,7 @@ angular.module('app.contacts', [])
 # Contact in Handbook TAB of Client
 # 1. manage list contacts
 # 2. Autocomplete email
-.controller('HandbookCtrl', [
+.controller('ContactCtrl', [
     '$scope', '$filter' , 'fetchTabData', 'fakeData', '$location', '$routeParams', 'ContactService', 'fetchContact', 'SearchUsers', 'fetchUsers', 'config' , '$q',
     ($scope, $filter, fetchTabData, fakeData, $location, $routeParams, ContactService, fetchContact, SearchUsers, fetchUsers, config, $q) ->
 
@@ -24,14 +24,18 @@ angular.module('app.contacts', [])
                         )(item)
 
                 return
+
+        if $routeParams.clientId
+            init()
+
         $scope.deleteContact = (contact) ->
             console.log contact.position._links.self.href
             fetchContact.delete contact.position._links.self.href 
             .then (res) ->
                 init()
+        $scope.editContact = (contact) ->
+            
 
-        if $routeParams.clientId
-            init()
         # 2. Autocomplete email
         $scope.selectedUser = null
         $scope.contact = {

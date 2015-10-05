@@ -4,9 +4,9 @@ angular.module('app.handbooks', [])
 # Contact in Handbook TAB of Client
 # 1. manage list contacts
 # 2. Autocomplete email
-.controller('ContactCtrl', [
+.controller('HandbookCtrl', [
     '$scope', '$routeParams', 'handbookService', 'clientService', 'sectionService', '$location',
-    ($scope, $routeParams, handbookService, clientService, sectionService, linkServices, $location) ->
+    ($scope, $routeParams, handbookService, clientService, sectionService, $location) ->
 
         $scope.clientId = $routeParams.clientId
         $scope.handbookId = $routeParams.handbookId
@@ -16,6 +16,7 @@ angular.module('app.handbooks', [])
 
         handbookService.get {org_id:$scope.clientId, hand_id:$scope.handbookId}, (data, getResponseHeaders) ->
             $scope.handbook = data
+            console.log $scope.handbook
             # $scope.$watch 'handbook', ((newVal, oldVal) ->
             #   if newVal
             #       updateData = {
@@ -69,18 +70,22 @@ angular.module('app.handbooks', [])
 
         $scope.loadSections = ->
             sectionService.query {org_id:$scope.clientId, hand_id:$scope.handbookId}, (data, getResponseHeaders) ->
-                $scope.ungroupSections = orderSections(data._embedded.items)
-                $scope.allSections = ungroupSection($scope.ungroupSections)
-                sectionDatas = data._embedded.items
-                # console.log $scope.allSections[1].children
-                $scope.parentSection = []
-                for i in [0 .. sectionDatas.length-1]
-                    if !sectionDatas[i]._links.parent && sectionDatas[i]
-                        $scope.parentSection.push({
-                            id: sectionDatas[i].id
-                            title: sectionDatas[i].title
-                            _links: sectionDatas[i]._links
-                        })
+                if data._embedded.items.length > 0
+                    $scope.ungroupSections = orderSections(data._embedded.items)
+                    $scope.allSections = ungroupSection($scope.ungroupSections)
+                    sectionDatas = data._embedded.items
+                    # console.log $scope.allSections[1].children
+                    $scope.parentSection = []
+                    for i in [0 .. sectionDatas.length-1]
+                        if !sectionDatas[i]._links.parent && sectionDatas[i]
+                            $scope.parentSection.push({
+                                id: sectionDatas[i].id
+                                title: sectionDatas[i].title
+                                _links: sectionDatas[i]._links
+                            })
+                else
+                    $scope.ungroupSections = []
+                    $scope.allSections = []
         $scope.loadSections()
 
         orderSections = (items) ->
