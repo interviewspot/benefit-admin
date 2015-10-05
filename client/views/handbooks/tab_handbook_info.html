@@ -1,56 +1,63 @@
-<table class="table tbl table-striped">
-    <tbody>
-        <tr>
-            <td class="td-20">Company Reg Biz Name <span class="red">*</span>:</td>
-            <td>
-                <input type="text" ng-model="clientDetail.name" class="txt-ipt"/>
-            </td>
-        </tr>
-        <tr>
-            <td class="td-20">Biz Reg No.</td>
-            <td>
-                <input type="text" ng-model="clientDetail.reg_no" class="txt-ipt"/>
-            </td>
-        </tr>
-        <tr>
-            <td class="td-20">Address:</td>
-            <td><input type="text" ng-model="clientDetail.billing_address" class="txt-ipt"/></td>
-        </tr>
-        <tr>
-            <td class="td-20">Unit Number:</td>
-            <td><input type="text" ng-model="clientDetail.code" class="txt-ipt"/></td>
-        </tr>
-        <tr>
-            <td class="td-20">Building Name:</td>
-            <td><input type="text" ng-model="clientDetail.building_name" class="txt-ipt"/></td>
-        </tr>
-        <tr>
-            <td class="td-20">Postal Code:</td>
-            <td><input type="text" ng-model="clientDetail.postal_code" class="txt-ipt"/></td>
-        </tr>
-        <tr>
-            <td class="td-20">&nbsp;</td>
-            <td>&nbsp;</td>
-        </tr>
-        <tr>
-            <td class="td-20">Handbook Title:</td>
-            <td><input type="text" ng-model="handbook.title" class="txt-ipt"/></td>
-        </tr>
-        <tr>
-            <td class="td-20">Version:</td>
-            <td><input type="text" ng-model="handbook.version" class="txt-ipt"/></td>
-        </tr>
-        <tr>
-            <td class="td-20">Year:</td>
-            <td><input type="text" ng-model="handbook.year" class="txt-ipt"/></td>
-        </tr>
-        <tr>
-            <td class="td-20">Language:</td>
-            <td><input type="text" ng-model="handbook.language" class="txt-ipt"/></td>
-        </tr>
-        
-    </tbody>
-</table>
+<ng-form name="frm_crt_handbook" novalidate>
+    <table class="table tbl table-striped">
+        <tbody>
+            <tr>
+                <td class="td-20">Handbook Title:</td>
+                <td>
+                    <input type="text"
+                    ng-model="handbook.title"
+                    class="txt-ipt"
+                    required =""
+                    name="hb_title"
+                    ng-class="{txt_err : (frm_crt_handbook.hb_title.$invalid && frm_crt_handbook.hb_title.$touched)}"
+                    />
+                </td>
+                {{frm_crt_handbook | json : 4}}
+            </tr>
+            <tr>
+                <td class="td-20">Version:</td>
+                <td>
+                    <input
+                    type="text"
+                    required
+                    ng-model="handbook.version"
+                    name="hb_version"
+                    class="txt-ipt"
+                    ng-class="{txt_err : frm_crt_handbook.hb_version.$error.required}"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="td-20">Year:</td>
+                <td>
+                    <input
+                    type="text"
+                    required
+                    ng-model="handbook.year"
+                    name="hb_year"
+                    class="txt-ipt"
+                    ng-class="{txt_err : frm_crt_handbook.hb_year.$error.required}"/>
+                </td>
+            </tr>
+            <tr>
+                <td class="td-20">Language:</td>
+                <td>
+                    <input type="text"
+                    required
+                    ng-model="handbook.language"
+                    name="hb_language"
+                    class="txt-ipt"
+                    ng-class="{txt_err : frm_crt_handbook.hb_language.$error.required}"/>
+                </td>
+            </tr>
 
-<a ng-click="submitHandbookInfo()" class="save btn-brown"><i class="fa fa-save"></i>&nbsp;SAVE</a>
-<!-- END : TBL -->
+        </tbody>
+    </table>
+
+    <button
+    type="submit"
+    ng-click="submitHandbookInfo()"
+    class="save btn-brown">
+        <i class="fa fa-save"></i>&nbsp;SAVE
+    </button>
+    <!-- END : TBL -->
+</form>

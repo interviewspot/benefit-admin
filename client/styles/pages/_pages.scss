@@ -116,6 +116,9 @@ h2.ttl-tab {
 		background: none;
 		border: none;
 	}
+    &.txt_err {
+        border: 1px solid red;
+    }
 }
 .rs-pass {
     margin-left: 10px;

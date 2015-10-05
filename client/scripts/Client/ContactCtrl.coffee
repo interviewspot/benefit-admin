@@ -4,9 +4,17 @@ angular.module('app.contacts', [])
 # Contact in Handbook TAB of Client
 # 1. manage list contacts
 # 2. Autocomplete email
-.controller('HandbookCtrl', [
+.controller('ContactCtrl', [
     '$scope', '$filter' , 'fetchTabData', 'fakeData', '$location', '$routeParams', 'ContactService', 'fetchContact', 'SearchUsers', 'fetchUsers', 'config' , '$q',
     ($scope, $filter, fetchTabData, fakeData, $location, $routeParams, ContactService, fetchContact, SearchUsers, fetchUsers, config, $q) ->
+
+        # $scope.handbook = {}
+
+        # $scope.$watch () ->
+        #     $scope.handbook.title
+        # ,
+        #     (nv)->
+        #         console.log $scope.frm_crt_handbook.hb_title
 
         # 1. manage list contacts
         init = ->
@@ -24,33 +32,9 @@ angular.module('app.contacts', [])
                         )(item)
 
                 return
-        $scope.deleteContact = (contact) ->
-            console.log contact.position._links.self.href
-            fetchContact.delete contact.position._links.self.href 
-            .then (res) ->
-                init()
 
-        if $routeParams.clientId
-            init()
+
         # 2. Autocomplete email
-        $scope.selectedUser = null
-        $scope.contact = {
-            email: ''
-            title: ''
-        }
-        $scope.srch_users   =
-            'email' : 0
-        $scope.createContact = ->
-            newContact = {
-                "position": {
-                    "title": $scope.contact.title
-                    "employee": $scope.srch_users[$scope.contact.email]
-                    "active": true
-                    "employer": $routeParams.clientId
-                }
-            }
-            ContactService.save {org_id:$routeParams.clientId}, newContact, (res)->
-                init()
         $scope.searchMail = (term) ->
             d = $q.defer()
             q = term.toLowerCase().trim()
@@ -72,6 +56,37 @@ angular.module('app.contacts', [])
                 d.resolve(results)
             return d.promise
         return
+
+
+        # 3. create contact
+        $scope.selectedUser = null
+        $scope.contact = {
+            email: ''
+            title: ''
+        }
+        $scope.srch_users   =
+            'email' : 0
+        $scope.createContact = ->
+            newContact = {
+                "position": {
+                    "title": $scope.contact.title
+                    "employee": $scope.srch_users[$scope.contact.email]
+                    "active": true
+                    "employer": $routeParams.clientId
+                }
+            }
+            ContactService.save {org_id:$routeParams.clientId}, newContact, (res)->
+                init()
+
+        # 4.delete contact
+        $scope.deleteContact = (contact) ->
+            console.log contact.position._links.self.href
+            fetchContact.delete contact.position._links.self.href
+            .then (res) ->
+                init()
+
+        if $routeParams.clientId
+            init()
 
 ])
 .directive('keyboardPoster',
