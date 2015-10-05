@@ -109,8 +109,10 @@ angular.module('app.handbook_section', [])
 
         #delete section function
         $scope.deleteSection = (section) ->
-            sectionService.delete {org_id:$scope.clientId, hand_id:$scope.handbookId, section_id:section.id}, (res)->
-                $scope.loadSections()
+            r = confirm("Do you want to section \"" + section.title + "\"?")
+            if r == true
+                sectionService.delete {org_id:$scope.clientId, hand_id:$scope.handbookId, section_id:section.id}, (res)->
+                    $scope.loadSections()
 
         $scope.parentSelect = null
         $scope.submitSection = () ->
@@ -146,9 +148,19 @@ angular.module('app.handbook_section', [])
                 if $scope.isCreateSubSection == true && $scope.isUpdate == false
                     sectionService.saveChild {org_id:$scope.clientId, hand_id:$scope.handbookId}, sectionItem, (res)->
                         $scope.loadSections()
+                        # display message
+                        $scope.sectionUpdated = 'Update Success'
+                        $timeout ()->
+                            $scope.sectionUpdated = null
+                        , 3000
                 if $scope.isCreateSubSection == false && $scope.isUpdate == false
                     sectionService.save {org_id:$scope.clientId, hand_id:$scope.handbookId}, sectionItem, (res)->
                         $scope.loadSections()
+                        # display message
+                        $scope.sectionUpdated = 'Update Success'
+                        $timeout ()->
+                            $scope.sectionUpdated = null
+                        , 3000
 
 
 

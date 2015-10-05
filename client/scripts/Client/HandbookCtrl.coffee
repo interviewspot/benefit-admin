@@ -65,7 +65,6 @@ angular.module('app.handbooks', [])
                 $scope.generalUpdated = null
             , 3000
 
-
 ])
 
 
