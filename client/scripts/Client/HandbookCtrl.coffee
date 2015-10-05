@@ -158,8 +158,11 @@ angular.module('app.handbooks', [])
 
         #delete section function
         $scope.deleteSection = (section) ->
-            sectionService.delete {org_id:$scope.clientId, hand_id:$scope.handbookId, section_id:section.id}, (res)->
-                $scope.loadSections()
+            r = confirm("Do you want to section \"" + section.title + "\"?")
+            if r == true
+                sectionService.delete {org_id:$scope.clientId, hand_id:$scope.handbookId, section_id:section.id}, (res)->
+                    $scope.loadSections()
+            
 
         $scope.parentSelect = null
         $scope.submitSection = () ->

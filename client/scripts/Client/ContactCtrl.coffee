@@ -5,13 +5,13 @@ angular.module('app.contacts', [])
 # 1. manage list contacts
 # 2. Autocomplete email
 .controller('ContactCtrl', [
-    '$scope', '$filter' , 'fetchTabData', 'fakeData', '$location', '$routeParams', 'ContactService', 'fetchContact', 'SearchUsers', 'fetchUsers', 'config' , '$q',
-    ($scope, $filter, fetchTabData, fakeData, $location, $routeParams, ContactService, fetchContact, SearchUsers, fetchUsers, config, $q) ->
+    '$scope', '$filter' , 'fetchTabData', 'fakeData', '$location', '$routeParams', 'ContactService', 'fetchContact', 'SearchUsers', 'fetchUsers', 'config' , '$q', '$modal',
+    ($scope, $filter, fetchTabData, fakeData, $location, $routeParams, ContactService, fetchContact, SearchUsers, fetchUsers, config, $q, $modal) ->
 
 
 
         # 1. manage list contacts
-        init = ->
+        $scope.loadContactList = ->
             ContactService.get {org_id:$routeParams.clientId}, (data, getResponseHeaders) ->
                 if data._embedded.items.length
                     $scope.contacts = []
@@ -28,7 +28,7 @@ angular.module('app.contacts', [])
                 return
 
         if $routeParams.clientId
-            init()
+            $scope.loadContactList()
 
         # 2. Autocomplete email
         $scope.searchMail = (term) ->
@@ -79,11 +79,20 @@ angular.module('app.contacts', [])
 
         # 4.delete contact
         $scope.deleteContact = (contact) ->
-            console.log contact.position._links.self.href
-            fetchContact.delete contact.position._links.self.href
-            .then (res) ->
-                init()
-
+            r = confirm("Do you want to delete \"" + contact.position.title + "\"?")
+            if r == true
+                fetchContact.delete contact.position._links.self.href
+                .then (res) ->
+                    $scope.loadContactList()
+            # modalInstance = $modal.open {
+            #     templateUrl: 'views/handbooks/delete_contact.html'
+            #     controller: 'DeleteContactCtrl'
+            #     resolve: {
+            #         contact: ->
+            #             return contact
+            #     }
+            #     scope: $scope
+            # }
 
         # 5. submit contact form
         $scope.contact_submit = ()->
@@ -91,8 +100,52 @@ angular.module('app.contacts', [])
                 console.log field
                 field.$dirty = true
 
+        # 6. edit contact
+        $scope.editContact = (contact) ->
+            $scope.editcontact = contact
+            modalInstance = $modal.open {
+                templateUrl: 'views/handbooks/contact_form.html'
+                controller: 'ContactFormCtrl'
+                resolve: {
+                    contact: ->
+                        return contact
+                }
+                scope: $scope
+            }
+
         return
 ])
+.controller('ContactFormCtrl', [
+    '$scope', '$routeParams', 'fetchContact', 'config', '$modalInstance', 'contact'
+    ($scope, $routeParams, fetchContact, config, $modalInstance, contact) ->
+        $scope.contact = contact
+        $scope.save = ->
+            updateContact = {
+                "position": {
+                    "title": contact.position.title
+                    "employee": contact.user.id
+                    "active": true
+                    "employer": $routeParams.clientId
+                }
+            }
+            fetchContact.update(contact.position._links.self.href, updateContact).then  (res) ->
+                $scope.loadContactList()
+                $modalInstance.close()
+        $scope.cancel = -> 
+            $modalInstance.dismiss('cancel');
+])
+# .controller('DeleteContactCtrl', [
+#     '$scope', '$routeParams', 'fetchContact', 'config', '$modalInstance', 'contact'
+#     ($scope, $routeParams, fetchContact, config, $modalInstance, contact) ->
+#         $scope.contact = contact
+#         $scope.confirm = ->
+#             fetchContact.delete contact.position._links.self.href
+#             .then (res) ->
+#                 $scope.loadContactList()
+#                 $modalInstance.close()
+#         $scope.cancel = -> 
+#             $modalInstance.dismiss('cancel');
+# ])
 .directive('keyboardPoster',
     ($parse, $timeout) ->
         DELAY_TIME_BEFORE_POSTING = 1000;

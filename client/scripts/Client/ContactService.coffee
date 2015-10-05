@@ -21,6 +21,7 @@ angular.module('app.contacts.services', [])
                 isArray: true
             update:
                 method:"PUT"
+                action: config.path.contact
             save:
                 method:"POST"
                 action: config.path.baseURL + config.path.contacts
@@ -49,6 +50,21 @@ angular.module('app.contacts.services', [])
             $http({
                 method: 'GET'
                 url: url
+            })
+            .then (res) ->
+                d.resolve(res)
+                return
+            , (error) ->
+                d.reject(error)
+                return
+
+            d.promise
+        update : (url, data) ->
+            d = $q.defer()
+            $http({
+                method: 'PUT'
+                url: url
+                data: data
             })
             .then (res) ->
                 d.resolve(res)
