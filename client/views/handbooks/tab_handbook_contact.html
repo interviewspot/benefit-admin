@@ -50,10 +50,10 @@
             <!-- END: LEFT -->
             <div class="col-md-3 col-sm-3 col-xs-12 ctc-right">
                 <p>
-                    <strong>1</strong> chosen item(s)
+                    <strong>{{totalSelected}}</strong> chosen item(s)
                 </p>
                 <p>
-                    <a class="btn btn-primary btn-delete">DELETE</a>
+                    <a class="btn btn-primary btn-delete" ng-click="deleteSelectedContacts()">DELETE</a>
                 </p>
             </div>
             <!-- END: RIGHT -->
@@ -69,7 +69,7 @@
                 <div class="ctc-control">
                     <i class="fa fa-edit" data-toggle="modal" data-target="#editContact" ng-click="editContact(contact)"></i>
                     <i class="fa fa-trash-o" ng-click="deleteContact(contact)"></i>
-                    <input type="checkbox" id="ctc-chk1" name="ctc-chk" />
+                    <input type="checkbox" id="ctc-chk1" name="ctc-chk" ng-model="contact.checked" ng-change="contactSelect()"/>
                 </div>
                 <!-- END: CONTROL -->
                 <h3>{{contact.user.first_name}}  {{contact.user.last_name}}</h3>

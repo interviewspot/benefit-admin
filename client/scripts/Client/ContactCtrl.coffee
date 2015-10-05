@@ -73,8 +73,7 @@ angular.module('app.contacts', [])
                 }
             }
             ContactService.save {org_id:$routeParams.clientId}, newContact, (res)->
-                init()
-
+                $scope.loadContactList()
 
 
         # 4.delete contact
@@ -113,6 +112,26 @@ angular.module('app.contacts', [])
                 scope: $scope
             }
 
+        # 7. count selected item
+        $scope.totalSelected = 0
+        $scope.contactSelect = ->
+            $scope.totalSelected = 0
+            for i, item of $scope.contacts
+                if item.checked == true
+                    $scope.totalSelected++
+
+        # 8. Delete selected contact
+        $scope.deleteSelectedContacts = ->
+            r = confirm("Do you want to delete all select contact?")
+            count = 0
+            if r == true
+                for i, item of $scope.contacts
+                    if item.checked == true
+                        fetchContact.delete item.position._links.self.href
+                        .then (res) ->
+                            count++
+                            if count == $scope.totalSelected
+                                $scope.loadContactList()
         return
 ])
 .controller('ContactFormCtrl', [
