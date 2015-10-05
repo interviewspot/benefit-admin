@@ -64,6 +64,11 @@ angular.module('app.contacts', [])
             'email' : 0
 
         $scope.createContact = ->
+            angular.forEach $scope.frm_contact.$error.required, (field)->
+                field.$dirty = true
+            if $scope.frm_contact.$error.required.length
+                return false
+
             newContact = {
                 "position": {
                     "title": $scope.contact.title
@@ -84,12 +89,6 @@ angular.module('app.contacts', [])
             .then (res) ->
                 init()
 
-
-        # 5. submit contact form
-        $scope.contact_submit = ()->
-            angular.forEach $scope.frm_contact.$error.required, (field)->
-                console.log field
-                field.$dirty = true
 
         return
 ])
