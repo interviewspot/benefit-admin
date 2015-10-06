@@ -22,10 +22,11 @@ angular.module('app.contacts', [])
                     for i, item of data._embedded.items
                         ((itemInstance) ->
                             fetchContact.get(itemInstance._links.employee.href).then  (res) ->
+
                                 $scope.contacts.push({
                                     'position': itemInstance
                                     'user' : res.data
-                                    'alphabet' : res.data.first_name.charAt(0).toLowerCase()
+                                    'alphabet' :  if res.data.first_name then res.data.first_name.charAt(0).toLowerCase() else res.data.username.charAt(0).toLowerCase()
                                 })
                         )(item)
 

@@ -84,6 +84,10 @@ angular.module('app.clients', [])
 
       # manage clients
       $scope.isEditClients = false
+      $scope.isCreateHandbook = false
+
+      $scope.createNewVersion = ->
+        $scope.isCreateHandbook = not $scope.isCreateHandbook
 
       if $routeParams.clientId
         clientService.get {org_id:$routeParams.clientId}, (data, getResponseHeaders) ->
@@ -91,6 +95,8 @@ angular.module('app.clients', [])
             fetchHandbook.get(data._links.handbook.href).then  (res) ->
               $scope.handbooks = []
               $scope.handbooks.push(res.data)
+          else
+              $scope.isCreateHandbook = true
           $scope.clientDetail = data
 
       # manage users
@@ -179,9 +185,8 @@ angular.module('app.clients', [])
         format: 'raw'
         trusted: true
       }
-      $scope.isCreateHandbook = false
-      $scope.createNewVersion = ->
-        $scope.isCreateHandbook = not $scope.isCreateHandbook
+
+
       # fakedata clients page
       fakeDT = fakeData.clients_data
       #$scope.clients_list = fakeDT.clients_list

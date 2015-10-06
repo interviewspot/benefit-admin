@@ -6,8 +6,9 @@ angular.module('app.handbook_info', [])
     '$scope', '$routeParams', 'handbookService', 'clientService', 'sectionService', '$location', '$timeout',
     ($scope, $routeParams, handbookService, clientService, sectionService, $location, $timeout) ->
 
-        $scope.clientId = $routeParams.clientId
+        $scope.clientId   = $routeParams.clientId
         $scope.handbookId = $routeParams.handbookId
+        $scope.isNewHandBook = false
 
         clientService.get {org_id:$scope.clientId}, (data, getResponseHeaders) ->
             $scope.clientDetail = data
@@ -39,7 +40,7 @@ angular.module('app.handbook_info', [])
             $scope.infoUpdated = 'Update Success'
             $timeout ()->
                 $scope.infoUpdated = null
-            , 3000
+            , 1000
 
         $scope.submitCreateHandbook = ->
             angular.forEach $scope.frm_crt_handbook.$error.required, (field)->
@@ -59,8 +60,9 @@ angular.module('app.handbook_info', [])
             handbookService.save {org_id:$scope.clientId}, newData
 
             # display message
-            $scope.infoUpdated = 'Save Success'
+            $scope.infoUpdated = 'Created New'
             $timeout ()->
                 $scope.infoUpdated = null
-            , 3000
+                location.reload()
+            , 500
 ])
