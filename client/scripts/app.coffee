@@ -19,6 +19,7 @@ angular.module('app', [
     'ui.tinymce'
     'angular.filter'
     'ngTouch'
+    'angular-loading-bar'
     
     # Custom modules
     'app.constant'

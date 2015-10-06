@@ -44,12 +44,13 @@ angular.module('app.handbooks', [])
             delete updateData.handbook._links 
             delete updateData.handbook.id
             updateData.handbook['organisation'] = $scope.clientId
-            handbookService.update {org_id:$scope.clientId, hand_id:$scope.handbookId}, updateData
-
-            $scope.generalUpdated = 'Update Success'
-            $timeout ()->
-                $scope.generalUpdated = null
-            , 3000
+            handbookService.update {org_id:$scope.clientId, hand_id:$scope.handbookId}, updateData, (res) ->
+                $scope.generalUpdated = 'Update Success'
+                $timeout ()->
+                    $scope.generalUpdated = null
+                , 2000
+            , (error) ->
+                $scope.generalUpdated = error.status + ': Error, refresh & try again !'
 
 ])
 

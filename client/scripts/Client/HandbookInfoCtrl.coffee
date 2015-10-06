@@ -34,13 +34,14 @@ angular.module('app.handbook_info', [])
             delete updateData.handbook._links
             delete updateData.handbook.id
             updateData.handbook['organisation'] = $scope.clientId
-            handbookService.update {org_id:$scope.clientId, hand_id:$scope.handbookId}, updateData
-
-            # display message
-            $scope.infoUpdated = 'Update Success'
-            $timeout ()->
-                $scope.infoUpdated = null
-            , 1000
+            handbookService.update {org_id:$scope.clientId, hand_id:$scope.handbookId}, updateData, (res) ->
+                # display message
+                $scope.infoUpdated = 'Update Success'
+                $timeout ()->
+                    $scope.infoUpdated = null
+                , 1000
+            , (error) ->
+                $scope.infoUpdated = error.status + ': Error, refresh & try again !'
 
         $scope.submitCreateHandbook = ->
             angular.forEach $scope.frm_crt_handbook.$error.required, (field)->
@@ -57,12 +58,13 @@ angular.module('app.handbook_info', [])
                     organisation: $scope.clientId
                 }
             }
-            handbookService.save {org_id:$scope.clientId}, newData
-
-            # display message
-            $scope.infoUpdated = 'Created New'
-            $timeout ()->
-                $scope.infoUpdated = null
-                location.reload()
-            , 500
+            handbookService.save {org_id:$scope.clientId}, newData, (res) ->
+                # display message
+                $scope.infoUpdated = 'Created New'
+                $timeout ()->
+                    $scope.infoUpdated = null
+                    location.reload()
+                , 500
+            , (error) ->
+                $scope.infoUpdated = error.status + ': Error, refresh & try again !'
 ])

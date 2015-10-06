@@ -1,4 +1,4 @@
-<!-- <table class="table tbl table-striped">
+<table class="table tbl table-striped">
     <tbody>
         <tr>
             <td class="td-20 td-bold">Current Logo:</td>
@@ -18,18 +18,12 @@
             </td>
         </tr>
     </tbody>
-</table> -->
+</table>
 <!-- END : TBL -->
 <form method="post">
     <div text-angular ng-model="handbook.description"></div>
+    <!-- <textarea ui-tinymce data-ng-model="handbook.description"></textarea> -->
 </form>
 <br />
-<p>
-<a ng-click="submitHandbookInfo()" class="save btn-brown">
-    <i class="fa fa-save"></i>&nbsp;&nbsp;SAVE DESCIRTION
-</a>
-<span class="msg-update">
-    {{generalUpdated}}
-</span>
-</p>
+<a ng-click="submitHandbookInfo()" class="save btn-brown"><i class="fa fa-save"></i>&nbsp;SAVE</a>
 <!-- END : EDITOR -->
