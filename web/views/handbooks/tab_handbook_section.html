@@ -55,13 +55,12 @@
                 </table>
                 <!-- END : TBL -->
                 <div text-angular
-                ng-model="formSection.description"
-                ></div>
+                    ng-model="formSection.description"></div>
                 <!-- <textarea ui-tinymce data-ng-model="formSection.description"></textarea> -->
                 <!-- END : EDITOR -->
                 <p class="tp-20">
                     <button type="submit"
-                    class="save btn-brown">
+                        class="save btn-brown">
                         <i class="fa fa-save"></i>&nbsp;&nbsp;SAVE SECTION
                     </button>
                     <span class="msg-update">
@@ -80,13 +79,13 @@
                     <div class="t-td text-center t-ct">Handbook Contents</div>
                 </div>
             </div>
-            <div class="tbl-r sc-itm" ng-repeat="(key, section) in allSections" ng-click="editSection(section)">
+            <div class="tbl-r sc-itm"
+                ng-repeat="(key, section) in allSections"
+                ng-class="{active: $index == selectedSec}"
+                ng-click="editSection(section, $index)">
                 <div class="t-tr" ng-if="!section._links.parent">
                     <div class="t-td t-3">Section {{section.no}}</div>
                     <div class="t-td t-ct" ng-bind-html="section.title"></div>
-                    <!-- <span class="tbl-edit" ng-click="editSection(section)">
-                        <i class="fa fa-pencil-square-o"></i>
-                    </span> -->
                     <span class="tbl-remove" ng-click="deleteSection(section)">
                         <i class="fa fa-trash-o"></i>
                     </span>
@@ -95,9 +94,6 @@
                     <div class="t-td t-3">Sub-section</div>
                     <div class="t-td t-2">{{section.parent_no}}.{{section.no}}</div>
                     <div class="t-td t-ct" ng-bind-html="section.title"></div>
-                    <!-- <span class="tbl-edit" >
-                        <i class="fa fa-pencil-square-o"></i>
-                    </span> -->
                     <span class="tbl-remove" ng-click="deleteSection(section)">
                         <i class="fa fa-trash-o"></i>
                     </span>
@@ -116,6 +112,8 @@
     </div>
 </div>
 <!-- END : ITEM -->
+
+<!-- PREVIEW PAGE -->
 <div class="item-preview" ng-show="showPreview">
     <div class="col-xs-12">
         <span class="cap-note" ng-click="showPreview = !showPreview">Exit Preview</span>

@@ -728,11 +728,18 @@ h2.ttl-tab {
 .tbl-r.sc-itm {
     cursor: pointer;
     &:hover {
-        background-color: $brown;
-        color: #fff;
+        background-color: #eee;
         .tbl-remove, .tbl-edit {
             @include opacity(1);
             @include transform(scale(1,1));
+        }
+    }
+    &.active {
+        background-color: $brown;
+        color: #fff;
+        &:hover {
+            background-color: $brown;
+            color: #fff;
         }
     }
     .t-tr {

@@ -67,12 +67,14 @@ angular.module('app.handbook_section', [])
 
         $scope.isUpdate = false
         $scope.isCreateSubSection = false
-        $scope.editSection = (section) ->
-            if section.active = true
+        $scope.selectedSec = null
+        $scope.editSection = (section, $index) ->
+            if section.active  = true
                 section.status = 'Active'
             else
-                section.active = 'Disabled'
+                section.status = 'Disabled'
             $scope.formSection = section
+            $scope.selectedSec = $index
 
             if section._links.parent
                 $scope.isCreateSubSection = true
@@ -80,7 +82,6 @@ angular.module('app.handbook_section', [])
                     temp = eval(section._links.parent.href.split('sections/')[1])
                     $scope.parentSelect = temp
                     $scope.changedValue(temp)
-
             else
                 $scope.isCreateSubSection = false
                 $scope.parentSelect = null
@@ -90,7 +91,8 @@ angular.module('app.handbook_section', [])
             $scope.parentSelect = id
 
         $scope.createSubSction = (isSub) ->
-            $scope.isUpdate = false
+            $scope.selectedSec = null
+            $scope.isUpdate    = false
             $scope.isCreateSubSection = isSub
             $scope.formSection = {
                 description: ''
