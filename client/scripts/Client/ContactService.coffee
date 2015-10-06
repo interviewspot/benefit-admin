@@ -9,7 +9,7 @@
 ###
 # angular.module 'transformApp'
 #   .service 'client.handbook', ->
-    # AngularJS will instantiate a singleton by calling "new" on this function
+# AngularJS will instantiate a singleton by calling "new" on this function
 
 angular.module('app.contacts.services', [])
 
@@ -25,19 +25,6 @@ angular.module('app.contacts.services', [])
             save:
                 method:"POST"
                 action: config.path.baseURL + config.path.contacts
-
-        }
-    )
-    return service
-
-.factory 'SearchUsers', ($resource, config) ->
-    service = $resource(config.path.baseURL + config.path.users, {}, {
-            query:
-                method:"GET",
-                action: config.path.baseURL + config.path.users
-                #isArray: true
-            update:
-                method:"PUT"
 
         }
     )
@@ -109,3 +96,16 @@ angular.module('app.contacts.services', [])
             d.promise
     }
 ])
+
+.factory 'SearchUsers', ($resource, config) ->
+    service = $resource(config.path.baseURL + config.path.users, {}, {
+            query:
+                method:"GET",
+                action: config.path.baseURL + config.path.users
+                #isArray: true
+            update:
+                method:"PUT"
+
+        }
+    )
+    return service
