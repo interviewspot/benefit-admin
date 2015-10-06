@@ -13,13 +13,23 @@ angular.module('app.handbooks', [])
         $scope.handbookId = $routeParams.handbookId
         #$scope.showNewFrm = true
 
+        # BUILD MENU TAB in CLIENT PAGE
+        $scope.ClientPage =
+            tabUrls : {}
         clientService.get {org_id:$scope.clientId}, (data, getResponseHeaders) ->
             $scope.clientDetail = data
+            $scope.ClientPage.tabUrls   =
+                "info" : '#/clients/' + data.id + '/info'
+                "user" : '#/clients/' + data.id + '/user'
+                "handbooks" : '#/clients/' + data.id + '/handbooks'
+                "policies"  : '#/clients/' + data.id + '/policies'
+                "insurance" : '#/clients/' + data.id + '/insurance'
+                "healthcare": '#/clients/' + data.id + '/healthcare'
+                "imerchant" : '#/clients/' + data.id + '/imerchant'
+        # ------------------------------------------------------------------
 
         handbookService.get {org_id:$scope.clientId, hand_id:$scope.handbookId}, (data, getResponseHeaders) ->
             $scope.handbook = data
-            # if $scope.handbook.length
-            #     $scope.showNewFrm = false
 
         $scope.isActive = (href) ->
             path = $location.path()

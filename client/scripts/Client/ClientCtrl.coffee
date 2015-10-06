@@ -89,6 +89,8 @@ angular.module('app.clients', [])
       $scope.createNewVersion = ->
         $scope.isCreateHandbook = not $scope.isCreateHandbook
 
+      $scope.ClientPage =
+        tabUrls : {}
       if $routeParams.clientId
         clientService.get {org_id:$routeParams.clientId}, (data, getResponseHeaders) ->
           if data._links.handbook
@@ -98,6 +100,14 @@ angular.module('app.clients', [])
           else
               $scope.isCreateHandbook = true
           $scope.clientDetail = data
+          $scope.ClientPage.tabUrls   =
+            "info" : '#/clients/' + data.id + '/info'
+            "user" : '#/clients/' + data.id + '/user'
+            "handbooks" : '#/clients/' + data.id + '/handbooks'
+            "policies"  : '#/clients/' + data.id + '/policies'
+            "insurance" : '#/clients/' + data.id + '/insurance'
+            "healthcare": '#/clients/' + data.id + '/healthcare'
+            "imerchant" : '#/clients/' + data.id + '/imerchant'
 
       # manage users
       $scope.isEditUser = false
@@ -130,61 +140,6 @@ angular.module('app.clients', [])
           fetchHandbook.delete handbook._links.self.href
           .then (res) ->
             $route.reload()
-      # tabs config
-      $scope.tabConfig = [
-        id: 'cpn'
-        baseUrl : 'views/clients/tab_company.html'
-      ,
-        id: 'usr'
-        baseUrl : 'views/clients/tab_user.html'
-      ,
-        id: 'hb'
-        baseUrl : 'views/clients/tab_handbook.html'
-      ,
-        id: 'po' 
-        baseUrl : 'views/clients/tab_policy.html'
-      ,
-        id: 'is' 
-        baseUrl : 'views/clients/tab_insurance.html'
-      ,
-        id: 'ht' 
-        baseUrl : 'views/clients/tab_healthcare.html'
-      ,
-        id: 'ic' 
-        baseUrl : 'views/clients/tab_imerchant.html'
-      ]
-
-
-      $scope.selectTab = (tabIndex) ->
-        $scope.selectedTabIndex = tabIndex
-        fetchTabData.tabFetchDataByIndex $scope.tabConfig[tabIndex]
-        .then  (res) ->
-            $scope.tabData = res.response;
-
-      # tabs child config
-      $scope.tabChildConfig = [
-        id : 'hi'
-        baseUrl : 'views/handbooks/tab_handbook_info.html'
-      ,
-        id : 'hg' 
-        baseUrl : 'views/handbooks/tab_handbook_general.html'
-      ,
-        id : 'hs' 
-        baseUrl : 'views/handbooks/tab_handbook_section.html'
-      ,
-        id : 'hc' 
-        baseUrl : 'views/handbooks/tab_handbook_contact.html'
-      ]
-      $scope.selectTabChild = (tabIndex) ->
-        $scope.selectedTabIndex = tabIndex
-        fetchTabData.tabFetchDataByIndex $scope.tabChildConfig[tabIndex]
-        .then  (res) ->
-            $scope.tabData = res.response;
-
-      $scope.tinymceOptions = {
-        format: 'raw'
-        trusted: true
-      }
 
 
       # fakedata clients page

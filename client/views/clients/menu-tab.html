@@ -1,21 +1,21 @@
 <li ng-class="{active : isActive('/clients/' + clientDetail.id + '/info')}">
-    <a href="#/clients/{{clientDetail.id}}/info" title="Company Info">Company Info</a>
+    <a href="{{ClientPage.tabUrls.info ? ClientPage.tabUrls.info : 'javascript:;'}}" title="Company Info">Company Info</a>
 </li>
 <li ng-class="{active : isActive('/clients/' + clientDetail.id + '/user')}">
-    <a href="#/clients/{{clientDetail.id}}/user" title="Users">Users</a>
+    <a href="{{ClientPage.tabUrls.user ? ClientPage.tabUrls.user : 'javascript:;'}}" title="Users">Users</a>
 </li>
 <li ng-class="{active : isActive('/clients/' + clientDetail.id + '/handbooks')}">
-    <a href="#/clients/{{clientDetail.id}}/handbooks" title="Handbook">Handbook</a>
+    <a href="{{ClientPage.tabUrls.handbooks ? ClientPage.tabUrls.handbooks : 'javascript:;'}}" title="Handbook">Handbook</a>
 </li>
 <li ng-class="{active : isActive('/clients/' + clientDetail.id + '/policies')}">
-    <a href="#/clients/{{clientDetail.id}}/policies" title="Policies">Policies</a>
+    <a href="{{ClientPage.tabUrls.policies ? ClientPage.tabUrls.policies : 'javascript:;'}}" title="Policies">Policies</a>
 </li>
 <li ng-class="{active : isActive('/clients/' + clientDetail.id + '/insurance')}">
-    <a href="#/clients/{{clientDetail.id}}/insurance" title="Insurance">Insurance</a>
+    <a href="{{ClientPage.tabUrls.insurance ? ClientPage.tabUrls.insurance : 'javascript:;'}}" title="Insurance">Insurance</a>
 </li>
 <li ng-class="{active : isActive('/clients/' + clientDetail.id + '/healthcare')}">
-    <a href="#/clients/{{clientDetail.id}}/healthcare" title="Healthcare">Healthcare</a>
+    <a href="{{ClientPage.tabUrls.healthcare ? ClientPage.tabUrls.healthcare : 'javascript:;'}}" title="Healthcare">Healthcare</a>
 </li>
 <li ng-class="{active : isActive('/clients/' + clientDetail.id + '/imerchant')}">
-    <a href="#/clients/{{clientDetail.id}}/imerchant" title="iMerchant">iMerchant</a>
+    <a href="{{ClientPage.tabUrls.imerchant ? ClientPage.tabUrls.imerchant : 'javascript:;'}}" title="iMerchant">iMerchant</a>
 </li>
