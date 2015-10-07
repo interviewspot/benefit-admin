@@ -123,7 +123,7 @@ angular.module('app.clients', [])
       $scope.editClient = (clients_edit) ->
         $scope.isDisable    = !$scope.isDisable
         $scope.clients_edit = !clients_edit
-
+        console.log $scope.clientDetail.about_company
         # Check data & update
         if $scope.clients_edit == false && $scope.clientDetail.id
           sm_client_data = {
@@ -141,7 +141,7 @@ angular.module('app.clients', [])
                 "userContactNo": if $scope.clientDetail.user_contact_no then $scope.clientDetail.user_contact_no else null,
                 "clientSince": if $scope.clientDetail.client_since then $scope.clientDetail.client_since else null,
                 "officeHours": if $scope.clientDetail.office_hours then $scope.clientDetail.office_hours else null,
-                "redemptionPassword": 4444,
+                "redemptionPassword": "4444",
                 "aboutCompany": if $scope.clientDetail.about_company then $scope.clientDetail.about_company  else null
           }
           clientService.update {org_id:$scope.clientDetail.id}, sm_client_data, (res) ->
@@ -151,7 +151,7 @@ angular.module('app.clients', [])
 
       # menu active
       $scope.isActive = (path) ->
-        if $location.path() == path
+        if $location.path().search(path) >= 0
           return 'active'
 
       # function delete handbook
@@ -166,6 +166,7 @@ angular.module('app.clients', [])
       # fakedata clients page
       fakeDT = fakeData.clients_data
       #$scope.clients_list = fakeDT.clients_list
+      #
       $scope.dt_tab_company = fakeDT.clients_tab_company
       $scope.dt_tab_user_list = fakeDT.clients_tab_user_list
       $scope.clients_tab_user_uploads = fakeDT.clients_tab_user_uploads

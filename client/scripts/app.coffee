@@ -50,6 +50,8 @@ angular.module('app', [
     'app.handbooks'
     'app.handbook_section'
     'app.handbook_info'
+    'app.users'
+    'app.users.services'
     #Khai bao app khi tao
 ])
     
@@ -106,21 +108,28 @@ angular.module('app', [
             .when('/clients', {
                 templateUrl: 'views/clients/list-clients.html'
             })
-            .when('/clients/:clientId/handbooks/:handbookId', {
-                templateUrl: 'views/handbooks/handbook.html'
-            })
             .when('/clients/:clientId', { 
                 templateUrl: 'views/clients/client.html'
             })
+            # info TAB
             .when('/clients/:clientId/info', { 
                 templateUrl: 'views/clients/client.html'
             })
+            # users TAB
+            .when('/clients/:clientId/user', {
+                templateUrl: 'views/clients/client-user.html'
+            })
+            .when('/clients/:clientId/user/:userId', {
+                templateUrl: 'views/clients/user/detail_warp.html'
+            })
+            # HANDBOOK TAB
             .when('/clients/:clientId/handbooks', { 
                 templateUrl: 'views/clients/client-handbook.html'
             })
-            .when('/clients/:clientId/user', { 
-                templateUrl: 'views/clients/client-user.html'
+            .when('/clients/:clientId/handbooks/:handbookId', {
+                templateUrl: 'views/handbooks/handbook.html'
             })
+            # policies TAB
             .when('/clients/:clientId/policies', { 
                 templateUrl: 'views/clients/client-policies.html'
             })
