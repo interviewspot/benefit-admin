@@ -4,7 +4,21 @@
 .t-c { text-align: center; }
 .t-r { text-align: right;  }
 .marg-bot { margin-bottom: 20px; }
-
+.btn {
+    display: inline-block;
+    outline: none;
+    > i.fa {
+        &.front {
+            margin-right: 10px;
+        }
+        &.back {
+            margin-right: 10px;
+        }
+    }
+    &:focus {
+        outline: none;
+    }
+}
 .btn-brown {
     background-color: #CFAE79;
     color: #fff;
@@ -16,6 +30,10 @@
     &:hover {
     	background-color: #9A7F53;
     	color: #fff;
+    }
+    &:focus {
+        background-color: #CFAE79;
+        color: #fff;
     }
 }
 .tp-20 {
@@ -106,6 +124,9 @@ h2.ttl-tab {
     &:hover {
         background-color: #999;
         color: #fff;
+    }
+    i.fa {
+        margin-right: 10px;
     }
 }
 .pagination-container {
@@ -749,6 +770,10 @@ h2.ttl-tab {
 
 .sction-list {
     margin-bottom: 20px;
+}
+/* FORM */
+.footer-frm {
+    padding: 20px 0 0 0;
 }
 /* CSS MESSAGE*/
 .msg-update {

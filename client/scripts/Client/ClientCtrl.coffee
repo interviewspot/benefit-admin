@@ -119,14 +119,35 @@ angular.module('app.clients', [])
       $scope.isDetailUpload = false
 
       # function edit
-      $scope.clients_edit = "Edit"
-      $scope.editClient = ->
-        $scope.isDisable = !$scope.isDisable
-        if $scope.isDisable
-          $scope.clients_edit = "Update"
-        else
-          $scope.clients_edit = "Edit"
-          clientService.update {org_id:params.id}, $scope.clientDetail
+      $scope.clients_edit = false
+      $scope.editClient = (clients_edit) ->
+        $scope.isDisable    = !$scope.isDisable
+        $scope.clients_edit = !clients_edit
+
+        # Check data & update
+        if $scope.clients_edit == false && $scope.clientDetail.id
+          sm_client_data = {
+            "organisation":
+                "adminUser": 9,  # Change this real ID
+                "parent": null,
+                "logo": null,
+                "name": if $scope.clientDetail.name then $scope.clientDetail.name else null,
+                "code": if $scope.clientDetail.code then $scope.clientDetail.code  else null,
+                "regNo": if $scope.clientDetail.reg_no then $scope.clientDetail.reg_no  else null,
+                "headOfficeNo": if $scope.clientDetail.head_office_no then $scope.clientDetail.head_office_no else null,
+                "billingAddress": if $scope.clientDetail.billing_address then $scope.clientDetail.billing_address else null,
+                "officeAddress" : if $scope.clientDetail.office_address then $scope.clientDetail.office_address else null,
+                "reservationEmail": if $scope.clientDetail.reservation_email then $scope.clientDetail.reservation_email else null ,
+                "userContactNo": if $scope.clientDetail.user_contact_no then $scope.clientDetail.user_contact_no else null,
+                "clientSince": if $scope.clientDetail.client_since then $scope.clientDetail.client_since else null,
+                "officeHours": if $scope.clientDetail.office_hours then $scope.clientDetail.office_hours else null,
+                "redemptionPassword": 4444,
+                "aboutCompany": if $scope.clientDetail.about_company then $scope.clientDetail.about_company  else null
+          }
+          clientService.update {org_id:$scope.clientDetail.id}, sm_client_data, (res) ->
+            console.log res
+          , (error) ->
+            console.log (error)
 
       # menu active
       $scope.isActive = (path) ->

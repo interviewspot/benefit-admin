@@ -15,7 +15,8 @@ angular.module('app.client.services', [])
                 action: config.path.baseURL + config.path.clients,
             },
             update:{
-                method:"PUT"
+                method:"PUT",
+                action: config.path.baseURL + config.path.client,
             }
     	}
 	)
@@ -102,36 +103,6 @@ angular.module('app.client.services', [])
                     'est_savings' : '$2,500'
                     'cs' : 'Astrid'
                 }
-            ,
-                {
-                    'id' : 2
-                    'company' : 'BSI Group'
-                    'status' : 'live'
-                    'industry' : 'Banking'
-                    'user' : 245
-                    'est_savings' : '$35,000'
-                    'cs' : 'Astrid'
-                }
-            ,
-                {
-                    'id' : 3
-                    'company' : 'Yang Kee'
-                    'status' : 'live'
-                    'industry' : 'Logistics'
-                    'user' : 220
-                    'est_savings' : '$15,000'
-                    'cs' : 'George'
-                }
-            ,
-                {
-                    'id' : 4
-                    'company' : 'Fastflow'
-                    'status' : 'live'
-                    'industry' : 'Logistics'
-                    'user' : 125
-                    'est_savings' : '$5,000'
-                    'cs' : 'Not Assigned'
-                }
             ]
             clients_tab_company : {
                 'id' : 1
@@ -161,83 +132,6 @@ angular.module('app.client.services', [])
                     'veri_code' : 'Awre5442d'
                     'employ_cls': 'Management'
                 }
-            ,
-                {
-                    'id' : 2
-                    'data_add'  : '29 July 2013 3:45pm'
-                    'firstname' : 'Wayne'
-                    'lastname'  : 'Smith'
-                    'email'     : 'w.smith@magenta.com'
-                    'contact_no': '761387'
-                    'veri_code' : 'OgGjhf974h'
-                    'employ_cls': 'Management'
-                }
-            ,
-                {
-                    'id' : 3
-                    'data_add'  : '19 Feb 2014 8:45pm'
-                    'firstname' : 'John'
-                    'lastname'  : 'Nguyen'
-                    'email'     : 'john_nguyen@magenta.com'
-                    'contact_no': '123975'
-                    'veri_code' : 'P8hdgh3asd'
-                    'employ_cls': 'Staff'
-                }
-            ,
-                {
-                    'id' : 4
-                    'data_add'  : '02 May 2015 14:45pm'
-                    'firstname' : 'Martin'
-                    'lastname'  : 'Long'
-                    'email'     : 'mr.long@magenta.com'
-                    'contact_no': '52342322'
-                    'veri_code' : '9hfaGF72'
-                    'employ_cls': 'Management'
-                }
-            ,
-            {
-                    'id' : 5
-                    'data_add'  : '29 June 2015 3:45pm'
-                    'firstname' : 'Astrid'
-                    'lastname'  : 'Tan'
-                    'email'     : 'a.magenta@magenta.com'
-                    'contact_no': '9787264'
-                    'veri_code' : 'Awre5442d'
-                    'employ_cls': 'Management'
-                }
-            ,
-                {
-                    'id' : 6
-                    'data_add'  : '29 July 2013 3:45pm'
-                    'firstname' : 'Wayne'
-                    'lastname'  : 'Smith'
-                    'email'     : 'w.smith@magenta.com'
-                    'contact_no': '761387'
-                    'veri_code' : 'OgGjhf974h'
-                    'employ_cls': 'Management'
-                }
-            ,
-                {
-                    'id' : 7
-                    'data_add'  : '19 Feb 2014 8:45pm'
-                    'firstname' : 'John'
-                    'lastname'  : 'Nguyen'
-                    'email'     : 'john_nguyen@magenta.com'
-                    'contact_no': '123975'
-                    'veri_code' : 'P8hdgh3asd'
-                    'employ_cls': 'Staff'
-                }
-            ,
-                {
-                    'id' : 8
-                    'data_add'  : '02 May 2015 14:45pm'
-                    'firstname' : 'Martin'
-                    'lastname'  : 'Long'
-                    'email'     : 'mr.long@magenta.com'
-                    'contact_no': '52342322'
-                    'veri_code' : '9hfaGF72'
-                    'employ_cls': 'Management'
-                }
             ]
             clients_tab_user_uploads : [
                 {
@@ -249,42 +143,6 @@ angular.module('app.client.services', [])
                     'employ_cls' : 'Executive'
                     'funct' : 'Sales'
                     'birthday' : '25/03/81'
-                    'nric' : 'Null'
-                }
-            ,
-                {
-                    'id' : 2
-                    'firstname' : 'Kenneth'
-                    'lastname' : 'Yap'
-                    'email' : 'a.magenta@magenta.com'
-                    'contact_no' : '936687'
-                    'employ_cls' : 'Management'
-                    'funct' : 'Marketing'
-                    'birthday' : '20/06/85'
-                    'nric' : 'Null'
-                }
-            ,
-                {
-                    'id' : 3
-                    'firstname' : 'Wayne'
-                    'lastname' : 'Ng'
-                    'email' : 'a.magenta@magenta.com'
-                    'contact_no' : '8728763'
-                    'employ_cls' : 'Executive'
-                    'funct' : 'Sales'
-                    'birthday' : '25/03/81'
-                    'nric' : 'Null'
-                }
-            ,
-                {
-                    'id' : 4
-                    'firstname' : 'Linda'
-                    'lastname' : 'Leong'
-                    'email' : 'a.magenta@magenta.com'
-                    'contact_no' : '765127'
-                    'employ_cls' : 'Management'
-                    'funct' : 'Marketing'
-                    'birthday' : '20/06/85'
                     'nric' : 'Null'
                 }
             ]
@@ -317,16 +175,6 @@ angular.module('app.client.services', [])
                     "est_save" : "s$20"
                     "ref"   : "244eefee"
                 }
-                {
-                    "id" : 2
-                    "date" : "24 Jul 2015 5:12pm"
-                    "merchant" : "Pollywooks"
-                    "item" : "Free Admission"
-                    "location" : "Nex Mall, Serangoon"
-                    "category" : "Kids"
-                    "est_save" : "s$18"
-                    "ref"   : "Seff55448"
-                }
             ]
             clients_user_upload_detail : [
                 {
@@ -341,45 +189,6 @@ angular.module('app.client.services', [])
                     'birthday' : '25/03/81'
                     'nric' : 'Null'
                 }
-            ,
-                {
-                    'id' : 2
-                    'firstname' : 'Kenneth'
-                    'lastname' : 'Yap'
-                    'email' : 'a.magenta@magenta.com'
-                    'contact_no' : '936687'
-                    'veri_code' : 'G553245'
-                    'employ_cls' : 'Management'
-                    'funct' : 'Marketing'
-                    'birthday' : '20/06/85'
-                    'nric' : 'Null'
-                }
-            ,
-                {
-                    'id' : 3
-                    'firstname' : 'Wayne'
-                    'lastname' : 'Ng'
-                    'email' : 'a.magenta@magenta.com'
-                    'contact_no' : '8728763'
-                    'veri_code' : '#%verrf3'
-                    'employ_cls' : 'Executive'
-                    'funct' : 'Sales'
-                    'birthday' : '25/03/81'
-                    'nric' : 'Null'
-                }
-            ,
-                {
-                    'id' : 4
-                    'firstname' : 'Linda'
-                    'lastname' : 'Leong'
-                    'email' : 'a.magenta@magenta.com'
-                    'contact_no' : '765127'
-                    'veri_code' : '%323@32'
-                    'employ_cls' : 'Management'
-                    'funct' : 'Marketing'
-                    'birthday' : '20/06/85'
-                    'nric' : 'Null'
-                }
             ]
             clients_tab_handbook_list : [
                 {
@@ -388,22 +197,6 @@ angular.module('app.client.services', [])
                     'last_modified' : '12 Jun 2015'
                     'language'      : 'English'
                     'public'        :  true
-                }
-            ,
-                {
-                    'id'            : 'chk_hb_2'
-                    'version'       : '1.3.1'
-                    'last_modified' : '05 Apr 2015'
-                    'language'      : 'Chinese'
-                    'public'        :  true
-                }
-            ,
-                {
-                    'id'            : 'chk_hb_3'
-                    'version'       : '1.2.1'
-                    'last_modified' : '12 Jun 2015'
-                    'language'      : 'English'
-                    'public'        :  false
                 }
             ]
             clients_tab_handbook_info : {
@@ -434,10 +227,3 @@ angular.module('app.client.services', [])
         }
     }
 ])
-# .factory 'Client', ($resource) ->
-# 	return $resource mainConfig.path.baseURL + mainConfig.path.client, {organisation_id:1}, {
-# 		query: {
-# 			action: mainConfig.path.baseURL + mainConfig.path.clients
-# 			method: 'GET'
-# 		}
-# 	}
