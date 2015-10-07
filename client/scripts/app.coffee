@@ -106,14 +106,14 @@ angular.module('app', [
         # CLIENTS MANAGEMENT
         $routeProvider
             .when('/clients', {
-                templateUrl: 'views/clients/list-clients.html'
+                templateUrl: 'views/clients/clients.html'
             })
             .when('/clients/:clientId', { 
-                templateUrl: 'views/clients/client.html'
+                templateUrl: 'views/clients/client-info.html'
             })
             # info TAB
             .when('/clients/:clientId/info', { 
-                templateUrl: 'views/clients/client.html'
+                templateUrl: 'views/clients/client-info.html'
             })
             # users TAB
             .when('/clients/:clientId/user', {

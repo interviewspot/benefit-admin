@@ -29,7 +29,8 @@
                         <td  class="text-center">{{user.emply_class ? user.emply_class : '-'}}</td>
                         <td  class="text-center td-18">{{user.date_added ? user.date_added : '-'}}</td>
                         <td class="td-manage text-center td-15">
-                            <i class="fa fa-check" title="Active"></i>
+                            <i class="fa fa-check" title="Active" ng-if="user.enabled"></i>
+                            <i class="fa fa-ban" title="Disable" ng-if="!user.enabled"></i>
                             <i class="fa fa-trash-o" title="Remove" ng-click="removeUser(user)"></i>
                         </td>
                     </tr>

@@ -1,7 +1,7 @@
 'use strict'
 angular.module('app.users', [])
 # --------------------------------------------
-# Contact in Handbook TAB of Client
+# Users in User TAB of Client
 # 1. GET USERS (a local function)
 # 2. PAGING, setup paging
 # 2.1 On Number Per Page Change
@@ -56,8 +56,11 @@ angular.module('app.users', [])
 
         return
 ])
+# --------------------------------------------
 # UserCtrl For single user page
 # 1. GET USER by EMAIL
+# 2. UPDATE USER
+# --------------------------------------------
 .controller('UserCtrl', [
     '$scope'
     , '$filter'
@@ -89,6 +92,9 @@ angular.module('app.users', [])
                 return
             , (error) ->
                 console.log error
+
+        # 2. UPDATE USER
+        $scope.isDisable = false
 
         # x. ONLOAD
         _getUser();
