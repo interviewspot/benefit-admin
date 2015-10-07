@@ -109,12 +109,13 @@ angular.module('app.handbook_section', [])
             status: ''
         }
 
-        #delete section function
+        # DELETE section
         $scope.deleteSection = (section) ->
             r = confirm("Do you want to section \"" + section.title + "\"?")
             if r == true
                 sectionService.delete {org_id:$scope.clientId, hand_id:$scope.handbookId, section_id:section.id}, (res)->
                     $scope.loadSections()
+
 
         $scope.parentSelect = null
         $scope.submitSection = () ->
@@ -137,7 +138,8 @@ angular.module('app.handbook_section', [])
                 sectionItem.section.active = true
             else
                 sectionItem.section.active = false
-            # update section
+
+            # UPDATE section
             if $scope.isUpdate == true
                 sectionService.update {org_id:$scope.clientId, hand_id:$scope.handbookId, section_id:$scope.formSection.id}, sectionItem, (res)->
                     $scope.loadSections()
@@ -145,8 +147,11 @@ angular.module('app.handbook_section', [])
                     $scope.sectionUpdated = 'Update Success'
                     $timeout ()->
                         $scope.sectionUpdated = null
-                    , 3000
+                    , 2000
+                , (error) ->
+                    $scope.sectionUpdated = error.status + ': Error, refresh & try again !'
             else
+                # SECTION LEVEL 1
                 if $scope.isCreateSubSection == true && $scope.isUpdate == false
                     sectionService.saveChild {org_id:$scope.clientId, hand_id:$scope.handbookId}, sectionItem, (res)->
                         $scope.loadSections()
@@ -154,7 +159,11 @@ angular.module('app.handbook_section', [])
                         $scope.sectionUpdated = 'Update Success'
                         $timeout ()->
                             $scope.sectionUpdated = null
-                        , 3000
+                        , 2000
+                    , (error) ->
+                        $scope.sectionUpdated = error.status + ': Error, refresh & try again !'
+
+                # SECTION LEVEL 2
                 if $scope.isCreateSubSection == false && $scope.isUpdate == false
                     sectionService.save {org_id:$scope.clientId, hand_id:$scope.handbookId}, sectionItem, (res)->
                         $scope.loadSections()
@@ -162,7 +171,9 @@ angular.module('app.handbook_section', [])
                         $scope.sectionUpdated = 'Update Success'
                         $timeout ()->
                             $scope.sectionUpdated = null
-                        , 3000
+                        , 2000
+                    , (error) ->
+                        $scope.sectionUpdated = error.status + ': Error, refresh & try again !'
 
 
 
