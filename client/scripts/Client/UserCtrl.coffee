@@ -23,7 +23,7 @@ angular.module('app.users', [])
 
         $scope.clientId =  $routeParams.clientId
         _URL_users =
-            list : config.path.baseURL + '/users'
+            list : config.path.baseURL + config.path.users
 
         # 1. GET USERS
         _getUsers = (limit, goPage) ->
@@ -57,7 +57,7 @@ angular.module('app.users', [])
         return
 ])
 # --------------------------------------------
-# UserCtrl For single user page
+# UserCtrl for single user page
 # 1. GET USER by EMAIL
 # 2. UPDATE USER
 # --------------------------------------------
@@ -82,7 +82,7 @@ angular.module('app.users', [])
 
         # 1. GET USER by EMAIL
         _URL =
-            detail : config.path.baseURL + '/users/'
+            detail : config.path.baseURL + config.path.users + '/'
 
         _getUser = () ->
             Users.get(_URL.detail + $scope.userId).then  (res) ->
