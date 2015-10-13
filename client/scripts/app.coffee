@@ -53,6 +53,9 @@ angular.module('app', [
     'app.users'
     'app.users.services'
     #Khai bao app khi tao
+
+    # Upload file dependencies
+    'ngFileUpload'
 ])
     
 .config([

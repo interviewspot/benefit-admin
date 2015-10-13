@@ -31,7 +31,8 @@
     "seiyria-bootstrap-slider": "~4.4.1",
     "textAngular": "1.3.2",
     "toastr": "~2.1.0",
-    "weather-icons": "~1.3.2"
+    "weather-icons": "~1.3.2",
+    "ng-file-upload": "~9.0.8"
   },
   "devDependencies": {
     "holderjs": "~2.3.1",
