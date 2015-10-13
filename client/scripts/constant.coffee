@@ -14,7 +14,6 @@ angular.module('app.constant', [])
                 'contacts'              : '/organisations/:org_id/positions'
                 'contact'               : '/organisations/:org_id/positions/:position_id'
                 'users'                 : '/users'
-
             }
         }
     )
