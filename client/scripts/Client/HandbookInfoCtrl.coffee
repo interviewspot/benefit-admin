@@ -74,37 +74,50 @@ angular.module('app.handbook_info', [])
     (Upload)->
 
         controller = [
-            '$scope', '$timeout', '$http'
-            ,($scope, $timeout, $http)->
+            '$scope', '$http', '$timeout'
+            ,($scope, $http, $timeout)->
                 
+                $scope.label = 'Upload new image'
                 $scope.fileName = ''
+                $scope.progressPercentage = 0;
 
                 $scope.uniqueID = new Date().getTime()
 
                 $scope.$watch 'file', (nv)->
                     if (nv)
-                        # Upload.upload {
-                        $http {
-                            url: $scope.uploadUrl,
-                            data: nv
+                        console.log nv.type
+                        Upload.upload {
+                            method: 'POST'
+                            url: $scope.uploadUrl
+                            data:
+                                binaryContent: nv
+                            headers:{
+                                "x-username" : 'kenneth.yap@ap.magenta-consulting.com'
+                                "x-password" : 'p@ssword'
+                                "Content-Type": if nv.type != '' then nv.type else 'application/octet-stream'
+                            }
                         } 
                         # response
                         .then (res)->
-                            console.log 'Success ' + res
+                            $scope.result = res
+                            $scope.progressPercentage = 0
                         # error
-                        .then (error)->
-                            console.log 'Error ' + error
+                        , (error)->
+                            console.error error
+                            $scope.progressPercentage = 0
+                            $scope.label = 'Error : '+ error.status
+                            $scope.result = null
+
                         # process tracker
-                        # .then (e)->
-                        #     $scope.progressPercentage = parseInt(100.0 * evt.loaded / evt.total)
-                        #     console.info 'Progress ' + $scope.progressPercentage
+                        , (e)->
+                            $scope.progressPercentage = parseInt(100.0 * e.loaded / e.total)
+                            console.info 'Progress ' + $scope.progressPercentage
 
         ] # END of controller
             
 
         link = (scope, element, attribute)->
             inputFile = $ element.find('input')
-            label = $ element.find('label')
 
 
             inputFile.on 'change', (e)->
@@ -116,15 +129,18 @@ angular.module('app.handbook_info', [])
                 console.log scope.fileName
 
                 if scope.fileName 
-                    label.html(scope.fileName)
+                    scope.label = scope.fileName
                 else
-                    label.html('Upload New Image')
+                    scope.label = 'Upload New Image'
 
         return {
             'restrict': 'E'
             'transclude': true
             'scope': 
                 'uploadUrl': '=uploadUrl'
+                'result': '=ngResult'
+                'color' : '=ngProgressColor'
+                # 'label' : '^ngLabel'
 
             
             'templateUrl': 'views/directives/uploadFile.html'
