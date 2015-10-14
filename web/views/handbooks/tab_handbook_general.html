@@ -1,0 +1,29 @@
+<table class="table tbl table-striped">
+    <tbody>
+        <tr>
+            <td class="td-20 td-bold">Current Logo:</td>
+            <td>
+                <img src="{{clients_tab_handbook_general.logo}}" alt="">
+            </td>
+        </tr>
+        <tr>
+            <td class="td-20 td-bold">Upload New Logo:</td>
+            <td>
+                <div class="fileUpload">
+                    <span>Upload...</span>
+                    <div style="height: 0px; width: 0px; overflow: hidden;">
+                        <input type="file" name="userfile" class="fileToUpload">
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<!-- END : TBL -->
+<form method="post">
+    <div text-angular ng-model="handbook.description"></div>
+    <!-- <textarea ui-tinymce data-ng-model="handbook.description"></textarea> -->
+</form>
+<br />
+<a ng-click="submitHandbookInfo()" class="save btn-brown"><i class="fa fa-save"></i>&nbsp;SAVE</a>
+<!-- END : EDITOR -->

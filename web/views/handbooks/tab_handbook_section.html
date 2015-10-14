@@ -1,0 +1,117 @@
+<div class="item-preview" ng-show="!showPreview">
+    <div class="col-md-8 col-sm-8 col-xs-6">
+        <span class="cap-note" ng-click="showPreview = !showPreview">
+                                                        Preview
+                                                    </span>
+        <div class="sec-itm blk-preview" ng-show="!isForward">
+                <table class="table tbl table-striped">
+                    <tbody>
+                        <tr>
+                            <td class="td-20 td-bold">Section Title:</td>
+                            <td>
+                                <input type="text" ng-model="formSection.title" class="txt-ipt"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td-20 td-bold">Status:</td>
+                            <td>
+                                <!-- <input type="text" ng-model="formSection.active" class="txt-ipt"/> -->
+                                <label>
+                                    <input type="checkbox" ng-model="formSection.active"> Active / Deactive
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td-20 td-bold">Section No:</td>
+                            <td>
+                                <input type="text" ng-model="formSection.version" class="txt-ipt"/>
+                            </td>
+                        </tr>
+                        <tr ng-if="isCreateSubSection">
+                            <td class="td-20 td-bold">Section Parent:</td>
+                            <td>
+                                <select  ng-model="parentSelect" ng-change="changedValue(parentSelect)"
+                                     data-ng-options="option.id as option.title for option in parentSection">
+                                    <option value="">Select Parent</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <!-- END : TBL -->
+                <div text-angular ng-model="formSection.description"></div>
+                <!-- <textarea ui-tinymce data-ng-model="formSection.description"></textarea> -->
+                <!-- END : EDITOR -->
+                <p class="tp-20">
+                    <a ng-click="submitSection()" class="save btn-brown"><i class="fa fa-save"></i>&nbsp;SAVE</a>
+                </p>
+        </div>
+        <!-- END : FORWARD -->
+    </div>
+    <div class="col-md-4 col-sm-4 col-xs-6">
+        <!-- SECTION LIST -->
+        <div class="tbl-div sction-list">
+            <div class="tbl-r">
+                <div class="t-tr td-bold">
+                    <div class="t-td text-center t-ct">Handbook Contents</div>
+                </div>
+            </div>
+            <div class="tbl-r sc-itm" ng-repeat="(key, section) in allSections" ng-click="editSection(section)">
+                <div class="t-tr" ng-if="!section._links.parent">
+                    <div class="t-td t-3">Section {{section.no}}</div>
+                    <div class="t-td t-ct" ng-bind-html="section.title"></div>
+                    <!-- <span class="tbl-edit" ng-click="editSection(section)">
+                        <i class="fa fa-pencil-square-o"></i>
+                    </span> -->
+                    <span class="tbl-remove" ng-click="deleteSection(section)">
+                        <i class="fa fa-trash-o"></i>
+                    </span>
+                </div>
+                <div class="t-tr" ng-if="section._links.parent">
+                    <div class="t-td t-3">Sub-section</div>
+                    <div class="t-td t-2">{{section.parent_no}}.{{section.no}}</div>
+                    <div class="t-td t-ct" ng-bind-html="section.title"></div>
+                    <!-- <span class="tbl-edit" >
+                        <i class="fa fa-pencil-square-o"></i>
+                    </span> -->
+                    <span class="tbl-remove" ng-click="deleteSection(section)">
+                        <i class="fa fa-trash-o"></i>
+                    </span>
+                </div>
+            </div>
+        </div><!-- END: TBL-div -->
+
+        <div class="section-control">
+            <a ng-click="createSubSction(true)">
+                Add Sub-Section
+            </a>
+            <a ng-click="createSubSction(false)">
+                Add New Section
+            </a>
+        </div>
+    </div>
+</div>
+<!-- END : ITEM -->
+<div class="item-preview" ng-show="showPreview">
+    <div class="col-xs-12">
+        <span class="cap-note" ng-click="showPreview = !showPreview">Exit Preview</span>
+        <div class="prv-logo">
+            <img src="images/logo-demo.png" alt="">
+        </div>
+        <h3 class="ttl-prv">
+            {{clientDetail.name}}
+        </h3>
+        <span class="ver-prv">Version {{handbook.version}},  {{handbook.year}}, {{handbook.language}} Version</span>
+        <div class="prv-desc" ng-bind-html="handbook.description"></div>
+        <accordion close-others="oneAtATime">
+            <accordion-group heading="{{key + 1}}. {{section.title}}" ng-repeat="(key, section) in ungroupSections">
+                <span ng-bind-html="section.description" ng-if="section.children.length == 0"></span>
+                <div ng-if="section.children.length > 0 && child.id > 0" ng-repeat="(k, child) in section.children">
+                    <strong>{{key + 1}}.{{k + 1}} - {{child.title}}</strong>
+                    <span ng-bind-html="child.description"></span>
+                </div>
+            </accordion-group>
+        </accordion>
+    </div>
+</div>
+<!-- END : ITEM -->

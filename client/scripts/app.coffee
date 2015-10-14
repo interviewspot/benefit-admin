@@ -1,9 +1,11 @@
-'use strict';
+'use strict'
 
 angular.module('app', [
     # Angular modules
     'ngRoute'
     'ngAnimate'
+    'ngResource'
+    'hateoas'
 
     # 3rd Party Modules
     'ui.bootstrap'
@@ -14,8 +16,13 @@ angular.module('app', [
     'ngMap'
     'ngTagsInput'
     'duScroll'
-
+    'ui.tinymce'
+    'angular.filter'
+    'ngTouch'
+    'angular-loading-bar'
+    
     # Custom modules
+    'app.constant'
     'app.controllers'
     'app.directives'
     'app.localization'
@@ -33,12 +40,27 @@ angular.module('app', [
     'app.chart.directives'
     'app.page.ctrls'
     'app.merchants'
-    'app.clients' #Khai bao app khi tao
+    'app.clients'
+    'app.client.services'
+    'app.handbook.services'
+    'app.handbook.sections.services'
+    'app.links.services'
+    'app.contacts'
+    'app.contacts.services'
+    'app.handbooks'
+    'app.handbook_section'
+    'app.handbook_info'
+    'app.users'
+    'app.users.services'
+    #Khai bao app khi tao
+
+    # Upload file dependencies
+    'ngFileUpload'
 ])
     
 .config([
-    '$routeProvider'
-    ($routeProvider) ->
+    '$routeProvider', 'HateoasInterceptorProvider', 'HateoasInterfaceProvider', '$sceDelegateProvider', '$httpProvider',
+    ($routeProvider, HateoasInterceptorProvider, HateoasInterfaceProvider, $sceDelegateProvider, $httpProvider) ->
 
         routes = [
             'dashboard'
@@ -50,7 +72,21 @@ angular.module('app', [
             'mail/compose', 'mail/inbox', 'mail/single'
             'tasks/tasks'
             'merchants/list-merchant', 'merchants/add', 'merchants/view', 'merchants/company', 'merchants/edit_company'
-            'clients/list-clients', 'clients/add', 'clients/view', 'clients/company', 'clients/edit_company','clients/create-new-handbook','clients/tab-view'
+            # CLIENT MANAGEMENT
+            # 'clients/index',
+            'clients/add',
+            'clients/view',
+            'clients/company',
+            'clients/edit_company',
+            'clients/create-new-handbook',
+            'clients/tab-view',
+            'clients/client',
+            'clients/client-user',
+            'clients/client-handbook',
+            'clients/client-policies',
+            'clients/client-insurance',
+            'clients/client-healthcare',
+            'clients/client-imerchant'
         ]
 
         setRoutes = (route) ->
@@ -64,8 +100,71 @@ angular.module('app', [
         routes.forEach( (route) ->
             setRoutes(route)
         )
+
+        # SET ROUTE MANUAL ---------------------------------------
         $routeProvider
             .when('/', { redirectTo: '/merchants/list-merchant'} )
             .when('/404', { templateUrl: 'views/pages/404.html'} )
+
+        # MERCHANT
+        $routeProvider
+            .when('/merchant', {
+                templateUrl: 'views/merchant/merchant.html'
+            })
+            .when('/merchant/:companyId', {
+                templateUrl: 'views/merchant/merchant-detail.html'
+            })
+
+        # CLIENTS MANAGEMENT
+        $routeProvider
+            .when('/clients', {
+                templateUrl: 'views/clients/clients.html'
+            })
+            .when('/clients/:clientId', { 
+                templateUrl: 'views/clients/client-info.html'
+            })
+            # info TAB
+            .when('/clients/:clientId/info', { 
+                templateUrl: 'views/clients/client-info.html'
+            })
+            # users TAB
+            .when('/clients/:clientId/user', {
+                templateUrl: 'views/clients/client-user.html'
+            })
+            .when('/clients/:clientId/user/:userId', {
+                templateUrl: 'views/clients/user/detail_warp.html'
+            })
+            # HANDBOOK TAB
+            .when('/clients/:clientId/handbooks', { 
+                templateUrl: 'views/clients/client-handbook.html'
+            })
+            .when('/clients/:clientId/handbooks/:handbookId', {
+                templateUrl: 'views/handbooks/handbook.html'
+            })
+            # policies TAB
+            .when('/clients/:clientId/policies', { 
+                templateUrl: 'views/clients/client-policies.html'
+            })
+            .when('/clients/:clientId/insurance', { 
+                templateUrl: 'views/clients/client-insurance.html'
+            })
+            .when('/clients/:clientId/healthcare', { 
+                templateUrl: 'views/clients/client-healthcare.html'
+            })
+            .when('/clients/:clientId/imerchant', { 
+                templateUrl: 'views/clients/client-imerchant.html'
+            })
+
             .otherwise( redirectTo: '/404' )
+
+        # HateoasInterceptorProvider.transformAllResponses()
+        # HateoasInterfaceProvider.setLinksKey("_links")
+        # HateoasInterfaceProvider.setHalEmbedded("_embedded")
+        # x-username: kenneth.yap@ap.magenta-consulting.com
+        # x-password: p@ssword
+        $sceDelegateProvider.resourceUrlWhitelist(['self', 'https://api.sg-benefits.com/**'])
+        $httpProvider.defaults.headers.common = {
+            'x-username': 'kenneth.yap@ap.magenta-consulting.com'
+            'x-password': 'p@ssword'
+        }
 ])

@@ -257,7 +257,8 @@ module.exports = (grunt) ->
                         "bower_components/weather-icons/css/*"
                         "bower_components/weather-icons/fonts/*"
                         "bower_components/weather-icons/font/*"
-
+                        "bower_components/textAngular/src/*"
+                        "lib/**/*"
                         "fonts/**/*"
                         "i18n/**/*"
                         "images/**/*"

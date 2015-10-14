@@ -1,107 +1,53 @@
 'use strict'
-
 angular.module('app.merchants', [])
-.factory('taskStorage2', ->
-    STORAGE_ID = 'tasks'
-    DEMO_TASKS = '[
-        {"title": "Finish homework", "completed": true},
-        {"title": "Make a call", "completed": true},
-        {"title": "Build a snowman :)", "completed": false},
-        {"title": "Apply for monster university!", "completed": false},
-        {"title": "Play games with friends", "completed": true},
-        {"title": "Shopping", "completed": false},
-        {"title": "One more dance", "completed": false},
-        {"title": "Try Google glass", "completed": false}
-    ]'
-
-    return {
-    get: ->
-        JSON.parse(localStorage.getItem(STORAGE_ID) || DEMO_TASKS )
-
-    put: (tasks)->
-        localStorage.setItem(STORAGE_ID, JSON.stringify(tasks))
-    }
-)
-
+# --------------------------------------------
+# Companies in Merchant
+# 1. GET Companies (a local function)
+# 2. PAGING, setup paging
+# 2.1 On Number Per Page Change
+# 2.2 Goto PAGE
+# 3. ONLOAD LISTING COMPANIES
+# --------------------------------------------
 .controller('merchantCtrl', [
-      '$scope', '$filter'
-      ($scope, $filter) ->
-# filter
-          $scope.stores = [
-              {id: 1, company: 'BullWorks Pte Ltd', store: 'Converser', type: 'AAA', cat: 'Euro', outlets: 'None', cs: 2, status: 'Live', action: "Manage", }
-              {id: 2, company: 'Resort world', store: 'Converser2', type: 'BBB', cat: 'CCC', outlets: 'None', cs: 2, status: 'Live', action: 'Manage', }
-              {id: 3, company: 'Nijiya Market', store: 'TTT', type: 'BNM', cat: 'Euro', outlets: 'None', cs: 2, status: 'Live', action: 'Manage', }
-          ]
-          $scope.searchKeywords = ''
-          $scope.filteredStores = []
-          $scope.row = ''
-
-          $scope.select = (page) ->
-              start = (page - 1) * $scope.numPerPage
-              end = start + $scope.numPerPage
-              $scope.currentPageStores = $scope.filteredStores.slice(start, end)
-          # console.log start
-          # console.log end
-          # console.log $scope.currentPageStores
-
-          # on page change: change numPerPage, filtering string
-          $scope.onFilterChange = ->
-              $scope.select(1)
-              $scope.currentPage = 1
-              $scope.row = ''
-
-          $scope.onNumPerPageChange = ->
-              $scope.select(1)
-              $scope.currentPage = 1
-
-          $scope.onOrderChange = ->
-              $scope.select(1)
-              $scope.currentPage = 1
+    '$scope'
+    , '$filter'
+    , '$location'
+    , '$routeParams'
+    , 'config'
+    , 'Companies'
+    ($scope, $filter, $location, $routeParams, config, Companies) ->
+        console.log 'OK'
 
 
-          $scope.search = ->
-              $scope.filteredStores = $filter('filter')($scope.stores, $scope.searchKeywords)
-              $scope.onFilterChange()
+        # 1. GET COMPANIES Fn
+        _getCompanies = (limit, goPage) ->
+            Companies.get(config.path.baseURL + config.path.clients + '?limit=' + limit + '&page=' + goPage).then  (res) ->
+                if res.status != 200 || typeof res != 'object'
+                    return
+                console.log res.data
+                $scope.companies       = res.data
+                $scope.companies.items = res.data._embedded.items
+                return
+            , (error) ->
+                console.log error
 
-          # orderBy
-          $scope.order = (rowName)->
-              if $scope.row == rowName
-                  return
-              $scope.row = rowName
-              $scope.filteredStores = $filter('orderBy')($scope.stores, rowName)
-              # console.log $scope.filteredStores
-              $scope.onOrderChange()
+        # 2. PAGING, setup paging
+        $scope.numPerPageOpt = [3, 5, 10, 20]
+        $scope.numPerPage    = $scope.numPerPageOpt[2]
+        $scope.currentPage   = 1
+        $scope.filteredUsers = []
+        $scope.currentPageUsers = []
 
-          # pagination
-          $scope.numPerPageOpt = [3, 5, 10, 20]
-          $scope.numPerPage = $scope.numPerPageOpt[2]
-          $scope.currentPage = 1
-          $scope.currentPageStores = []
+        # 2.1 On Number Per Page Change
+        $scope.onNPPChange = () ->
+            _getCompanies($scope.numPerPage, $scope.currentPage)
 
-          # init
-          init = ->
-              $scope.search()
-              $scope.select($scope.currentPage)
-          init()
+        # 2.2 Goto PAGE
+        $scope.gotoPage = (page) ->
+            _getCompanies($scope.numPerPage, $scope.currentPage)
 
+        # 3. ONLOAD LIST USERS
+        _getCompanies($scope.numPerPage, $scope.currentPage);
 
-  ])
-
-.controller('TabsMerchantCtrl', [
-      '$scope'
-      ($scope) ->
-          $scope.tabs = [
-              {
-                  title: "Company"
-                  content: "Dynamic content 1.  Consectetur adipisicing elit. Nihil, quidem, officiis, et ex laudantium sed cupiditate voluptatum libero nobis sit illum voluptates beatae ab. Ad, repellendus non sequi et at."
-                  html: "<h1>Hai</h1>"
-              }
-              {
-                  title: "Disabled"
-                  content: "Dynamic content 2.  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nihil, quidem, officiis, et ex laudantium sed cupiditate voluptatum libero nobis sit illum voluptates beatae ab. Ad, repellendus non sequi et at."
-                  disabled: true
-              }
-          ]
-          $scope.html="<h1>Hai</h1>"
-          $scope.navType = "pills"
-  ])
+        return
+])

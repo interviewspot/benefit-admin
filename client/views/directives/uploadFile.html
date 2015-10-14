@@ -1,0 +1,20 @@
+
+<div class="fileUpload">
+	<img 
+	ngf-thumbnail="file || ' '"
+	ng-show="file"
+	ngf-size="{width: 20, height: 20, quality: 0.9}">
+    <label for="{{uniqueID}}">Upload New Image</label>
+    <div style="height: 0px; width: 0px; overflow: hidden;">
+        <input type="file" name="userfile" class="fileToUpload" 
+        id="{{uniqueID}}"
+        ngf-select
+        ng-model="file"
+        accept="image/*" >
+    </div>
+
+    <div style="width: {{progressPercentage || 0}}; margin-top: 10px; background: green;"
+    ng-show="progressPercentage">
+    	
+    </div>
+</div>

@@ -1,0 +1,124 @@
+<div class="row" data-ng-controller="ContactCtrl">
+    <div class="col-xs-12 blk-create">
+        <div class="row">
+            <div class="col-md-9 col-sm-9 col-xs-12 ctc-left">
+                <h2 class="ttl-tab"><span>Create New Contact</span></h2>
+                <form class="frm-create-ctact modal_frm" name="frm-contact">
+                    <div class="row">
+                        <div class="col-md-5 col-sm-5 col-xs-12 frm-itm">
+                            <div class="srch-em-wrap">
+
+                                <label>Search by email:</label>
+                                <input type="text"
+                                class="ipt txt-email"
+                                name="txt-email"
+                                placeholder="Search by user's email"
+                                keyboard-poster
+                                post-function="searchMail"
+                                list="_users"
+                                ng-model='contact.email'
+                                />
+                                <datalist id="_users">
+                                    <select style="display: none;"
+                                        id="_select"
+                                        name="_select"
+                                        ng-model='selectedUser'
+                                        ng-options='k as v for (k,v) in srch_users'></select>
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-sm-5 col-xs-12 frm-itm">
+                            <label>Title contact:</label>
+                            <input type="tel" class="ipt txt-title" name="txt-title" ng-model='contact.title'/>
+                        </div>
+                        <div class="col-md-2 col-sm-2 col-xs-12 text-center frm-itm">
+                            <label>&nbsp;</label>
+                            <button class="btn btn-submit btn-primary" ng-click="createContact()">CREATE</button>
+                        </div>
+                    </div>
+                </form><!-- END: FORM -->
+            </div>
+
+            <!-- END: LEFT -->
+            <div class="col-md-3 col-sm-3 col-xs-12 ctc-right">
+                <p>
+                    <strong>1</strong> chosen item(s)
+                </p>
+                <p>
+                    <a class="btn btn-primary btn-delete">DELETE</a>
+                </p>
+            </div>
+            <!-- END: RIGHT -->
+        </div>
+    </div>
+    <!-- END: CREATE CONTACT -->
+
+    <!-- START: LIST CONTACT -->
+    <div class="col-md-6 col-sm-6 col-xs-12" ng-repeat="(i, item) in contacts | groupBy : 'alphabet'">
+        <div class="ctc-itm">
+            <h2>{{i}}</h2>
+            <div class="ctc-content" ng-repeat="contact in item">
+                <div class="ctc-control">
+                    <i class="fa fa-edit" data-toggle="modal" data-target="#editContact" ng-click="editContact(contact)"></i>
+                    <i class="fa fa-trash-o" ng-click="deleteContact(contact)"></i>
+                    <input type="checkbox" id="ctc-chk1" name="ctc-chk" />
+                </div>
+                <!-- END: CONTROL -->
+                <h3>{{contact.user.first_name}}  {{contact.user.last_name}}</h3>
+                <p class="ctc-add">Singapore, {{contact.position.title}}</p>
+                <p>
+                    <b>M:</b> +65 9108 6935
+                </p>
+                <p>
+                    <b>0:</b> +65 6720 3663
+                </p>
+                <p>
+                    <b>E:</b> {{contact.user.email}}
+                </p>
+            </div>
+        </div>
+        <!-- END: ITEM -->
+    </div>
+    <!-- END: COL -->
+</div><!-- END: ROW -->
+
+<!-- MODAL: EDIT CONTACT -->
+<div id="editContact" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Edit Contact</h4>
+            </div>
+            <div class="modal-body">
+                <form class="frm_edit_contact modal_frm" name="frm_edit_contact">
+                    <p>
+                        <label>Fullname:</label>
+                        <input type="text" class="ipt txt-fullname" name="txt-fullname" />
+                    </p>
+                    <p>
+                        <label>Address:</label>
+                        <input type="text" class="ipt txt-address" name="txt-address">
+                    </p>
+                    <p>
+                        <label>Mobile:</label>
+                        <input type="tel" class="ipt txt-mobile" name="txt-mobile">
+                    </p>
+                    <p>
+                        <label>Operate Mobile:</label>
+                        <input type="tel" class="ipt txt-operate" name="txt-operate">
+                    </p>
+                    <p>
+                        <label>Email:</label>
+                        <input type="email" class="ipt txt-email" name="txt-email">
+                    </p>
+                    <p class="text-center">
+                        <button class="btn btn-update btn-primary">UPDATE</button>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- END : MODAL EDIT CONTACT-->

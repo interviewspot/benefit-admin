@@ -1,0 +1,56 @@
+<table class="table tbl table-striped">
+    <tbody>
+        <tr>
+            <td class="td-20">Company Reg Biz Name <span class="red">*</span>:</td>
+            <td>
+                <input type="text" ng-model="clientDetail.name" class="txt-ipt"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="td-20">Biz Reg No.</td>
+            <td>
+                <input type="text" ng-model="clientDetail.reg_no" class="txt-ipt"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="td-20">Address:</td>
+            <td><input type="text" ng-model="clientDetail.billing_address" class="txt-ipt"/></td>
+        </tr>
+        <tr>
+            <td class="td-20">Unit Number:</td>
+            <td><input type="text" ng-model="clientDetail.code" class="txt-ipt"/></td>
+        </tr>
+        <tr>
+            <td class="td-20">Building Name:</td>
+            <td><input type="text" ng-model="clientDetail.building_name" class="txt-ipt"/></td>
+        </tr>
+        <tr>
+            <td class="td-20">Postal Code:</td>
+            <td><input type="text" ng-model="clientDetail.postal_code" class="txt-ipt"/></td>
+        </tr>
+        <tr>
+            <td class="td-20">&nbsp;</td>
+            <td>&nbsp;</td>
+        </tr>
+        <tr>
+            <td class="td-20">Handbook Title:</td>
+            <td><input type="text" ng-model="handbook.title" class="txt-ipt"/></td>
+        </tr>
+        <tr>
+            <td class="td-20">Version:</td>
+            <td><input type="text" ng-model="handbook.version" class="txt-ipt"/></td>
+        </tr>
+        <tr>
+            <td class="td-20">Year:</td>
+            <td><input type="text" ng-model="handbook.year" class="txt-ipt"/></td>
+        </tr>
+        <tr>
+            <td class="td-20">Language:</td>
+            <td><input type="text" ng-model="handbook.language" class="txt-ipt"/></td>
+        </tr>
+
+    </tbody>
+</table>
+
+<a ng-click="submitHandbookInfo()" class="save btn-brown"><i class="fa fa-save"></i>&nbsp;SAVE</a>
+<!-- END : TBL -->

@@ -1,13 +1,778 @@
+/**
+ * SCSS ALL PAGES
+ */
+.t-c { text-align: center; }
+.t-r { text-align: right;  }
+.marg-bot { margin-bottom: 20px; }
+.btn {
+    display: inline-block;
+    outline: none;
+    > i.fa {
+        &.front {
+            margin-right: 10px;
+        }
+        &.back {
+            margin-right: 10px;
+        }
+    }
+    &:focus {
+        outline: none;
+    }
+}
+.btn-brown {
+    background-color: #CFAE79;
+    color: #fff;
+    border: none;
+    @include  border-radius(4px);
+    @include transition(all 0.2s linear);
+    padding: 5px 10px;
+    cursor: pointer;
+    &:hover {
+    	background-color: #9A7F53;
+    	color: #fff;
+    }
+    &:focus {
+        background-color: #CFAE79;
+        color: #fff;
+    }
+}
+.tp-20 {
+	margin-top: 20px;
+}
 .non-display {
     display: none;
 }
-
+.text_error {
+    border: 1px solid red;
+}
 .page {
-    padding: 15px;
+    padding: 15px 0;
 }
 
 .page-form-ele {
     h3 {
         margin: 0;
     }
+}
+.ttl-page {
+	text-transform: uppercase;
+	font-size: 20px;
+    margin: 0 0 20px 0;
+    .sp-sts {
+		text-transform: capitalize;
+		font-size: 12px;
+		margin-left: 20px;
+		padding: 1px 10px;
+		color: #fff;
+		vertical-align: 2px;
+		@include border-radius(4px);
+		&.green {
+			background-color: #73AD42;
+		}
+    }
+}
+h2.ttl-tab {
+	text-transform: uppercase;
+	font-size: 16px;
+    margin: 15px 0 20px 0;
+    border-bottom: 1px solid #ddd;
+    span {
+    	background-color: #fff;
+    	padding-right: 10px;
+    	letter-spacing: 1px;
+    }
+}
+.red {
+	color: red;
+}
+.text-center {
+	text-align: center;
+	.bt-edit {
+		float: none;
+	}
+}
+.text-right {
+	text-align: right;
+}
+.text-left {
+	text-align: left;
+}
+.td-20 {
+	width: 20%;
+}
+.td-15 {
+    width: 15%;
+}
+.td-18 {
+    width: 10%;
+}
+.td-30 {
+    width: 30%;
+}
+.td-bold {
+	font-weight: bold;
+}
+.bt-edit {
+    display: inline-block;
+    padding: 2px 15px;
+    @include border-radius(4px);
+    color: #fff;
+    background-color: #bbb;
+    float: right;
+    cursor: pointer;
+    @include transition(all 0.2s linear);
+    &:hover {
+        background-color: #999;
+        color: #fff;
+    }
+    i.fa {
+        margin-right: 10px;
+    }
+}
+.pagination-container {
+	.pagination {
+		margin: 0;
+	}
+}
+.txt-ipt {
+	width: 100%;
+	outline: none;
+	border: 1px solid #ddd;
+	@include border-radius(4px);
+	padding: 5px;
+	&:focus {
+		border: 1px solid #999;
+	}
+	&.txt_disabled {
+		background: none;
+		border: none;
+	}
+    &.txt_err {
+        border: 1px solid red;
+    }
+}
+.rs-pass {
+    margin-left: 10px;
+    background-color: #db0000;
+    color: #fff;
+    @include border-radius(4px);
+    padding: 2px 10px;
+    font-size: 10px;
+}
+.table {
+	a {
+		cursor: pointer;
+	}
+	border-bottom: 1px solid #ddd;
+	td, th {
+		vertical-align: middle !important;
+		border-right: 1px solid #ddd;
+		position: relative;
+		&:first-child {
+			border-left: 1px solid #ddd;
+		}
+	}
+	&.tbl-small {
+		font-size: 12px;
+		tr.tr-hover {
+			&:hover {
+			    background-color: #CFAE79;
+			    cursor: pointer;
+			    color: #fff;
+			    .tbl-remove, .tbl-edit {
+			    	@include opacity(1);
+			    	@include transform(scale(1,1));
+			    }
+			}
+		}
+	}
+}
+.td-manage {
+    i {
+        font-size: 16px;
+        margin-right: 7px;
+        cursor: pointer;
+        &:hover {
+            color: #CFAE79
+        }
+        &:first-child {
+        	border-right: 1px solid #ddd;
+        	padding-right: 7px;
+        }
+        &.fa-times {
+            width: 24px;
+        }
+    }
+}
+.td-logo {
+    position: relative;
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+    i {
+        position: absolute;
+        color: #bbb;
+        font-size: 18px;
+        cursor: pointer;
+        top: 10px;
+        &:hover {
+            color: red;
+        }
+    }
+    .ups-name {
+    	display: block;
+    }
+}
+.tbl-remove, .tbl-edit {
+	@include opacity(0);
+	@include transition(all 0.2s linear);
+	@include transform(scale(0,0));
+	@include border-radius(50%);
+	width: 20px;
+	height: 20px;
+	display: inline-block;
+	background-color: #fff;
+	position: absolute;
+	text-align: center;
+	line-height: 20px;
+	right: 5px;
+	top: 10px;
+	i {
+		color: #000;
+		font-size: 14px;
+	}
+}
+.tbl-edit {
+	right: 30px;
+	line-height: 22px;
+}
+.client-tabs {
+	position: relative;
+}
+.cap-note {
+	background-color: #CFAE79;
+	color: #fff;
+	@include border-radius(4px);
+	padding: 2px 15px;
+	position: absolute;
+	top: -50px;
+    right: 15px;
+    cursor: pointer;
+    &:hover {
+    	background-color: #9A7F53;
+    }
+}
+.section-control {
+	text-align: center;
+	a {
+		display: inline-block;
+		background-color: #bbb;
+		@include border-radius(4px);
+		margin: 0 10px;
+	    padding: 5px 10px;
+    	color: #fff;
+    	cursor: pointer;
+    	@include transition(all 0.2s linear);
+    	&:hover {
+    		background-color: #999;
+            color: #fff;
+    	}
+	}
+}
+.clp-title {
+	background-color: #bbb;
+	padding: 5px 10px;
+	margin-bottom: 2px;
+	color: #fff;
+	cursor: pointer;
+	@include transition(all 0.2s linear);
+	&:hover {
+		background-color: #999;
+	}
+}
+.clp-content {
+	padding-top: 15px;
+	padding-left: 15px;
+	padding-bottom: 15px;
+	p {
+		span {
+			font-weight: bold;
+		}
+	}
+}
+.ttl-prv {
+	font-size: 14px;
+	margin: 10px 0;
+	font-weight: bold;
+}
+.ver-prv {
+	display: block;
+	text-decoration: underline;
+	margin-bottom: 10px;
+}
+.prv-desc {
+	margin-bottom: 10px;	
+}
+.handbook_list, .clients_list {
+    position: relative;
+    .cap-note {
+        top: -10px;
+        right: 0;
+    }
+}
+.tbl-bg {
+	th {
+        background-color: #ddd;
+    }
+}
+.clients_list {
+    .cap-note {
+        top: 0;
+    }
+    .table  {
+        a {
+        	cursor: pointer;
+        }
+    }
+}
+.user-list {
+	position: relative;
+	p {
+		margin-bottom: 0;
+	}
+	.user-sts {
+		span {
+			display: inline-block;
+			border-right: 1px solid #ddd;
+			margin-right: 10px;
+			padding-right: 10px;
+			cursor: pointer;
+			&:last-child {
+				border-right: none;
+				margin-right: 0;
+				padding-right: 0;
+			}
+			&:hover, &.active {
+				text-decoration: underline;
+				font-weight: bold;
+			}
+		}
+	}
+	.cap-note {
+		top: 15px;
+		right: 0;
+	}
+	.table {
+		margin-top: 20px;
+	}
+}
+.user-edit {
+	position: relative;
+}
+.control-button {
+	position: absolute;
+	top: -10px;
+	right: 0;
+	span {
+		display: inline-block;
+		background-color: #bbb;
+		color: #fff;
+		cursor: pointer;
+	    padding: 2px 15px;
+	    margin-right: 10px;
+		@include border-radius(4px);
+		@include transition(all 0.2s linear);
+		&:last-child {
+			margin-right: 0;
+		}
+		&:hover {
+			background-color: #999;
+		}
+		&.cfirm {
+			background-color: #CFAE79;
+			&:hover {
+				background-color: #9A7F53;
+			}
+		}
+	}
+}
+.lb-block {
+    display: block;
+}
+.ipt-user {
+	width: 100%;
+    border: 1px solid #ddd;
+    padding: 5px;
+    outline: none;
+    &:focus {
+    	border: 1px solid #999;
+    }
+}
+.btn-cancel {
+	background-color: #bbb;
+	text-transform: uppercase;
+	color: #fff;
+	@include transition(all 0.2s linear);
+	&:hover {
+		background-color: #999;
+		color: #fff;
+	}
+}
+.btn-add {
+	background-color: #CFAE79;
+	text-transform: uppercase;
+	color: #fff;
+	@include transition(all 0.2s linear);
+	&:hover {
+		background-color: #9A7F53;
+		color: #fff;
+	}
+}
+.add-upload {
+	p {
+		> a {
+			color: #CFAE79;
+		}
+	}
+	.blk-upload {
+		margin-bottom: 5px;
+	}
+}
+.confirm-upload, .detail-upload {
+	position: relative;
+}
+.detail-upload {
+	.cap-note {
+	    top: -10px;
+    	right: 0;
+	}
+}
+.ctc-itm {
+    margin-bottom: 15px;
+    h2 {
+        border-bottom: 1px solid #ccc;
+        background-color: #ddd;
+        text-transform: uppercase;
+        padding: 5px 0 5px 10px;
+        margin: 0 0 10px 0;
+        font-size: 24px;
+        border-top: 1px solid #ccc;
+        font-weight: bold;
+    }
+    .ctc-content {
+        border-bottom: 1px solid #ccc;
+        text-indent: 15px;
+        padding-bottom: 10px;
+        margin-bottom: 10px;
+        position: relative;
+        &:last-child {
+            padding-bottom: 0;
+            margin-bottom: 0;
+            border-bottom: none;
+        }
+        .ctc-control {
+            position: absolute;
+            top: 0;
+            right: 0;
+            i {
+                font-size: 18px;
+                cursor: pointer;
+                margin-left: 10px;
+                text-indent: 0;
+                @include opacity(0);
+                @include transform(scale(0,0));
+                @include transition(all 0.2s linear);
+                &:hover {
+                    color: #000;
+                }
+            }
+            input[type="checkbox"] {
+                margin-left: 10px;
+                cursor: pointer;
+            }
+        }
+        h3 {
+            margin: 0 ;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        p {
+            margin-bottom: 1px;
+            &.ctc-add {
+                margin-bottom: 15px;
+            }
+        }
+        &:hover {
+            .ctc-control {
+                i {
+                    @include opacity(1);
+                    @include transform(scale(1,1));
+                }
+            }
+        }
+    }
+}
+.frm-create-ctact {
+    .btn-submit {
+        outline: none;
+        display: block;
+        padding: 5px 12px;
+    }
+    .frm-itm {
+        margin-bottom: 10px;
+    }
+    .srch-em-wrap {
+        position: relative;
+        .ac-container {
+            top: 55px !important;
+            left: 0 !important;
+        }
+    }
+}
+.modal_frm {
+    .ipt {
+        width: 100%;
+        border: 1px solid #ddd;
+        @include border-radius(4px);
+        padding: 5px;
+        outline: none;
+        @include transition(all 0.2s linear);
+        &:focus {
+            border: 1px solid #999;
+        }
+        &.txt_err {
+            border: 1px solid red;
+        }
+    }
+    input[type="radio"] {
+        vertical-align: -2px;
+    }
+}
+.blk-create {
+    margin-bottom: 30px;
+    .ctc-right {
+        padding-top: 50px;
+        text-align: right;
+        .btn-delete {
+            padding: 5px 12px;
+        }
+        p {
+            margin-bottom: 5px;
+        }
+    }
+}
+.frm-create-ctact {
+	background-color: #eee;
+	padding: 15px;
+}
+/* CSS MODAL */
+#modalMessage, #modalThankyou {
+	.modal-body, .modal-footer {
+		text-align: center;
+	}
+}
+/* CSS MERCHANT PAGE */
+.merchant-list {
+	position: relative;
+	.cap-note {
+		top: 0;
+		right: 0;
+	}
+}
+
+.td-control {
+    color: #ccc;
+	a {
+		display: inline-block;
+		margin: 0 5px;
+        color: #333;
+        &:hover {
+            color: $brown;
+        }
+	}
+}
+
+.merchant-ctent { clear: both; }
+.offers-itm { margin-bottom: 20px; }
+.ex-excel {
+	text-align: right;
+	i {
+		display: inline-block;
+		width: 50px;
+		height: 30px;
+		background-image: url("../images/export-to-excel-image.png");
+		background-repeat: no-repeat;
+		background-position: top center;
+		background-size: 50px auto;
+	}
+}
+/* CSS OVERRIDE UPLOAD FILE */
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    background-color: #bbb;
+    color: #000;
+    font-weight: 300;
+    text-align: center;
+    display: inline-block;
+    padding: 5px 16px;
+    @include border-radius(20px);
+    @include transition(all 0.2s linear);
+    cursor: pointer;
+    vertical-align: -15px;
+    &:hover {
+    	background-color: #999;
+    }
+    span {
+    	color: #fff;
+    	font-size: 12px;
+    }
+    .fileToUpload {
+		position: absolute;
+		top: 0;
+		right: 0;
+		margin: 0;
+		padding: 0;
+		font-size: 20px;
+		cursor: pointer;
+		@include opacity(0);
+    }
+}
+.blk-upload {
+	label {
+		margin-bottom: 0;
+	}
+	.cls-file {
+		background-color: #fff;
+	    padding: 3px 10px;
+	    border: 1px solid #ddd;
+	    width: 50%;
+	    display: inline-block;
+	    margin: 0 10px;
+	    @include border-radius(4px);
+	}
+	.fileUpload {
+		vertical-align: -9px;
+	}
+	a {
+		cursor: pointer;
+		padding: 4px 12px;
+    	float: right;
+	}
+}
+.clients_edit {
+	padding: 15px;
+}
+/* CSS OVERIDE BOOTSTRAP */
+.edit_handbook  {
+    .panel-default {
+        > .panel-heading {
+            @include border-radius(0);
+            background-color: #eee;
+        }
+    }
+}
+.tab-pane {
+	padding: 15px 0;
+}
+.lv1 {
+	> .nav-tabs {
+		background-color: #f9f9f9;
+		margin-bottom: 20px;
+		> li {
+			> a {
+				@include border-radius(0px);
+				font-weight: bold;
+				font-size: 16px;
+                color: #333;
+			}
+		}
+	}
+}
+.lv2 {
+	.nav-tabs {
+		background: none;
+        > li {
+			> a {
+                color: #333;
+            }
+        }
+	}
+}
+.pagination > .active > a, .pagination > .active > a:hover, .pagination > .active > a:focus, .pagination > .active > span, .pagination > .active > span:hover, .pagination > .active > span:focus {
+    z-index: 0;
+}
+/*------------------------*/
+/* TABLE DIV */
+.tbl-div {
+    border: 1px solid #ddd;
+    .tbl-r {
+        border-bottom: 1px solid #ddd;
+        &:nth-child(2n+1) {
+            background-color: #f9f9f9;
+        }
+        &:last-child {
+            border-bottom: none;
+        }
+    }
+    .t-tr {
+        display: table;
+        width: 100%;
+        .t-td {
+            display: table-cell;
+            height: 40px;
+            vertical-align: middle;
+            font-size: 11px;
+            text-align: left;
+            border-right: 1px solid #ddd;
+            padding: 0 10px;
+            &.t-ct {
+                border-right: none;
+            }
+            &.t-3 {
+                width: 80px;
+            }
+            &.t-2 {
+                width: 40px;
+            }
+            &.text-center {
+                text-align: center;
+            }
+        }
+    }
+}
+
+.tbl-r.sc-itm {
+    cursor: pointer;
+    &:hover {
+        background-color: #eee;
+        .tbl-remove, .tbl-edit {
+            @include opacity(1);
+            @include transform(scale(1,1));
+        }
+    }
+    &.active {
+        background-color: $brown;
+        color: #fff;
+        &:hover {
+            background-color: $brown;
+            color: #fff;
+        }
+    }
+    .t-tr {
+        position: relative;
+    }
+}
+
+.sction-list {
+    margin-bottom: 20px;
+}
+/* FORM */
+.footer-frm {
+    padding: 20px 0 0 0;
+}
+/* CSS MESSAGE*/
+.msg-update {
+    display: inline-block;
+    padding-left: 20px;
+    color: #CFAE79;
 }

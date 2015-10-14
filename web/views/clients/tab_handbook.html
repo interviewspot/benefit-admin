@@ -1,0 +1,86 @@
+<div class="handbook_list" ng-show="!isEditHandbook && !isCreateNew">
+    <h2 class="ttl-tab">
+        <span>Employee Handbook</span>
+    </h2>
+    <span class="cap-note"
+        ng-click="fnCreateNew()"
+        ng-if="handbooks.length == 0">
+        Create New
+    </span>
+    <table class="table tbl table-hover table-striped">
+        <tbody>
+            <tr>
+                <th class="text-center">Version</th>
+                <th class="text-center">Last Modified</th>
+                <th class="text-center">Language</th>
+                <th class="text-center">Published</th>
+                <th class="text-center">Manage</th>
+            </tr>
+            <tr ng-repeat="hb_list in handbooks">
+                <td class="text-center">
+                    <a href="#/clients/{{clientDetail.id}}/handbooks/{{hb_list.id}}">
+                        {{hb_list.version}}
+                    </a>
+                </td>
+                <td class="text-center">{{hb_list.last_modified}}</td>
+                <td class="text-center">{{hb_list.language}}</td>
+                <td class="text-center">
+                    <input type="checkbox" 
+                        name="handbook_chk" 
+                        id="{{hb_list.id}}" 
+                        ng-checked="hb_list.public"/>
+                </td>
+                <td class="text-center td-manage">
+                    <a href="#/clients/{{clientDetail.id}}/handbooks/{{hb_list.id}}">
+                    <i class="fa fa-edit" 
+                        title="Edit Handbook"></i>
+                    </a>
+                    <i class="fa fa-trash-o" title="Remove Handbook"  deleteitem></i>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <footer class="table-footer">
+        <div class="row">
+            <div class="col-md-6 page-num-info">
+                <span>
+                                        Show
+                                        <select data-ng-model="numPerPage"
+                                                data-ng-options="num for num in numPerPageOpt"
+                                                data-ng-change="onNumPerPageChange()">
+                                        </select>
+                                        entries per page
+                                    </span>
+            </div>
+            <div class="col-md-6 text-right pagination-container">
+                <pagination class="pagination-sm" ng-model="currentPage" total-items="filteredStores.length" max-size="4" ng-change="select(currentPage)" items-per-page="numPerPage" rotate="false" boundary-links="true"></pagination>
+            </div>
+        </div>
+    </footer>
+    <!-- END : PAGINATION -->
+</div>
+<!-- END: HANDBOOK LIST -->
+<div class="create_handbook" ng-show="isCreateNew">
+    <h2 class="ttl-tab">
+        <span>Create Employee Handbook</span>
+    </h2>
+    <tabset class="client-tabs lv2">
+        <tab heading="Handbook Info">
+            <div ng-include="'views/clients/tab_hb_create_info.html'"></div>
+        </tab>
+        <!-- END: TAB -->
+        <tab heading="General Description">
+            <div ng-include="'views/clients/tab_hb_create_general.html'"></div>
+        </tab>
+        <!-- END: TAB -->
+        <tab heading="Sections">
+            <div class="row" ng-include="'views/clients/tab_hb_create_section.html'"></div>
+        </tab>
+        <!-- END: TAB -->
+        <tab heading="Contacts">
+            <div ng-include="'views/clients/tab_hb_create_contact.html'"></div>
+        </tab>
+        <!-- END: TAB -->
+    </tabset>
+</div>
+<!-- END: BLOCK CREATE -->
