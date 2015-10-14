@@ -578,26 +578,21 @@ h2.ttl-tab {
 		right: 0;
 	}
 }
+
 .td-control {
+    color: #ccc;
 	a {
 		display: inline-block;
-		margin-right: 7px;
+		margin: 0 5px;
         color: #333;
-		&:first-child {
-			border-right: 1px solid #ddd;
-			padding-right: 7px;
-		}
         &:hover {
-            color: #000;
+            color: $brown;
         }
 	}
 }
-.merchant-ctent {
-	clear: both;
-}
-.offers-itm {
-	margin-bottom: 20px;
-}
+
+.merchant-ctent { clear: both; }
+.offers-itm { margin-bottom: 20px; }
 .ex-excel {
 	text-align: right;
 	i {
