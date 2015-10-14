@@ -77,7 +77,8 @@ angular.module('app.handbook_info', [])
             '$scope', '$http', '$timeout'
             ,($scope, $http, $timeout)->
                 
-                $scope.label = 'Upload new image'
+                defaultLabel = $scope.label
+
                 $scope.fileName = ''
                 $scope.progressPercentage = 0;
 
@@ -107,6 +108,9 @@ angular.module('app.handbook_info', [])
                             $scope.progressPercentage = 0
                             $scope.label = 'Error : '+ error.status
                             $scope.result = null
+                            $timeout ()->
+                                $scope.label = defaultLabel
+                            ,1000
 
                         # process tracker
                         , (e)->
@@ -140,7 +144,7 @@ angular.module('app.handbook_info', [])
                 'uploadUrl': '=uploadUrl'
                 'result': '=ngResult'
                 'color' : '=ngProgressColor'
-                # 'label' : '^ngLabel'
+                'label' : '=ngLabel'
 
             
             'templateUrl': 'views/directives/uploadFile.html'
