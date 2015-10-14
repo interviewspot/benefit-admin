@@ -452,9 +452,11 @@
             if (options.contentRange) {
                 options.headers['Content-Range'] = options.contentRange;
             }
+
             console.log('/js/jquery.fileupload.js:455 set username,password');
             console.log(options);
-            options.username = 'testuser';
+            options.username = 'kenneth.yap@ap.magenta-consulting.com';
+            //options.username = 'testuser';
             options.password = 'p@ssword';
             paramName = 'binaryContent';
             options.paramName = 'binaryContent';
@@ -464,6 +466,7 @@
             //if (options.password) {
             options.headers['x-password'] = options.password;
             //}
+
             if (!multipart || options.blob || !this._isInstanceOf('File', file)) {
                 options.headers['Content-Disposition'] = 'attachment; filename="' +
                     encodeURI(file.name) + '"';

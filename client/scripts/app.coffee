@@ -106,6 +106,15 @@ angular.module('app', [
             .when('/', { redirectTo: '/merchants/list-merchant'} )
             .when('/404', { templateUrl: 'views/pages/404.html'} )
 
+        # MERCHANT
+        $routeProvider
+            .when('/merchant', {
+                templateUrl: 'views/merchant/merchant.html'
+            })
+            .when('/merchant/:companyId', {
+                templateUrl: 'views/merchant/merchant-detail.html'
+            })
+
         # CLIENTS MANAGEMENT
         $routeProvider
             .when('/clients', {

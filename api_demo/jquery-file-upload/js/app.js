@@ -16,45 +16,63 @@
     'use strict';
 
     var isOnGitHub = window.location.hostname === 'blueimp.github.io',
+
     //url = isOnGitHub ? '//jquery-file-upload.appspot.com/' : 'server/php/';
-        url = 'http://localhost/projects/apps/api/web/app_dev.php/api/providers/sonata.media.provider.image/media.json';
+    //    url = 'http://localhost/projects/apps/api/web/app_dev.php/api/providers/sonata.media.provider.image/media';
+        url = 'https://api.sg-benefits.com/api/providers/sonata.media.provider.image/media';
+
     var myapp = angular.module('demo', [
         'blueimp.fileupload'
     ])
         .config([
             '$httpProvider', 'fileUploadProvider',
             function ($httpProvider, fileUploadProvider) {
-                //$httpProvider.defaults.headers.common.username = 'testuser';
-                //$httpProvider.defaults.headers.common.password = 'p@ssword';
-//console.log('hello')
-                delete $httpProvider.defaults.headers.common['X-Requested-With'];
-                fileUploadProvider.defaults.redirect = window.location.href.replace(
-                    /\/[^\/]*$/,
-                    '/cors/result.html?%s'
-                );
-                if (isOnGitHub) {
-                    // Demo settings:
-                    angular.extend(fileUploadProvider.defaults, {
-                        // Enable image resizing, except for Android and Opera,
-                        // which actually support image resizing, but fail to
-                        // send Blob objects via XHR requests:
 
-                        disableImageResize: /Android(?!.*Chrome)|Opera/
-                            .test(window.navigator.userAgent),
-                        maxFileSize: 999000,
-                        acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i
-                    });
-                }
+
+                // delete $httpProvider.defaults.headers.common['X-Requested-With'];
+                // // $httpProvider.defaults.headers.common = {
+                // //     'x-username' : 'kenneth.yap@ap.magenta-consulting.com',
+                // //     'x-password' : 'p@ssword'
+                // // };
+
+                // $httpProvider.defaults.headers.common['x-username'] = 'kenneth.yap@ap.magenta-consulting.com';
+                // $httpProvider.defaults.headers.common['x-password'] = 'p@ssword';
+                // //$httpProvider.defaults.headers.common['x-a'] = 'p@s';
+
+                // fileUploadProvider.defaults.redirect = window.location.href.replace(
+                //     /\/[^\/]*$/,
+                //     '/cors/result.html?%s'
+                // );
+                // // if (isOnGitHub) {
+                // //     // Demo settings:
+                // //     angular.extend(fileUploadProvider.defaults, {
+                // //         // Enable image resizing, except for Android and Opera,
+                // //         // which actually support image resizing, but fail to
+                // //         // send Blob objects via XHR requests:
+
+                // //         disableImageResize: /Android(?!.*Chrome)|Opera/
+                // //             .test(window.navigator.userAgent),
+                // //         maxFileSize: 999000,
+                // //         acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+                // //         'x-username' : 'kenneth.yap@ap.magenta-consulting.com'
+                // //     });
+                // // }
             }
         ])
 
         .controller('DemoFileUploadController', [
             '$scope', '$http', '$filter', '$window',
             function ($scope, $http) {
+                // SET OPTION FOR UPLOAD
                 $scope.options = {
-                    url: url
+                    url : url,
+                    headers: {
+                        "x-username" : 'kenneth.yap@ap.magenta-consulting.com',
+                        "x-password" : 'p@ssword'
+                    }
                 };
 
+                // LOAD FILE
                 if (!isOnGitHub) {
                     $scope.loadingFiles = true;
                     $http.get(url)
