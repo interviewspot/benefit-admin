@@ -1,5 +1,6 @@
+<form name="co_info_frm">
 <div class="col-md-8 col-sm-8 col-xs-12 cpn-left">
-    <form name="co_info_frm">
+
         <p class="clearfix t-r">
             <button type="submit" class="btn"
                 ng-class="clients_edit ? 'btn-brown' : 'btn-edit'"
@@ -141,7 +142,7 @@
         </h2>
         <div text-angular ng-model="clientDetail.about_company"></div>
 
-    </form>
+
 </div>
 <!-- END : COL LEFT -->
 <div class="col-md-4 col-sm-4 col-xs-12 cpn-right">
@@ -152,23 +153,30 @@
                     Company Logo
                 </th>
             </tr>
-            <tr>
+            <!-- <tr>
                 <td class="text-center td-logo">
                     <img src="{{clientDetail.logo}}" alt=""/>
                     <i class="fa fa-times"></i>
                 </td>
-            </tr>
+            </tr> -->
             <tr>
                 <td class="text-center">
-                    <div class="fileUpload">
+                    <upload-file
+                        upload-url="urlUpload"
+                        ng-progress-color="'#CFAE79'"
+                        ng-result="uploadresponse"
+                        ng-label="'Upload file'">
+                    </upload-file>
+                    <!-- <div class="fileUpload">
                         <span>Upload New Image</span>
                         <div style="height: 0px; width: 0px; overflow: hidden;">
                             <input type="file" name="userfile" class="fileToUpload">
                         </div>
-                    </div>
+                    </div> -->
                 </td>
             </tr>
         </tbody>
     </table>
 </div>
 <!-- END : COL RIGHT -->
+</form>

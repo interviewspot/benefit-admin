@@ -3,8 +3,8 @@
 angular.module('app.clients', [])
 
 .controller('clientCtrl', [
-    '$scope', '$filter' , 'fetchTabData', 'fakeData', '$location', 'clientService', 'fetchHandbook', '$routeParams', '$route'
-    ($scope, $filter, fetchTabData, fakeData, $location, clientService, fetchHandbook, $routeParams, $route) ->
+    '$scope', '$filter' , 'fetchTabData', 'fakeData', '$location', 'clientService', 'fetchHandbook', '$routeParams', '$route', 'config'
+    ($scope, $filter, fetchTabData, fakeData, $location, clientService, fetchHandbook, $routeParams, $route, config) ->
     # filter
       $scope.stores = [
           {id: 1, company: 'BullWorks Pte Ltd', status: 'nverser', industry: 'AAA', users: 'Euro', estsaving: 'None', cs: 2,action: "Manage", }
@@ -123,9 +123,14 @@ angular.module('app.clients', [])
       $scope.editClient = (clients_edit) ->
         $scope.isDisable    = !$scope.isDisable
         $scope.clients_edit = !clients_edit
-        console.log $scope.clientDetail.about_company
+
         # Check data & update
         if $scope.clients_edit == false && $scope.clientDetail.id
+
+          console.log $scope.uploadresponse
+          console.log $scope.result
+          return;
+          #id_img =
           sm_client_data = {
             "organisation":
                 "adminUser": 9,  # Change this real ID
@@ -177,4 +182,97 @@ angular.module('app.clients', [])
       $scope.dt_tab_handbook_info = fakeDT.clients_tab_handbook_info
       $scope.clients_tab_handbook_general = fakeDT.clients_tab_handbook_general
       $scope.clients_tab_handbook_section = fakeDT.clients_tab_handbook_section
+
+      # END MASHNASH --------------------------
+      # ---------------------------------------
+
+      # UPLOAD FILE IMG [ LOGO ]
+      # https://api.sg-benefits.com/api/providers/sonata.media.provider.image/media
+      # config.path.baseURL + config.path.upload + 'image/media'
+
+      $scope.urlUpload = config.path.baseURL + config.path.upload + 'image/media';
+
   ])
+.directive 'uploadFile', [
+    'Upload',
+    (Upload)->
+
+        controller = [
+            '$scope', '$http', '$timeout'
+            ,($scope, $http, $timeout)->
+
+                defaultLabel = $scope.label
+
+                $scope.fileName = ''
+                $scope.progressPercentage = 0;
+
+                $scope.uniqueID = new Date().getTime()
+
+                $scope.$watch 'file', (nv)->
+                    if (nv)
+                        console.log nv.type
+                        Upload.upload {
+                            method: 'POST'
+                            url: $scope.uploadUrl
+                            data:
+                                binaryContent: nv
+                            headers:{
+                                "x-username" : 'kenneth.yap@ap.magenta-consulting.com'
+                                "x-password" : 'p@ssword'
+                                "Content-Type": if nv.type != '' then nv.type else 'application/octet-stream'
+                            }
+                        }
+                        # response
+                        .then (res)->
+                            $scope.result = res
+                            $scope.progressPercentage = 0
+                        # error
+                        , (error)->
+                            console.error error
+                            $scope.progressPercentage = 0
+                            $scope.label = 'Error : '+ error.status
+                            $scope.result = null
+                            $timeout ()->
+                                $scope.label = defaultLabel
+                            ,1000
+
+                        # process tracker
+                        , (e)->
+                            $scope.progressPercentage = parseInt(100.0 * e.loaded / e.total)
+                            console.info 'Progress ' + $scope.progressPercentage
+
+        ] # END of controller
+
+
+        link = (scope, element, attribute)->
+            inputFile = $ element.find('input')
+
+
+            inputFile.on 'change', (e)->
+                if this.files && this.files.length > 1
+                    scope.fileName = ( this.getAttribute( 'data-multiple-caption' ) || '' ).replace( '{count}', this.files.length );
+                else
+                    scope.fileName = e.target.value.split( '\\' ).pop()
+
+                console.log scope.fileName
+
+                if scope.fileName
+                    scope.label = scope.fileName
+                else
+                    scope.label = 'Upload New Image'
+
+        return {
+            'restrict': 'E'
+            'transclude': true
+            'scope':
+                'uploadUrl': '=uploadUrl'
+                'result': '=ngResult'
+                'color' : '=ngProgressColor'
+                'label' : '=ngLabel'
+
+
+            'templateUrl': 'views/directives/uploadFile.html'
+            'controller': controller
+            'link': link
+        }
+]

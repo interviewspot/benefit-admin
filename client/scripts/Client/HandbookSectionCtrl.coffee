@@ -6,44 +6,26 @@ angular.module('app.handbook_section', [])
     '$scope', '$routeParams', 'handbookService', 'clientService', 'sectionService', '$location', '$timeout',
     ($scope, $routeParams, handbookService, clientService, sectionService, $location, $timeout) ->
 
-
-        $scope.loadSections = ->
-            sectionService.query {org_id:$scope.clientId, hand_id:$scope.handbookId}, (data, getResponseHeaders) ->
-                if data._embedded.items.length > 0
-                    $scope.ungroupSections = orderSections(data._embedded.items)
-                    $scope.allSections = ungroupSection($scope.ungroupSections)
-                    sectionDatas = data._embedded.items
-                    # console.log $scope.allSections[1].children
-                    $scope.parentSection = []
-                    for i in [0 .. sectionDatas.length-1]
-                        if !sectionDatas[i]._links.parent && sectionDatas[i]
-                            $scope.parentSection.push({
-                                id: sectionDatas[i].id
-                                title: sectionDatas[i].title
-                                _links: sectionDatas[i]._links
-                            })
-                else
-                    $scope.ungroupSections = []
-                    $scope.allSections = []
-        $scope.loadSections()
-
         orderSections = (items) ->
-            newList = []
+            treeList = []
+
             for i in [0 .. items.length-1]
                 if !items[i]._links.parent
                     items[i].children = []
-                    newList.push(items[i])
-            for i in [0 .. items.length-1]
-                if items[i]._links.parent
-                    for j, item of newList
-                        if newList[j]._links.self.href == items[i]._links.parent.href
-                            newList[j].children[items[i].version] = items[i]
+                    treeList.push(items[i])
 
-            for j, item of newList
-                newList[j].children = newList[j].children.sort(sectionCompare)
-            newList.sort(sectionCompare)
+            for j, item of treeList
+                for i in [0 .. items.length-1]
+                    if items[i]._links.parent
+                        if treeList[j]._links.self.href == items[i]._links.parent.href
+                            treeList[j].children.push(items[i])
 
-            return newList
+            for j, item of treeList
+                treeList[j].children = treeList[j].children.sort(sectionCompare)
+
+            treeList.sort(sectionCompare)
+
+            return treeList
 
         ungroupSection = (items) ->
             returnList = []
@@ -63,6 +45,35 @@ angular.module('app.handbook_section', [])
             if (a.version > b.version)
                 return 1;
             return 0;
+
+        # ------------------------------
+        # LOAD LIST SECTIONS
+        $scope.loadSections = ->
+            sectionService.query {org_id:$scope.clientId, hand_id:$scope.handbookId}, (data, getResponseHeaders) ->
+                if data._embedded.items.length > 0
+                    console.log data._embedded.items
+                    $scope.ungroupSections = orderSections(data._embedded.items)
+                    console.log $scope.ungroupSections
+                    $scope.allSections     = ungroupSection($scope.ungroupSections)
+                    sectionDatas           = data._embedded.items
+                    console.log $scope.allSections
+
+                    $scope.parentSection = []
+                    for i in [0 .. sectionDatas.length-1]
+                        if !sectionDatas[i]._links.parent && sectionDatas[i]
+                            $scope.parentSection.push({
+                                id: sectionDatas[i].id
+                                title: sectionDatas[i].title
+                                _links: sectionDatas[i]._links
+                            })
+                else
+                    $scope.ungroupSections = []
+                    $scope.allSections = []
+        $scope.loadSections()
+
+
+
+
 
 
         $scope.isUpdate = false

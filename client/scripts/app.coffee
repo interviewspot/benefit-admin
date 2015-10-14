@@ -103,7 +103,7 @@ angular.module('app', [
 
         # SET ROUTE MANUAL ---------------------------------------
         $routeProvider
-            .when('/', { redirectTo: '/merchants/list-merchant'} )
+            .when('/', { redirectTo: '/merchant'} )
             .when('/404', { templateUrl: 'views/pages/404.html'} )
 
         # MERCHANT
