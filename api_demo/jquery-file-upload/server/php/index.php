@@ -12,4 +12,11 @@
 
 error_reporting(E_ALL | E_STRICT);
 require('UploadHandler.php');
-$upload_handler = new UploadHandler();
+
+$options = array(
+            'user_dirs' => true,
+            'accept_file_types' => '/\.(gif|jpe?g|png)$/i',
+            'mkdir_mode' => 0755,
+           );
+$upload_handler = new UploadHandler($options);
+print_r($upload_handler);
