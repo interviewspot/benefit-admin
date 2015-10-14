@@ -127,8 +127,8 @@ angular.module('app.clients', [])
         # Check data & update
         if $scope.clients_edit == false && $scope.clientDetail.id
 
-          console.log $scope.uploadresponse
-          console.log $scope.result
+          console.log $scope.$$childTail.uploadresponse
+          # console.log $scope.result
           return;
           #id_img =
           sm_client_data = {
@@ -191,6 +191,8 @@ angular.module('app.clients', [])
       # config.path.baseURL + config.path.upload + 'image/media'
 
       $scope.urlUpload = config.path.baseURL + config.path.upload + 'image/media';
+      $scope.uploadButtonLabel = 'Upload file'
+      # $scope.uploadresponse = {}
 
   ])
 .directive 'uploadFile', [
@@ -201,7 +203,7 @@ angular.module('app.clients', [])
             '$scope', '$http', '$timeout'
             ,($scope, $http, $timeout)->
 
-                defaultLabel = $scope.label
+                defaultLabel = $scope.label.toString()
 
                 $scope.fileName = ''
                 $scope.progressPercentage = 0;
@@ -210,7 +212,6 @@ angular.module('app.clients', [])
 
                 $scope.$watch 'file', (nv)->
                     if (nv)
-                        console.log nv.type
                         Upload.upload {
                             method: 'POST'
                             url: $scope.uploadUrl
@@ -224,8 +225,9 @@ angular.module('app.clients', [])
                         }
                         # response
                         .then (res)->
-                            $scope.result = res
-                            $scope.progressPercentage = 0
+                          $scope.result = res.data
+                          $scope.progressPercentage = 0
+
                         # error
                         , (error)->
                             console.error error
@@ -234,7 +236,7 @@ angular.module('app.clients', [])
                             $scope.result = null
                             $timeout ()->
                                 $scope.label = defaultLabel
-                            ,1000
+                            ,3000
 
                         # process tracker
                         , (e)->
@@ -254,8 +256,6 @@ angular.module('app.clients', [])
                 else
                     scope.fileName = e.target.value.split( '\\' ).pop()
 
-                console.log scope.fileName
-
                 if scope.fileName
                     scope.label = scope.fileName
                 else
@@ -263,12 +263,12 @@ angular.module('app.clients', [])
 
         return {
             'restrict': 'E'
-            'transclude': true
+            # 'transclude': true
             'scope':
                 'uploadUrl': '=uploadUrl'
-                'result': '=ngResult'
                 'color' : '=ngProgressColor'
                 'label' : '=ngLabel'
+                'result': '=ngUploadresponse'
 
 
             'templateUrl': 'views/directives/uploadFile.html'
