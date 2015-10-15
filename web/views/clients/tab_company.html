@@ -1,143 +1,148 @@
+<form name="co_info_frm">
 <div class="col-md-8 col-sm-8 col-xs-12 cpn-left">
-    <p class="clearfix">
-        <span class="bt-edit"
-            ng-click="editClient()">{{clients_edit}}</span>
-    </p>
-    <table class="table tbl table-striped">
-        <tbody>
-            <tr>
-                <td class="td-30">Company Reg Biz Name <span class="red">*</span>:</td>
-                <td>
-                    <input type="text"
-                        ng-model="clientDetail.name"
-                        class="txt-ipt"
-                        ng-disabled="!isDisable"
-                        ng-class="{txt_disabled : !isDisable}">
-                </td>
-            </tr>
-            <tr>
-                <td class="td-30">Biz Reg No.</td>
-                <td>
-                    <input type="text"
-                        ng-model="clientDetail.reg_no"
-                        class="txt-ipt"
-                        ng-disabled="!isDisable"
-                        ng-class="{txt_disabled : !isDisable}">
-                </td>
-            </tr>
-            <tr>
-                <td class="td-30">Address:</td>
-                <td>
-                    <input type="text"
-                        ng-model="clientDetail.billing_address"
-                        class="txt-ipt"
-                        ng-disabled="!isDisable"
-                        ng-class="{txt_disabled : !isDisable}">
-                </td>
-            </tr>
-            <tr>
-                <td class="td-30">Unit Number:</td>
-                <td>
-                    <input type="text"
-                        ng-model="clientDetail.code"
-                        class="txt-ipt"
-                        ng-disabled="!isDisable"
-                        ng-class="{txt_disabled : !isDisable}">
-                </td>
-            </tr>
-            <tr>
-                <td class="td-30">Building Name:</td>
-                <td>
-                    <input type="text"
-                        ng-model="clientDetail.building_name"
-                        class="txt-ipt"
-                        ng-disabled="!isDisable"
-                        ng-class="{txt_disabled : !isDisable}">
-                </td>
-            </tr>
-            <tr>
-                <td class="td-30">Postal Code:</td>
-                <td>
-                    <input type="text"
-                        ng-model="clientDetail.postal_code"
-                        class="txt-ipt"
-                        ng-disabled="!isDisable"
-                        ng-class="{txt_disabled : !isDisable}">
-                </td>
-            </tr>
-            <tr>
-                <td class="td-30">Business Type</td>
-                <td>
-                    <input type="text"
-                        ng-model="clientDetail.business_type"
-                        class="txt-ipt"
-                        ng-disabled="!isDisable"
-                        ng-class="{txt_disabled : !isDisable}">
-                </td>
-            </tr>
-            <tr>
-                <td class="td-30">Office Number</td>
-                <td>
-                    <input type="text"
-                        ng-model="clientDetail.head_office_no"
-                        class="txt-ipt"
-                        ng-disabled="!isDisable"
-                        ng-class="{txt_disabled : !isDisable}">
-                </td>
-            </tr>
-            <tr>
-                <td class="td-30">Admin User Email</td>
-                <td>
-                    <input type="text"
-                        ng-model="clientDetail.reservation_email"
-                        class="txt-ipt"
-                        ng-disabled="!isDisable"
-                        ng-class="{txt_disabled : !isDisable}">
-                    <span
-                        ng-class="{hide : isDisable}"
-                        class="rs-pass">Reset password</span>
-                </td>
-            </tr>
-            <tr>
-                <td class="td-30">Admin Contact No.</td>
-                <td>
-                    <input type="text"
-                        ng-model="clientDetail.user_contact_no"
-                        class="txt-ipt"
-                        ng-disabled="!isDisable"
-                        ng-class="{txt_disabled : !isDisable}">
-                </td>
-            </tr>
-            <tr>
-                <td class="td-30">Client Since</td>
-                <td>
-                    <input type="text"
-                        ng-model="clientDetail.client_since"
-                        class="txt-ipt"
-                        ng-disabled="!isDisable"
-                        ng-class="{txt_disabled : !isDisable}">
-                </td>
-            </tr>
-            <tr>
-                <td class="td-30">Package Type</td>
-                <td>
-                    <input type="text"
-                        ng-model="clientDetail.package_type"
-                        class="txt-ipt"
-                        ng-disabled="!isDisable"
-                        ng-class="{txt_disabled : !isDisable}">
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <!-- END: TABLE -->
-    <h2 class="ttl-tab">
-        <span>About Company</span>
-    </h2>
-    <form method="post">
+
+        <p class="clearfix t-r">
+            <button type="submit" class="btn"
+                ng-class="clients_edit ? 'btn-brown' : 'btn-edit'"
+                ng-click="editClient(clients_edit)">
+                <i class="fa fa-pencil front"></i>
+                {{clients_edit ? 'Submit to save' : 'Edit info'}}
+            </button>
+        </p><!-- BUTTON -->
+        <table class="table tbl table-striped">
+            <tbody>
+                <tr>
+                    <td class="td-30">Company Reg Biz Name <span class="red">*</span>:</td>
+                    <td>
+                        <input type="text"
+                            ng-model="clientDetail.name"
+                            class="txt-ipt"
+                            ng-disabled="!isDisable"
+                            ng-class="{txt_disabled : !isDisable}">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td-30">Biz Reg No.</td>
+                    <td>
+                        <input type="text"
+                            ng-model="clientDetail.reg_no"
+                            class="txt-ipt"
+                            ng-disabled="!isDisable"
+                            ng-class="{txt_disabled : !isDisable}">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td-30">Address:</td>
+                    <td>
+                        <input type="text"
+                            ng-model="clientDetail.billing_address"
+                            class="txt-ipt"
+                            ng-disabled="!isDisable"
+                            ng-class="{txt_disabled : !isDisable}">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td-30">Unit Number:</td>
+                    <td>
+                        <input type="text"
+                            ng-model="clientDetail.code"
+                            class="txt-ipt"
+                            ng-disabled="!isDisable"
+                            ng-class="{txt_disabled : !isDisable}">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td-30">Building Name:</td>
+                    <td>
+                        <input type="text"
+                            ng-model="clientDetail.building_name"
+                            class="txt-ipt"
+                            ng-disabled="!isDisable"
+                            ng-class="{txt_disabled : !isDisable}">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td-30">Postal Code:</td>
+                    <td>
+                        <input type="text"
+                            ng-model="clientDetail.postal_code"
+                            class="txt-ipt"
+                            ng-disabled="!isDisable"
+                            ng-class="{txt_disabled : !isDisable}">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td-30">Business Type</td>
+                    <td>
+                        <input type="text"
+                            ng-model="clientDetail.business_type"
+                            class="txt-ipt"
+                            ng-disabled="!isDisable"
+                            ng-class="{txt_disabled : !isDisable}">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td-30">Office Number</td>
+                    <td>
+                        <input type="text"
+                            ng-model="clientDetail.head_office_no"
+                            class="txt-ipt"
+                            ng-disabled="!isDisable"
+                            ng-class="{txt_disabled : !isDisable}">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td-30">Admin User Email</td>
+                    <td>
+                        <input type="text"
+                            ng-model="clientDetail.reservation_email"
+                            class="txt-ipt"
+                            ng-disabled="!isDisable"
+                            ng-class="{txt_disabled : !isDisable}">
+                        <span
+                            ng-class="{hide : isDisable}"
+                            class="rs-pass">Reset password</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td-30">Admin Contact No.</td>
+                    <td>
+                        <input type="text"
+                            ng-model="clientDetail.user_contact_no"
+                            class="txt-ipt"
+                            ng-disabled="!isDisable"
+                            ng-class="{txt_disabled : !isDisable}">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td-30">Client Since</td>
+                    <td>
+                        <input type="text"
+                            ng-model="clientDetail.client_since"
+                            class="txt-ipt"
+                            ng-disabled="!isDisable"
+                            ng-class="{txt_disabled : !isDisable}">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td-30">Package Type</td>
+                    <td>
+                        <input type="text"
+                            ng-model="clientDetail.package_type"
+                            class="txt-ipt"
+                            ng-disabled="!isDisable"
+                            ng-class="{txt_disabled : !isDisable}">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- END: TABLE -->
+        <h2 class="ttl-tab">
+            <span>About Company</span>
+        </h2>
         <div text-angular ng-model="clientDetail.about_company"></div>
-      <!-- <textarea ui-tinymce="tinymceOptions" ng-model="clientDetail.about_company"></textarea> -->
-    </form>
+
+
 </div>
 <!-- END : COL LEFT -->
 <div class="col-md-4 col-sm-4 col-xs-12 cpn-right">
@@ -148,23 +153,29 @@
                     Company Logo
                 </th>
             </tr>
-            <tr>
-                <td class="text-center td-logo">
-                    <img src="{{clientDetail.logo}}" alt=""/>
-                    <i class="fa fa-times"></i>
+            <tr ng-if="!clientDetail.logo_url">
+                <td class="t-c">
+                    NO LOGO
                 </td>
             </tr>
-            <tr>
+            <tr ng-if="clientDetail.logo_url" ng-cloak>
+                <td class="text-center td-logo" ng-model="clientDetail.logo">
+                    <img ng-src="{{clientDetail.logo_url}}" alt="{{clientDetail.name}}"/>
+                    <i class="fa fa-times" ng-click="delLogo()"></i>
+                </td>
+            </tr>
+            <tr ng-show="isDisable">
                 <td class="text-center">
-                    <div class="fileUpload">
-                        <span>Upload New Image</span>
-                        <div style="height: 0px; width: 0px; overflow: hidden;">
-                            <input type="file" name="userfile" class="fileToUpload">
-                        </div>
-                    </div>
+                    <upload-file
+                        upload-url="urlUpload"
+                        ng-uploadresponse="uploadresponse"
+                        ng-label="uploadButtonLabel"
+                        ng-progress-color="'#CFAE79'">
+                    </upload-file>
                 </td>
             </tr>
         </tbody>
     </table>
 </div>
 <!-- END : COL RIGHT -->
+</form>

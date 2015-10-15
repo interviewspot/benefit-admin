@@ -107,6 +107,7 @@ angular.module('app.clients', [])
                   return
                 logo_id_arr = php.explode('/media/', data._links.logo.href)
                 $scope.clientDetail = data
+                $scope.urlUpload    = $scope.clientDetail._links.logo.href
                 $scope.clientDetail['logo_url'] = res.data.url
                 $scope.clientDetail['logo']     = logo_id_arr[1]
 
@@ -115,8 +116,7 @@ angular.module('app.clients', [])
               console.log error
           else
             $scope.clientDetail = data
-
-
+            $scope.urlUpload    = config.path.baseURL + config.path.upload + 'image/media'
 
           $scope.ClientPage.tabUrls   =
             "info" : '#/clients/' + data.id + '/info'
@@ -167,28 +167,17 @@ angular.module('app.clients', [])
           # SET LOGO
           logo_id = null
           if ($scope.$$childTail.uploadresponse)
-            if (!$scope.clientDetail.logo)
-              logo_id = $scope.$$childTail.uploadresponse.id
-            else
-              data_img = {
-                url: $scope.clientDetail.logo_url
-              }
-              Images.update($scope.clientDetail._links.logo.href , data_img).then  (res) ->
-                console.log res
-                return
-              , (error) ->
-                console.log error
+            logo_id = $scope.$$childTail.uploadresponse.id
           else
             logo_id = $scope.clientDetail.logo
 
           sm_client_data.organisation['logo'] = logo_id
-          console.log sm_client_data
 
           # return
           # GO TO UPDATE
           clientService.update {org_id:$scope.clientDetail.id}, sm_client_data, (res) ->
             if typeof res.organisation == 'object' && res.organisation.logo
-              # location.reload()
+              location.reload()
               return
           , (error) ->
               console.log (error)
@@ -230,8 +219,8 @@ angular.module('app.clients', [])
       # https://api.sg-benefits.com/api/providers/sonata.media.provider.image/media
       # config.path.baseURL + config.path.upload + 'image/media'
 
-      #$scope.urlUpload = config.path.baseURL + config.path.upload + 'image/media'
-      $scope.urlUpload  = 'https://api.sg-benefits.com/media/67'
+      $scope.urlUpload = config.path.baseURL + config.path.upload + 'image/media'
+      # $scope.urlUpload  = 'https://api.sg-benefits.com/media/67'
       $scope.uploadButtonLabel = 'Upload file'
 
       # DEL LOGO

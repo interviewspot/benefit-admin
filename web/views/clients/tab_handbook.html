@@ -1,13 +1,11 @@
-<div class="handbook_list" ng-show="!isEditHandbook && !isCreateNew">
+<div class="handbook_list" ng-if="!isCreateHandbook">
     <h2 class="ttl-tab">
         <span>Employee Handbook</span>
     </h2>
-    <span class="cap-note"
-        ng-click="fnCreateNew()"
-        ng-if="handbooks.length == 0">
-        Create New
-    </span>
-    <table class="table tbl table-hover table-striped">
+    <!-- <div class="t-r marg-bot">
+        <span class="btn btn-brown" ng-click="createNewVersion()">Create new version</span>
+    </div> -->
+    <table class="table tbl table-hover table-striped" >
         <tbody>
             <tr>
                 <th class="text-center">Version</th>
@@ -35,22 +33,22 @@
                     <i class="fa fa-edit" 
                         title="Edit Handbook"></i>
                     </a>
-                    <i class="fa fa-trash-o" title="Remove Handbook"  deleteitem></i>
+                    <i class="fa fa-trash-o" title="Remove Handbook" ng-click="deleteHandbook(hb_list)"></i>
                 </td>
             </tr>
         </tbody>
     </table>
-    <footer class="table-footer">
+    <footer class="table-footer" ng-if="handbooks.length">
         <div class="row">
             <div class="col-md-6 page-num-info">
                 <span>
-                                        Show
-                                        <select data-ng-model="numPerPage"
-                                                data-ng-options="num for num in numPerPageOpt"
-                                                data-ng-change="onNumPerPageChange()">
-                                        </select>
-                                        entries per page
-                                    </span>
+                    Show
+                    <select data-ng-model="numPerPage"
+                            data-ng-options="num for num in numPerPageOpt"
+                            data-ng-change="onNumPerPageChange()">
+                    </select>
+                    entries per page
+                </span>
             </div>
             <div class="col-md-6 text-right pagination-container">
                 <pagination class="pagination-sm" ng-model="currentPage" total-items="filteredStores.length" max-size="4" ng-change="select(currentPage)" items-per-page="numPerPage" rotate="false" boundary-links="true"></pagination>
@@ -60,25 +58,13 @@
     <!-- END : PAGINATION -->
 </div>
 <!-- END: HANDBOOK LIST -->
-<div class="create_handbook" ng-show="isCreateNew">
+<div class="create_handbook" ng-if="isCreateHandbook">
     <h2 class="ttl-tab">
         <span>Create Employee Handbook</span>
     </h2>
     <tabset class="client-tabs lv2">
         <tab heading="Handbook Info">
-            <div ng-include="'views/clients/tab_hb_create_info.html'"></div>
-        </tab>
-        <!-- END: TAB -->
-        <tab heading="General Description">
-            <div ng-include="'views/clients/tab_hb_create_general.html'"></div>
-        </tab>
-        <!-- END: TAB -->
-        <tab heading="Sections">
-            <div class="row" ng-include="'views/clients/tab_hb_create_section.html'"></div>
-        </tab>
-        <!-- END: TAB -->
-        <tab heading="Contacts">
-            <div ng-include="'views/clients/tab_hb_create_contact.html'"></div>
+            <div ng-include="'views/handbooks/create_form.html'"></div>
         </tab>
         <!-- END: TAB -->
     </tabset>

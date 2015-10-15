@@ -1,5 +1,5 @@
 <div data-ng-controller="HandbookInfoCtrl" >
-<form name="frm_crt_handbook" novalidate ng-submit="submitHandbookInfo()">
+<form name="frm_crt_handbook" novalidate ng-submit="submitCreateHandbook()">
     <table class="table tbl table-striped">
         <tbody>
             <tr>
@@ -50,7 +50,12 @@
                     />
                 </td>
             </tr>
-
+            <tr>
+                <td class="td-20">Description:</td>
+                <td>
+                    <div text-angular ng-model="handbook.description"></div>
+                </td>
+            </tr>
         </tbody>
     </table>
     <p>

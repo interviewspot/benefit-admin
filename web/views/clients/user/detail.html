@@ -1,0 +1,192 @@
+<!-- END : USER LIST -->
+<div class="user-edit" data-ng-controller="UserCtrl">
+    <h2 class="ttl-tab">
+        <a href="#/clients/{{clientId}}/user/">Users</a>
+        <span class="sub-sep"><i class="fa fa fa-caret-right"></i></span>
+        <span>{{user.username}}</span>
+    </h2>
+    <div class="t-r marg-bot ">
+        <button type="submit" class="btn btn-edit">
+            <i class="fa fa-pencil"></i>
+            Edit
+        </button>
+        <button class="btn btn-edit">Delete</button>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <table class="table tbl table-striped">
+                <tbody>
+                    <tr>
+                        <th class="td-30">First Name <span class="red">*</span></th>
+                        <td>
+                            <input type="text"
+                                value="{{user.first_name}}"
+                                class="txt-ipt"
+                                ng-disabled="!isDisable"
+                                ng-class="{txt_disabled : !isDisable}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Last Name</th>
+                        <td><input type="text"
+                                value="{{user.last_name}}"
+                                class="txt-ipt"
+                                ng-disabled="!isDisable"
+                                ng-class="{txt_disabled : !isDisable}"></td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Email <span class="red">*</span></th>
+                        <td><input type="text"
+                                value="{{user.email}}"
+                                class="txt-ipt"
+                                ng-disabled="!isDisable"
+                                ng-class="{txt_disabled : !isDisable}"></td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Contact</th>
+                        <td><input type="text"
+                                value="{{user.contact}}"
+                                class="txt-ipt"
+                                ng-disabled="!isDisable"
+                                ng-class="{txt_disabled : !isDisable}"></td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Employee Class</th>
+                        <td><input type="text"
+                                value="{{user.employ_cls}}"
+                                class="txt-ipt"
+                                ng-disabled="!isDisable"
+                                ng-class="{txt_disabled : !isDisable}"></td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Function</th>
+                        <td><input type="text"
+                                value="{{user.function}}"
+                                class="txt-ipt"
+                                ng-disabled="!isDisable"
+                                ng-class="{txt_disabled : !isDisable}"></td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Birthday</th>
+                        <td><input type="text"
+                                value="{{user.birthday}}"
+                                class="txt-ipt"
+                                ng-disabled="!isDisable"
+                                ng-class="{txt_disabled : !isDisable}"></td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">NRIC No.</th>
+                        <td><input type="text"
+                                value="{{user.nric}}"
+                                class="txt-ipt"
+                                ng-disabled="!isDisable"
+                                ng-class="{txt_disabled : !isDisable}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- END: COL -->
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <table class="table tbl table-striped">
+                <tbody>
+                    <tr>
+                        <th class="td-30">Date Added</th>
+                        <td><input type="text"
+                                value="{{user.date_add}}"
+                                class="txt-ipt"
+                                ng-disabled="!isDisable"
+                                ng-class="{txt_disabled : !isDisable}"></td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">De-activated Date</th>
+                        <td><input type="text"
+                                value="{{user.date_end}}"
+                                class="txt-ipt"
+                                ng-disabled="!isDisable"
+                                ng-class="{txt_disabled : !isDisable}"></td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Birthday</th>
+                        <td><input type="text"
+                                value="{{user.birthday}}"
+                                class="txt-ipt"
+                                ng-disabled="!isDisable"
+                                ng-class="{txt_disabled : !isDisable}"></td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">App Status</th>
+                        <td>
+                            <input type="text"
+                                value="{{user.app_status}}"
+                                class="txt-ipt"
+                                ng-disabled="!isDisable"
+                                ng-class="{txt_disabled : !isDisable}">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Verification Code</th>
+                        <td><input type="text"
+                                value="{{user.veri_code}}"
+                                class="txt-ipt"
+                                ng-disabled="!isDisable"
+                                ng-class="{txt_disabled : !isDisable}"></td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Redemptions</th>
+                        <td><input type="text"
+                                value="{{user.redemptions}}"
+                                class="txt-ipt"
+                                ng-disabled="!isDisable"
+                                ng-class="{txt_disabled : !isDisable}"></td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Est. Savings</th>
+                        <td><input type="text"
+                                value="{{user.est_saving}}"
+                                class="txt-ipt"
+                                ng-disabled="!isDisable"
+                                ng-class="{txt_disabled : !isDisable}"></td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Medical Card ID</th>
+                        <td><input type="text"
+                                value="{{user.card_id}}"
+                                class="txt-ipt"
+                                ng-disabled="!isDisable"
+                                ng-class="{txt_disabled : !isDisable}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- END: COL -->
+        <div class="col-xs-12 user-history">
+            <h2 class="ttl-tab">
+                <span>Redemption History</span>
+            </h2>
+            <table class="table tbl tbl-bg table-striped">
+                <tbody>
+                    <tr>
+                        <th class="text-center">Date/Time</th>
+                        <th>Merchant</th>
+                        <th>Item</th>
+                        <th>Location</th>
+                        <th>Category</th>
+                        <th>Est. Value</th>
+                        <th>Ref </th>
+                    </tr>
+                    <tr ng-repeat="redemption in clients_user_redemptions_list">
+                        <td>{{redemption.date}}</td>
+                        <td>{{redemption.merchant}}</td>
+                        <td>{{redemption.item}}</td>
+                        <td>{{redemption.location}}</td>
+                        <td>{{redemption.category}}</td>
+                        <td>{{redemption.est_save}}</td>
+                        <td>{{redemption.ref}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- END: HISTORY -->
+    </div>
+</div>
+<!-- END : USER EDIT -->
