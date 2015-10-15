@@ -153,12 +153,13 @@
                     Company Logo
                 </th>
             </tr>
-            <!-- <tr>
-                <td class="text-center td-logo">
+            <tr>
+                <td class="text-center td-logo" ng-model="clientDetail.logo">
+                    {{clientDetail.logo}}
                     <img src="{{clientDetail.logo}}" alt=""/>
                     <i class="fa fa-times"></i>
                 </td>
-            </tr> -->
+            </tr>
             <tr>
                 <td class="text-center">
                     <upload-file
@@ -167,12 +168,6 @@
                         ng-label="uploadButtonLabel"
                         ng-progress-color="'#CFAE79'">
                     </upload-file>
-                    <!-- <div class="fileUpload">
-                        <span>Upload New Image</span>
-                        <div style="height: 0px; width: 0px; overflow: hidden;">
-                            <input type="file" name="userfile" class="fileToUpload">
-                        </div>
-                    </div> -->
                 </td>
             </tr>
         </tbody>

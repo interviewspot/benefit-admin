@@ -128,14 +128,17 @@ angular.module('app.clients', [])
         if $scope.clients_edit == false && $scope.clientDetail.id
 
           console.log $scope.$$childTail.uploadresponse
-          # console.log $scope.result
-          return;
+          logo_id = null
+          if ($scope.$$childTail.uploadresponse)
+            logo_id = $scope.$$childTail.uploadresponse.id
+          else
+            logo_id = $scope.clientDetail.logo
           #id_img =
           sm_client_data = {
             "organisation":
                 "adminUser": 9,  # Change this real ID
                 "parent": null,
-                "logo": null,
+                "logo": logo_id,
                 "name": if $scope.clientDetail.name then $scope.clientDetail.name else null,
                 "code": if $scope.clientDetail.code then $scope.clientDetail.code  else null,
                 "regNo": if $scope.clientDetail.reg_no then $scope.clientDetail.reg_no  else null,
