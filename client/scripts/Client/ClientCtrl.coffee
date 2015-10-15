@@ -3,8 +3,8 @@
 angular.module('app.clients', [])
 
 .controller('clientCtrl', [
-    '$scope', '$filter' , 'fetchTabData', 'fakeData', '$location', 'clientService', 'fetchHandbook', '$routeParams', '$route', 'config'
-    ($scope, $filter, fetchTabData, fakeData, $location, clientService, fetchHandbook, $routeParams, $route, config) ->
+    '$scope', '$filter' , 'fetchTabData', 'fakeData', '$location', 'clientService', 'fetchHandbook', '$routeParams', '$route', 'config', 'Images', 'php'
+    ($scope, $filter, fetchTabData, fakeData, $location, clientService, fetchHandbook, $routeParams, $route, config, Images, php) ->
     # filter
       $scope.stores = [
           {id: 1, company: 'BullWorks Pte Ltd', status: 'nverser', industry: 'AAA', users: 'Euro', estsaving: 'None', cs: 2,action: "Manage", }
@@ -99,7 +99,25 @@ angular.module('app.clients', [])
               $scope.handbooks.push(res.data)
           else
               $scope.isCreateHandbook = true
-          $scope.clientDetail = data
+
+          # GET LOGO URL
+          if typeof data._links.logo_url == 'object' && data._links.logo_url.href
+            Images.get(data._links.logo_url.href).then  (res) ->
+              if res.status != 200 || typeof res != 'object'
+                  return
+                logo_id_arr = php.explode('/media/', data._links.logo.href)
+                $scope.clientDetail = data
+                $scope.clientDetail['logo_url'] = res.data.url
+                $scope.clientDetail['logo']     = logo_id_arr[1]
+
+              return
+            , (error) ->
+              console.log error
+          else
+            $scope.clientDetail = data
+
+
+
           $scope.ClientPage.tabUrls   =
             "info" : '#/clients/' + data.id + '/info'
             "user" : '#/clients/' + data.id + '/user'
@@ -127,18 +145,11 @@ angular.module('app.clients', [])
         # Check data & update
         if $scope.clients_edit == false && $scope.clientDetail.id
 
-          console.log $scope.$$childTail.uploadresponse
-          logo_id = null
-          if ($scope.$$childTail.uploadresponse)
-            logo_id = $scope.$$childTail.uploadresponse.id
-          else
-            logo_id = $scope.clientDetail.logo
           #id_img =
           sm_client_data = {
             "organisation":
                 "adminUser": 9,  # Change this real ID
                 "parent": null,
-                "logo": logo_id,
                 "name": if $scope.clientDetail.name then $scope.clientDetail.name else null,
                 "code": if $scope.clientDetail.code then $scope.clientDetail.code  else null,
                 "regNo": if $scope.clientDetail.reg_no then $scope.clientDetail.reg_no  else null,
@@ -152,10 +163,35 @@ angular.module('app.clients', [])
                 "redemptionPassword": "4444",
                 "aboutCompany": if $scope.clientDetail.about_company then $scope.clientDetail.about_company  else null
           }
+
+          # SET LOGO
+          logo_id = null
+          if ($scope.$$childTail.uploadresponse)
+            if (!$scope.clientDetail.logo)
+              logo_id = $scope.$$childTail.uploadresponse.id
+            else
+              data_img = {
+                url: $scope.clientDetail.logo_url
+              }
+              Images.update($scope.clientDetail._links.logo.href , data_img).then  (res) ->
+                console.log res
+                return
+              , (error) ->
+                console.log error
+          else
+            logo_id = $scope.clientDetail.logo
+
+          sm_client_data.organisation['logo'] = logo_id
+          console.log sm_client_data
+
+          # return
+          # GO TO UPDATE
           clientService.update {org_id:$scope.clientDetail.id}, sm_client_data, (res) ->
-            console.log res
+            if typeof res.organisation == 'object' && res.organisation.logo
+              # location.reload()
+              return
           , (error) ->
-            console.log (error)
+              console.log (error)
 
       # menu active
       $scope.isActive = (path) ->
@@ -191,11 +227,27 @@ angular.module('app.clients', [])
 
       # UPLOAD FILE IMG [ LOGO ]
       # https://api.sg-benefits.com/api/providers/sonata.media.provider.image/media
+      # https://api.sg-benefits.com/api/providers/sonata.media.provider.image/media
       # config.path.baseURL + config.path.upload + 'image/media'
 
-      $scope.urlUpload = config.path.baseURL + config.path.upload + 'image/media';
+      #$scope.urlUpload = config.path.baseURL + config.path.upload + 'image/media'
+      $scope.urlUpload  = 'https://api.sg-benefits.com/media/67'
       $scope.uploadButtonLabel = 'Upload file'
-      # $scope.uploadresponse = {}
+
+      # DEL LOGO
+      $scope.delLogo   = () ->
+        console.log $scope.clientDetail._links
+        # $scope.clientDetail._links.logo.href
+        if typeof $scope.clientDetail._links.logo == 'object' && $scope.clientDetail._links.logo.href
+
+          Images.delete($scope.clientDetail._links.logo.href).then  (res) ->
+            if res.status == 204
+              $scope.clientDetail.logo = null
+            return
+          , (error) ->
+            console.log error
+            if error.status == 500
+              $scope.clientDetail.logo = null
 
   ])
 .directive 'uploadFile', [

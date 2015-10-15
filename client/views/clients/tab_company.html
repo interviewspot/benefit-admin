@@ -153,14 +153,18 @@
                     Company Logo
                 </th>
             </tr>
-            <tr>
-                <td class="text-center td-logo" ng-model="clientDetail.logo">
-                    {{clientDetail.logo}}
-                    <img src="{{clientDetail.logo}}" alt=""/>
-                    <i class="fa fa-times"></i>
+            <tr ng-if="!clientDetail.logo_url">
+                <td class="t-c">
+                    NO LOGO
                 </td>
             </tr>
-            <tr>
+            <tr ng-if="clientDetail.logo_url" ng-cloak>
+                <td class="text-center td-logo" ng-model="clientDetail.logo">
+                    <img ng-src="{{clientDetail.logo_url}}" alt="{{clientDetail.name}}"/>
+                    <i class="fa fa-times" ng-click="delLogo()"></i>
+                </td>
+            </tr>
+            <tr ng-show="isDisable">
                 <td class="text-center">
                     <upload-file
                         upload-url="urlUpload"

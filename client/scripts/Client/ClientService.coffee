@@ -108,6 +108,50 @@ angular.module('app.client.services', [])
             d.promise
     }
 ])
+.factory('Images', [ '$http', '$q', '$resource', ($http, $q, $resource) ->
+    return {
+        get : (url) ->
+            d = $q.defer()
+            $http({
+                method: 'GET'
+                url: url
+            })
+            .then (res) ->
+                d.resolve(res)
+                return
+            , (error) ->
+                d.reject(error)
+                return
+            d.promise
+        delete : (url) ->
+            d = $q.defer()
+            $http({
+                method: 'DELETE'
+                url: url
+            })
+            .then (res) ->
+                d.resolve(res)
+                return
+            , (error) ->
+                d.reject(error)
+                return
+            d.promise
+        update : (url, data) ->
+            d = $q.defer()
+            $http({
+                method: 'POST'
+                url: url
+                data: data
+            })
+            .then (res) ->
+                d.resolve(res)
+                return
+            , (error) ->
+                d.reject(error)
+                return
+            d.promise
+    }
+])
 
 .factory('fakeData', [ '$http', '$q', ($http, $q) ->
     return {

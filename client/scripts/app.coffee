@@ -56,6 +56,7 @@ angular.module('app', [
 
     # Upload file dependencies
     'ngFileUpload'
+    'app.phpjs.services'
 ])
     
 .config([
