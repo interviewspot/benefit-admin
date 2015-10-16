@@ -97,6 +97,29 @@ angular.module('app.users', [])
         $scope.isDisable = false
 
         # x. ONLOAD
-        _getUser();
+        if ($scope.userId != 'new')
+            _getUser();
+        else
+
+])
+
+# --------------------------------------------
+# NewUserCtrl for new user page
+# 1. GET USER by EMAIL
+# 2. UPDATE USER
+# --------------------------------------------
+.controller('NewUserCtrl', [
+    '$scope'
+    , '$filter'
+    , 'fetchTabData'
+    , '$location'
+    , '$routeParams'
+    , 'config'
+    , '$q'
+    , 'UserService'
+    , 'Users' ,
+    ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users) ->
+        $scope.clientId =  $routeParams.clientId
+
 ])
 

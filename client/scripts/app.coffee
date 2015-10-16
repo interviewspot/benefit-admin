@@ -52,6 +52,7 @@ angular.module('app', [
     'app.handbook_info'
     'app.users'
     'app.users.services'
+    'app.merchants.html' # REMOVE AFTER DONE LAYOUT
     #Khai bao app khi tao
 
     # Upload file dependencies
@@ -116,6 +117,7 @@ angular.module('app', [
                 templateUrl: 'views/merchant/merchant-detail.html'
             })
 
+
         # CLIENTS MANAGEMENT
         $routeProvider
             .when('/clients', {
@@ -135,6 +137,10 @@ angular.module('app', [
             .when('/clients/:clientId/user/:userId', {
                 templateUrl: 'views/clients/user/detail_warp.html'
             })
+            .when('/clients/:clientId/new-user', {
+                templateUrl: 'views/clients/user/detail_new_warp.html'
+            })
+
             # HANDBOOK TAB
             .when('/clients/:clientId/handbooks', { 
                 templateUrl: 'views/clients/client-handbook.html'

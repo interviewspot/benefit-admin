@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('app.merchants', [])
+angular.module('app.merchants.html', [])
 .factory('taskStorage2', ->
     STORAGE_ID = 'tasks'
     DEMO_TASKS = '[
@@ -14,6 +14,7 @@ angular.module('app.merchants', [])
         {"title": "Try Google glass", "completed": false}
     ]'
 
+
     return {
     get: ->
         JSON.parse(localStorage.getItem(STORAGE_ID) || DEMO_TASKS )
@@ -23,7 +24,7 @@ angular.module('app.merchants', [])
     }
 )
 
-.controller('merchantCtrl', [
+.controller('merchantsCtrl', [
       '$scope', '$filter'
       ($scope, $filter) ->
 # filter

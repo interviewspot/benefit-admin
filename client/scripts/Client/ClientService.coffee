@@ -108,6 +108,25 @@ angular.module('app.client.services', [])
             d.promise
     }
 ])
+
+.factory('ClientAPI', [ '$http', '$q', '$resource', ($http, $q, $resource) ->
+    return {
+        go : (method, url) ->
+            d = $q.defer()
+            $http({
+                method: method
+                url: url
+            })
+            .then (res) ->
+                d.resolve(res)
+                return
+            , (error) ->
+                d.reject(error)
+                return
+            d.promise
+    }
+])
+
 .factory('Images', [ '$http', '$q', '$resource', ($http, $q, $resource) ->
     return {
         get : (url) ->

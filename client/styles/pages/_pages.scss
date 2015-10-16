@@ -590,10 +590,11 @@ h2.ttl-tab {
 }
 
 .td-control {
+    width: 15%;
     color: #ccc;
 	a {
 		display: inline-block;
-		margin: 0 5px;
+		margin: 0 10px;
         color: #333;
         &:hover {
             color: $brown;
