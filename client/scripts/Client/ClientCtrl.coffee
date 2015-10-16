@@ -3,8 +3,8 @@
 angular.module('app.clients', [])
 
 .controller('clientCtrl', [
-    '$scope', '$filter' , 'fetchTabData', 'fakeData', '$location', 'clientService', 'fetchHandbook', '$routeParams', '$route', 'config', 'Images', 'php'
-    ($scope, $filter, fetchTabData, fakeData, $location, clientService, fetchHandbook, $routeParams, $route, config, Images, php) ->
+    '$scope', '$filter' , 'fetchTabData', 'fakeData', '$location', 'clientService', 'fetchHandbook', '$routeParams', '$route', 'config', 'Images', 'php', 'ClientAPI'
+    ($scope, $filter, fetchTabData, fakeData, $location, clientService, fetchHandbook, $routeParams, $route, config, Images, php, ClientAPI) ->
     # filter
       $scope.stores = [
           {id: 1, company: 'BullWorks Pte Ltd', status: 'nverser', industry: 'AAA', users: 'Euro', estsaving: 'None', cs: 2,action: "Manage", }
@@ -148,7 +148,7 @@ angular.module('app.clients', [])
           #id_img =
           sm_client_data = {
             "organisation":
-                "adminUser": 9,  # Change this real ID
+                "adminUser": null,  # Change this real ID
                 "parent": null,
                 "name": if $scope.clientDetail.name then $scope.clientDetail.name else null,
                 "code": if $scope.clientDetail.code then $scope.clientDetail.code  else null,
@@ -237,6 +237,19 @@ angular.module('app.clients', [])
             console.log error
             if error.status == 500
               $scope.clientDetail.logo = null
+
+      # DEL CLIENT
+      $scope.deleteClient   = (client) ->
+        # console.log client
+        r = confirm("Do you want to delete this client \"" + client.name + "\"?")
+        if r == true
+          ClientAPI.go('DELETE', client._links.self.href).then  (res) ->
+            location.reload()
+            return true
+          , (error) ->
+            # console.log error
+            alert error.status + ' : Try later'
+        return
 
   ])
 .directive 'uploadFile', [
