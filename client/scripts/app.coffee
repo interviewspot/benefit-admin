@@ -113,8 +113,20 @@ angular.module('app', [
             .when('/merchant', {
                 templateUrl: 'views/merchant/merchant.html'
             })
-            .when('/merchant/:companyId', {
-                templateUrl: 'views/merchant/merchant-detail.html'
+            .when('/merchant/:clientId/info', {
+                templateUrl: 'views/merchant/merchant-detail_info.html'
+            })
+            .when('/merchant/:clientId/outlets', {
+                templateUrl: 'views/merchant/merchant-detail_outlets.html'
+            })
+            .when('/merchant/:clientId/offers', {
+                templateUrl: 'views/merchant/merchant-detail_offers.html'
+            })
+            .when('/merchant/:clientId/reports', {
+                templateUrl: 'views/merchant/merchant-detail_reports.html'
+            })
+            .when('/merchant/:clientId/campaigns', {
+                templateUrl: 'views/merchant/merchant-detail_campaigns.html'
             })
 
 

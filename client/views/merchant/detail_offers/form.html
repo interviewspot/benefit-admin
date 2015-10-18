@@ -1,0 +1,153 @@
+<div class="cmd-bar t-r">
+    <a class="btn btn-brown">
+        ADD NEW OFFER
+    </a>
+</div>
+<div class="list-txt">
+    <span>Total</span>
+    12 Offers
+</div>
+<div class="list-info">
+    <div class="itm" data-ng-repeat="(i, item) in offer_items">
+        <div class="info-item offer-item clearfix" ng-click="op_form(i)">
+            <h4>
+                {{item.name}}
+                <label class="r">
+                    Total Offer Limit
+                    <span>100/ No Limits (Default)</span>
+                </label>
+            </h4>
+            <p class="of-rw">
+                <span class="of-status">
+                    Active
+                </span>
+                <label class="of-type">
+                    <span>Offer type</span>
+                    1-for-1 v
+                </label>
+                <label class="l">
+                    Est. Value
+                    <span class="price">$25</span>
+                </label>
+                <label class="l">
+                    Effective Date
+                    <span>12 June 2015</span>
+                </label>
+                <label class="l">
+                    Expires
+                    <span>31 Dec 2015</span>
+                </label>
+            </p>
+            <span class="del-item" ng-click="delOffer(item.id)">
+                    <i class="fa fa-trash-o"></i>
+            </span>
+        </div>
+        <div class="detail-info-frm" ng-show="offer_items[i].open_frm" >
+            <div class="merchant-ctent">
+                    <div class="row">
+                        <div class="col-md-9 col-sm-9 col-xs-12 offer-left">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <table class="table table-striped table-bordered tbl">
+                                        <tbody><tr>
+                                            <td>Offer Title:</td>
+                                            <td>Main Course</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Offer Type:</td>
+                                            <td>1-for-1 v</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Est. Value:</td>
+                                            <td>S$25</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Offer Cat,:</td>
+                                            <td>F&amp;B v</td>
+                                        </tr>
+                                        <tr>
+                                            <td>GoDiscount Amt:</td>
+                                            <td>-N.A-</td>
+                                    </tr></tbody></table>
+                                </div>
+                                <!-- END: TBL -->
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <table class="table table-striped table-bordered tbl">
+                                        <tbody><tr>
+                                            <td>Effective Date:</td>
+                                            <td>12 June 2015</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Expires:</td>
+                                            <td>31 Dec 2015</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Status:</td>
+                                            <td>Active v</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Redemptions Till Date:</td>
+                                            <td>450</td>
+                                        </tr>
+                                    </tbody></table>
+                                </div>
+                                <!-- END: TBL -->
+                                <div class="col-xs-12">
+                                    <table class="table table-striped table-bordered tbl">
+                                        <tbody><tr>
+                                            <td>Total Offer Limit:
+                                            </td>
+                                            <td>100/ No Limits (Default)</td>
+                                            <td>Per:</td>
+                                            <td>Offer/Month/Year/Default</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Redemption Limit:
+                                            </td>
+                                            <td>50/-NA-</td>
+                                            <td>Per:</td>
+                                            <td>Company/User</td>
+                                        </tr>
+                                    </tbody></table>
+                                </div>
+                                <!-- END: TBL -->
+                        </div>
+                        <!-- END : LEFT -->
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12 offer-right">
+                        <table class="table table-striped table-bordered tbl">
+                            <tbody><tr>
+                                <th>Participating Outlets
+                                </th>
+                            </tr>
+                            <tr>
+                                <td>26 Seah Street</td>
+                            </tr>
+                            <tr>
+                                <td>Bedok Mall, Bedok Central</td>
+                            </tr>
+                            <tr>
+                                <td class="text-center">
+                                    <span class="bt-edit">Outlets</span>
+                                </td>
+                            </tr>
+                        </tbody></table>
+                    </div>
+                    <!-- END : RIGHT -->
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h2 class="ttl-tab"><span>Redemption Info</span></h2>
+                        <!-- END : EDITOR -->
+                        Text Editor Here
+                    </div>
+                    <div class="col-md-6">
+                        <h2 class="ttl-tab"><span>T&amp;Cs</span></h2>
+                        Text Editor Here
+                        <!-- END : EDITOR -->
+                    </div>
+                </div>
+            </div>
+        </div><!-- END: detail-info-frm -->
+    </div><!-- END: ITEM -->
+</div><!-- END: LIST -->
