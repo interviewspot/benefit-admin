@@ -80,6 +80,18 @@
             </h2>
             <div class="blk-upload">
                 <label>Browse For File:</label>
+                <sheet-parser
+                ng-result="jsonResult">
+                </sheet-parser>
+                <a class="btn-add btn" ng-click="isUserUpload = !isUserUpload">add</a>
+            </div>
+            <pre>{{jsonResult | json : 4}}</pre>
+
+            <!-- <h2 class="ttl-tab">
+                <span>Upload Excel File</span>
+            </h2>
+            <div class="blk-upload">
+                <label>Browse For File:</label>
                 <span class="cls-file">No file selected</span>
                 <div class="fileUpload">
                     <span>Browse...</span>
@@ -88,7 +100,8 @@
                     </div>
                 </div>
                 <a class="btn-add btn" ng-click="isUserUpload = !isUserUpload">add</a>
-            </div>
+            </div> -->
+
             <p>If you require the Excel format for mass uploading, please <a href="#">click here</a> to download the template</p>
         </div><!-- END: UPFILE EXCEL -->
     </div>
