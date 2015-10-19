@@ -5,16 +5,18 @@
         <span class="sub-sep"><i class="fa fa fa-caret-right"></i></span>
         <span>{{user.username}}</span>
     </h2>
+    <ng-form name="frm-updateuser" class="frm-updateuser ng-pristine ng-valid" novalidate>
     <div class="t-r marg-bot ">
-        <button type="submit" class="btn btn-brown">
+        <button type="submit" class="btn btn-brown" ng-click="updateUser()">
             <i class="fa fa-pencil"></i>
             Submit to save
         </button>
         &nbsp;&nbsp;&nbsp;&nbsp;
-        <button class="btn btn-edit">Delete</button>
+        <button class="btn btn-edit" ng-click="deleteUser()">Delete</button>
     </div>
     <div class="row">
         <div class="col-md-6 col-sm-6 col-xs-12">
+            <input type="hidden" ng-model="user.id" value="{{user.id}}">
             <table class="table tbl table-striped">
                 <tbody>
                     <tr>
@@ -24,7 +26,8 @@
                                 value="{{user.first_name}}"
                                 class="txt-ipt"
                                 ng-disabled="!isDisable"
-                                ng-class="{txt_disabled : !isDisable}">
+                                ng-class="{txt_disabled : !isDisable}"
+                                ng-model="user.first_name">
                         </td>
                     </tr>
                     <tr>
@@ -33,7 +36,8 @@
                                 value="{{user.last_name}}"
                                 class="txt-ipt"
                                 ng-disabled="!isDisable"
-                                ng-class="{txt_disabled : !isDisable}"></td>
+                                ng-class="{txt_disabled : !isDisable}"
+                                ng-model="user.last_name"></td>
                     </tr>
                     <tr>
                         <th class="td-30">Email <span class="red">*</span></th>
@@ -41,7 +45,7 @@
                                 value="{{user.email}}"
                                 class="txt-ipt"
                                 ng-disabled="!isDisable"
-                                ng-class="{txt_disabled : !isDisable}"></td>
+                                ng-model="user.email"></td>
                     </tr>
                     <tr>
                         <th class="td-30">Contact</th>
@@ -159,6 +163,7 @@
                 </tbody>
             </table>
         </div>
+
         <!-- END: COL -->
         <div class="col-xs-12 user-history">
             <h2 class="ttl-tab">
@@ -189,5 +194,6 @@
         </div>
         <!-- END: HISTORY -->
     </div>
+    </ng-form>
 </div>
 <!-- END : USER EDIT -->
