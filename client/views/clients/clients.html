@@ -80,45 +80,50 @@
                         <div class="modal-body">
                             <form class="frm_create_clients modal_frm" name="frm_create_clients">
                                 <p>
-                                    <label>Company:</label>
+                                    <label>Company</label>
                                     <input type="text"
                                            class="ipt"
-                                           name="txt-company"/>
+                                           name="txt-company"
+                                           ng-model="co.name" />
                                 </p>
                                 <p>
-                                    <label>Status:</label>
-                                    <select class="ipt">
-                                        <option value="Live">Live</option>
-                                        <option value="Active">Not Active</option>
-                                    </select>
-                                </p>
-                                <p>
-                                    <label>Industry:</label>
+                                    <label>Code</label>
                                     <input type="text"
                                            class="ipt"
-                                           name="txt-industry">
+                                           name="txt-code"
+                                           ng-model="co.code" />
                                 </p>
                                 <p>
-                                    <label>Users:</label>
-                                    <input type="number"
-                                           class="ipt"
-                                           name="txt-users">
-                                </p>
-                                <p>
-                                    <label>Est Savings:</label>
+                                    <label>Biz Reg No.</label>
                                     <input type="text"
                                            class="ipt"
-                                           name="txt-est">
+                                           name="txt-regno"
+                                           ng-model="co.regNo" />
                                 </p>
                                 <p>
-                                    <label>CS:</label>
+                                    <label>Head Office No.</label>
                                     <input type="text"
                                            class="ipt"
-                                           name="txt-cs">
+                                           name="txt-headOfficeNo"
+                                           ng-model="co.headOfficeNo" />
                                 </p>
-                                <p class="text-center">
-                                    <button class="btn btn-create btn-primary">CREATE</button>
+                                <p>
+                                    <label>Office Address.</label>
+                                    <input type="text"
+                                           class="ipt"
+                                           name="txt-headOfficeNo"
+                                           ng-model="co.officeAddress" />
                                 </p>
+                                <p>
+                                    <label>Reservation Email</label>
+                                    <input type="text"
+                                           class="ipt"
+                                           name="txt-headOfficeNo"
+                                           ng-model="co.reservationEmail" />
+                                </p>
+                                <button type="submit" class="save btn-brown">
+                                    <i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;CREATE NEW CLIENT
+                                </button>
                             </form>
                         </div>
                     </div>
