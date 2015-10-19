@@ -53,11 +53,13 @@ angular.module('app', [
     'app.users'
     'app.users.services'
     'app.merchants.html' # REMOVE AFTER DONE LAYOUT
+    #'app.offerdirective' # DIRECTIVE FORM OFFER
     #Khai bao app khi tao
 
     # Upload file dependencies
     'ngFileUpload'
     'app.phpjs.services'
+
 ])
     
 .config([
