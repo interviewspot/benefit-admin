@@ -6,31 +6,52 @@
         <span>Add new</span>
     </h2>
     <div class="frm_new">
-        <form class="frm-adduser ng-pristine ng-valid">
+        <div class="message">{{infoUpdated}}</div>
+        <ng-form name="frm-adduser" class="frm-adduser ng-pristine ng-valid" novalidate>
             <table class="table tbl table-striped">
                 <tbody>
                     <tr>
+                        <th class="td-20">User name <span class="red">*</span></th>
+                        <td>
+                            <input type="text"
+                                name="txt-username"
+                                class="ipt-user"
+                                ng-class="{txt_err : frm-adduser.txt-username.$error.required}"
+                                ng-model="user.username">
+                        </td>
+                    </tr>
+                    <tr>
                         <th class="td-20">First Name <span class="red">*</span></th>
                         <td>
-                            <input type="text" name="txt-firstname" class="ipt-user">
+                            <input type="text"
+                                name="txt-firstname"
+                                class="ipt-user"
+                                ng-class="{txt_err : frm-adduser.txt-firstname.$error.required}"
+                                ng-model="user.firstname">
                         </td>
                     </tr>
                     <tr>
                         <th class="td-20">Last Name <span class="red">*</span></th>
                         <td>
-                            <input type="text" name="txt-lastname" class="ipt-user">
+                            <input type="text" name="txt-lastname" class="ipt-user"
+                                ng-class="{txt_err : frm-adduser.txt-lastname.$error.required}"
+                                ng-model="user.lastname">
                         </td>
                     </tr>
                     <tr>
                         <th class="td-20">Email <span class="red">*</span></th>
                         <td>
-                            <input type="email" name="txt-email" class="ipt-user">
+                            <input type="email" name="txt-email" class="ipt-user"
+                                ng-class="{txt_err : frm-adduser.txt-email.$error.required}"
+                                ng-model="user.email">
                         </td>
                     </tr>
                     <tr>
                         <th class="td-20">Password <span class="red">*</span></th>
                         <td>
-                            <input type="password" name="txt-email" class="ipt-user">
+                            <input type="password" name="txt-password" class="ipt-user"
+                                ng-class="{txt_err : frm-adduser.txt-password.$error.required}"
+                                ng-model="user.password">
                         </td>
                     </tr>
                 </tbody>
@@ -70,7 +91,7 @@
                     </tr>
                 </tbody>
             </table>
-            <p class="text-right"><button type="submit" class="btn btn-add">SAVE USER</button></p>
+            <p class="text-right"><button type="submit" ng-click="submitCreateUser()" class="btn btn-add">SAVE USER</button></p>
             <br />
         </form><!-- FORM -->
         <br /><br /><br /><br />

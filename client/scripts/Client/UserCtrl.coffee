@@ -89,12 +89,44 @@ angular.module('app.users', [])
                 if res.status != 200 || typeof res != 'object'
                     return
                 $scope.user = res.data
+                console.log res.data
                 return
             , (error) ->
                 console.log error
 
         # 2. UPDATE USER
-        $scope.isDisable = false
+        $scope.isDisable = true
+        $scope.updateUser = () ->
+            newData = {
+                "user": {
+                    "first_name": $scope.user.first_name,
+                    "id": $scope.user.id,
+                    "last_name": $scope.user.last_name,
+                    "email": $scope.user.email,
+                }
+            }
+            #console.log newData
+            Users.put($scope.user._links.self.href, newData).then  (res) ->
+                if res.status != 200 || typeof res != 'object'
+                    return
+                location.reload()
+                #console.log res.data
+                return
+            , (error) ->
+                console.log error
+        # 3. DELETE USER
+        $scope.deleteUser = () ->
+            r = confirm("Do you want to delete this user \"" + $scope.user.email + "\"?")
+            if r == true
+                Users.delete($scope.user._links.self.href).then  (res) ->
+                    if res.status != 200 || typeof res != 'object'
+                        return
+                    location.reload()
+                    #console.log res.data
+                    return
+                , (error) ->
+                    console.log error
+            return
 
         # x. ONLOAD
         if ($scope.userId != 'new')
@@ -121,5 +153,37 @@ angular.module('app.users', [])
     ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users) ->
         $scope.clientId =  $routeParams.clientId
 
+        _URL =
+            detail : config.path.baseURL + '/users'
+
+        $scope.submitCreateUser = ->
+            #angular.forEach $scope.frm-adduser.$error.required, (field)->
+            #    field.$dirty = true
+            #if $scope.frm-adduser.$error.required.length
+            #    return false
+
+            newData = {
+                "user": {
+                    "firstName": $scope.user.firstname,
+                    "middleName": "",
+                    "lastName": $scope.user.lastname,
+                    "username": $scope.user.username,
+                    "email": $scope.user.email,
+                    "enabled": true,
+                    "plainPassword": $scope.user.password,
+                    "ssn": null
+                }
+            }
+            #console.log newData
+
+            Users.post(_URL.detail, newData).then  (res) ->
+                if res.status == 200
+                    $scope.infoUpdated = 'Created New'
+                    #$timeout ()->
+                    #    $scope.infoUpdated = null
+                    #    location.reload()
+                    #, 500
+            , (error) ->
+                $scope.infoUpdated = error.status + ': Error, refresh & try again !'
 ])
 
