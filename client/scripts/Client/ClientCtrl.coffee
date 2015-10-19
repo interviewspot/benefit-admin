@@ -173,7 +173,6 @@ angular.module('app.clients', [])
 
           sm_client_data.organisation['logo'] = logo_id
 
-          console.log sm_client_data
           #return
           # return
           # GO TO UPDATE
@@ -252,6 +251,22 @@ angular.module('app.clients', [])
             # console.log error
             alert error.status + ' : Try later'
         return
+
+      # NEW CLIENT
+      $scope.rule =
+        validMail : /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i
+        noSpace   : /[^\s\\]/
+      $scope.submitNewClient = () ->
+        angular.forEach $scope.frm_create_clients.$error.required, (field)->
+          field.$dirty = true
+          console.log field
+
+        if $scope.frm_create_clients.$error.required.length
+          return false
+
+        console.log "aaa"
+        return
+
 
   ])
 .directive 'uploadFile', [
