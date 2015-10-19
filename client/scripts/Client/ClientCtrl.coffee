@@ -148,20 +148,20 @@ angular.module('app.clients', [])
           #id_img =
           sm_client_data = {
             "organisation":
-                "adminUser": null,  # Change this real ID
+                "admin_user": null,  # Change this real ID
                 "parent": null,
                 "name": if $scope.clientDetail.name then $scope.clientDetail.name else null,
                 "code": if $scope.clientDetail.code then $scope.clientDetail.code  else null,
-                "regNo": if $scope.clientDetail.reg_no then $scope.clientDetail.reg_no  else null,
-                "headOfficeNo": if $scope.clientDetail.head_office_no then $scope.clientDetail.head_office_no else null,
+                "reg_no": if $scope.clientDetail.reg_no then $scope.clientDetail.reg_no  else null,
+                "head_office_no": if $scope.clientDetail.head_office_no then $scope.clientDetail.head_office_no else null,
                 "billingAddress": if $scope.clientDetail.billing_address then $scope.clientDetail.billing_address else null,
-                "officeAddress" : if $scope.clientDetail.office_address then $scope.clientDetail.office_address else null,
-                "reservationEmail": if $scope.clientDetail.reservation_email then $scope.clientDetail.reservation_email else null ,
-                "userContactNo": if $scope.clientDetail.user_contact_no then $scope.clientDetail.user_contact_no else null,
-                "clientSince": if $scope.clientDetail.client_since then $scope.clientDetail.client_since else null,
-                "officeHours": if $scope.clientDetail.office_hours then $scope.clientDetail.office_hours else null,
-                "redemptionPassword": "4444",
-                "aboutCompany": if $scope.clientDetail.about_company then $scope.clientDetail.about_company  else null
+                "office_address" : if $scope.clientDetail.office_address then $scope.clientDetail.office_address else null,
+                "reservation_email": if $scope.clientDetail.reservation_email then $scope.clientDetail.reservation_email else null ,
+                "user_contact_no": if $scope.clientDetail.user_contact_no then $scope.clientDetail.user_contact_no else null,
+                "client_since": if $scope.clientDetail.client_since then $scope.clientDetail.client_since else null,
+                "office_hours": if $scope.clientDetail.office_hours then $scope.clientDetail.office_hours else null,
+                "redemption_password": "4444",
+                "about_company": if $scope.clientDetail.about_company then $scope.clientDetail.about_company  else null
           }
 
           # SET LOGO
@@ -173,6 +173,7 @@ angular.module('app.clients', [])
 
           sm_client_data.organisation['logo'] = logo_id
 
+          #return
           # return
           # GO TO UPDATE
           clientService.update {org_id:$scope.clientDetail.id}, sm_client_data, (res) ->
@@ -250,6 +251,22 @@ angular.module('app.clients', [])
             # console.log error
             alert error.status + ' : Try later'
         return
+
+      # NEW CLIENT
+      $scope.rule =
+        validMail : /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i
+        noSpace   : /[^\s\\]/
+      $scope.submitNewClient = () ->
+        angular.forEach $scope.frm_create_clients.$error.required, (field)->
+          field.$dirty = true
+          console.log field
+
+        if $scope.frm_create_clients.$error.required.length
+          return false
+
+        console.log "aaa"
+        return
+
 
   ])
 .directive 'uploadFile', [

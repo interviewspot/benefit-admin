@@ -41,16 +41,16 @@
                         <tbody>
                             <tr data-ng-repeat="company in companies.items">
                                 <td class="text-center">
-                                    <a href="#/merchant/{{company.id}}" title="{{company.name}}">
+                                    <a href="#/merchant/{{company.id}}/info" title="{{company.name}}">
                                         {{company.name}}
                                     </a>
                                 </td>
                                 <td class="text-center">{{company.store ? company.store : '-'}}</td>
                                 <td class="text-center">{{company.type ? company.type : '-'}}</td>
                                 <td class="text-center">{{company.cat ? company.cat : '-'}}</td>
-                                <td class="text-center">{{store.outlets}}</td>
-                                <td class="text-center">{{store.cs}}</td>
-                                <td class="text-center">{{store.status}}</td>
+                                <td class="text-center">-</td>
+                                <td class="text-center">-</td>
+                                <td class="text-center">-</td>
                                 <td class="td-control text-center">
                                     <a href="#/pages/lock-screen" title="De-Active"><i class="fa fa-times"></i></a>
                                     |

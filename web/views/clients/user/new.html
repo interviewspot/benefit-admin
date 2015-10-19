@@ -1,0 +1,96 @@
+<!-- END : USER LIST -->
+<div class="user-edit" data-ng-controller="NewUserCtrl">
+    <h2 class="ttl-tab">
+        <a href="#/clients/{{clientId}}/user/">Users</a>
+        <span class="sub-sep"><i class="fa fa fa-caret-right"></i></span>
+        <span>Add new</span>
+    </h2>
+    <div class="frm_new">
+        <form class="frm-adduser ng-pristine ng-valid">
+            <table class="table tbl table-striped">
+                <tbody>
+                    <tr>
+                        <th class="td-20">First Name <span class="red">*</span></th>
+                        <td>
+                            <input type="text" name="txt-firstname" class="ipt-user">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="td-20">Last Name <span class="red">*</span></th>
+                        <td>
+                            <input type="text" name="txt-lastname" class="ipt-user">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="td-20">Email <span class="red">*</span></th>
+                        <td>
+                            <input type="email" name="txt-email" class="ipt-user">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="td-20">Password <span class="red">*</span></th>
+                        <td>
+                            <input type="password" name="txt-email" class="ipt-user">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <br />
+            <table class="table tbl table-striped">
+                <tbody>
+                    <tr>
+                        <th class="td-20">Contact</th>
+                        <td>
+                            <input type="text" name="txt-contact" class="ipt-user">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="td-20">Employee Class</th>
+                        <td>
+                            <input type="text" name="txt-employee" class="ipt-user">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="td-20">Function</th>
+                        <td>
+                            <input type="text" name="txt-function"  class="ipt-user">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="td-20">Birthday</th>
+                        <td>
+                            <input type="text" name="txt-birthday" class="ipt-user">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="td-20">NRIC No.</th>
+                        <td>
+                        <input type="text" name="txt-nric" class="ipt-user">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="text-right"><button type="submit" class="btn btn-add">SAVE USER</button></p>
+            <br />
+        </form><!-- FORM -->
+        <br /><br /><br /><br />
+        <div class="add-upload">
+            <h2 class="ttl-tab">
+                <span>Upload Excel File</span>
+            </h2>
+            <div class="blk-upload">
+                <label>Browse For File:</label>
+                <span class="cls-file">No file selected</span>
+                <div class="fileUpload">
+                    <span>Browse...</span>
+                    <div style="height: 0px; width: 0px; overflow: hidden;">
+                        <input type="file" name="userfile" class="fileToUpload">
+                    </div>
+                </div>
+                <a class="btn-add btn" ng-click="isUserUpload = !isUserUpload">add</a>
+            </div>
+            <p>If you require the Excel format for mass uploading, please <a href="#">click here</a> to download the template</p>
+        </div><!-- END: UPFILE EXCEL -->
+    </div>
+</div>
+<!-- END : USER EDIT -->
