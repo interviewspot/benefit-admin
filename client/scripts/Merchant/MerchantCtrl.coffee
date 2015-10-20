@@ -58,6 +58,9 @@ angular.module('app.merchants', [])
 # 2.1 On Number Per Page Change
 # 2.2 Goto PAGE
 # 3. ONLOAD LISTING COMPANIES
+# 4. Submit Form Offer
+# 5. Open Datepicker
+# 5.1 Set mindate
 # --------------------------------------------
 .controller('merchantDetailCtrl', [
     '$scope'
@@ -124,6 +127,33 @@ angular.module('app.merchants', [])
             console.log key
             $scope.offer_items[key]['open_frm'] = !$scope.offer_items[key]['open_frm']
             return
+
+        # 4. Submit Form Offer
+        $scope.validForm = (index) ->
+            $scope.offer_items[index]['ipt'] = {}
+            if !$scope.offer_items[index].name || ($scope.offer_items[index].name && $scope.offer_items[index].name.length < 4)
+                $scope.offer_items[index].ipt['name'] = 'error'
+
+        # 5. Open Datepicker
+        $scope.open  = ($event, index) ->
+            $event.preventDefault();
+            $event.stopPropagation();
+            $scope.offer_items[index].effdate = {}
+
+            $scope.offer_items[index].effdate.opened = true;
+
+        $scope.expire  = ($event, index) ->
+            $event.preventDefault();
+            $event.stopPropagation();
+            $scope.offer_items[index].expdate = {}
+
+            $scope.offer_items[index].expdate.opened = true;
+
+        #$scope.formats = ['dd-MMMM-yyyy']
+
+
+        # 5.1 Set mindate
+        $scope.minDate = new Date();
 
         # x. ONLOAD
         _getCompany($scope.clientId)

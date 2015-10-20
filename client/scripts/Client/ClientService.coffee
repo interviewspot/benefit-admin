@@ -106,6 +106,20 @@ angular.module('app.client.services', [])
                 d.reject(error)
                 return
             d.promise
+        post : (url, data) ->
+            d = $q.defer()
+            $http({
+                method: 'POST'
+                url: url
+                data: data
+            })
+            .then (res) ->
+                d.resolve(res)
+                return
+            , (error) ->
+                d.reject(error)
+                return
+            d.promise
     }
 ])
 

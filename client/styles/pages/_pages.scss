@@ -140,7 +140,7 @@ h2.ttl-tab {
 		margin: 0;
 	}
 }
-.txt-ipt {
+.txt-ipt, .slect {
 	width: 100%;
 	outline: none;
 	border: 1px solid #ddd;
@@ -156,6 +156,19 @@ h2.ttl-tab {
     &.txt_err {
         border: 1px solid red;
     }
+}
+.td-chk {
+    label {
+        margin-bottom: 0;
+        font-weight: normal;
+    }
+    input[type="checkbox"] {
+        vertical-align: -2px;
+        margin-right: 5px;
+    }
+}
+.offer-button {
+    margin-top: 20px;
 }
 .rs-pass {
     margin-left: 10px;
