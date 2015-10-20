@@ -169,10 +169,10 @@ angular.module('app.users', [])
             detail : config.path.baseURL + config.path.users
 
         $scope.submitCreateUser = ->
-            #angular.forEach $scope.frm-adduser.$error.required, (field)->
-            #    field.$dirty = true
-            #if $scope.frm-adduser.$error.required.length
-            #    return false
+            angular.forEach $scope.frm_adduser.$error.required, (field)->
+                field.$dirty = true
+            if $scope.frm_adduser.$error.required.length
+                return false
 
             newData = {
                 "user": {
