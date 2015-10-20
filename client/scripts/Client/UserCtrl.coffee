@@ -204,17 +204,17 @@ angular.module('app.users', [])
                                     "employee": res.data.id
                                     "active"  : true
                                     "employer": $scope.clientId
-                                    "handbook_contact" : true
+                                    #"handbook_contact" : true
                                 }
                             }
 
                             # CREATE POSITION USER
                             ContactService.save {org_id:$scope.clientId}, newContact, (res)->
+                                $scope.infoUpdated = 'Created New'
                                 if typeof res == 'object' && res.code == 201
-                                    $scope.infoUpdated = 'Created New'
                                     $timeout ()->
                                         $location.path('/clients/' + $scope.clientId + '/user')
-                                    , 300
+                                    , 500
 
                     , (error) ->
                         console.log error
