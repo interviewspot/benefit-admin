@@ -3,8 +3,8 @@
 angular.module('app.clients', [])
 
 .controller('clientCtrl', [
-    '$scope', '$filter' , 'fetchTabData', 'fakeData', '$location', 'clientService', 'fetchHandbook', '$routeParams', '$route', 'config', 'Images', 'php', 'ClientAPI'
-    ($scope, $filter, fetchTabData, fakeData, $location, clientService, fetchHandbook, $routeParams, $route, config, Images, php, ClientAPI) ->
+    '$scope', '$filter' , 'fetchTabData', 'fakeData', '$location', 'clientService', 'fetchHandbook', '$routeParams', '$route', 'config', 'Images', 'php', 'ClientAPI', 'Companies'
+    ($scope, $filter, fetchTabData, fakeData, $location, clientService, fetchHandbook, $routeParams, $route, config, Images, php, ClientAPI, Companies) ->
     # filter
       $scope.stores = [
           {id: 1, company: 'BullWorks Pte Ltd', status: 'nverser', industry: 'AAA', users: 'Euro', estsaving: 'None', cs: 2,action: "Manage", }
@@ -253,18 +253,32 @@ angular.module('app.clients', [])
         return
 
       # NEW CLIENT
+      $scope.co   = null
       $scope.rule =
         validMail : /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i
         noSpace   : /[^\s\\]/
+
       $scope.submitNewClient = () ->
         angular.forEach $scope.frm_create_clients.$error.required, (field)->
           field.$dirty = true
-          console.log field
+          #console.log field
 
         if $scope.frm_create_clients.$error.required.length
           return false
+        co_data =
+          organisation : $scope.co
+        Companies.post(config.path.baseURL + config.path.clients, co_data ).then  (res) ->
+            console.log res
+            if typeof res == 'object' && res.status == 201
+              console.log "OK, SAVED"
+            else
+              alert error.status + ' : Try later'
+            location.reload()
+            return true
+        , (error) ->
+          # console.log error
+          alert error.status + ' : Try later'
 
-        console.log "aaa"
         return
 
 

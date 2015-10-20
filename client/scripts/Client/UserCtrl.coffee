@@ -100,13 +100,13 @@ angular.module('app.users', [])
             newData = {
                 "user": {
                     "first_name": $scope.user.first_name,
-                    "id": $scope.user.id,
-                    "last_name": $scope.user.last_name,
-                    "email": $scope.user.email,
+                    "last_name" : $scope.user.last_name,
+                    "email"     : $scope.user.email,
+                    "username"  : $scope.user.username
                 }
             }
-            #console.log newData
-            Users.put($scope.user._links.self.href, newData).then  (res) ->
+
+            Users.put(_URL.detail + $scope.user.id, newData).then  (res) ->
                 if res.status != 200 || typeof res != 'object'
                     return
                 location.reload()
@@ -114,6 +114,7 @@ angular.module('app.users', [])
                 return
             , (error) ->
                 console.log error
+
         # 3. DELETE USER
         $scope.deleteUser = () ->
             r = confirm("Do you want to delete this user \"" + $scope.user.email + "\"?")
