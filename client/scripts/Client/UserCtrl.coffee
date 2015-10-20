@@ -114,21 +114,26 @@ angular.module('app.users', [])
             Users.put(_URL.detail + $scope.user.id, newData).then  (res) ->
                 if res.status == 204
                     $scope.infoUpdated = 'Updated user successfully!'
-                    #console.log res.data
+                    $timeout ()->
+                        clientId =  $routeParams.clientId
+                        $location.path('/clients/' + clientId + '/user')
+                    , 300
+
                     return
             , (error) ->
                 $scope.infoUpdated = error.status + ': Error, refresh & try again !'
+
         # 3. DELETE USER
         $scope.deleteUser = () ->
             r = confirm("Do you want to delete this user \"" + $scope.user.email + "\"?")
             if r == true
                 Users.delete(_URL.detail + $scope.user.id).then  (res) ->
-                    if res.status == 204
+                    if typeof res == 'object' && res.status == 204
                         $scope.infoUpdated = 'Deleted user successfully!'
                         $timeout ()->
                             clientId =  $routeParams.clientId
                             $location.path('/clients/' + clientId + '/user')
-                        , 1000
+                        , 300
                         return
                 , (error) ->
                     $scope.infoUpdated = error.status + ': Error, refresh & try again !'
@@ -185,12 +190,12 @@ angular.module('app.users', [])
             #console.log newData
 
             Users.post(_URL.detail, newData.user).then  (res) ->
-                if res.status == 201
+                if typeof res == 'object' && res.status == 201
                     $scope.infoUpdated = 'Created New'
                     $timeout ()->
                         clientId =  $routeParams.clientId
                         $location.path('/clients/' + clientId + '/user')
-                    , 1000
+                    , 500
             , (error) ->
                 #console.log(error)
                 $scope.infoUpdated = error.status + ': Error, refresh & try again !'
