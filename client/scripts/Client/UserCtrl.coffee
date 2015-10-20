@@ -101,8 +101,6 @@ angular.module('app.users', [])
             newData = {
                 "user": {
                     "first_name": $scope.user.first_name,
-<<<<<<< HEAD
-                    #"middleName": "",
                     "last_name": $scope.user.last_name,
                     "username": $scope.user.username,
                     "email":  $scope.user.email,
@@ -117,25 +115,9 @@ angular.module('app.users', [])
                 if res.status == 204
                     $scope.infoUpdated = 'Updated user successfully!'
                     #console.log res.data
-=======
-                    "last_name" : $scope.user.last_name,
-                    "email"     : $scope.user.email,
-                    "username"  : $scope.user.username,
-                    "handbook_contact" : true
-                }
-            }
-
-            Users.put(_URL.detail + $scope.user.id, newData).then  (res) ->
-                if res.status != 200 || typeof res != 'object'
->>>>>>> origin/master
                     return
             , (error) ->
-<<<<<<< HEAD
                 $scope.infoUpdated = error.status + ': Error, refresh & try again !'
-=======
-                console.log error
-
->>>>>>> origin/master
         # 3. DELETE USER
         $scope.deleteUser = () ->
             r = confirm("Do you want to delete this user \"" + $scope.user.email + "\"?")
@@ -195,15 +177,9 @@ angular.module('app.users', [])
                     "username": $scope.user.username,
                     "email":  $scope.user.email,
                     "enabled": true,
-<<<<<<< HEAD
                     "plain_password": $scope.user.password,
                     "ssn": null,
                     #"handbook_contact" : true
-=======
-                    "handbook_contact" : true,
-                    "plainPassword": $scope.user.password,
-                    "ssn": null
->>>>>>> origin/master
                 }
             }
             #console.log newData
