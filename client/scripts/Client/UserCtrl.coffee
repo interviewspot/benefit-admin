@@ -120,8 +120,7 @@ angular.module('app.users', [])
                 if res.status == 204
                     $scope.infoUpdated = 'Updated user successfully!'
                     $timeout ()->
-                        clientId =  $routeParams.clientId
-                        $location.path('/clients/' + clientId + '/user')
+                        $scope.infoUpdated = null
                     , 300
 
                     return
@@ -166,8 +165,9 @@ angular.module('app.users', [])
     , '$q'
     , 'UserService'
     , 'Users'
-    , '$timeout',
-    ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout) ->
+    , '$timeout'
+    , 'ContactService' ,
+    ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, ContactService) ->
         $scope.clientId =  $routeParams.clientId
 
         _URL =
@@ -180,29 +180,48 @@ angular.module('app.users', [])
                 return false
 
             newData = {
-                "user": {
-                    "first_name": $scope.user.first_name,
-                    #"middleName": "",
-                    "last_name": $scope.user.last_name,
-                    "username": $scope.user.username,
-                    "email":  $scope.user.email,
-                    "enabled": true,
-                    "plain_password": $scope.user.password,
-                    "ssn": null,
-                    #"handbook_contact" : true
-                }
+                "user":
+                    "first_name"     : $scope.user.first_name
+                    "last_name"      : $scope.user.last_name
+                    "username"       : $scope.user.username
+                    "email"          : $scope.user.email
+                    "enabled"        : true
+                    "plain_password" : $scope.user.password
+                    "ssn"            : null
             }
-            #console.log newData
 
-            Users.post(_URL.detail, newData.user).then  (res) ->
+            Users.post(_URL.detail, newData).then  (res) ->
                 if typeof res == 'object' && res.status == 201
-                    $scope.infoUpdated = 'Created New'
-                    $timeout ()->
-                        clientId =  $routeParams.clientId
-                        $location.path('/clients/' + clientId + '/user')
-                    , 500
+
+                    # NEW POSTION in THIS CLIENT
+                    Users.get(_URL.detail + '/' + $scope.user.email.trim()).then (res) ->
+
+                        if res.status == 200 && typeof res == 'object'
+                            # SEND API : SAVE
+                            newContact = {
+                                "position": {
+                                    "title"   : "Postion of " + $scope.user.username
+                                    "employee": res.data.id
+                                    "active"  : true
+                                    "employer": $scope.clientId
+                                    "handbook_contact" : true
+                                }
+                            }
+
+                            # CREATE POSITION USER
+                            ContactService.save {org_id:$scope.clientId}, newContact, (res)->
+                                if typeof res == 'object' && res.code == 201
+                                    $scope.infoUpdated = 'Created New'
+                                    $timeout ()->
+                                        $location.path('/clients/' + $scope.clientId + '/user')
+                                    , 300
+
+                    , (error) ->
+                        console.log error
+                        alert 'API error connection: Not yet create user for this client'
+
             , (error) ->
-                #console.log(error)
+                console.log error
                 $scope.infoUpdated = error.status + ': Error, refresh & try again !'
 
 ])

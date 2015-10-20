@@ -83,6 +83,7 @@ angular.module('app.contacts', [])
                     "employee": $scope.srch_users[$scope.contact.email]
                     "active"  : true
                     "employer": $routeParams.clientId
+                    "handbook_contact" : true
                 }
             }
 
@@ -156,11 +157,14 @@ angular.module('app.contacts', [])
                     "employee": $scope.srch_users[contact.user.email]
                     "active": true
                     "employer": $routeParams.clientId
+                    "handbook_contact" : true
                 }
             }
             fetchContact.update(contact.position._links.self.href, updateContact).then  (res) ->
                 $scope.loadContactList()
                 $modalInstance.close()
+
+
         $scope.cancel = ->
             $modalInstance.dismiss('cancel');
 ])
