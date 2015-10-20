@@ -102,7 +102,8 @@ angular.module('app.users', [])
                     "first_name": $scope.user.first_name,
                     "last_name" : $scope.user.last_name,
                     "email"     : $scope.user.email,
-                    "username"  : $scope.user.username
+                    "username"  : $scope.user.username,
+                    "handbook_contact" : true
                 }
             }
 
@@ -171,6 +172,7 @@ angular.module('app.users', [])
                     "username": $scope.user.username,
                     "email": $scope.user.email,
                     "enabled": true,
+                    "handbook_contact" : true,
                     "plainPassword": $scope.user.password,
                     "ssn": null
                 }
