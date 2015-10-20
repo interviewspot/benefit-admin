@@ -17,7 +17,7 @@
                         <th class="text-center">CS</th>
                         <th class="text-center">Actions</th>
                     </tr>
-                    <tr ng-repeat="client in clients_list">
+                    <tr ng-repeat="client in clients_list" >
                         <td class="text-center">
                             <a href="#/clients/{{client.id}}/info">
                                 {{client.name}}
@@ -34,12 +34,12 @@
                         <td class="text-center">
                             {{client.cs}}
                         </td>
-                        <td class="text-center td-manage">
-                            <i class="fa fa-check" title="Active"></i>
-                            <i class="fa fa-eye" title="View" ng-click="fnEditClients()"></i>
-                            <i class="fa fa-edit" title="Edit" ng-click="fnEditClients()"></i>
-                            <i class="fa fa-sign-in" title="Assign CS"></i>
-                            <i class="fa fa-trash-o" deleteitem title="Remove"></i>
+                        <td class="text-center td-control">
+                            <a><i class="fa fa-check"></i></a>
+                            |
+                            <a title="Assign CS"><i class="fa fa-sign-in"></i></a>
+                            |
+                            <a title="Delete Clients" ng-click="deleteClient(client)"><i class="fa fa-trash-o"></i></a>
                         </td>
                     </tr>
                 </tbody>
@@ -78,47 +78,78 @@
                             <h4 class="modal-title">Create New Clients</h4>
                         </div>
                         <div class="modal-body">
-                            <form class="frm_create_clients modal_frm" name="frm_create_clients">
+                            <form
+                                class="frm_create_clients modal_frm"
+                                name="frm_create_clients"
+                                novalidate
+                                ng-submit="submitNewClient()">
                                 <p>
-                                    <label>Company:</label>
+                                    <label>Company</label>
                                     <input type="text"
                                            class="ipt"
-                                           name="txt-company"/>
+                                           name="co_name"
+                                           ng-model="co.name"
+                                           ng-minlength="4"
+                                           required = ""
+                                           ng-class='{txt_err : (frm_create_clients.co_name.$invalid && frm_create_clients.co_name.$dirty)}'
+                                            />
                                 </p>
                                 <p>
-                                    <label>Status:</label>
-                                    <select class="ipt">
-                                        <option value="Live">Live</option>
-                                        <option value="Active">Not Active</option>
-                                    </select>
-                                </p>
-                                <p>
-                                    <label>Industry:</label>
+                                    <label>Code</label>
                                     <input type="text"
                                            class="ipt"
-                                           name="txt-industry">
+                                           name="co_code"
+                                           ng-model="co.code"
+                                           ng-minlength="4"
+                                           ng-pattern="rule.noSpace"
+                                           required = ""
+                                           ng-class='{txt_err : (frm_create_clients.co_code.$invalid && frm_create_clients.co_code.$dirty)}'
+                                           />
                                 </p>
                                 <p>
-                                    <label>Users:</label>
-                                    <input type="number"
-                                           class="ipt"
-                                           name="txt-users">
-                                </p>
-                                <p>
-                                    <label>Est Savings:</label>
+                                    <label>Biz Reg No.</label>
                                     <input type="text"
                                            class="ipt"
-                                           name="txt-est">
+                                           name="co_regno"
+                                           ng-model="co.reg_no"
+                                           required = ""
+                                           ng-minlength="4"
+                                           ng-class='{txt_err : (frm_create_clients.co_regno.$invalid && frm_create_clients.co_regno.$dirty)}' />
                                 </p>
                                 <p>
-                                    <label>CS:</label>
+                                    <label>Head Office No.</label>
                                     <input type="text"
                                            class="ipt"
-                                           name="txt-cs">
+                                           name="co_headOfficeNo"
+                                           ng-model="co.head_office_no"
+                                           required = ""
+                                           ng-minlength="4"
+                                           ng-class='{txt_err : (frm_create_clients.co_headOfficeNo.$invalid && frm_create_clients.co_headOfficeNo.$dirty)}' />
                                 </p>
-                                <p class="text-center">
-                                    <button class="btn btn-create btn-primary">CREATE</button>
+                                <p>
+                                    <label>Office Address.</label>
+                                    <input type="text"
+                                           class="ipt"
+                                           name="co_headOfficeAdd"
+                                           ng-model="co.office_address"
+                                           required = ""
+                                           ng-minlength="4"
+                                           ng-class='{txt_err : (frm_create_clients.co_headOfficeAdd.$invalid && frm_create_clients.co_headOfficeAdd.$dirty)}'/>
                                 </p>
+                                <p>
+                                    <label>Reservation Email</label>
+                                    <input type="text"
+                                           class="ipt"
+                                           name="co_remail"
+                                           ng-model="co.reservation_email"
+                                           required = ""
+                                           ng-minlength="4"
+                                           ng-pattern="rule.validMail"
+                                           ng-class='{txt_err : (frm_create_clients.co_remail.$invalid && frm_create_clients.co_remail.$dirty)}'   />
+                                </p>
+                                <button type="submit" class="save btn-brown">
+                                    <i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;CREATE NEW CLIENT
+                                </button>
                             </form>
                         </div>
                     </div>

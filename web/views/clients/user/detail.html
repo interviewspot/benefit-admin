@@ -5,42 +5,55 @@
         <span class="sub-sep"><i class="fa fa fa-caret-right"></i></span>
         <span>{{user.username}}</span>
     </h2>
+    <form name="frm_updateuser" class="frm-updateuser" novalidate>
     <div class="t-r marg-bot ">
-        <button type="submit" class="btn btn-edit">
+        <span class="msg-update">{{infoUpdated}} </span>
+        <button type="submit" class="btn btn-brown" ng-click="updateUser()">
             <i class="fa fa-pencil"></i>
-            Edit
+            Submit to save
         </button>
-        <button class="btn btn-edit">Delete</button>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <button class="btn btn-edit" ng-click="deleteUser()">Delete</button>
     </div>
     <div class="row">
         <div class="col-md-6 col-sm-6 col-xs-12">
+            <input type="hidden" ng-model="user.id" value="{{user.id}}">
             <table class="table tbl table-striped">
                 <tbody>
                     <tr>
                         <th class="td-30">First Name <span class="red">*</span></th>
                         <td>
                             <input type="text"
-                                value="{{user.first_name}}"
+                                name="firstname"
                                 class="txt-ipt"
                                 ng-disabled="!isDisable"
-                                ng-class="{txt_disabled : !isDisable}">
+                                ng-class="{txt_disabled : !isDisable}"
+                                ng-model="user.first_name" required>
+                            <p style="color:red" ng-show="frm_updateuser.firstname.$dirty && frm_updateuser.firstname.$invalid">
+                              <span ng-show="frm_updateuser.firstname.$error.required && frm_updateuser.firstname.$dirty">First name is required.</span>
+                            </p>
                         </td>
                     </tr>
                     <tr>
                         <th class="td-30">Last Name</th>
                         <td><input type="text"
-                                value="{{user.last_name}}"
                                 class="txt-ipt"
                                 ng-disabled="!isDisable"
-                                ng-class="{txt_disabled : !isDisable}"></td>
+                                ng-class="{txt_disabled : !isDisable}"
+                                ng-model="user.last_name"></td>
                     </tr>
                     <tr>
                         <th class="td-30">Email <span class="red">*</span></th>
-                        <td><input type="text"
-                                value="{{user.email}}"
+                        <td><input type="email"
+                                name="email"
                                 class="txt-ipt"
                                 ng-disabled="!isDisable"
-                                ng-class="{txt_disabled : !isDisable}"></td>
+                                ng-model="user.email" required>
+                            <p style="color:red" ng-show="frm_updateuser.email.$dirty && frm_updateuser.email.$invalid">
+                              <span ng-show="frm_updateuser.email.$error.required">Email is required.</span>
+                              <span ng-show="frm_updateuser.email.$error.email">Invalid email address.</span>
+                            </p>
+                        </td>
                     </tr>
                     <tr>
                         <th class="td-30">Contact</th>
@@ -158,6 +171,7 @@
                 </tbody>
             </table>
         </div>
+
         <!-- END: COL -->
         <div class="col-xs-12 user-history">
             <h2 class="ttl-tab">
@@ -188,5 +202,6 @@
         </div>
         <!-- END: HISTORY -->
     </div>
+    </form>
 </div>
 <!-- END : USER EDIT -->
