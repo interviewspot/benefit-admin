@@ -8,7 +8,7 @@
     <form name="frm_updateuser" class="frm-updateuser" novalidate>
     <div class="t-r marg-bot ">
         <span class="msg-update">{{infoUpdated}} </span>
-        <button type="submit" class="btn btn-brown" ng-click="updateUser()" ng-disabled="frm_updateuser.firstname.$invalid || frm_updateuser.email.$invalid">
+        <button type="submit" class="btn btn-brown" ng-click="updateUser()">
             <i class="fa fa-pencil"></i>
             Submit to save
         </button>
@@ -29,8 +29,8 @@
                                 ng-disabled="!isDisable"
                                 ng-class="{txt_disabled : !isDisable}"
                                 ng-model="user.first_name" required>
-                            <p style="color:red">
-                              <span ng-show="frm_updateuser.firstname.$error.required">First name is required.</span>
+                            <p style="color:red" ng-show="frm_updateuser.firstname.$dirty && frm_updateuser.firstname.$invalid">
+                              <span ng-show="frm_updateuser.firstname.$error.required && frm_updateuser.firstname.$dirty">First name is required.</span>
                             </p>
                         </td>
                     </tr>

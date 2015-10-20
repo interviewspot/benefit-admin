@@ -98,6 +98,11 @@ angular.module('app.users', [])
         # 2. UPDATE USER
         $scope.isDisable = true
         $scope.updateUser = () ->
+            angular.forEach $scope.frm_updateuser.$error.required, (field)->
+                field.$dirty = true
+            if $scope.frm_updateuser.$error.required.length
+                return false
+
             newData = {
                 "user": {
                     "first_name": $scope.user.first_name,
