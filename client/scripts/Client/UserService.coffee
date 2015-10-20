@@ -98,7 +98,7 @@ angular.module('app.users.services', [])
                 if !nv
                     $scope.result =
                         status: 'error'
-                        message: "couldn't parse sheet"
+                        message: "Unsuported sheet type or couldn't read sheet"
                 else
                     $scope.result =
                         status: 'OK'
@@ -122,30 +122,38 @@ angular.module('app.users.services', [])
                     scope.label = 'No file selected'
 
                 files = e.target.files;
-                # for i in [0..files.length-1]
                 f = files[0]
-                reader = new FileReader();
-                name = f.name;
-                reader.onload = (e)->
-                    data = e.target.result;
-                    workbook = XLSX.read(data, {type: 'binary'});
-                    first_sheet_name = workbook.SheetNames[0]
-                    worksheet = workbook.Sheets[first_sheet_name]
-                    json = sheet_to_custom_json(worksheet)
-                    data = {}
-                    data.name = name
-                    data.json = json
-                    scope.parsedJson = data
 
-                reader.readAsBinaryString(f)
+                fileName = f.name.split('.')[f.name.split.length-1]
+                isValid = if fileName == 'csv' || fileName == 'xls' || fileName == 'xlsx' then true else false
+                    
+                if isValid
+                    reader = new FileReader();
+                    name = f.name;
+                    reader.onload = (e)->
+                        data             = e.target.result;
+                        workbook         = XLSX.read(data, {type: 'binary'});
+                        first_sheet_name = workbook.SheetNames[0]
+                        worksheet        = workbook.Sheets[first_sheet_name]
+                        json             = sheet_to_custom_json(worksheet)
+
+                        data = 
+                            name: name
+                            json: json
+                        scope.parsedJson = data
+
+                    reader.readAsBinaryString(f)
+                else
+                    scope.parsedJson = false
+                        
 
         sheet_to_custom_json = (sheet)->
-            firstCol = []
+            firstCol  = []
             secondCol = []
-            tempCell = {}
-            tempObj = {}
-            status = ''
-            angular.forEach sheet, (cell, key)->
+            tempCell  = {}
+            tempObj   = {}
+            status    = ''
+            angular.forEach sheet, (cell, key)-> 
                 if (key.split('A').length>1)
                     tempCell =
                         id: key
