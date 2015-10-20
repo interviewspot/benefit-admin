@@ -71,8 +71,9 @@ angular.module('app.users', [])
     , '$q'
     , '$modal'
     , 'UserService'
-    , 'Users' ,
-    ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, $modal, UserService, Users) ->
+    , 'Users'
+    , '$timeout',
+    ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, $modal, UserService, Users, $timeout) ->
         $scope.clientId =  $routeParams.clientId
         $scope.userId   =  if $routeParams.userId then $routeParams.userId.trim() else false
 
@@ -100,32 +101,38 @@ angular.module('app.users', [])
             newData = {
                 "user": {
                     "first_name": $scope.user.first_name,
-                    "id": $scope.user.id,
+                    #"middleName": "",
                     "last_name": $scope.user.last_name,
-                    "email": $scope.user.email,
+                    "username": $scope.user.username,
+                    "email":  $scope.user.email,
+                    #"handbook_contact" : true,
+                    #"enabled": true,
+                    #"plain_password": null,
+                    #"ssn": null
                 }
             }
             #console.log newData
-            Users.put($scope.user._links.self.href, newData).then  (res) ->
-                if res.status != 200 || typeof res != 'object'
+            Users.put(_URL.detail + $scope.user.id, newData).then  (res) ->
+                if res.status == 204
+                    $scope.infoUpdated = 'Updated user successfully!'
+                    #console.log res.data
                     return
-                location.reload()
-                #console.log res.data
-                return
             , (error) ->
-                console.log error
+                $scope.infoUpdated = error.status + ': Error, refresh & try again !'
         # 3. DELETE USER
         $scope.deleteUser = () ->
             r = confirm("Do you want to delete this user \"" + $scope.user.email + "\"?")
             if r == true
-                Users.delete($scope.user._links.self.href).then  (res) ->
-                    if res.status != 200 || typeof res != 'object'
+                Users.delete(_URL.detail + $scope.user.id).then  (res) ->
+                    if res.status == 204
+                        $scope.infoUpdated = 'Deleted user successfully!'
+                        $timeout ()->
+                            clientId =  $routeParams.clientId
+                            $location.path('/clients/' + clientId + '/user')
+                        , 1000
                         return
-                    location.reload()
-                    #console.log res.data
-                    return
                 , (error) ->
-                    console.log error
+                    $scope.infoUpdated = error.status + ': Error, refresh & try again !'
             return
 
         # x. ONLOAD
@@ -149,12 +156,13 @@ angular.module('app.users', [])
     , 'config'
     , '$q'
     , 'UserService'
-    , 'Users' ,
-    ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users) ->
+    , 'Users'
+    , '$timeout',
+    ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout) ->
         $scope.clientId =  $routeParams.clientId
 
         _URL =
-            detail : config.path.baseURL + '/users'
+            detail : config.path.baseURL + config.path.users
 
         $scope.submitCreateUser = ->
             #angular.forEach $scope.frm-adduser.$error.required, (field)->
@@ -164,26 +172,29 @@ angular.module('app.users', [])
 
             newData = {
                 "user": {
-                    "firstName": $scope.user.firstname,
-                    "middleName": "",
-                    "lastName": $scope.user.lastname,
+                    "first_name": $scope.user.first_name,
+                    #"middleName": "",
+                    "last_name": $scope.user.last_name,
                     "username": $scope.user.username,
-                    "email": $scope.user.email,
+                    "email":  $scope.user.email,
                     "enabled": true,
-                    "plainPassword": $scope.user.password,
-                    "ssn": null
+                    "plain_password": $scope.user.password,
+                    "ssn": null,
+                    #"handbook_contact" : true
                 }
             }
             #console.log newData
 
-            Users.post(_URL.detail, newData).then  (res) ->
-                if res.status == 200
+            Users.post(_URL.detail, newData.user).then  (res) ->
+                if res.status == 201
                     $scope.infoUpdated = 'Created New'
-                    #$timeout ()->
-                    #    $scope.infoUpdated = null
-                    #    location.reload()
-                    #, 500
+                    $timeout ()->
+                        clientId =  $routeParams.clientId
+                        $location.path('/clients/' + clientId + '/user')
+                    , 1000
             , (error) ->
+                #console.log(error)
                 $scope.infoUpdated = error.status + ': Error, refresh & try again !'
+
 ])
 
