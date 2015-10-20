@@ -99,10 +99,8 @@
             <h2 class="ttl-tab">
                 <span>Upload Excel File</span>
             </h2>
-            <sheet-parser
-            ng-result="jsonR">
-            </sheet-parser>
-            <pre>{{jsonR}}</pre>
+            <sheet-parser ng-result="jsonResult"></sheet-parser>
+            <pre>{{jsonResult | json : 4}}</pre>
             <!-- <div class="blk-upload">
                 <label>Browse For File:</label>
                 <span class="cls-file">No file selected</span>
