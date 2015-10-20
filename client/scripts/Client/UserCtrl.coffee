@@ -169,38 +169,25 @@ angular.module('app.users', [])
     , 'ContactService' ,
     ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, ContactService) ->
         $scope.clientId =  $routeParams.clientId
-
+        $scope.isExcel = false
         _URL =
             detail : config.path.baseURL + config.path.users
 
-        $scope.submitCreateUser = ->
-            angular.forEach $scope.frm_adduser.$error.required, (field)->
-                field.$dirty = true
-            if $scope.frm_adduser.$error.required.length
-                return false
-
+        _insertUser = (user) ->
             newData = {
-                "user":
-                    "first_name"     : $scope.user.first_name
-                    "last_name"      : $scope.user.last_name
-                    "username"       : $scope.user.username
-                    "email"          : $scope.user.email
-                    "enabled"        : true
-                    "plain_password" : $scope.user.password
-                    "ssn"            : null
+                "user": user
             }
-
             Users.post(_URL.detail, newData).then  (res) ->
                 if typeof res == 'object' && res.status == 201
 
                     # NEW POSTION in THIS CLIENT
-                    Users.get(_URL.detail + '/' + $scope.user.email.trim()).then (res) ->
+                    Users.get(_URL.detail + '/' + user.email.trim()).then (res) ->
 
                         if res.status == 200 && typeof res == 'object'
                             # SEND API : SAVE
                             newContact = {
                                 "position": {
-                                    "title"   : "Postion of " + $scope.user.username
+                                    "title"   : "Position of " + user.username
                                     "employee": res.data.id
                                     "active"  : true
                                     "employer": $scope.clientId
@@ -224,5 +211,56 @@ angular.module('app.users', [])
                 console.log error
                 $scope.infoUpdated = error.status + ': Error, refresh & try again !'
 
+        #By Input
+        $scope.submitCreateUser = ->
+            angular.forEach $scope.frm_adduser.$error.required, (field)->
+                field.$dirty = true
+            if $scope.frm_adduser.$error.required.length
+                return false
+            $scope.isExcel = false
+
+            user = {
+                "first_name"     : $scope.user.first_name
+                "last_name"      : $scope.user.last_name
+                "username"       : $scope.user.username
+                "email"          : $scope.user.email
+                "enabled"        : true
+                "plain_password" : $scope.user.password
+                "ssn"            : null
+            }
+
+            _insertUser(user)
+
+        #By Excel
+        $scope.createUserExcel = ->
+            $scope.isExcel = true
+            user = $scope.jsonResult.data.json
+
+            #validate data
+            if user.username == undefined || user.username == null || user.username == ""
+                $scope.infoUpdated = "Missing username."
+                return
+            if user.first_name == undefined || user.first_name == null || user.first_name == ""
+                $scope.infoUpdated = "Missing first_name."
+                return
+            if user.email == undefined || user.email == null || user.email == ""
+                $scope.infoUpdated = "Missing email."
+                return
+            if user.plain_password == undefined || user.plain_password == null || user.plain_password == ""
+                $scope.infoUpdated = "Missing password."
+                return
+
+            #map data
+            insertUser = {
+                "first_name"     : user.first_name
+                "last_name"      : user.last_name
+                "username"       : user.username
+                "email"          : user.email
+                "enabled"        : true
+                "plain_password" : user.plain_password
+                "ssn"            : null
+            }
+
+            _insertUser(insertUser)
 ])
 
