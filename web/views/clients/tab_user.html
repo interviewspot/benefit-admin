@@ -6,9 +6,7 @@
             <span>Un-Active</span>
             <span>De-Active</span>
         </p>
-        <div class="t-r">
-            <a href="#/clients/{{clientId}}/new-user" class="btn btn-brown">Add new user</a>
-        </div>
+        <span class="cap-note">Add new user</span>
         <div class="table-responsive tbl-1024" ng-show="users.total">
             <table class="table tbl tbl-bg table-hover table-striped">
                 <tbody>
@@ -30,12 +28,10 @@
                         <td  class="text-center">{{user.verify_code ? user.verify_code : '-'}}</td>
                         <td  class="text-center">{{user.emply_class ? user.emply_class : '-'}}</td>
                         <td  class="text-center td-18">{{user.date_added ? user.date_added : '-'}}</td>
-                        <td class="td-control text-center td-15">
-                            <a><i class="fa fa-check"></i></a>
-                            |
-                            <a title="Ban"><i class="fa fa-ban"></i></a>
-                            |
-                            <a title="Delete User" ng-click="removeUser(user)"><i class="fa fa-trash-o"></i></a>
+                        <td class="td-manage text-center td-15">
+                            <i class="fa fa-check" title="Active" ng-if="user.enabled"></i>
+                            <i class="fa fa-ban" title="Disable" ng-if="!user.enabled"></i>
+                            <i class="fa fa-trash-o" title="Remove" ng-click="removeUser(user)"></i>
                         </td>
                     </tr>
                 </tbody>

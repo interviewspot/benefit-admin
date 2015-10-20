@@ -22,16 +22,6 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class="td-30">Code:</td>
-                    <td>
-                        <input type="text"
-                            ng-model="clientDetail.code"
-                            class="txt-ipt"
-                            ng-disabled="!isDisable"
-                            ng-class="{txt_disabled : !isDisable}">
-                    </td>
-                </tr>
-                <tr>
                     <td class="td-30">Biz Reg No.</td>
                     <td>
                         <input type="text"
@@ -55,7 +45,7 @@
                     <td class="td-30">Unit Number:</td>
                     <td>
                         <input type="text"
-
+                            ng-model="clientDetail.code"
                             class="txt-ipt"
                             ng-disabled="!isDisable"
                             ng-class="{txt_disabled : !isDisable}">
@@ -130,8 +120,8 @@
                         <input type="text"
                             ng-model="clientDetail.client_since"
                             class="txt-ipt"
-                            disabled="disabled"
-                            >
+                            ng-disabled="!isDisable"
+                            ng-class="{txt_disabled : !isDisable}">
                     </td>
                 </tr>
                 <tr>

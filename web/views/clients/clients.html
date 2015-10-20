@@ -17,7 +17,7 @@
                         <th class="text-center">CS</th>
                         <th class="text-center">Actions</th>
                     </tr>
-                    <tr ng-repeat="client in clients_list" >
+                    <tr ng-repeat="client in clients_list">
                         <td class="text-center">
                             <a href="#/clients/{{client.id}}/info">
                                 {{client.name}}
@@ -34,12 +34,12 @@
                         <td class="text-center">
                             {{client.cs}}
                         </td>
-                        <td class="text-center td-control">
-                            <a><i class="fa fa-check"></i></a>
-                            |
-                            <a title="Assign CS"><i class="fa fa-sign-in"></i></a>
-                            |
-                            <a title="Delete Clients" ng-click="deleteClient(client)"><i class="fa fa-trash-o"></i></a>
+                        <td class="text-center td-manage">
+                            <i class="fa fa-check" title="Active"></i>
+                            <i class="fa fa-eye" title="View" ng-click="fnEditClients()"></i>
+                            <i class="fa fa-edit" title="Edit" ng-click="fnEditClients()"></i>
+                            <i class="fa fa-sign-in" title="Assign CS"></i>
+                            <i class="fa fa-trash-o" deleteitem title="Remove"></i>
                         </td>
                     </tr>
                 </tbody>
