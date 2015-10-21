@@ -18,23 +18,38 @@ angular.module('app.users', [])
     , '$q'
     , '$modal'
     , 'UserService'
-    , 'Users' ,
-    ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, $modal, UserService, Users) ->
+    , 'Users'
+    , 'fetchContact'
+    , '$timeout',
+    ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, $modal, UserService, Users, fetchContact, $timeout) ->
 
         $scope.clientId =  $routeParams.clientId
         _URL_users =
-            list : config.path.baseURL + config.path.users
+            #list : config.path.baseURL + config.path.users
+            list : config.path.baseURL + config.path.contacts.replace(":org_id", $routeParams.clientId)
 
         # 1. GET USERS
         _getUsers = (limit, goPage) ->
-            Users.get(_URL_users.list + '?limit=' + limit + '&page=' + goPage).then  (res) ->
-                if res.status != 200 || typeof res != 'object'
-                    return
-                $scope.users = res.data
-                $scope.users.items = res.data._embedded.items
+
+            fetchContact.get(_URL_users.list + '?limit=' + limit + '&page=' + goPage).then  (res) ->
+                #console.log(res)
+                if res.data._embedded.items.length
+                    $scope.users = res.data
+                    $scope.users.items = []
+                    for i, item of res.data._embedded.items
+                        ((itemInstance) ->
+                            Users.get(itemInstance._links.employee.href).then  (res) ->
+                                if res.status != 200 || typeof res != 'object'
+                                    return
+                                #console.log(res)
+                                $scope.users.items.push(res.data)
+                                #$scope.users = res.data
+                                #$scope.users.items = res.data._embedded.items
+                                return
+                            , (error) ->
+                                console.log error
+                        )(item)
                 return
-            , (error) ->
-                console.log error
 
         # 2. PAGING, setup paging
         $scope.numPerPageOpt = [3, 5, 10, 20]
@@ -51,7 +66,22 @@ angular.module('app.users', [])
         $scope.gotoPage = (page) ->
             _getUsers($scope.numPerPage, $scope.currentPage)
 
-        # 3. ONLOAD LIST USERS
+        # 3. DELETE USER
+        $scope.removeUser = (user) ->
+            r = confirm("Do you want to delete this user \"" + user.email + "\"?")
+            if r == true
+                deleteUrl = config.path.baseURL + config.path.users + '/'
+                Users.delete(deleteUrl + user.id).then  (res) ->
+                    if typeof res == 'object' && res.status == 204
+                        $timeout ()->
+                            location.reload()
+                        , 300
+                        return
+                , (error) ->
+                    alert(error.status + ': Error, refresh & try again !')
+            return
+
+        # 4. ONLOAD LIST USERS
         _getUsers($scope.numPerPage, $scope.currentPage);
 
         return
@@ -71,8 +101,10 @@ angular.module('app.users', [])
     , '$q'
     , '$modal'
     , 'UserService'
-    , 'Users' ,
-    ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, $modal, UserService, Users) ->
+    , 'Users'
+    , '$timeout'
+    ,
+    ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, $modal, UserService, Users, $timeout) ->
         $scope.clientId =  $routeParams.clientId
         $scope.userId   =  if $routeParams.userId then $routeParams.userId.trim() else false
 
@@ -82,6 +114,7 @@ angular.module('app.users', [])
 
         # 1. GET USER by EMAIL
         _URL =
+            list   : config.path.baseURL + config.path.users
             detail : config.path.baseURL + config.path.users + '/'
 
         _getUser = () ->
@@ -94,38 +127,78 @@ angular.module('app.users', [])
             , (error) ->
                 console.log error
 
+        _searchUserbyEntry = (entry, searchVal, callback) ->
+            if typeof callback != 'function'
+                return
+            get_result = null
+            Users.get(_URL.list + '?search=user.' + entry + ':' + searchVal).then  (res) ->
+                if res.status == 200 && typeof res == 'object'
+                    get_result = res.data
+                    callback(get_result)
+                return get_result
+            , (error) ->
+                callback(error)
+                console.log error
+
         # 2. UPDATE USER
         $scope.isDisable = true
         $scope.updateUser = () ->
+            angular.forEach $scope.frm_updateuser.$error.required, (field)->
+                field.$dirty = true
+            if $scope.frm_updateuser.$error.required.length || $scope.frm_updateuser.$invalid
+                return false
+
+            # PREPARE DATA
+            user_code = $scope.user.code
+            user_code = user_code.trim()
+            user_code = user_code.toLowerCase()
+
             newData = {
                 "user": {
-                    "first_name": $scope.user.first_name,
-                    "id": $scope.user.id,
-                    "last_name": $scope.user.last_name,
-                    "email": $scope.user.email,
+                    "first_name" : $scope.user.first_name
+                    "last_name"  : $scope.user.last_name
+                    "username"   : $scope.user.username
+                    "email"      : $scope.user.email
+                    "code"       : $scope.user.code
+                    #"handbook_contact" : true,
+                    #"enabled": true,
+                    #"plain_password": null,
+                    #"ssn": null
                 }
             }
-            #console.log newData
-            Users.put($scope.user._links.self.href, newData).then  (res) ->
-                if res.status != 200 || typeof res != 'object'
-                    return
-                location.reload()
-                #console.log res.data
+
+            Users.put(_URL.detail + $scope.user.id, newData).then  (res) ->
+                if res.status == 204
+                    $scope.infoUpdated = 'Updated user successfully!'
+                    $timeout ()->
+                        $scope.infoUpdated = null
+                    , 300
                 return
+
             , (error) ->
-                console.log error
+                checkError = (datajson) ->
+                    if typeof datajson == 'object' && datajson._embedded.items.length
+                        $scope.infoUpdated = error.status + ': Verification code existed, refresh & try again!'
+                    else
+                        $scope.infoUpdated = error.status + ': Error API, refresh & try again!'
+
+                _searchUserbyEntry('code', newData.user.code, checkError)
+
+
         # 3. DELETE USER
         $scope.deleteUser = () ->
             r = confirm("Do you want to delete this user \"" + $scope.user.email + "\"?")
             if r == true
-                Users.delete($scope.user._links.self.href).then  (res) ->
-                    if res.status != 200 || typeof res != 'object'
+                Users.delete(_URL.detail + $scope.user.id).then  (res) ->
+                    if typeof res == 'object' && res.status == 204
+                        $scope.infoUpdated = 'Deleted user successfully!'
+                        $timeout ()->
+                            clientId =  $routeParams.clientId
+                            $location.path('/clients/' + clientId + '/user')
+                        , 300
                         return
-                    location.reload()
-                    #console.log res.data
-                    return
                 , (error) ->
-                    console.log error
+                    $scope.infoUpdated = error.status + ': Error, refresh & try again !'
             return
 
         # x. ONLOAD
@@ -149,41 +222,126 @@ angular.module('app.users', [])
     , 'config'
     , '$q'
     , 'UserService'
-    , 'Users' ,
-    ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users) ->
+    , 'Users'
+    , '$timeout'
+    , 'ContactService'
+    , 'php' ,
+    ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, ContactService, php) ->
         $scope.clientId =  $routeParams.clientId
+        $scope.isExcel = false
 
         _URL =
-            detail : config.path.baseURL + '/users'
+            detail : config.path.baseURL + config.path.users
 
-        $scope.submitCreateUser = ->
-            #angular.forEach $scope.frm-adduser.$error.required, (field)->
-            #    field.$dirty = true
-            #if $scope.frm-adduser.$error.required.length
-            #    return false
-
-            newData = {
-                "user": {
-                    "firstName": $scope.user.firstname,
-                    "middleName": "",
-                    "lastName": $scope.user.lastname,
-                    "username": $scope.user.username,
-                    "email": $scope.user.email,
-                    "enabled": true,
-                    "plainPassword": $scope.user.password,
-                    "ssn": null
-                }
-            }
-            #console.log newData
-
-            Users.post(_URL.detail, newData).then  (res) ->
-                if res.status == 200
-                    $scope.infoUpdated = 'Created New'
-                    #$timeout ()->
-                    #    $scope.infoUpdated = null
-                    #    location.reload()
-                    #, 500
+        _searchUserbyEntry = (entry, searchVal, callback) ->
+            if typeof callback != 'function'
+                return
+            get_result = null
+            Users.get(_URL.list + '?search=user.' + entry + ':' + searchVal).then  (res) ->
+                if res.status == 200 && typeof res == 'object'
+                    get_result = res.data
+                    callback(get_result)
+                return get_result
             , (error) ->
-                $scope.infoUpdated = error.status + ': Error, refresh & try again !'
+                callback(error)
+                console.log error
+
+        _insertUser = (user) ->
+            newData = {
+                "user": user
+            }
+            Users.post(_URL.detail, newData).then  (res) ->
+                if typeof res == 'object' && res.status == 201
+
+                    # NEW POSTION in THIS CLIENT
+                    Users.get(_URL.detail + '/' + user.email.trim()).then (res) ->
+                        $scope.infoUpdated = 'Created New'
+
+                        if res.status == 200 && typeof res == 'object'
+                            # SEND API : SAVE
+                            newContact = {
+                                "position": {
+                                    "title"   : "Position of " + user.username
+                                    "employee": res.data.id
+                                    "active"  : true
+                                    "employer": $scope.clientId
+                                    "handbook_contact" : true
+                                }
+                            }
+
+                            # CREATE POSITION USER
+                            ContactService.save {org_id:$scope.clientId}, newContact, (res)->
+
+                                if typeof res == 'object' && res.code == 201
+                                    $timeout ()->
+                                        $location.path('/clients/' + $scope.clientId + '/user')
+                                    , 500
+
+                    , (error) ->
+                        console.log error
+                        alert 'API error connection: Not yet create user for this client'
+
+            , (error) ->
+                checkError = (datajson) ->
+                    if typeof datajson == 'object' && datajson._embedded.items.length
+                        $scope.infoUpdated = error.status + ': Verification code existed, refresh & try again!'
+                    else
+                        $scope.infoUpdated = error.status + ': Error API, refresh & try again!'
+
+                _searchUserbyEntry('code', newData.user.code, checkError)
+
+        #By Input FRM
+        $scope.submitCreateUser = ->
+            angular.forEach $scope.frm_adduser.$error.required, (field)->
+                field.$dirty = true
+            if $scope.frm_adduser.$error.required.length || $scope.frm_updateuser.$invalid
+                return false
+            $scope.isExcel = false
+
+            user = {
+                "first_name"     : $scope.user.first_name
+                "last_name"      : $scope.user.last_name
+                "username"       : $scope.user.username
+                "email"          : $scope.user.email
+                "enabled"        : true
+                "plain_password" : $scope.user.password
+                "ssn"            : null
+                "code"           : php.randomString(6, 'a#')
+            }
+
+            _insertUser(user)
+
+        #By Excel Import
+        $scope.createUserExcel = ->
+            $scope.isExcel = true
+            user = $scope.jsonResult.data.json
+
+            #validate data
+            if user.username == undefined || user.username == null || user.username == ""
+                $scope.infoUpdated = "Missing username."
+                return
+            if user.first_name == undefined || user.first_name == null || user.first_name == ""
+                $scope.infoUpdated = "Missing first_name."
+                return
+            if user.email == undefined || user.email == null || user.email == ""
+                $scope.infoUpdated = "Missing email."
+                return
+            if user.plain_password == undefined || user.plain_password == null || user.plain_password == ""
+                $scope.infoUpdated = "Missing password."
+                return
+
+            #map data
+            insertUser = {
+                "first_name"     : user.first_name
+                "last_name"      : user.last_name
+                "username"       : user.username
+                "email"          : user.email
+                "enabled"        : true
+                "plain_password" : user.plain_password
+                "ssn"            : null
+                "code"           : php.randomString(6, 'a#')
+            }
+
+            _insertUser(insertUser)
 ])
 
