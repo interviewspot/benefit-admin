@@ -212,7 +212,7 @@ angular.module('app.users', [])
                 if typeof res == 'object' && res.status == 201
 
                     # NEW POSTION in THIS CLIENT
-                    Users.get(_URL.detail + '/' + $scope.user.email.trim()).then (res) ->
+                    Users.get(_URL.detail + '/' + user.email.trim()).then (res) ->
                         $scope.infoUpdated = 'Created New'
 
                         if res.status == 200 && typeof res == 'object'
