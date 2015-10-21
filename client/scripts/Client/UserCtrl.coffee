@@ -135,10 +135,11 @@ angular.module('app.users', [])
 
             newData = {
                 "user": {
-                    "first_name": $scope.user.first_name,
-                    "last_name": $scope.user.last_name,
-                    "username": $scope.user.username,
-                    "email":  $scope.user.email,
+                    "first_name" : $scope.user.first_name
+                    "last_name"  : $scope.user.last_name
+                    "username"   : $scope.user.username
+                    "email"      : $scope.user.email
+                    "code"       : $scope.user.code
                     #"handbook_contact" : true,
                     #"enabled": true,
                     #"plain_password": null,
@@ -196,8 +197,9 @@ angular.module('app.users', [])
     , 'UserService'
     , 'Users'
     , '$timeout'
-    , 'ContactService' ,
-    ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, ContactService) ->
+    , 'ContactService'
+    , 'php' ,
+    ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, ContactService, php) ->
         $scope.clientId =  $routeParams.clientId
         $scope.isExcel = false
 
@@ -223,7 +225,7 @@ angular.module('app.users', [])
                                     "employee": res.data.id
                                     "active"  : true
                                     "employer": $scope.clientId
-                                    #"handbook_contact" : true
+                                    "handbook_contact" : true
                                 }
                             }
 
@@ -259,6 +261,7 @@ angular.module('app.users', [])
                 "enabled"        : true
                 "plain_password" : $scope.user.password
                 "ssn"            : null
+                "code"           : php.randomString(6, 'a#')
             }
 
             _insertUser(user)
@@ -291,6 +294,7 @@ angular.module('app.users', [])
                 "enabled"        : true
                 "plain_password" : user.plain_password
                 "ssn"            : null
+                "code"           : php.randomString(6, 'a#')
             }
 
             _insertUser(insertUser)

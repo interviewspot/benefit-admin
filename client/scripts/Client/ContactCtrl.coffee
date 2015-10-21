@@ -83,7 +83,7 @@ angular.module('app.contacts', [])
                     "employee": $scope.srch_users[$scope.contact.email]
                     "active"  : true
                     "employer": $routeParams.clientId
-                    #"handbook_contact" : true
+                    "handbook_contact" : true
                 }
             }
 

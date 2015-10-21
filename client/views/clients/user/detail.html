@@ -26,9 +26,9 @@
                             <input type="text"
                                 name="firstname"
                                 class="txt-ipt"
-                                ng-disabled="!isDisable"
                                 ng-class="{txt_disabled : !isDisable}"
-                                ng-model="user.first_name" required>
+                                ng-model="user.first_name"
+                                required>
                             <p style="color:red" ng-show="frm_updateuser.firstname.$dirty && frm_updateuser.firstname.$invalid">
                               <span ng-show="frm_updateuser.firstname.$error.required && frm_updateuser.firstname.$dirty">First name is required.</span>
                             </p>
@@ -38,8 +38,6 @@
                         <th class="td-30">Last Name</th>
                         <td><input type="text"
                                 class="txt-ipt"
-                                ng-disabled="!isDisable"
-                                ng-class="{txt_disabled : !isDisable}"
                                 ng-model="user.last_name"></td>
                     </tr>
                     <tr>
@@ -47,8 +45,8 @@
                         <td><input type="email"
                                 name="email"
                                 class="txt-ipt"
-                                ng-disabled="!isDisable"
-                                ng-model="user.email" required>
+                                ng-model="user.email"
+                                required>
                             <p style="color:red" ng-show="frm_updateuser.email.$dirty && frm_updateuser.email.$invalid">
                               <span ng-show="frm_updateuser.email.$error.required">Email is required.</span>
                               <span ng-show="frm_updateuser.email.$error.email">Invalid email address.</span>
@@ -60,7 +58,6 @@
                         <td><input type="text"
                                 value="{{user.contact}}"
                                 class="txt-ipt"
-                                ng-disabled="!isDisable"
                                 ng-class="{txt_disabled : !isDisable}"></td>
                     </tr>
                     <tr>
@@ -68,7 +65,6 @@
                         <td><input type="text"
                                 value="{{user.employ_cls}}"
                                 class="txt-ipt"
-                                ng-disabled="!isDisable"
                                 ng-class="{txt_disabled : !isDisable}"></td>
                     </tr>
                     <tr>
@@ -76,7 +72,6 @@
                         <td><input type="text"
                                 value="{{user.function}}"
                                 class="txt-ipt"
-                                ng-disabled="!isDisable"
                                 ng-class="{txt_disabled : !isDisable}"></td>
                     </tr>
                     <tr>
@@ -84,7 +79,6 @@
                         <td><input type="text"
                                 value="{{user.birthday}}"
                                 class="txt-ipt"
-                                ng-disabled="!isDisable"
                                 ng-class="{txt_disabled : !isDisable}"></td>
                     </tr>
                     <tr>
@@ -92,7 +86,6 @@
                         <td><input type="text"
                                 value="{{user.nric}}"
                                 class="txt-ipt"
-                                ng-disabled="!isDisable"
                                 ng-class="{txt_disabled : !isDisable}"></td>
                     </tr>
                 </tbody>
@@ -107,7 +100,6 @@
                         <td><input type="text"
                                 value="{{user.date_add}}"
                                 class="txt-ipt"
-                                ng-disabled="!isDisable"
                                 ng-class="{txt_disabled : !isDisable}"></td>
                     </tr>
                     <tr>
@@ -115,7 +107,6 @@
                         <td><input type="text"
                                 value="{{user.date_end}}"
                                 class="txt-ipt"
-                                ng-disabled="!isDisable"
                                 ng-class="{txt_disabled : !isDisable}"></td>
                     </tr>
                     <tr>
@@ -123,7 +114,6 @@
                         <td><input type="text"
                                 value="{{user.birthday}}"
                                 class="txt-ipt"
-                                ng-disabled="!isDisable"
                                 ng-class="{txt_disabled : !isDisable}"></td>
                     </tr>
                     <tr>
@@ -132,24 +122,27 @@
                             <input type="text"
                                 value="{{user.app_status}}"
                                 class="txt-ipt"
-                                ng-disabled="!isDisable"
                                 ng-class="{txt_disabled : !isDisable}">
                         </td>
                     </tr>
                     <tr>
                         <th class="td-30">Verification Code</th>
                         <td><input type="text"
-                                value="{{user.veri_code}}"
+                                name="code"
                                 class="txt-ipt"
-                                ng-disabled="!isDisable"
-                                ng-class="{txt_disabled : !isDisable}"></td>
+                                required
+                                placeholder="Verification code 6 chars"
+                                ng-minlength="6"
+                                ng-model="user.code"
+                                ng-pattern="/^[a-z\d\-\_]+$/"
+                                ng-class="{txt_err : frm_updateuser.code.$error.required}"
+                                ></td>
                     </tr>
                     <tr>
                         <th class="td-30">Redemptions</th>
                         <td><input type="text"
                                 value="{{user.redemptions}}"
                                 class="txt-ipt"
-                                ng-disabled="!isDisable"
                                 ng-class="{txt_disabled : !isDisable}"></td>
                     </tr>
                     <tr>
@@ -157,7 +150,6 @@
                         <td><input type="text"
                                 value="{{user.est_saving}}"
                                 class="txt-ipt"
-                                ng-disabled="!isDisable"
                                 ng-class="{txt_disabled : !isDisable}"></td>
                     </tr>
                     <tr>
@@ -165,7 +157,6 @@
                         <td><input type="text"
                                 value="{{user.card_id}}"
                                 class="txt-ipt"
-                                ng-disabled="!isDisable"
                                 ng-class="{txt_disabled : !isDisable}"></td>
                     </tr>
                 </tbody>
