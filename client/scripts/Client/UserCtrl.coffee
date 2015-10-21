@@ -74,8 +74,8 @@ angular.module('app.users', [])
                 Users.delete(deleteUrl + user.id).then  (res) ->
                     if typeof res == 'object' && res.status == 204
                         $timeout ()->
-                            $location.reload()
-                        , 1000
+                            location.reload()
+                        , 300
                         return
                 , (error) ->
                     alert(error.status + ': Error, refresh & try again !')
