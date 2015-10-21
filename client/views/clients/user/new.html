@@ -112,7 +112,7 @@
                 </tbody>
             </table>
             <p class="text-right">
-                <span class="msg-update">{{infoUpdated}} </span>
+                <span ng-show="!isExcel" class="msg-update">{{infoUpdated}} </span>
                 <button type="submit"
                         ng-click="submitCreateUser()"
                         class="btn btn-add">SAVE USER</button></p>
@@ -136,6 +136,8 @@
                 </div>
                 <a class="btn-add btn" ng-click="isUserUpload = !isUserUpload">add</a>
             </div> -->
+            <a class="btn-add btn" ng-click="createUserExcel()" ng-show="jsonResult.status=='OK'">add</a>
+            <span ng-show="isExcel" class="msg-update">{{infoUpdated}} </span>
             <p>If you require the Excel format for mass uploading, please <a href="#">click here</a> to download the template</p>
         </div><!-- END: UPFILE EXCEL -->
     </div>
