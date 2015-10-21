@@ -170,6 +170,7 @@ angular.module('app.users', [])
     ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, ContactService) ->
         $scope.clientId =  $routeParams.clientId
         $scope.isExcel = false
+
         _URL =
             detail : config.path.baseURL + config.path.users
 
@@ -212,7 +213,7 @@ angular.module('app.users', [])
                 console.log error
                 $scope.infoUpdated = error.status + ': Error, refresh & try again !'
 
-        #By Input
+        #By Input FRM
         $scope.submitCreateUser = ->
             angular.forEach $scope.frm_adduser.$error.required, (field)->
                 field.$dirty = true
@@ -232,7 +233,7 @@ angular.module('app.users', [])
 
             _insertUser(user)
 
-        #By Excel
+        #By Excel Import
         $scope.createUserExcel = ->
             $scope.isExcel = true
             user = $scope.jsonResult.data.json
