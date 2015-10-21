@@ -195,7 +195,7 @@ angular.module('app.users', [])
 
                     # NEW POSTION in THIS CLIENT
                     Users.get(_URL.detail + '/' + $scope.user.email.trim()).then (res) ->
-
+                        $scope.infoUpdated = 'Created New'
                         if res.status == 200 && typeof res == 'object'
                             # SEND API : SAVE
                             newContact = {
@@ -210,7 +210,7 @@ angular.module('app.users', [])
 
                             # CREATE POSITION USER
                             ContactService.save {org_id:$scope.clientId}, newContact, (res)->
-                                $scope.infoUpdated = 'Created New'
+
                                 if typeof res == 'object' && res.code == 201
                                     $timeout ()->
                                         $location.path('/clients/' + $scope.clientId + '/user')
