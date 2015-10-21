@@ -145,8 +145,13 @@ angular.module('app.users', [])
         $scope.updateUser = () ->
             angular.forEach $scope.frm_updateuser.$error.required, (field)->
                 field.$dirty = true
-            if $scope.frm_updateuser.$error.required.length
+            if $scope.frm_updateuser.$error.required.length || $scope.frm_updateuser.$invalid
                 return false
+
+            # PREPARE DATA
+            user_code = $scope.user.code
+            user_code = user_code.trim()
+            user_code = user_code.toLowerCase()
 
             newData = {
                 "user": {
@@ -154,14 +159,14 @@ angular.module('app.users', [])
                     "last_name"  : $scope.user.last_name
                     "username"   : $scope.user.username
                     "email"      : $scope.user.email
-                    "code"       : $scope.user.code.trim()
+                    "code"       : $scope.user.code
                     #"handbook_contact" : true,
                     #"enabled": true,
                     #"plain_password": null,
                     #"ssn": null
                 }
             }
-            #console.log newData
+
             Users.put(_URL.detail + $scope.user.id, newData).then  (res) ->
                 if res.status == 204
                     $scope.infoUpdated = 'Updated user successfully!'
@@ -289,7 +294,7 @@ angular.module('app.users', [])
         $scope.submitCreateUser = ->
             angular.forEach $scope.frm_adduser.$error.required, (field)->
                 field.$dirty = true
-            if $scope.frm_adduser.$error.required.length
+            if $scope.frm_adduser.$error.required.length || $scope.frm_updateuser.$invalid
                 return false
             $scope.isExcel = false
 
