@@ -18,23 +18,38 @@ angular.module('app.users', [])
     , '$q'
     , '$modal'
     , 'UserService'
-    , 'Users' ,
-    ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, $modal, UserService, Users) ->
+    , 'Users'
+    , 'fetchContact'
+    , '$timeout',
+    ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, $modal, UserService, Users, fetchContact, $timeout) ->
 
         $scope.clientId =  $routeParams.clientId
         _URL_users =
-            list : config.path.baseURL + config.path.users
+            #list : config.path.baseURL + config.path.users
+            list : config.path.baseURL + config.path.contacts.replace(":org_id", $routeParams.clientId)
 
         # 1. GET USERS
         _getUsers = (limit, goPage) ->
-            Users.get(_URL_users.list + '?limit=' + limit + '&page=' + goPage).then  (res) ->
-                if res.status != 200 || typeof res != 'object'
-                    return
-                $scope.users = res.data
-                $scope.users.items = res.data._embedded.items
+
+            fetchContact.get(_URL_users.list + '?limit=' + limit + '&page=' + goPage).then  (res) ->
+                #console.log(res)
+                if res.data._embedded.items.length
+                    $scope.users = res.data
+                    $scope.users.items = []
+                    for i, item of res.data._embedded.items
+                        ((itemInstance) ->
+                            Users.get(itemInstance._links.employee.href).then  (res) ->
+                                if res.status != 200 || typeof res != 'object'
+                                    return
+                                #console.log(res)
+                                $scope.users.items.push(res.data)
+                                #$scope.users = res.data
+                                #$scope.users.items = res.data._embedded.items
+                                return
+                            , (error) ->
+                                console.log error
+                        )(item)
                 return
-            , (error) ->
-                console.log error
 
         # 2. PAGING, setup paging
         $scope.numPerPageOpt = [3, 5, 10, 20]
@@ -51,7 +66,22 @@ angular.module('app.users', [])
         $scope.gotoPage = (page) ->
             _getUsers($scope.numPerPage, $scope.currentPage)
 
-        # 3. ONLOAD LIST USERS
+        # 3. DELETE USER
+        $scope.removeUser = (user) ->
+            r = confirm("Do you want to delete this user \"" + user.email + "\"?")
+            if r == true
+                deleteUrl = config.path.baseURL + config.path.users + '/'
+                Users.delete(deleteUrl + user.id).then  (res) ->
+                    if typeof res == 'object' && res.status == 204
+                        $timeout ()->
+                            $location.reload()
+                        , 1000
+                        return
+                , (error) ->
+                    alert(error.status + ': Error, refresh & try again !')
+            return
+
+        # 4. ONLOAD LIST USERS
         _getUsers($scope.numPerPage, $scope.currentPage);
 
         return
