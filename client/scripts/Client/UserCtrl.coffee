@@ -102,7 +102,8 @@ angular.module('app.users', [])
     , '$modal'
     , 'UserService'
     , 'Users'
-    , '$timeout',
+    , '$timeout'
+    ,
     ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, $modal, UserService, Users, $timeout) ->
         $scope.clientId =  $routeParams.clientId
         $scope.userId   =  if $routeParams.userId then $routeParams.userId.trim() else false
@@ -113,6 +114,7 @@ angular.module('app.users', [])
 
         # 1. GET USER by EMAIL
         _URL =
+            list   : config.path.baseURL + config.path.users
             detail : config.path.baseURL + config.path.users + '/'
 
         _getUser = () ->
@@ -123,6 +125,19 @@ angular.module('app.users', [])
                 console.log res.data
                 return
             , (error) ->
+                console.log error
+
+        _searchUserbyEntry = (entry, searchVal, callback) ->
+            if typeof callback != 'function'
+                return
+            get_result = null
+            Users.get(_URL.list + '?search=user.' + entry + ':' + searchVal).then  (res) ->
+                if res.status == 200 && typeof res == 'object'
+                    get_result = res.data
+                    callback(get_result)
+                return get_result
+            , (error) ->
+                callback(error)
                 console.log error
 
         # 2. UPDATE USER
@@ -139,7 +154,7 @@ angular.module('app.users', [])
                     "last_name"  : $scope.user.last_name
                     "username"   : $scope.user.username
                     "email"      : $scope.user.email
-                    "code"       : $scope.user.code
+                    "code"       : $scope.user.code.trim()
                     #"handbook_contact" : true,
                     #"enabled": true,
                     #"plain_password": null,
@@ -153,10 +168,17 @@ angular.module('app.users', [])
                     $timeout ()->
                         $scope.infoUpdated = null
                     , 300
+                return
 
-                    return
             , (error) ->
-                $scope.infoUpdated = error.status + ': Error, refresh & try again !'
+                checkError = (datajson) ->
+                    if typeof datajson == 'object' && datajson._embedded.items.length
+                        $scope.infoUpdated = error.status + ': Verification code existed, refresh & try again!'
+                    else
+                        $scope.infoUpdated = error.status + ': Error API, refresh & try again!'
+
+                _searchUserbyEntry('code', newData.user.code, checkError)
+
 
         # 3. DELETE USER
         $scope.deleteUser = () ->
@@ -206,6 +228,19 @@ angular.module('app.users', [])
         _URL =
             detail : config.path.baseURL + config.path.users
 
+        _searchUserbyEntry = (entry, searchVal, callback) ->
+            if typeof callback != 'function'
+                return
+            get_result = null
+            Users.get(_URL.list + '?search=user.' + entry + ':' + searchVal).then  (res) ->
+                if res.status == 200 && typeof res == 'object'
+                    get_result = res.data
+                    callback(get_result)
+                return get_result
+            , (error) ->
+                callback(error)
+                console.log error
+
         _insertUser = (user) ->
             newData = {
                 "user": user
@@ -242,8 +277,13 @@ angular.module('app.users', [])
                         alert 'API error connection: Not yet create user for this client'
 
             , (error) ->
-                console.log error
-                $scope.infoUpdated = error.status + ': Error, refresh & try again !'
+                checkError = (datajson) ->
+                    if typeof datajson == 'object' && datajson._embedded.items.length
+                        $scope.infoUpdated = error.status + ': Verification code existed, refresh & try again!'
+                    else
+                        $scope.infoUpdated = error.status + ': Error API, refresh & try again!'
+
+                _searchUserbyEntry('code', newData.user.code, checkError)
 
         #By Input FRM
         $scope.submitCreateUser = ->
