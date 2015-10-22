@@ -181,7 +181,7 @@ angular.module('app.clients', [])
               location.reload()
               return
           , (error) ->
-              console.log (error)
+              alert error.status + ' : Try later and new company code'
 
       # menu active
       $scope.isActive = (path) ->
@@ -276,8 +276,7 @@ angular.module('app.clients', [])
             location.reload()
             return true
         , (error) ->
-          # console.log error
-          alert error.status + ' : Try later'
+          alert error.status + ' : Try later and new company code'
 
         return
 
