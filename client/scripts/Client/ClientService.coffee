@@ -323,3 +323,85 @@ angular.module('app.client.services', [])
         }
     }
 ])
+
+.directive 'uploadFile', [
+    'Upload',
+    (Upload)->
+
+        controller = [
+            '$scope', '$http', '$timeout'
+            ,($scope, $http, $timeout)->
+
+                defaultLabel = $scope.label.toString()
+
+                $scope.fileName = ''
+                $scope.progressPercentage = 0;
+
+                $scope.uniqueID = new Date().getTime()
+
+                $scope.$watch 'file', (nv)->
+                    if (nv)
+                        Upload.upload {
+                            method: 'POST'
+                            url: $scope.uploadUrl
+                            data:
+                                binaryContent: nv
+                            headers:{
+                                "x-username" : 'kenneth.yap@ap.magenta-consulting.com'
+                                "x-password" : 'p@ssword'
+                                "Content-Type": if nv.type != '' then nv.type else 'application/octet-stream'
+                            }
+                        }
+                        # response
+                        .then (res)->
+                          $scope.result = res.data
+                          $scope.progressPercentage = 0
+
+                        # error
+                        , (error)->
+                            console.error error
+                            $scope.progressPercentage = 0
+                            $scope.label = 'Error : '+ error.status
+                            $scope.result = null
+                            $timeout ()->
+                                $scope.label = defaultLabel
+                            ,3000
+
+                        # process tracker
+                        , (e)->
+                            $scope.progressPercentage = parseInt(100.0 * e.loaded / e.total)
+                            console.info 'Progress ' + $scope.progressPercentage
+
+        ] # END of controller
+
+
+        link = (scope, element, attribute)->
+            inputFile = $ element.find('input')
+
+
+            inputFile.on 'change', (e)->
+                if this.files && this.files.length > 1
+                    scope.fileName = ( this.getAttribute( 'data-multiple-caption' ) || '' ).replace( '{count}', this.files.length );
+                else
+                    scope.fileName = e.target.value.split( '\\' ).pop()
+
+                if scope.fileName
+                    scope.label = scope.fileName
+                else
+                    scope.label = 'Upload New Image'
+
+        return {
+            'restrict': 'E'
+            # 'transclude': true
+            'scope':
+                'uploadUrl': '=uploadUrl'
+                'color' : '=ngProgressColor'
+                'label' : '=ngLabel'
+                'result': '=ngUploadresponse'
+
+
+            'templateUrl': 'views/directives/uploadFile.html'
+            'controller': controller
+            'link': link
+        }
+]
