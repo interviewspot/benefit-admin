@@ -294,7 +294,7 @@ angular.module('app.users', [])
         $scope.submitCreateUser = ->
             angular.forEach $scope.frm_adduser.$error.required, (field)->
                 field.$dirty = true
-            if $scope.frm_adduser.$error.required.length || $scope.frm_updateuser.$invalid
+            if $scope.frm_adduser.$error.required.length
                 return false
             $scope.isExcel = false
 

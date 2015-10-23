@@ -44,30 +44,30 @@
                     </tr>
                 </tbody>
             </table>
-            <footer class="table-footer">
-                <div class="row">
-                    <div class="col-md-6 page-num-info">
-                <span>
-                    Show
-                    <select data-ng-model="numPerPage"
-                            data-ng-options="num for num in numPerPageOpt"
-                            data-ng-change="onNumPerPageChange()">
-                    </select>
-                    entries per page
-                </span>
-                    </div>
-                    <div class="col-md-6 text-right pagination-container">
-                        <pagination class="pagination-sm"
-                                    ng-model="currentPage"
-                                    total-items="filteredStores.length"
-                                    max-size="4"
-                                    ng-change="select(currentPage)"
-                                    items-per-page="numPerPage"
-                                    rotate="false"
-                                    boundary-links="true"></pagination>
-                    </div>
+            <footer class="table-footer" ng-show="clients.pages >= 2">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+            <span>
+                Show
+                <select data-ng-model="numPerPage"
+                        data-ng-options="num for num in numPerPageOpt"
+                        data-ng-change="onNPPChange()">
+                </select>
+                users / page
+            </span>
                 </div>
-            </footer>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                ng-model="currentPage"
+                                total-items="clients.total"
+                                max-size="4"
+                                ng-change="gotoPage(currentPage)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
             <!-- END : PAGINATION -->
             <div id="createClients" class="modal fade" role="dialog">
                 <div class="modal-dialog">
