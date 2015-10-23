@@ -3,64 +3,42 @@
 angular.module('app.clients', [])
 
 .controller('clientCtrl', [
-    '$scope', '$filter' , 'fetchTabData', 'fakeData', '$location', 'clientService', 'fetchHandbook', '$routeParams', '$route', 'config', 'Images', 'php', 'ClientAPI', 'Companies'
-    ($scope, $filter, fetchTabData, fakeData, $location, clientService, fetchHandbook, $routeParams, $route, config, Images, php, ClientAPI, Companies) ->
+    '$scope', '$filter' , 'fetchTabData', 'fakeData', '$location', 'clientService', 'fetchHandbook', '$routeParams', '$route', 'config', 'Images', 'php', 'ClientAPI', 'Companies', 'Clients',
+    ($scope, $filter, fetchTabData, fakeData, $location, clientService, fetchHandbook, $routeParams, $route, config, Images, php, ClientAPI, Companies, Clients) ->
     # filter
-      $scope.stores = [
-          {id: 1, company: 'BullWorks Pte Ltd', status: 'nverser', industry: 'AAA', users: 'Euro', estsaving: 'None', cs: 2,action: "Manage", }
-          {id: 2, company: 'BullWorks Pte Ltd', status: 'nverser', industry: 'AAA', users: 'Euro', estsaving: 'None', cs: 2,action: "Manage", }
-          {id: 3, company: 'BullWorks Pte Ltd', status: 'nverser', industry: 'AAA', users: 'Euro', estsaving: 'None', cs: 2 ,action: "Manage", }
-      ]
-      $scope.searchKeywords = ''
-      $scope.filteredStores = []
-      $scope.row = ''
 
-      $scope.select = (page) ->
-          start = (page - 1) * $scope.numPerPage
-          end = start + $scope.numPerPage
-          $scope.currentPageStores = $scope.filteredStores.slice(start, end)
-      
-      $scope.onFilterChange = ->
-          $scope.select(1)
-          $scope.currentPage = 1
-          $scope.row = ''
+      _URL_clients =
+            list : config.path.baseURL + config.path.clients
 
-      $scope.onNumPerPageChange = ->
-          $scope.select(1)
-          $scope.currentPage = 1
+      # 1. GET USERS
+      _getClients = (limit, goPage) ->
+            Clients.get(_URL_clients.list + '?limit=' + limit + '&page=' + goPage).then  (res) ->
+                if res.status != 200 || typeof res != 'object'
+                    return
+                $scope.clients = res.data
+                $scope.clients_list = res.data._embedded.items
+                return
+            , (error) ->
+                console.log error
+                return
 
-      $scope.onOrderChange = ->
-          $scope.select(1)
-          $scope.currentPage = 1
-
-
-      $scope.search = ->
-          $scope.filteredStores = $filter('filter')($scope.stores, $scope.searchKeywords)
-          $scope.onFilterChange()
-
-      # orderBy
-      $scope.order = (rowName)->
-          if $scope.row == rowName
-              return
-          $scope.row = rowName
-          $scope.filteredStores = $filter('orderBy')($scope.stores, rowName)
-          # console.log $scope.filteredStores
-          $scope.onOrderChange()
-
-      # pagination
+      # 2. PAGING, setup paging
       $scope.numPerPageOpt = [3, 5, 10, 20]
-      $scope.numPerPage = $scope.numPerPageOpt[2]
-      $scope.currentPage = 1
-      $scope.currentPageStores = []
-      
-      # init
-      init = ->
-          $scope.search()
-          $scope.select($scope.currentPage)
-          clientService.query {}, (clientData, getResponseHeaders) ->
-            $scope.clients_list = clientData._embedded.items
+      $scope.numPerPage    = $scope.numPerPageOpt[0]
+      $scope.currentPage   = 1
+      $scope.filteredUsers = []
+      $scope.currentPageUsers = []
 
-      init()
+        # 2.1 On Number Per Page Change
+      $scope.onNPPChange = () ->
+            _getClients($scope.numPerPage, $scope.currentPage)
+
+      # 2.2 Goto PAGE
+      $scope.gotoPage = (page) ->
+            _getClients($scope.numPerPage, $scope.currentPage)
+
+      # 4. ONLOAD LIST USERS
+      _getClients($scope.numPerPage, $scope.currentPage);
 
       # show preview
       $scope.showPreview = false
