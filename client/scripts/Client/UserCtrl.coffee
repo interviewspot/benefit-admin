@@ -28,6 +28,11 @@ angular.module('app.users', [])
             #list : config.path.baseURL + config.path.users
             list : config.path.baseURL + config.path.contacts.replace(":org_id", $routeParams.clientId)
 
+        # GET STAMPTIME FROM RFC 822 timetype
+        $scope.getTime = (ndate) ->
+            dateAsDateObject = new Date(Date.parse(ndate))
+            return dateAsDateObject.getTime()
+
         # 1. GET USERS
         _getUsers = (limit, goPage) ->
 
