@@ -51,12 +51,12 @@ angular.module('app.handbook_section', [])
         $scope.loadSections = ->
             sectionService.query {org_id:$scope.clientId, hand_id:$scope.handbookId}, (data, getResponseHeaders) ->
                 if data._embedded.items.length > 0
-                    console.log data._embedded.items
+                    #console.log data._embedded.items
                     $scope.ungroupSections = orderSections(data._embedded.items)
-                    console.log $scope.ungroupSections
+                    #console.log $scope.ungroupSections
                     $scope.allSections     = ungroupSection($scope.ungroupSections)
                     sectionDatas           = data._embedded.items
-                    console.log $scope.allSections
+                    #console.log $scope.allSections
 
                     $scope.parentSection = []
                     for i in [0 .. sectionDatas.length-1]

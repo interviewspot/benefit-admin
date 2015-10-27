@@ -24,9 +24,9 @@ angular.module('app.contacts', [])
                             fetchContact.get(itemInstance._links.employee.href).then  (res) ->
 
                                 $scope.contacts.push({
-                                    'position': itemInstance
-                                    'user' : res.data
-                                    'alphabet' :  if res.data.first_name then res.data.first_name.charAt(0).toLowerCase() else res.data.username.charAt(0).toLowerCase()
+                                    'position' : itemInstance
+                                    'user'     : res.data
+                                    'alphabet' : if res.data.first_name then res.data.first_name.charAt(0).toLowerCase() else res.data.username.charAt(0).toLowerCase()
                                 })
                         )(item)
 
@@ -147,23 +147,51 @@ angular.module('app.contacts', [])
 # EDIT CONTACT CTRL
 # in MODAL BOX
 .controller('ContactFormCtrl', [
-    '$scope', '$routeParams', 'fetchContact', 'config', '$modalInstance', 'contact'
-    ($scope, $routeParams, fetchContact, config, $modalInstance, contact) ->
+    '$scope', '$routeParams', 'fetchContact', 'config', '$modalInstance', 'fetchUsers', '$q','contact'
+    ($scope, $routeParams, fetchContact, config, $modalInstance, fetchUsers, $q, contact) ->
         $scope.contact = contact
+        $scope.srch_users   =
+            'email' : 0
+
+        $scope.searchMail = (term) ->
+            d = $q.defer()
+            q = term.toLowerCase().trim()
+            results = {}
+
+            fetchUsers.get(config.path.baseURL + config.path.users + '?search=user.email:%'+q+'%').then (res) ->
+
+                if res.data._embedded
+                    $scope.srch_users = {}
+                    users = res.data._embedded.items
+                    for i in [0...users.length]
+                        item = users[i]
+                        results[item.email] = item.id
+                    $scope.srch_users = results
+                    d.resolve(results)
+                else
+                    return
+            , () ->
+                d.resolve(results)
+            return d.promise
+
+
         $scope.save = ->
+            console.log $scope.srch_users
             updateContact = {
                 "position": {
                     "title": contact.position.title
-                    "employee": $scope.srch_users[contact.user.email]
+                    "employee": $scope.srch_users[$scope.contact.user.email]
                     "active": true
                     "employer": $routeParams.clientId
                     "handbook_contact" : true
                 }
             }
+
             fetchContact.update(contact.position._links.self.href, updateContact).then  (res) ->
                 $scope.loadContactList()
                 $modalInstance.close()
-
+            , (error) ->
+                alert error.status + ' : Wrong email! Try again.'
 
         $scope.cancel = ->
             $modalInstance.dismiss('cancel');
