@@ -52,6 +52,7 @@ angular.module('app', [
     'app.handbook_info'
     'app.users'
     'app.users.services'
+    'app.employee'
     'app.merchants.html' # REMOVE AFTER DONE LAYOUT
     #'app.offerdirective' # DIRECTIVE FORM OFFER
     #Khai bao app khi tao
@@ -174,6 +175,12 @@ angular.module('app', [
             })
             .when('/clients/:clientId/imerchant', { 
                 templateUrl: 'views/clients/client-imerchant.html'
+            })
+
+        # EMPLOYEE MANAGEMENT
+        $routeProvider
+            .when('/employee', {
+                templateUrl: 'views/employee/employee.html'
             })
 
             .otherwise( redirectTo: '/404' )
