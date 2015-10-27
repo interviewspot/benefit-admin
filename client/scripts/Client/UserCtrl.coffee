@@ -129,6 +129,10 @@ angular.module('app.users', [])
                 $scope.user = res.data
                 if($scope.user.birthday == "-0001-11-30T00:00:00+0655")
                     $scope.user.birthday = ""
+                if($scope.user.date_added == "-0001-11-30T00:00:00+0655")
+                    $scope.user.date_added = ""
+                else
+                    $scope.user.date_added = $filter('date')(new Date($scope.user.date_added), 'MM/dd/yyyy')
                 console.log res.data
                 return
             , (error) ->
@@ -160,8 +164,10 @@ angular.module('app.users', [])
             user_code = user_code.trim()
             user_code = user_code.toLowerCase()
             date_added = $scope.user.date_added;
-            if(date_added == "-0001-11-30T00:00:00+0655")
-                date_added = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss')
+            if(date_added == "")
+                date_added = $filter('date')(new Date(), 'yyyy-MM-ddT00:00:00+0000')
+            else
+                date_added = $filter('date')(new Date($scope.user.date_added), 'yyyy-MM-ddT00:00:00+0000')
             newData = {
                 "user": {
                     "first_name" : $scope.user.first_name
@@ -181,7 +187,7 @@ angular.module('app.users', [])
 
             birthday = $scope.user.birthday || ''
             if(birthday != '')
-                birthday = $filter('date')(new Date(birthday), 'yyyy-MM-dd')
+                birthday = $filter('date')(new Date(birthday), 'yyyy-MM-ddT00:00:00+0000')
                 newData.user.birthday = birthday
 
 
@@ -338,12 +344,12 @@ angular.module('app.users', [])
                 "code"           : php.randomString(6, 'a#')
                 "mobile_no"      : $scope.user.mobile_no || ''
                 "office_no"      : $scope.user.office_no || ''
-                "date_added"     : $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss')
+                "date_added"     : $filter('date')(new Date(), 'yyyy-MM-ddT00:00:00+0000')
             }
 
             birthday = $scope.user.birthday || ''
             if(birthday != '')
-                birthday = $filter('date')(new Date(birthday), 'yyyy-MM-dd')
+                birthday = $filter('date')(new Date(birthday), 'yyyy-MM-ddT00:00:00+0000')
                 user.birthday = birthday
 
             console.log(user);
@@ -368,6 +374,9 @@ angular.module('app.users', [])
             if user.plain_password == undefined || user.plain_password == null || user.plain_password == ""
                 $scope.infoUpdated = "Missing password."
                 return
+            if user.birthday == undefined || user.birthday == null || user.birthday == ""
+                $scope.infoUpdated = "Missing birthday."
+                return
 
             #map data
             insertUser = {
@@ -381,11 +390,11 @@ angular.module('app.users', [])
                 "code"           : php.randomString(6, 'a#')
                 "mobile_no"      : user.mobile_no || ''
                 "office_no"      : user.office_no || ''
-                "date_added"     : $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss')
+                "date_added"     : $filter('date')(new Date(), 'yyyy-MM-ddT00:00:00+0000')
             }
             birthday = user.birthday || ''
             if(birthday != '')
-                birthday = $filter('date')(new Date(birthday), 'yyyy-MM-dd')
+                birthday = $filter('date')(new Date(birthday), 'yyyy-MM-ddT00:00:00+0000')
                 insertUser.birthday = birthday
 
             _insertUser(insertUser)

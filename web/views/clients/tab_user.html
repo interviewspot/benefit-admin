@@ -26,13 +26,13 @@
                         <td><a href="#/clients/{{clientId}}/user/{{user.email}}">{{user.email}}</a></td>
                         <td  class="text-center">{{user.first_name}}</td>
                         <td  class="text-center">{{user.last_name}}</td>
-                        <td  class="text-center">{{user.contact_no ? user.contact_no : 'Not Available Yet!'}}</td>
+                        <td  class="text-center">{{user.mobile_no ? user.mobile_no : '-'}}</td>
                         <td  class="text-center">{{user.code ? user.code : 'Not Available Yet!'}}</td>
                         <td  class="text-center">{{user.emply_class ? user.emply_class : 'Not Available Yet!'}}</td>
-                        <td  class="text-center td-18">
-                            sssss
-                            {{user.date_added ? user.date_added | date:'MM/dd/yyyy @ h:mma' : '-'}}
+                        <td  class="text-center td-18" ng-if="getTime(user.date_added)">
+                            {{getTime(user.date_added) | date:'MM.dd.yyyy'}}
                         </td>
+                        <td  class="text-center td-18" ng-if="!getTime(user.date_added)">-</td>
                         <td class="td-control text-center td-15">
                             <a><i class="fa fa-check"></i></a>
                             |

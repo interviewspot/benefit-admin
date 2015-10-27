@@ -74,13 +74,13 @@
                 <!-- END: CONTROL -->
                 <h3>{{contact.user.first_name}}  {{contact.user.last_name}}</h3>
                 <p class="ctc-add">Singapore, {{contact.position.title}}</p>
-                <p>
-                    <b>M:</b> +65 9108 6935
+                <p ng-if="contact.user.mobile_no">
+                    <b>M:</b> {{contact.user.mobile_no}}
                 </p>
-                <p>
-                    <b>0:</b> +65 6720 3663
+                <p ng-if="contact.user.office_no">
+                    <b>0:</b> {{contact.user.office_no}}
                 </p>
-                <p>
+                <p ng-if="contact.user.email">
                     <b>E:</b> {{contact.user.email}}
                 </p>
             </div>
