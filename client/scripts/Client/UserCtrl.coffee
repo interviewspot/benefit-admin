@@ -127,6 +127,8 @@ angular.module('app.users', [])
                 if res.status != 200 || typeof res != 'object'
                     return
                 $scope.user = res.data
+                if($scope.user.birthday == "-0001-11-30T00:00:00+0655")
+                    $scope.user.birthday = ""
                 console.log res.data
                 return
             , (error) ->
@@ -157,7 +159,9 @@ angular.module('app.users', [])
             user_code = $scope.user.code
             user_code = user_code.trim()
             user_code = user_code.toLowerCase()
-
+            date_added = $scope.user.date_added;
+            if(date_added == "-0001-11-30T00:00:00+0655")
+                date_added = $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss')
             newData = {
                 "user": {
                     "first_name" : $scope.user.first_name
@@ -169,8 +173,17 @@ angular.module('app.users', [])
                     #"enabled": true,
                     #"plain_password": null,
                     #"ssn": null
+                    "mobile_no"      : $scope.user.mobile_no || ''
+                    "office_no"      : $scope.user.office_no || ''
+                    "date_added"     : date_added
                 }
             }
+
+            birthday = $scope.user.birthday || ''
+            if(birthday != '')
+                birthday = $filter('date')(new Date(birthday), 'yyyy-MM-dd')
+                newData.user.birthday = birthday
+
 
             Users.put(_URL.detail + $scope.user.id, newData).then  (res) ->
                 if res.status == 204
@@ -189,6 +202,11 @@ angular.module('app.users', [])
 
                 _searchUserbyEntry('code', newData.user.code, checkError)
 
+        #open date picker
+        $scope.openDatepicker  = ($event) ->
+            $event.preventDefault()
+            $event.stopPropagation()
+            $scope.datepickerOpened = true
 
         # 3. DELETE USER
         $scope.deleteUser = () ->
@@ -295,6 +313,12 @@ angular.module('app.users', [])
 
                 _searchUserbyEntry('code', newData.user.code, checkError)
 
+        #open date picker
+        $scope.openDatepicker  = ($event) ->
+            $event.preventDefault()
+            $event.stopPropagation()
+            $scope.datepickerOpened = true
+
         #By Input FRM
         $scope.submitCreateUser = ->
             angular.forEach $scope.frm_adduser.$error.required, (field)->
@@ -312,8 +336,18 @@ angular.module('app.users', [])
                 "plain_password" : $scope.user.password
                 "ssn"            : null
                 "code"           : php.randomString(6, 'a#')
+                "mobile_no"      : $scope.user.mobile_no || ''
+                "office_no"      : $scope.user.office_no || ''
+                "date_added"     : $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss')
             }
 
+            birthday = $scope.user.birthday || ''
+            if(birthday != '')
+                birthday = $filter('date')(new Date(birthday), 'yyyy-MM-dd')
+                user.birthday = birthday
+
+            console.log(user);
+            #return;
             _insertUser(user)
 
         #By Excel Import
@@ -345,7 +379,14 @@ angular.module('app.users', [])
                 "plain_password" : user.plain_password
                 "ssn"            : null
                 "code"           : php.randomString(6, 'a#')
+                "mobile_no"      : user.mobile_no || ''
+                "office_no"      : user.office_no || ''
+                "date_added"     : $filter('date')(new Date(), 'yyyy-MM-dd HH:mm:ss')
             }
+            birthday = user.birthday || ''
+            if(birthday != '')
+                birthday = $filter('date')(new Date(birthday), 'yyyy-MM-dd')
+                insertUser.birthday = birthday
 
             _insertUser(insertUser)
 ])

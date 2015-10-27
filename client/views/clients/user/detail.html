@@ -56,9 +56,15 @@
                     <tr>
                         <th class="td-30">Contact no.</th>
                         <td><input type="text"
+                                name="mobile_no"
                                 ng-model="user.mobile_no"
                                 class="txt-ipt"
-                                ng-class="{txt_disabled : !isDisable}"></td>
+                                ng-class="{txt_disabled : !isDisable}"
+                                ng-pattern="/^[\d+ ]+$/">
+                            <p style="color:red">
+                                <span ng-show="frm_updateuser.mobile_no.$invalid  && frm_updateuser.mobile_no.$dirty">Mobile number only contain number, whitespace and +.</span>
+                            </p>
+                        </td>
                     </tr>
                     <tr>
                         <th class="td-30">Employee Class</th>
@@ -77,9 +83,14 @@
                     <tr>
                         <th class="td-30">Office no.</th>
                         <td><input type="text"
+                                name="office_no"
                                 ng-model="user.office_no"
                                 class="txt-ipt"
-                                ng-class="{txt_disabled : !isDisable}"></td>
+                                ng-class="{txt_disabled : !isDisable}"
+                                ng-pattern="/^[\d+ ]+$/">
+                            <p style="color:red">
+                                <span ng-show="frm_updateuser.office_no.$invalid  && frm_updateuser.office_no.$dirty">Office number only contain number, whitespace and +.</span>
+                            </p>
                     </tr>
                     <tr>
                         <th class="td-30">NRIC No.</th>
@@ -98,9 +109,8 @@
                     <tr>
                         <th class="td-30">Date Added</th>
                         <td><input type="text"
-                                value="Not Available Yet!"
-                                class="txt-ipt"
-                                ng-class="{txt_disabled : !isDisable}"></td>
+                                ng-model="user.date_added"
+                                class="txt-ipt txt_disabled" disabled></td>
                     </tr>
                     <tr>
                         <th class="td-30">De-activated Date</th>
@@ -110,11 +120,22 @@
                                 ng-class="{txt_disabled : !isDisable}"></td>
                     </tr>
                     <tr>
-                        <th class="td-30">Birthday</th>
+                        <th class="td-30">Birthday <span class="red">*</span></th>
                         <td><input type="text"
-                                value="Not Available Yet!"
-                                class="txt-ipt"
-                                ng-class="{txt_disabled : !isDisable}"></td>
+                                    name="birthday"
+                                    class="ipt-user"
+                                    datepicker-popup="MM/dd/yyyy"
+                                    ng-model="user.birthday"
+                                    is-open="datepickerOpened"
+                                    close-text="Close"
+                                    show-button-bar="false"
+                                    ng-click="openDatepicker($event)"
+                                    ng-class="{txt_disabled : !isDisable}"
+                                    required/>
+                            <p style="color:red">
+                                <span ng-show="frm_updateuser.birthday.$invalid  && frm_updateuser.birthday.$dirty">Birthday is required.</span>
+                            </p>
+                        </td>
                     </tr>
                     <tr>
                         <th class="td-30">App Status</th>
