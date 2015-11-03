@@ -15,13 +15,11 @@ angular.module('app.handbook.services', [])
 
 .factory 'handbookService', ($resource, config) ->
 	service = $resource(config.path.baseURL + config.path.handbook, {}, {
-            query:{
+            query:
                 method:"GET",
-                # action: config.path.baseURL + config.path.handbooks,
-            },
-            update:{
+                # action: config.path.baseURL + config.path.handbooks
+            update:
                 method:"PUT"
-            }
             save:
                 method:"POST"
                 action: config.path.baseURL + config.path.handbooks

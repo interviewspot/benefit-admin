@@ -36,12 +36,12 @@ angular.module('app.handbook_info', [])
 
             updateData = {
                 "handbook": {
-                    "version": $scope.handbook.version
-                    "title": $scope.handbook.title
-                    "year": $scope.handbook.year
-                    "description": $scope.handbook.description
-                    "organisation": $scope.clientId
-                    "locale": $scope.handbook.locale
+                    "version"      : $scope.handbook.version
+                    "title"        : $scope.handbook.title
+                    "year"         : $scope.handbook.year
+                    "description"  : $scope.handbook.description
+                    "organisation" : $scope.clientId
+                    "locale"       : $scope.handbook.locale
                 }
             }
 
@@ -52,7 +52,7 @@ angular.module('app.handbook_info', [])
                 $scope.infoUpdated = 'Update Success'
                 $timeout ()->
                     $scope.infoUpdated = null
-                , 1000
+                , 500
             , (error) ->
                 $scope.infoUpdated = error.status + ': Error, refresh & try again !'
 
@@ -64,12 +64,12 @@ angular.module('app.handbook_info', [])
 
             newData = {
                 "handbook": {
-                    "version": $scope.handbook.version
-                    "title": $scope.handbook.title
-                    "year": $scope.handbook.year
-                    "description": $scope.handbook.description
-                    "organisation": $scope.clientId
-                    "locale": $scope.handbook.locale
+                    "version"      : $scope.handbook.version
+                    "title"        : $scope.handbook.title
+                    "year"         : $scope.handbook.year
+                    "description"  : $scope.handbook.description
+                    "organisation" : $scope.clientId
+                    "locale"       : $scope.handbook.locale
                 }
             }
 

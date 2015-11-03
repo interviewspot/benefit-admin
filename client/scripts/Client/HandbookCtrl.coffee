@@ -30,6 +30,7 @@ angular.module('app.handbooks', [])
 
         handbookService.get {org_id:$scope.clientId, hand_id:$scope.handbookId}, (data, getResponseHeaders) ->
             $scope.handbook = data
+            $scope.handbook.locale = 'en-us'
 
         $scope.isActive = (href) ->
             path = $location.path()
@@ -39,16 +40,24 @@ angular.module('app.handbooks', [])
         $scope.submitHandbookInfo = ->
 
             updateData = {
-                handbook: $scope.handbook
+                "handbook": {
+                    "version"      : $scope.handbook.version
+                    "title"        : $scope.handbook.title
+                    "year"         : $scope.handbook.year
+                    "description"  : $scope.handbook.description
+                    "organisation" : $scope.clientId
+                    "locale"       : $scope.handbook.locale
+                }
             }
             delete updateData.handbook._links 
             delete updateData.handbook.id
             updateData.handbook['organisation'] = $scope.clientId
+            console.log updateData
             handbookService.update {org_id:$scope.clientId, hand_id:$scope.handbookId}, updateData, (res) ->
                 $scope.generalUpdated = 'Update Success'
                 $timeout ()->
                     $scope.generalUpdated = null
-                , 2000
+                , 1000
             , (error) ->
                 $scope.generalUpdated = error.status + ': Error, refresh & try again !'
 

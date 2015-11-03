@@ -137,11 +137,12 @@ angular.module('app.handbook_section', [])
 
             sectionItem = {
                 section: {
-                    description: $scope.formSection.description
-                    title: $scope.formSection.title
-                    version: $scope.formSection.version
-                    handbook: $scope.handbookId
-                    parent: $scope.parentSelect
+                    description : $scope.formSection.description
+                    title       : $scope.formSection.title
+                    version     : $scope.formSection.version
+                    handbook    : $scope.handbookId
+                    parent      : $scope.parentSelect
+                    locale      : 'en_us'
                 }
             }
 
@@ -158,7 +159,7 @@ angular.module('app.handbook_section', [])
                     $scope.sectionUpdated = 'Update Success'
                     $timeout ()->
                         $scope.sectionUpdated = null
-                    , 2000
+                    , 1000
                 , (error) ->
                     $scope.sectionUpdated = error.status + ': Error, refresh & try again !'
             else
@@ -170,7 +171,7 @@ angular.module('app.handbook_section', [])
                         $scope.sectionUpdated = 'Update Success'
                         $timeout ()->
                             $scope.sectionUpdated = null
-                        , 2000
+                        , 1000
                     , (error) ->
                         $scope.sectionUpdated = error.status + ': Error, refresh & try again !'
 
@@ -182,7 +183,7 @@ angular.module('app.handbook_section', [])
                         $scope.sectionUpdated = 'Update Success'
                         $timeout ()->
                             $scope.sectionUpdated = null
-                        , 2000
+                        , 1000
                     , (error) ->
                         $scope.sectionUpdated = error.status + ': Error, refresh & try again !'
 

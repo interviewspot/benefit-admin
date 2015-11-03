@@ -8,10 +8,13 @@
                     <input type="text"
                     ng-model="handbook.title"
                     class="txt-ipt"
-                    required =""
+                    required
                     name="hb_title"
                     ng-class='{txt_err : (frm_crt_handbook.hb_title.$invalid && frm_crt_handbook.hb_title.$dirty)}'
                     />
+                    <p style="color:red">
+                                <span ng-show="frm_crt_handbook.hb_title.$invalid  && frm_crt_handbook.hb_title.$dirty">Title is required.</span>
+                            </p>
                 </td>
             </tr>
             <tr>
@@ -25,6 +28,9 @@
                     class="txt-ipt"
                     ng-class='{txt_err : (frm_crt_handbook.hb_version.$invalid && frm_crt_handbook.hb_version.$dirty)}'
                     />
+                    <p style="color:red">
+                                <span ng-show="frm_crt_handbook.hb_version.$invalid  && frm_crt_handbook.hb_version.$dirty">Version is required.</span>
+                            </p>
                 </td>
             </tr>
             <tr>
@@ -38,16 +44,17 @@
                     class="txt-ipt"
                     ng-class='{txt_err : (frm_crt_handbook.hb_year.$invalid && frm_crt_handbook.hb_year.$dirty)}'
                     />
+                    <p style="color:red">
+                                <span ng-show="frm_crt_handbook.hb_year.$invalid  && frm_crt_handbook.hb_year.$dirty">Year is required.</span>
+                            </p>
                 </td>
             </tr>
             <tr>
                 <td class="td-20">Language:</td>
                 <td>
-                    <input type="text"
-                    ng-model="handbook.language"
-                    name="hb_language"
-                    class="txt-ipt"
-                    />
+                    <select name="hb_language" ng-model="handbook.locale" class="txt-ipt">
+                        <option value="en-us">English</option>
+                    </select>
                 </td>
             </tr>
             <tr>
