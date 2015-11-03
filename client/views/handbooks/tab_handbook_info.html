@@ -5,16 +5,17 @@
             <tr>
                 <td class="td-20">Handbook Title:</td>
                 <td>
+
                     <input type="text"
-                    ng-model="handbook.title"
+                    ng-model="handbook.translations['en-us'].title"
                     class="txt-ipt"
                     required
                     name="hb_title"
                     ng-class='{txt_err : (frm_crt_handbook.hb_title.$invalid && frm_crt_handbook.hb_title.$dirty)}'
                     />
                     <p style="color:red">
-                                <span ng-show="frm_crt_handbook.hb_title.$invalid  && frm_crt_handbook.hb_title.$dirty">Title is required.</span>
-                            </p>
+                        <span ng-show="frm_crt_handbook.hb_title.$invalid  && frm_crt_handbook.hb_title.$dirty">Title is required.</span>
+                    </p>
                 </td>
             </tr>
             <tr>

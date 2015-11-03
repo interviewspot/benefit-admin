@@ -5,8 +5,8 @@ angular.module('app.handbooks', [])
 # 1. manage list contacts
 # 2. Autocomplete email
 .controller('HandbookCtrl', [
-    '$scope', '$routeParams', 'handbookService', 'clientService', 'sectionService', '$location', '$timeout',
-    ($scope, $routeParams, handbookService, clientService, sectionService, $location, $timeout) ->
+    '$scope', '$routeParams', 'fetchHandbook', 'handbookService', 'clientService', 'sectionService', '$location', '$timeout',
+    ($scope, $routeParams, fetchHandbook, handbookService, clientService, sectionService, $location, $timeout) ->
 
         # GET PARAM FROM URL
         $scope.clientId   = $routeParams.clientId
@@ -32,6 +32,16 @@ angular.module('app.handbooks', [])
             $scope.handbook = data
             $scope.handbook.locale = 'en-us'
 
+            # GET TRANSLATIONS
+            fetchHandbook.get(data._links.translations.href).then  (res) ->
+                if res.status != 200 || typeof res != 'object'
+                    return
+                $scope.handbook['translations'] = res.data
+                return
+            , (error) ->
+                console.log error
+                return
+
         $scope.isActive = (href) ->
             path = $location.path()
             if path.indexOf(href) is 0
@@ -42,9 +52,9 @@ angular.module('app.handbooks', [])
             updateData = {
                 "handbook": {
                     "version"      : $scope.handbook.version
-                    "title"        : $scope.handbook.title
+                    "title"        : $scope.handbook.translations[$scope.handbook.locale].title
                     "year"         : $scope.handbook.year
-                    "description"  : $scope.handbook.description
+                    "description"  : $scope.handbook.translations[$scope.handbook.locale].description
                     "organisation" : $scope.clientId
                     "locale"       : $scope.handbook.locale
                 }

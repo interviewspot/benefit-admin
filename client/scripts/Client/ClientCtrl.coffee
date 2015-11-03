@@ -78,6 +78,18 @@ angular.module('app.clients', [])
                 $scope.isCreateHandbook = true
                 return
               $scope.handbooks = res.data._embedded.items
+
+              # GET TRANSLATIONS
+              angular.forEach $scope.handbooks, (item, i) ->
+                Clients.get(item._links.translations.href).then  (res) ->
+                  if res.status != 200 || typeof res != 'object'
+                    return
+                  $scope.handbooks[i]['translations'] = res.data
+                  return
+                , (error) ->
+                  console.log error
+                  return
+
           else
               $scope.isCreateHandbook = true
 
