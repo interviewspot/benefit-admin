@@ -3,8 +3,8 @@ angular.module('app.handbook_section', [])
 # --------------------------------------------
 
 .controller('HandbookSectionCtrl', [
-    '$scope', '$routeParams', 'handbookService', 'clientService', 'sectionService', '$location', '$timeout',
-    ($scope, $routeParams, handbookService, clientService, sectionService, $location, $timeout) ->
+    '$scope', '$routeParams', 'handbookService', 'clientService', 'sectionService', '$location', '$timeout', 'fetchHandbook'
+    ($scope, $routeParams, handbookService, clientService, sectionService, $location, $timeout, fetchHandbook) ->
 
         orderSections = (items) ->
             treeList = []
@@ -39,6 +39,18 @@ angular.module('app.handbook_section', [])
                         returnList.push(child)
             return returnList
 
+        translateSection = (item) ->
+            newItem = item
+            fetchHandbook.get(item._links.translations.href).then  (res) ->
+                    if res.status != 200 || typeof res != 'object'
+                        return
+                    newItem['translations'] = res.data
+                    return
+                , (error) ->
+                    console.log error
+                    return
+            return newItem
+
         sectionCompare = (a,b) ->
             if (a.version < b.version)
                 return -1;
@@ -54,9 +66,21 @@ angular.module('app.handbook_section', [])
                     #console.log data._embedded.items
                     $scope.ungroupSections = orderSections(data._embedded.items)
                     #console.log $scope.ungroupSections
-                    $scope.allSections     = ungroupSection($scope.ungroupSections)
+                    $scope.translateSections     = ungroupSection($scope.ungroupSections)
                     sectionDatas           = data._embedded.items
-                    #console.log $scope.allSections
+                    $scope.allSections = []
+                    #translate
+                    j = 0
+                    while j < $scope.translateSections.length
+                        # GET TRANSLATIONS
+                        #$scope.newSection = $scope.translateSections[j]
+                        item = translateSection($scope.translateSections[j])
+                        $scope.allSections.push(item)
+                        j++
+
+                    #console.log($scope.allSections)
+                    #return
+
 
                     $scope.parentSection = []
                     for i in [0 .. sectionDatas.length-1]
@@ -84,7 +108,9 @@ angular.module('app.handbook_section', [])
                 section.status = 'Active'
             else
                 section.status = 'Disabled'
+
             $scope.formSection = section
+            #console.log($scope.formSection)
             $scope.selectedSec = $index
 
             if section._links.parent
@@ -137,14 +163,16 @@ angular.module('app.handbook_section', [])
 
             sectionItem = {
                 section: {
-                    description : $scope.formSection.description
-                    title       : $scope.formSection.title
+                    description : $scope.formSection.translations['en_us'].description
+                    title       : $scope.formSection.translations['en_us'].title
                     version     : $scope.formSection.version
                     handbook    : $scope.handbookId
                     parent      : $scope.parentSelect
                     locale      : 'en_us'
                 }
             }
+
+            console.log(sectionItem)
 
             if $scope.formSection.status = 'Active'
                 sectionItem.section.active = true
