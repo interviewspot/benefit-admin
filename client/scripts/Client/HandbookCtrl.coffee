@@ -26,6 +26,7 @@ angular.module('app.handbooks', [])
                 "insurance" : '#/clients/' + data.id + '/insurance'
                 "healthcare": '#/clients/' + data.id + '/healthcare'
                 "imerchant" : '#/clients/' + data.id + '/imerchant'
+                "notifications" : '#/clients/' + data.id + '/notifications'
         # ------------------------------------------------------------------
 
         handbookService.get {org_id:$scope.clientId, hand_id:$scope.handbookId}, (data, getResponseHeaders) ->

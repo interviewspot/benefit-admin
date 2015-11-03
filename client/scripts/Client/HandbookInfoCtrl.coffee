@@ -11,6 +11,8 @@ angular.module('app.handbook_info', [])
         $scope.isNewHandBook = false
         $scope.isCreateHandbook = false
 
+
+
         # Default locale for create new
         $scope.handbook = {}
         $scope.handbook.locale = 'en-us'

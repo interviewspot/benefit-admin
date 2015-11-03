@@ -157,6 +157,18 @@ h2.ttl-tab {
         border: 1px solid red;
     }
 }
+.text-area {
+    width: 100%;
+    outline: none;
+    border: 1px solid #ddd;
+    @include border-radius(4px);
+    padding: 5px;
+    height: 100px;
+    resize: none;
+    &:focus {
+        border: 1px solid #999;
+    }
+}
 .td-chk {
     label {
         margin-bottom: 0;

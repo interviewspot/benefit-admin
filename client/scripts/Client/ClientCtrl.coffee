@@ -119,6 +119,7 @@ angular.module('app.clients', [])
             "insurance" : '#/clients/' + data.id + '/insurance'
             "healthcare": '#/clients/' + data.id + '/healthcare'
             "imerchant" : '#/clients/' + data.id + '/imerchant'
+            "notifications" : '#/clients/' + data.id + '/notifications'
 
       # manage users
       $scope.isEditUser = false

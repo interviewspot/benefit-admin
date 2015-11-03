@@ -91,6 +91,7 @@ angular.module('app', [
             'clients/client-policies',
             'clients/client-insurance',
             'clients/client-healthcare',
+            'clients/client-notifications',
             'clients/client-imerchant'
         ]
 
@@ -162,6 +163,10 @@ angular.module('app', [
             })
             .when('/clients/:clientId/handbooks/:handbookId', {
                 templateUrl: 'views/handbooks/handbook.html'
+            })
+            # Notifi TAB
+            .when('/clients/:clientId/notifications', {
+                templateUrl: 'views/clients/client-notifications.html'
             })
             # policies TAB
             .when('/clients/:clientId/policies', { 
