@@ -72,8 +72,8 @@ angular.module('app.clients', [])
         tabUrls : {}
       if $routeParams.clientId
         clientService.get {org_id:$routeParams.clientId}, (data, getResponseHeaders) ->
-          if data._links.handbook
-            fetchHandbook.get(data._links.handbook.href).then  (res) ->
+          if data._links.handbooks
+            fetchHandbook.get(data._links.handbooks.href).then  (res) ->
               $scope.handbooks = []
               $scope.handbooks.push(res.data)
           else
