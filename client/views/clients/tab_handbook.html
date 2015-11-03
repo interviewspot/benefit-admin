@@ -2,12 +2,13 @@
     <h2 class="ttl-tab">
         <span>Employee Handbook</span>
     </h2>
-    <!-- <div class="t-r marg-bot">
+    <div class="t-r marg-bot">
         <span class="btn btn-brown" ng-click="createNewVersion()">Create new version</span>
-    </div> -->
+    </div>
     <table class="table tbl table-hover table-striped" >
         <tbody>
             <tr>
+                <th class="text-center">Title</th>
                 <th class="text-center">Version</th>
                 <th class="text-center">Last Modified</th>
                 <th class="text-center">Language</th>
@@ -17,16 +18,18 @@
             <tr ng-repeat="hb_list in handbooks">
                 <td class="text-center">
                     <a href="#/clients/{{clientDetail.id}}/handbooks/{{hb_list.id}}">
-                        {{hb_list.version}}
+                        {{hb_list.title}}
                     </a>
                 </td>
-                <td class="text-center">{{hb_list.last_modified}}</td>
-                <td class="text-center">{{hb_list.language}}</td>
+                <td class="text-center">{{hb_list.version}}</td>
+                <td class="text-center">Not Available Yet!</td>
+                <td class="text-center">Not Available Yet!</td>
                 <td class="text-center">
-                    <input type="checkbox" 
+                    <!--input type="checkbox"
                         name="handbook_chk" 
                         id="{{hb_list.id}}" 
-                        ng-checked="hb_list.public"/>
+                        ng-checked="hb_list.public"/-->
+                    Not Available Yet!
                 </td>
                 <td class="text-center td-manage">
                     <a href="#/clients/{{clientDetail.id}}/handbooks/{{hb_list.id}}">

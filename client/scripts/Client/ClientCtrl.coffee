@@ -78,7 +78,6 @@ angular.module('app.clients', [])
                 $scope.isCreateHandbook = true
                 return
               $scope.handbooks = res.data._embedded.items
-
           else
               $scope.isCreateHandbook = true
 
