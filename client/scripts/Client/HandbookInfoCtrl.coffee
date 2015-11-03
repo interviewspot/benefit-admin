@@ -9,6 +9,11 @@ angular.module('app.handbook_info', [])
         $scope.clientId   = $routeParams.clientId
         $scope.handbookId = $routeParams.handbookId
         $scope.isNewHandBook = false
+        $scope.isCreateHandbook = false
+
+        # Default locale for create new
+        $scope.handbook = {}
+        $scope.handbook.locale = 'en-us'
 
         clientService.get {org_id:$scope.clientId}, (data, getResponseHeaders) ->
             $scope.clientDetail = data
@@ -16,6 +21,7 @@ angular.module('app.handbook_info', [])
         if $scope.isCreateHandbook == false
             handbookService.get {org_id:$scope.clientId, hand_id:$scope.handbookId}, (data, getResponseHeaders) ->
                 $scope.handbook = data
+                $scope.handbook.locale = 'en-us'
 
         $scope.isActive = (href) ->
             path = $location.path()
@@ -29,11 +35,18 @@ angular.module('app.handbook_info', [])
                 return false
 
             updateData = {
-                handbook: $scope.handbook
+                "handbook": {
+                    "version": $scope.handbook.version
+                    "title": $scope.handbook.title
+                    "year": $scope.handbook.year
+                    "description": $scope.handbook.description
+                    "organisation": $scope.clientId
+                    "locale": $scope.handbook.locale
+                }
             }
-            delete updateData.handbook._links
-            delete updateData.handbook.id
-            updateData.handbook['organisation'] = $scope.clientId
+
+            #console.log(updateData)
+
             handbookService.update {org_id:$scope.clientId, hand_id:$scope.handbookId}, updateData, (res) ->
                 # display message
                 $scope.infoUpdated = 'Update Success'
@@ -50,14 +63,16 @@ angular.module('app.handbook_info', [])
                 return false
 
             newData = {
-                handbook: {
-                    version: $scope.handbook.version
-                    title: $scope.handbook.title
-                    year: $scope.handbook.year
-                    description: $scope.handbook.description
-                    organisation: $scope.clientId
+                "handbook": {
+                    "version": $scope.handbook.version
+                    "title": $scope.handbook.title
+                    "year": $scope.handbook.year
+                    "description": $scope.handbook.description
+                    "organisation": $scope.clientId
+                    "locale": $scope.handbook.locale
                 }
             }
+
             handbookService.save {org_id:$scope.clientId}, newData, (res) ->
                 # display message
                 $scope.infoUpdated = 'Created New'
