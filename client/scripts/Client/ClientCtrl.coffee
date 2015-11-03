@@ -74,8 +74,11 @@ angular.module('app.clients', [])
         clientService.get {org_id:$routeParams.clientId}, (data, getResponseHeaders) ->
           if data._links.handbooks
             fetchHandbook.get(data._links.handbooks.href).then  (res) ->
-              $scope.handbooks = []
-              $scope.handbooks.push(res.data)
+              if typeof res.data._embedded != 'object' || !res.data._embedded.items
+                $scope.isCreateHandbook = true
+                return
+              $scope.handbooks = res.data._embedded.items
+
           else
               $scope.isCreateHandbook = true
 
