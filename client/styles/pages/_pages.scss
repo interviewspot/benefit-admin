@@ -952,10 +952,48 @@ h2.ttl-tab {
     color: #fff;
     padding-left: 15px;
     padding-right: 15px;
-    i {
-        margin-right: 10px;
-    }
     &:hover {
         background-color: #393939;
+    }
+}
+.notifi-itm {
+    border: 1px solid #ddd;
+    padding: 10px;
+    position: relative;
+    @include border-radius(5px);
+    margin-bottom: 10px;
+    h3.notifi-ttl {
+        margin: 0 0 10px 0;
+        font-size: 14px;
+        text-transform: uppercase;
+        font-weight: 800;
+    }
+    .notifi-date {
+        font-size: 12px;
+        margin-bottom: 10px;
+        i {
+            margin-right: 3px;
+            font-size: 14px;
+        }
+    }
+    .notifi-push {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        @include border-radius(50%);
+        @include transition(all 0.2s linear);
+        background-color: #CFAE79;
+        color: #fff;
+        display: inline-block;
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        i {
+            font-size: 12px;
+            line-height: 30px;
+        }
+        &:hover {
+            background-color: #9A7F53;
+        }
     }
 }
