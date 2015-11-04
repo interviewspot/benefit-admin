@@ -63,9 +63,8 @@ angular.module('app.handbook_section', [])
         $scope.loadSections = ->
             sectionService.query {org_id:$scope.clientId, hand_id:$scope.handbookId}, (data, getResponseHeaders) ->
                 if data._embedded.items.length > 0
-                    #console.log data._embedded.items
+
                     $scope.ungroupSections = orderSections(data._embedded.items)
-                    #console.log $scope.ungroupSections
                     $scope.translateSections     = ungroupSection($scope.ungroupSections)
                     sectionDatas           = data._embedded.items
                     $scope.allSections = []
@@ -78,10 +77,6 @@ angular.module('app.handbook_section', [])
                         $scope.allSections.push(item)
                         j++
 
-                    #console.log($scope.allSections)
-                    #return
-
-
                     $scope.parentSection = []
                     for i in [0 .. sectionDatas.length-1]
                         if !sectionDatas[i]._links.parent && sectionDatas[i]
@@ -93,22 +88,21 @@ angular.module('app.handbook_section', [])
                 else
                     $scope.ungroupSections = []
                     $scope.allSections = []
+
         $scope.loadSections()
-
-
-
-
-
 
         $scope.isUpdate = false
         $scope.isCreateSubSection = false
         $scope.selectedSec = null
+
         $scope.editSection = (section, $index) ->
             if section.active  = true
                 section.status = 'Active'
             else
                 section.status = 'Disabled'
 
+            section.title      = if section.translations['en_us'].title then section.translations['en_us'].title else section.title
+            section.description  = if section.translations['en_us'].description then section.translations['en_us'].description else section.description
             $scope.formSection = section
             #console.log($scope.formSection)
             $scope.selectedSec = $index
@@ -163,8 +157,8 @@ angular.module('app.handbook_section', [])
 
             sectionItem = {
                 section: {
-                    description : $scope.formSection.translations['en_us'].description
-                    title       : $scope.formSection.translations['en_us'].title
+                    description : ($scope.formSection.description)
+                    title       : ($scope.formSection.title)
                     version     : $scope.formSection.version
                     handbook    : $scope.handbookId
                     parent      : $scope.parentSelect
