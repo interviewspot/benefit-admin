@@ -13,7 +13,7 @@
                             <td>
                                 <input type="text"
                                 name="sec_title"
-                                ng-model="formSection.translations['en_us'].title"
+                                ng-model="formSection.title"
                                 required=""
                                 class="txt-ipt ipt"
                                 ng-class='{txt_err : (frm_section.sec_title.$invalid && frm_section.sec_title.$dirty)}'/>
@@ -56,7 +56,7 @@
                 </table>
                 <!-- END : TBL -->
                 <div text-angular
-                    ng-model="formSection.translations['en_us'].description"></div>
+                    ng-model="formSection.description"></div>
                 <!-- <textarea ui-tinymce data-ng-model="formSection.description"></textarea> -->
                 <!-- END : EDITOR -->
                 <p class="tp-20">
@@ -80,13 +80,14 @@
                     <div class="t-td text-center t-ct">Handbook Contents</div>
                 </div>
             </div>
+
             <div class="tbl-r sc-itm"
                 ng-repeat="(key, section) in allSections"
                 ng-class="{active: $index == selectedSec}"
                 ng-click="editSection(section, $index)">
                 <div class="t-tr" ng-if="!section._links.parent">
                     <div class="t-td t-3">Section {{section.no}}</div>
-                    <div class="t-td t-ct" ng-bind-html="section.translations['en_us'].title"></div>
+                    <div class="t-td t-ct" ng-bind-html="section.translations['en_us'].title ? section.translations['en_us'].title : section.title"></div>
                     <span class="tbl-remove" ng-click="deleteSection(section)">
                         <i class="fa fa-trash-o"></i>
                     </span>
@@ -94,7 +95,7 @@
                 <div class="t-tr" ng-if="section._links.parent">
                     <div class="t-td t-3">Sub-section</div>
                     <div class="t-td t-2">{{section.parent_no}}.{{section.no}}</div>
-                    <div class="t-td t-ct" ng-bind-html="section.translations['en_us'].title"></div>
+                    <div class="t-td t-ct" ng-bind-html="section.translations['en_us'].title ? section.translations['en_us'].title : section.title"></div>
                     <span class="tbl-remove" ng-click="deleteSection(section)">
                         <i class="fa fa-trash-o"></i>
                     </span>

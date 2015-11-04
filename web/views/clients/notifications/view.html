@@ -1,0 +1,45 @@
+<div class="client_notification_blk">
+    <div class="row">
+        <div class="col-md-8 col-sm-8 col-xs-12 notifi-list">
+            <h2 class="ttl-tab">
+                <span>List Notifications</span>
+            </h2>
+            <p>
+                <label>Title: </label>
+                <input type="text" class="txt-ipt">
+            </p>
+            <p>
+                <label>Content: </label>
+                <div text-angular ng-model="notifi.content"></div>
+            </p>
+            <p>
+                <a href="#" class="btn-brown">
+                    <i class="fa fa-paper-plane"></i>
+                    Push
+                </a>
+            </p>
+        </div>
+        <!-- END: LIST -->
+        <div class="col-md-4 col-sm-4 col-xs-12 notifi-form">
+            <h2 class="ttl-tab">
+                <span>Create Notifications</span>
+            </h2>
+            <form class="frm-nofiti" name="frm-nofiti">
+                <p>
+                    <label>Title: </label>
+                    <input type="text" class="txt-ipt" placeholder="Title">
+                </p>
+                <p>
+                    <label>Content: </label>
+                    <textarea class="text-area" placeholder="Content"></textarea>
+                </p>
+                <p class='text-center'>
+                    <button class="btn btn-brown">
+                        Create
+                    </button>
+                </p>
+            </form>
+        </div>
+        <!-- END: LIST -->
+    </div>
+</div>
