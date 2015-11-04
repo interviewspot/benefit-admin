@@ -53,6 +53,7 @@ angular.module('app', [
     'app.users'
     'app.users.services'
     'app.employee'
+    'app.notifications'
     'app.merchants.html' # REMOVE AFTER DONE LAYOUT
     #'app.offerdirective' # DIRECTIVE FORM OFFER
     #Khai bao app khi tao
@@ -184,7 +185,7 @@ angular.module('app', [
 
         # EMPLOYEE MANAGEMENT
         $routeProvider
-            .when('/employee', {
+            .when('/employees', {
                 templateUrl: 'views/employee/employee.html'
             })
 
