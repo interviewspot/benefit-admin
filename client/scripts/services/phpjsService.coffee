@@ -73,5 +73,18 @@ angular.module('app.phpjs.services', [])
 
             return result
 
+        # -------------------------------------
+        # getNOW_TimeStamp
+        getNOW_TimeStamp : () ->
+            now = new Date
+            now.getMonth() + 1 + '/' + now.getDate() + '/' + now.getFullYear() + ' ' + now.getHours() + ':' + (if now.getMinutes() < 10 then '0' + now.getMinutes() else now.getMinutes()) + ':' + (if now.getSeconds() < 10 then '0' + now.getSeconds() else now.getSeconds())
+
+        # -------------------------------------
+        # getTimeStamp
+        getTimeStamp : (ndate) ->
+            if ndate == 1
+                ndate = getNOW_TimeStamp()
+            dateAsDateObject = new Date(Date.parse(ndate))
+            dateAsDateObject.getTime()
     }
 ])

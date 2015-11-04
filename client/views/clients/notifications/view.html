@@ -4,81 +4,51 @@
             <h2 class="ttl-tab">
                 <span>List Notifications</span>
             </h2>
-            <div class="notifi-itm">
-                <h3 class="notifi-ttl">Notification 1</h3>
+            <div class="notifi-itm"
+                ng-class="{isnew : item.isNew}"
+                ng-repeat="(i, item) in notifis._embedded.items">
+                <h3 class="notifi-ttl">{{item.subject}}</h3>
                 <div class="notifi-date">
                     <i class="fa fa-clock-o"></i>
-                    12/06/2015 14:30:59
+                    {{getTime(item.created_at) | date:'h:mm a, MM.dd.yyyy'}}
                 </div>
-                <div class="notifi-content">
-                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters
-                </div>
-                <a href="#" class="notifi-push">
-                    <i class="fa fa-paper-plane"></i>
-                </a>
+                <div class="notifi-content">{{item.body}}</div>
+                <a title="Push"
+                    class="notifi-cmd notifi-push"
+                    ng-click="pushNotifi(item)"><i class="fa fa-paper-plane"></i></a>
+                <a title="Edit" class="notifi-cmd notifi-edit"><i class="fa fa-pencil"></i></a>
+                <a title="Delete" class="notifi-cmd notifi-remove"><i class="fa fa-remove"></i></a>
             </div>
-            <!-- END: ITEM -->
-            <div class="notifi-itm">
-                <h3 class="notifi-ttl">Notification 2</h3>
-                <div class="notifi-date">
-                    <i class="fa fa-clock-o"></i>
-                    14/06/2015 11:20:29
-                </div>
-                <div class="notifi-content">
-                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters
-                </div>
-                <a href="#" class="notifi-push">
-                    <i class="fa fa-paper-plane"></i>
-                </a>
-            </div>
-            <!-- END: ITEM -->
-            <div class="notifi-itm">
-                <h3 class="notifi-ttl">Notification 3</h3>
-                <div class="notifi-date">
-                    <i class="fa fa-clock-o"></i>
-                    12/06/2015 14:30:59
-                </div>
-                <div class="notifi-content">
-                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters
-                </div>
-                <a href="#" class="notifi-push">
-                    <i class="fa fa-paper-plane"></i>
-                </a>
-            </div>
-            <!-- END: ITEM -->
-            <div class="notifi-itm">
-                <h3 class="notifi-ttl">Notification 4</h3>
-                <div class="notifi-date">
-                    <i class="fa fa-clock-o"></i>
-                    14/06/2015 11:20:29
-                </div>
-                <div class="notifi-content">
-                    It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters
-                </div>
-                <a href="#" class="notifi-push">
-                    <i class="fa fa-paper-plane"></i>
-                </a>
-            </div>
-            <!-- END: ITEM -->
+            <p class="t-c" ng-if="!notifis._embedded.items">
+                No notification, create some?
+            </p>
         </div>
         <!-- END: LIST -->
         <div class="col-md-4 col-sm-4 col-xs-12 notifi-form">
             <h2 class="ttl-tab">
                 <span>Create Notifications</span>
             </h2>
-            <form class="frm-nofiti" name="frm-nofiti">
+            <form class="frm_nofiti" name="frm_nofiti">
                 <p>
                     <label>Title: </label>
-                    <input type="text" class="txt-ipt" placeholder="Title">
+                    <input
+                        type="text"
+                        class="txt-ipt"
+                        placeholder="Subject"
+                        ng-model="new_notifi.subject">
                 </p>
                 <p>
                     <label>Content: </label>
-                    <textarea class="text-area" placeholder="Content"></textarea>
+                    <textarea
+                        class="text-area"
+                        placeholder="Content"
+                        ng-model="new_notifi.body"></textarea>
                 </p>
-                <p class='text-center'>
-                    <button class="btn btn-brown">
-                        Create
-                    </button>
+                <p class="t-r">
+                    <button class="btn btn-brown"
+                        type="submit"
+                        ng-click="submitCreateNotifi()"
+                        >Create</button>
                 </p>
             </form>
         </div>

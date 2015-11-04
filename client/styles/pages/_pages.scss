@@ -962,6 +962,9 @@ h2.ttl-tab {
     position: relative;
     @include border-radius(5px);
     margin-bottom: 10px;
+    &.isnew {
+        background-color: #eee;
+    }
     h3.notifi-ttl {
         margin: 0 0 10px 0;
         font-size: 14px;
@@ -976,24 +979,41 @@ h2.ttl-tab {
             font-size: 14px;
         }
     }
-    .notifi-push {
+    .notifi-push, .notifi-cmd {
+        cursor: pointer;
         position: absolute;
-        top: 10px;
-        right: 10px;
         @include border-radius(50%);
         @include transition(all 0.2s linear);
-        background-color: #CFAE79;
+        background-color: #bbb;
         color: #fff;
         display: inline-block;
-        width: 30px;
-        height: 30px;
+        width: 20px;
+        height: 20px;
         text-align: center;
         i {
-            font-size: 12px;
-            line-height: 30px;
+            display: block;
+            font-size: 11px;
+            line-height: 20px;
+            cursor: pointer;
         }
         &:hover {
-            background-color: #9A7F53;
+            background-color: darken(#bbb, 10%);
         }
+    }
+    .notifi-push {
+        top: 10px;
+        right: 70px;
+        background-color: $brown;
+        &:hover {
+            background-color: darken($brown, 10%);
+        }
+    }
+    .notifi-edit {
+        top: 10px;
+        right: 40px;
+    }
+    .notifi-remove {
+        top: 10px;
+        right: 10px;
     }
 }
