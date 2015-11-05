@@ -5,19 +5,49 @@
                 <span>List Notifications</span>
             </h2>
             <div class="notifi-itm"
-                ng-class="{isnew : item.isNew}"
-                ng-repeat="(i, item) in notifis._embedded.items">
-                <h3 class="notifi-ttl">{{item.subject}}</h3>
-                <div class="notifi-date">
-                    <i class="fa fa-clock-o"></i>
-                    {{getTime(item.created_at) | date:'h:mm a, MM.dd.yyyy'}}
+                ng-repeat="(i, item) in notifis._embedded.items | orderBy : notifis._embedded.items.id">
+                <div class="noti-item"
+                ng-class="{isnew : item.isNew}">
+                    <h3 class="notifi-ttl">{{item.subject}}</h3>
+                    <div class="notifi-date">
+                        <i class="fa fa-clock-o"></i>
+                        {{getTime(item.created_at) | date:'h:mm a, MM.dd.yyyy'}}
+                    </div>
+                    <div class="notifi-content">{{item.body}}</div>
+                    <a title="Push"
+                        class="notifi-cmd notifi-push"
+                        ng-click="pushNotifi(item)"><i class="fa fa-paper-plane"></i></a>
+                    <a title="Edit"
+                    class="notifi-cmd notifi-edit"
+                    ng-click="showNotiForm(i)"><i class="fa fa-pencil"></i></a>
+                    <a title="Delete" class="notifi-cmd notifi-remove"><i class="fa fa-remove"></i></a>
                 </div>
-                <div class="notifi-content">{{item.body}}</div>
-                <a title="Push"
-                    class="notifi-cmd notifi-push"
-                    ng-click="pushNotifi(item)"><i class="fa fa-paper-plane"></i></a>
-                <a title="Edit" class="notifi-cmd notifi-edit"><i class="fa fa-pencil"></i></a>
-                <a title="Delete" class="notifi-cmd notifi-remove"><i class="fa fa-remove"></i></a>
+                <!-- END: ITEM LIST -->
+                <div class="noti-form" ng-show="notifis._embedded.items[i].shw_frm">
+                    <p>
+                        <label>Title: </label>
+                        <input
+                            type="text"
+                            class="txt-ipt"
+                            value="{{notifis._embedded.items[i].subject}}"
+                            ng-model="notifis._embedded.items[i].subject">
+                    </p>
+                    <p>
+                        <label>Content: </label>
+                        <textarea
+                            class="text-area"
+                            placeholder="Content"
+                            ng-model="notifis._embedded.items[i].body">
+                            {{notifis._embedded.items[i].body}}
+                            </textarea>
+                    </p>
+                    <p class="t-c">
+                        <button class="btn btn-brown"
+                            type="submit"
+                            ><i class="fa fa-save"></i>&nbsp;&nbsp;SAVE OFFER</button>
+                    </p>
+                </div>
+                <!-- END : FORM -->
             </div>
             <p class="t-c" ng-if="!notifis._embedded.items">
                 No notification, create some?

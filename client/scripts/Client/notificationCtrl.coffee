@@ -9,6 +9,7 @@ angular.module('app.notifications', [])
 # 3. GET STAMPTIME
 # 4. Create new message (Notification)
 # 5. PUSH Notifi to USERs
+# 6. Show Form Nofication edit
 # --------------------------------------------
 .controller('notificationCtrl', [
     '$scope'
@@ -110,6 +111,11 @@ angular.module('app.notifications', [])
                 , (error) ->
                     console.log error
             re_push(pushMsg)
+
+        # 6. Show Form Notification edit
+        $scope.showNotiForm = (key) ->
+            $scope.notifis._embedded.items[key]['shw_frm'] = !$scope.notifis._embedded.items[key]['shw_frm']
+            return
 
 
         # x. ONLOAD LIST USERS
