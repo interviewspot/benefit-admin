@@ -5,7 +5,7 @@
                 <span>List Notifications</span>
             </h2>
             <div class="notifi-itm"
-                ng-repeat="(i, item) in notifis._embedded.items | orderBy : notifis._embedded.items.id">
+                ng-repeat="(i, item) in notifis._embedded.items">
                 <div class="noti-item"
                 ng-class="{isnew : item.isNew}">
                     <h3 class="notifi-ttl">{{item.subject}}</h3>
@@ -20,7 +20,7 @@
                     <a title="Edit"
                     class="notifi-cmd notifi-edit"
                     ng-click="showNotiForm(i)"><i class="fa fa-pencil"></i></a>
-                    <a title="Delete" class="notifi-cmd notifi-remove"><i class="fa fa-remove"></i></a>
+                    <a title="Delete" ng-click="deleteNotifi(i)" class="notifi-cmd notifi-remove"><i class="fa fa-remove"></i></a>
                 </div>
                 <!-- END: ITEM LIST -->
                 <div class="noti-form" ng-show="notifis._embedded.items[i].shw_frm">
@@ -29,7 +29,6 @@
                         <input
                             type="text"
                             class="txt-ipt"
-                            value="{{notifis._embedded.items[i].subject}}"
                             ng-model="notifis._embedded.items[i].subject">
                     </p>
                     <p>
@@ -38,12 +37,12 @@
                             class="text-area"
                             placeholder="Content"
                             ng-model="notifis._embedded.items[i].body">
-                            {{notifis._embedded.items[i].body}}
                             </textarea>
                     </p>
                     <p class="t-c">
                         <button class="btn btn-brown"
                             type="submit"
+                            ng-click="submitUpdateNotifi(i)"
                             ><i class="fa fa-save"></i>&nbsp;&nbsp;SAVE OFFER</button>
                     </p>
                 </div>
