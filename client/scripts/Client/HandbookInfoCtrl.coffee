@@ -53,10 +53,11 @@ angular.module('app.handbook_info', [])
                     "description"  : $scope.handbook.translations[$scope.handbook.locale].description
                     "organisation" : $scope.clientId
                     "locale"       : $scope.handbook.locale
+                    "active"       : $scope.handbook.active
                 }
             }
 
-            #console.log(updateData)
+            console.log(updateData)
 
             handbookService.update {org_id:$scope.clientId, hand_id:$scope.handbookId}, updateData, (res) ->
                 # display message
@@ -81,6 +82,7 @@ angular.module('app.handbook_info', [])
                     "description"  : $scope.handbook.description
                     "organisation" : $scope.clientId
                     "locale"       : $scope.handbook.locale
+                    "active"       : $scope.handbook.active
                 }
             }
 
