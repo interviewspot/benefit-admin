@@ -78,6 +78,7 @@ angular.module('app.clients', [])
                 $scope.isCreateHandbook = true
                 return
               $scope.handbooks = res.data._embedded.items
+              #console.log($scope.handbooks)
 
               # GET TRANSLATIONS
               angular.forEach $scope.handbooks, (item, i) ->
