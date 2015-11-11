@@ -121,12 +121,14 @@ angular.module('app.users', [])
         _URL =
             list   : config.path.baseURL + config.path.users
             detail : config.path.baseURL + config.path.users + '/'
+            tags   : config.path.baseURL + '/tags'
 
         _getUser = () ->
             Users.get(_URL.detail + $scope.userId).then  (res) ->
                 if res.status != 200 || typeof res != 'object'
                     return
                 $scope.user = res.data
+                $scope.user.employee_class = []
                 if($scope.user.birthday == "-0001-11-30T00:00:00+0655")
                     $scope.user.birthday = ""
                 if($scope.user.date_added == "-0001-11-30T00:00:00+0655")
@@ -213,6 +215,24 @@ angular.module('app.users', [])
             $event.preventDefault()
             $event.stopPropagation()
             $scope.datepickerOpened = true
+
+        #get tags list
+        $scope.tags = {}
+        $scope.tags.employee_class = [{"text":"Tag 1"},{"text":"Tag 2"}]
+        $scope.tags.employee_function = []
+        _getTags = () ->
+            Users.get(_URL.tags).then  (res) ->
+                if res.status != 200 || typeof res != 'object'
+                    return
+                angular.forEach res.data._embedded.items, (tag)->
+                    if tag.employee_class && tag.active
+                        $scope.tags.employee_class.push({"text" : tag.name})
+                    if tag.employee_function && tag.active
+                        $scope.tags.employee_function.push({text: tag.name})
+                return
+            , (error) ->
+                console.log error
+        #_getTags()
 
         # 3. DELETE USER
         $scope.deleteUser = () ->

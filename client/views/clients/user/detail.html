@@ -68,10 +68,9 @@
                     </tr>
                     <tr>
                         <th class="td-30">Employee Class</th>
-                        <td><input type="text"
-                                value="Not Available Yet!"
-                                class="txt-ipt"
-                                ng-class="{txt_disabled : !isDisable}"></td>
+                        <td><tags-input class="txt-ipt" ng-model="user.employee_class" add-from-autocomplete-only="false">
+                          <auto-complete source="tags.employee_class"></auto-complete>
+                        </tags-input>{{tags.employee_class}}</td>
                     </tr>
                     <tr>
                         <th class="td-30">Function</th>
