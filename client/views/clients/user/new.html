@@ -104,13 +104,23 @@
                     <tr>
                         <th class="td-20">Employee Class</th>
                         <td>
-                            <input type="text" name="txt-employee" class="ipt-user" value="Not Available Yet!">
+                            <tags-input class="txt-ipt"
+                                ng-model="user.employee_class"
+                                display-property="name"
+                                add-from-autocomplete-only="true">
+                              <auto-complete source="tags.getEmployeeClass($query)"></auto-complete>
+                            </tags-input>
                         </td>
                     </tr>
                     <tr>
                         <th class="td-20">Function</th>
                         <td>
-                            <input type="text" name="txt-function"  class="ipt-user" value="Not Available Yet!">
+                            <tags-input class="txt-ipt"
+                                ng-model="user.employee_function"
+                                display-property="name"
+                                add-from-autocomplete-only="true">
+                              <auto-complete source="tags.getEmployeeFunction($query)"></auto-complete>
+                            </tags-input>
                         </td>
                     </tr>
                     <tr>

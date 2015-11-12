@@ -3,8 +3,8 @@
 angular.module('app.clients', [])
 
 .controller('clientCtrl', [
-    '$scope', '$filter' , 'fetchTabData', 'fakeData', '$location', 'clientService', 'fetchHandbook', '$routeParams', '$route', 'config', 'Images', 'php', 'ClientAPI', 'Companies', 'Clients',
-    ($scope, $filter, fetchTabData, fakeData, $location, clientService, fetchHandbook, $routeParams, $route, config, Images, php, ClientAPI, Companies, Clients) ->
+    '$scope', '$filter' , 'fetchTabData', 'fakeData', '$location', 'clientService', 'fetchHandbook', '$routeParams', '$route', 'config', 'Images', 'php', 'ClientAPI', 'Companies', 'Clients', 'handbookService',
+    ($scope, $filter, fetchTabData, fakeData, $location, clientService, fetchHandbook, $routeParams, $route, config, Images, php, ClientAPI, Companies, Clients, handbookService) ->
     # filter
 
       _URL_clients =
@@ -67,6 +67,31 @@ angular.module('app.clients', [])
 
       $scope.createNewVersion = ->
         $scope.isCreateHandbook = not $scope.isCreateHandbook
+      $scope.changePublished = (handbook, clientId)->
+        handbook.locale = 'en-us'
+        #console.log(handbook)
+        updateData = {
+            "handbook": {
+                "version"      : handbook.version
+                "title"        : handbook.translations[handbook.locale].title
+                "year"         : handbook.year
+                "description"  : handbook.translations[handbook.locale].description
+                "organisation" : clientId
+                "locale"       : handbook.locale
+                "active"       : handbook.active
+            }
+        }
+
+        #onsole.log(updateData)
+
+        handbookService.update {org_id:clientId, hand_id:handbook.id}, updateData, (res) ->
+            # display message
+            $scope.infoUpdated = 'Update Success'
+            #$timeout ()->
+            #    $scope.infoUpdated = null
+            #, 500
+        , (error) ->
+            $scope.infoUpdated = error.status + ': Error, refresh & try again !'
 
       $scope.ClientPage =
         tabUrls : {}

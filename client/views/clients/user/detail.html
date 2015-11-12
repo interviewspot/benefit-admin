@@ -72,9 +72,10 @@
                             <tags-input class="txt-ipt"
                                 ng-model="user.employee_class"
                                 display-property="name"
-                                add-from-autocomplete-only="true">
+                                add-from-autocomplete-only="true"
+                                replace-spaces-with-dashes="false">
                               <auto-complete source="tags.getEmployeeClass($query)"></auto-complete>
-                            </tags-input>
+                            </tags-input><pre>{{user.employee_class | json}}</pre>
                         </td>
                     </tr>
                     <tr>
@@ -82,9 +83,10 @@
                         <td><tags-input class="txt-ipt"
                                 ng-model="user.employee_function"
                                 display-property="name"
-                                add-from-autocomplete-only="true">
+                                add-from-autocomplete-only="true"
+                                replace-spaces-with-dashes="false">
                               <auto-complete source="tags.getEmployeeFunction($query)"></auto-complete>
-                            </tags-input></td>
+                            </tags-input><pre>{{user.employee_function | json}}</pre></td>
                     </tr>
                     <tr>
                         <th class="td-30">Office no.</th>
