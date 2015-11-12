@@ -1022,3 +1022,17 @@ h2.ttl-tab {
     padding: 10px;
     margin-bottom: 10px;
 }
+
+
+/* TAGS */
+tags-input {
+    .tags {
+        .tag-item {
+            border: none;
+            background: #ddd;
+            &.selected {
+                background: #bbb;
+            }
+        }
+    }
+}
