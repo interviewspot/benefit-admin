@@ -223,6 +223,7 @@ angular.module('app.users', [])
                 keyTag = "tag" + numTag
                 $scope.updateTags.position.tags[keyTag] = {}
                 $scope.updateTags.position.tags[keyTag].name = tag.name
+                $scope.updateTags.position.tags[keyTag].active = true
                 $scope.updateTags.position.tags[keyTag].employee_class = 1
                 $scope.updateTags.position.tags[keyTag].employee_function = 0
                 numTag++
@@ -231,6 +232,7 @@ angular.module('app.users', [])
                 keyTag = "tag" + numTag
                 $scope.updateTags.position.tags[keyTag] = {}
                 $scope.updateTags.position.tags[keyTag].name = tag.name
+                $scope.updateTags.position.tags[keyTag].active = true
                 $scope.updateTags.position.tags[keyTag].employee_class = 0
                 $scope.updateTags.position.tags[keyTag].employee_function = 1
                 numTag++
@@ -270,27 +272,8 @@ angular.module('app.users', [])
             $event.stopPropagation()
             $scope.datepickerOpened = true
 
-        #get tags list
+        # get tags list
         $scope.tags = {}
-        $scope.tags.getTagData = (t_query) ->
-            deferred = $q.defer();
-            temp = [
-              { "name": "Captain America", "realname": "Steven Rogers", "city": "New York", "picture": "captainamerica.png" },
-              { "name": "Batman", "realname": "Bruce Wayne", "city": "Gotham City", "picture": "batman.png" },
-              { "name": "Aquaman", "realname": "Arthur Curry", "city": "Atlantis", "picture": "aquaman.png" },
-              { "name": "Captain Marvel", "realname": "Billy Batson", "city": "Fawcett City", "picture": "captainmarvel.png" },
-              { "name": "Dead Pool", "realname": "Wade Wilson", "city": "Sedona", "picture": "deadpool.png" },
-              { "name": "Flash", "realname": "Barry Allen", "city": "Central City", "picture": "flash.png" },
-              { "name": "Green Lantern", "realname": "Hal Jordan", "city": "Coast City", "picture": "greenlantern.png" },
-              { "name": "Iron Man", "realname": "Tony Stark", "city": "New York", "picture": "ironman.png" },
-              { "name": "Robin", "realname": "Dick Grayson", "city": "Gotham City", "picture": "robin.png" },
-              { "name": "Spiderman", "realname": "Peter Parker", "city": "New York", "picture": "spiderman.png" },
-              { "name": "Superman", "realname": "Clark Kent", "city": "Metropolis", "picture": "superman.png" },
-              { "name": "Wonder Woman", "realname": "Diana Prince", "city": "Paradise Island", "picture": "wonderwoman.png" },
-              { "name": "The Punisher", "realname": "Frank Castle", "city": "New York", "picture": "thepunisher.png" }
-            ]
-            deferred.resolve(temp);
-            deferred.promise;
 
         $scope.tags.employee_class    = []
         $scope.tags.employee_function = []
@@ -411,6 +394,7 @@ angular.module('app.users', [])
                                 keyTag = "tag" + numTag
                                 newContact.position.tags[keyTag] = {}
                                 newContact.position.tags[keyTag].name = tag.name
+                                newContact.position.tags[keyTag].active = true
                                 newContact.position.tags[keyTag].employee_class = 1
                                 newContact.position.tags[keyTag].employee_function = 0
                                 numTag++
@@ -419,6 +403,7 @@ angular.module('app.users', [])
                                 keyTag = "tag" + numTag
                                 newContact.position.tags[keyTag] = {}
                                 newContact.position.tags[keyTag].name = tag.name
+                                newContact.position.tags[keyTag].active = true
                                 newContact.position.tags[keyTag].employee_class = 0
                                 newContact.position.tags[keyTag].employee_function = 1
                                 numTag++

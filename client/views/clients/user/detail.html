@@ -72,7 +72,6 @@
                             <tags-input class="txt-ipt"
                                 ng-model="user.employee_class"
                                 display-property="name"
-                                add-from-autocomplete-only="true"
                                 replace-spaces-with-dashes="false">
                               <auto-complete source="tags.getEmployeeClass($query)"></auto-complete>
                             </tags-input>
@@ -83,7 +82,6 @@
                         <td><tags-input class="txt-ipt"
                                 ng-model="user.employee_function"
                                 display-property="name"
-                                add-from-autocomplete-only="true"
                                 replace-spaces-with-dashes="false">
                               <auto-complete source="tags.getEmployeeFunction($query)"></auto-complete>
                             </tags-input></td>
@@ -128,7 +126,7 @@
                                 ng-class="{txt_disabled : !isDisable}"></td>
                     </tr>
                     <tr>
-                        <th class="td-30">Birthday <span class="red">*</span></th>
+                        <th class="td-30">Birthday</th>
                         <td><input type="text"
                                     name="birthday"
                                     class="ipt-user"
@@ -139,10 +137,7 @@
                                     show-button-bar="false"
                                     ng-click="openDatepicker($event)"
                                     ng-class="{txt_disabled : !isDisable}"
-                                    required/>
-                            <p style="color:red">
-                                <span ng-show="frm_updateuser.birthday.$invalid  && frm_updateuser.birthday.$dirty">Birthday is required.</span>
-                            </p>
+                                    />
                         </td>
                     </tr>
                     <tr>
