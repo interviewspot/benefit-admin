@@ -238,7 +238,7 @@ angular.module('app.users', [])
             deferred.resolve(temp);
             deferred.promise;
 
-        $scope.tags.employee_class    = [{"text":"Tag 1"},{"text":"Tag 2"}]
+        $scope.tags.employee_class    = []
         $scope.tags.employee_function = []
         _getTags = () ->
             Users.get(_URL.tags).then  (res) ->
@@ -246,13 +246,23 @@ angular.module('app.users', [])
                     return
                 angular.forEach res.data._embedded.items, (tag)->
                     if tag.employee_class && tag.active
-                        $scope.tags.employee_class.push({"text" : tag.name})
+                        $scope.tags.employee_class.push({name : tag.name})
                     if tag.employee_function && tag.active
-                        $scope.tags.employee_function.push({text: tag.name})
+                        $scope.tags.employee_function.push({name : tag.name})
                 return
             , (error) ->
                 console.log error
-        #_getTags()
+        _getTags()
+
+        $scope.tags.getEmployeeClass = (query) ->
+            deferred = $q.defer();
+            deferred.resolve($scope.tags.employee_class);
+            deferred.promise;
+
+        $scope.tags.getEmployeeFunction = (query) ->
+            deferred = $q.defer();
+            deferred.resolve($scope.tags.employee_function);
+            deferred.promise;
 
         # 3. DELETE USER
         $scope.deleteUser = () ->

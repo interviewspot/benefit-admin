@@ -71,17 +71,20 @@
                         <td>
                             <tags-input class="txt-ipt"
                                 ng-model="user.employee_class"
-                                display-property="name">
-                              <auto-complete source="tags.getTagData($query)"></auto-complete>
+                                display-property="name"
+                                add-from-autocomplete-only="true">
+                              <auto-complete source="tags.getEmployeeClass($query)"></auto-complete>
                             </tags-input>
-                        <pre>{{tags.employee_class | json}}</pre></td>
+                        </td>
                     </tr>
                     <tr>
                         <th class="td-30">Function</th>
-                        <td><input type="text"
-                                value="Not Available Yet!"
-                                class="txt-ipt"
-                                ng-class="{txt_disabled : !isDisable}"></td>
+                        <td><tags-input class="txt-ipt"
+                                ng-model="user.employee_function"
+                                display-property="name"
+                                add-from-autocomplete-only="true">
+                              <auto-complete source="tags.getEmployeeFunction($query)"></auto-complete>
+                            </tags-input></td>
                     </tr>
                     <tr>
                         <th class="td-30">Office no.</th>
