@@ -71,17 +71,20 @@
                         <td>
                             <tags-input class="txt-ipt"
                                 ng-model="user.employee_class"
-                                display-property="name">
-                              <auto-complete source="tags.getTagData($query)"></auto-complete>
+                                display-property="name"
+                                replace-spaces-with-dashes="false">
+                              <auto-complete source="tags.getEmployeeClass($query)"></auto-complete>
                             </tags-input>
-                        <pre>{{tags.employee_class | json}}</pre></td>
+                        </td>
                     </tr>
                     <tr>
                         <th class="td-30">Function</th>
-                        <td><input type="text"
-                                value="Not Available Yet!"
-                                class="txt-ipt"
-                                ng-class="{txt_disabled : !isDisable}"></td>
+                        <td><tags-input class="txt-ipt"
+                                ng-model="user.employee_function"
+                                display-property="name"
+                                replace-spaces-with-dashes="false">
+                              <auto-complete source="tags.getEmployeeFunction($query)"></auto-complete>
+                            </tags-input></td>
                     </tr>
                     <tr>
                         <th class="td-30">Office no.</th>
@@ -123,7 +126,7 @@
                                 ng-class="{txt_disabled : !isDisable}"></td>
                     </tr>
                     <tr>
-                        <th class="td-30">Birthday <span class="red">*</span></th>
+                        <th class="td-30">Birthday</th>
                         <td><input type="text"
                                     name="birthday"
                                     class="ipt-user"
@@ -134,10 +137,7 @@
                                     show-button-bar="false"
                                     ng-click="openDatepicker($event)"
                                     ng-class="{txt_disabled : !isDisable}"
-                                    required/>
-                            <p style="color:red">
-                                <span ng-show="frm_updateuser.birthday.$invalid  && frm_updateuser.birthday.$dirty">Birthday is required.</span>
-                            </p>
+                                    />
                         </td>
                     </tr>
                     <tr>

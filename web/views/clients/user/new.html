@@ -104,17 +104,27 @@
                     <tr>
                         <th class="td-20">Employee Class</th>
                         <td>
-                            <input type="text" name="txt-employee" class="ipt-user" value="Not Available Yet!">
+                            <tags-input class="txt-ipt"
+                                ng-model="user_tags.employee_class"
+                                display-property="name"
+                                replace-spaces-with-dashes="false">
+                              <auto-complete source="tags.getEmployeeClass($query)"></auto-complete>
+                            </tags-input>
                         </td>
                     </tr>
                     <tr>
                         <th class="td-20">Function</th>
                         <td>
-                            <input type="text" name="txt-function"  class="ipt-user" value="Not Available Yet!">
+                            <tags-input class="txt-ipt"
+                                ng-model="user_tags.employee_function"
+                                display-property="name"
+                                replace-spaces-with-dashes="false">
+                              <auto-complete source="tags.getEmployeeFunction($query)"></auto-complete>
+                            </tags-input>
                         </td>
                     </tr>
                     <tr>
-                        <th class="td-20">Birthday <span class="red">*</span></th>
+                        <th class="td-20">Birthday</th>
                         <td>
                             <input type="text"
                                     name="birthday"
@@ -125,10 +135,7 @@
                                     close-text="Close"
                                     show-button-bar="false"
                                     ng-click="openDatepicker($event)"
-                                    required />
-                            <p style="color:red">
-                                <span ng-show="frm_adduser.birthday.$invalid  && frm_adduser.birthday.$dirty">Birthday is required.</span>
-                            </p>
+                                     />
                         </td>
                     </tr>
                     <tr>
