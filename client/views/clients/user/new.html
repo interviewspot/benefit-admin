@@ -105,9 +105,10 @@
                         <th class="td-20">Employee Class</th>
                         <td>
                             <tags-input class="txt-ipt"
-                                ng-model="user.employee_class"
+                                ng-model="user_tags.employee_class"
                                 display-property="name"
-                                add-from-autocomplete-only="true">
+                                add-from-autocomplete-only="true"
+                                replace-spaces-with-dashes="false">
                               <auto-complete source="tags.getEmployeeClass($query)"></auto-complete>
                             </tags-input>
                         </td>
@@ -116,9 +117,10 @@
                         <th class="td-20">Function</th>
                         <td>
                             <tags-input class="txt-ipt"
-                                ng-model="user.employee_function"
+                                ng-model="user_tags.employee_function"
                                 display-property="name"
-                                add-from-autocomplete-only="true">
+                                add-from-autocomplete-only="true"
+                                replace-spaces-with-dashes="false">
                               <auto-complete source="tags.getEmployeeFunction($query)"></auto-complete>
                             </tags-input>
                         </td>

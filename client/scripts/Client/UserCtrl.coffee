@@ -48,9 +48,16 @@ angular.module('app.users', [])
                                     return
                                 #console.log(res)
                                 res.data.position_id = itemInstance.id
+                                Users.get(_URL_users.list + '/' + itemInstance.id + '/tags').then  (tag) ->
+                                    if tag.data._embedded.items.length > 0
+                                        tag_lst = []
+                                        angular.forEach tag.data._embedded.items, (tag)->
+                                            if(tag.employee_class)
+                                                tag_lst.push(tag.name)
+                                        res.data.employee_class = tag_lst.join(', ')
+                                , (error) ->
+                                    console.log error
                                 $scope.users.items.push(res.data)
-                                #$scope.users = res.data
-                                #$scope.users.items = res.data._embedded.items
                                 return
                             , (error) ->
                                 console.log error
@@ -137,6 +144,8 @@ angular.module('app.users', [])
                     if res.status != 200 || typeof res != 'object'
                         return
                     $scope.user = res.data
+                    $scope.user.employee_class = []
+                    $scope.user.employee_function = []
                     $scope.updateTags.position.employee = $scope.user.id
                     if($scope.user.birthday == "-0001-11-30T00:00:00+0655")
                         $scope.user.birthday = ""
@@ -144,7 +153,15 @@ angular.module('app.users', [])
                         $scope.user.date_added = ""
                     else
                         $scope.user.date_added = $filter('date')(new Date($scope.user.date_added), 'MM/dd/yyyy')
-                    console.log res.data
+                    #console.log res.data
+                    # get tags for user
+                    Users.get(_URL.detail + $scope.userId + '/tags').then  (tag) ->
+                        #console.log(tag.data._embedded.items)
+                        if tag.data._embedded.items.length > 0
+                            $scope.user.employee_class = $filter('filter')(tag.data._embedded.items, {employee_class:true})
+                            $scope.user.employee_function = $filter('filter')(tag.data._embedded.items,{employee_function:true})
+                    , (error) ->
+                        console.log error
                     return
                 , (error) ->
                     console.log error
@@ -354,7 +371,7 @@ angular.module('app.users', [])
             if typeof callback != 'function'
                 return
             get_result = null
-            Users.get(_URL.list + '?search=user.' + entry + ':' + searchVal).then  (res) ->
+            Users.get(_URL.detail + '?search=user.' + entry + ':' + searchVal).then  (res) ->
                 if res.status == 200 && typeof res == 'object'
                     get_result = res.data
                     callback(get_result)
@@ -385,6 +402,28 @@ angular.module('app.users', [])
                                     "handbook_contact" : true
                                 }
                             }
+
+                            # add tags
+                            newContact.position.tags = {}
+                            numTag = 1
+
+                            angular.forEach $scope.user_tags.employee_class, (tag)->
+                                keyTag = "tag" + numTag
+                                newContact.position.tags[keyTag] = {}
+                                newContact.position.tags[keyTag].name = tag.name
+                                newContact.position.tags[keyTag].employee_class = 1
+                                newContact.position.tags[keyTag].employee_function = 0
+                                numTag++
+
+                            angular.forEach $scope.user_tags.employee_function, (tag)->
+                                keyTag = "tag" + numTag
+                                newContact.position.tags[keyTag] = {}
+                                newContact.position.tags[keyTag].name = tag.name
+                                newContact.position.tags[keyTag].employee_class = 0
+                                newContact.position.tags[keyTag].employee_function = 1
+                                numTag++
+
+                            #console.log(newContact)
 
                             # CREATE POSITION USER
                             ContactService.save {org_id:$scope.clientId}, newContact, (res)->
