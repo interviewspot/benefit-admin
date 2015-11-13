@@ -109,7 +109,7 @@ angular.module('app.notifications', [])
                             , (error) ->
                                 alert(error.data.message)
                         else
-                            alert('Send message is completed!')
+                            alert('The message has been delivered to employees in the company.')
                 , (error) ->
                     console.log error
             re_push(pushMsg)
