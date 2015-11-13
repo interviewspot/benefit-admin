@@ -103,7 +103,7 @@ angular.module('app.notifications', [])
                 aREST.get(notifi._links.push.href).then  (res) ->
                     if typeof res == 'object' && res.status == 200
                         pMsg.push.current = res.data.current + 1
-                        if pMsg.push.current < res.data.total
+                        if pMsg.push.current <= res.data.total
                             aREST.put(notifi._links.push.href, pMsg).then  (res) ->
                                 re_push(pMsg)
                             , (error) ->
