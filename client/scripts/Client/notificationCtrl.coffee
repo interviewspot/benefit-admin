@@ -81,10 +81,13 @@ angular.module('app.notifications', [])
                 if typeof res == 'object' && res.status == 201
                     newMsg.message['created_at'] = 1
                     newMsg.message['isNew']      = 1
-                    $scope.notifis._embedded.items.unshift newMsg.message
-                    $timeout ()->
-                        $scope.notifis._embedded.items[0].isNew = 0
-                    , 3000
+                    if $scope.notifis._embedded.items
+                        $scope.notifis._embedded.items.unshift newMsg.message
+                        $timeout ()->
+                            $scope.notifis._embedded.items[0].isNew = 0
+                        , 3000
+                    else
+                        location.reload()
             , (error) ->
                 console.log error
 
@@ -99,14 +102,14 @@ angular.module('app.notifications', [])
             re_push = (pMsg) ->
                 aREST.get(notifi._links.push.href).then  (res) ->
                     if typeof res == 'object' && res.status == 200
-                        console.log res.data
+                        pMsg.push.current = res.data.current
+                        console.log pMsg.push.current
+                        console.log res.data.total
                         if pMsg.push.current < res.data.total
                             pMsg.push.current = res.data.current++
                             aREST.put(notifi._links.push.href, pMsg).then  (res) ->
-                                console.log res
                                 re_push(pMsg)
                             , (error) ->
-                                console.log error
                                 alert(error.data.message)
                         else
                             return
