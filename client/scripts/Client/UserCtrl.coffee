@@ -264,7 +264,7 @@ angular.module('app.users', [])
 
                 _searchUserbyEntry('code', newData.user.code, checkError)
 
-        #open date picker
+        # 2.1 open date picker
         $scope.openDatepicker  = ($event) ->
             $event.preventDefault()
             $event.stopPropagation()
