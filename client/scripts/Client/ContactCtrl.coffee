@@ -19,17 +19,18 @@ angular.module('app.contacts', [])
             ContactService.get {org_id:$routeParams.clientId}, (data, getResponseHeaders) ->
                 if data._embedded.items.length
                     $scope.contacts = []
-                    for i, item of data._embedded.items
+
+                    angular.forEach data._embedded.items, (item, i) ->
+                        $scope.contacts[i] = {}
                         ((itemInstance) ->
                             fetchContact.get(itemInstance._links.employee.href).then  (res) ->
+                                $scope.contacts[i]['position'] = itemInstance
+                                $scope.contacts[i]['user']     = res.data
+                                $scope.contacts[i]['alphabet'] = if res.data.first_name then res.data.first_name.charAt(0).toLowerCase() else res.data.username.charAt(0).toLowerCase()
 
-                                $scope.contacts.push({
-                                    'position' : itemInstance
-                                    'user'     : res.data
-                                    'alphabet' : if res.data.first_name then res.data.first_name.charAt(0).toLowerCase() else res.data.username.charAt(0).toLowerCase()
-                                })
+                                fetchContact.get(itemInstance._links.tags.href).then  (res) ->
+                                    $scope.contacts[i]['tags'] = res.data
                         )(item)
-
                 return
 
         if $routeParams.clientId

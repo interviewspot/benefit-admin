@@ -1036,3 +1036,21 @@ tags-input {
         }
     }
 }
+hr.line {
+    margin: 10px 0;
+    background: #ddd;
+    height: 1px;
+    border: none;
+}
+.l-tags {
+    .tag {
+        &:after {
+            content: ',';
+        }
+        &:last-child {
+            &:after {
+                content: '.';
+            }
+        }
+    }
+}
