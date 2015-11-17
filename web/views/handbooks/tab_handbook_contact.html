@@ -73,7 +73,11 @@
                 </div>
                 <!-- END: CONTROL -->
                 <h3>{{contact.user.first_name}}  {{contact.user.last_name}}</h3>
-                <p class="ctc-add">Singapore, {{contact.position.title}}</p>
+                <p class="ctc-add l-tags">Singapore,
+                    <span class="tag"
+                        ng-repeat="tag in contact.tags._embedded.items | filter:{employee_function:true} | filter:{active:true}">
+                        {{tag.name}}
+                    </span></p>
                 <p ng-if="contact.user.mobile_no">
                     <b>M:</b> {{contact.user.mobile_no}}
                 </p>
@@ -88,13 +92,6 @@
                     <b>Class:</b>
                     <span class="tag"
                         ng-repeat="tag in contact.tags._embedded.items | filter:{employee_class:true} | filter:{active:true}">
-                        {{tag.name}}
-                    </span>
-                </p>
-                <p class="l-tags">
-                    <b>Function:</b>
-                    <span class="tag"
-                        ng-repeat="tag in contact.tags._embedded.items | filter:{employee_function:true} | filter:{active:true}">
                         {{tag.name}}
                     </span>
                 </p>
