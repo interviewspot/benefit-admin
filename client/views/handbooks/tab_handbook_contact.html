@@ -77,7 +77,12 @@
                     <span class="tag"
                         ng-repeat="tag in contact.tags._embedded.items | filter:{employee_function:true} | filter:{active:true}">
                         {{tag.name}}
-                    </span></p>
+                    </span>
+                    <span class="tag"
+                        ng-repeat="tag in contact.tags._embedded.items | filter:{employee_class:true} | filter:{active:true}">
+                        {{tag.name}}
+                    </span>
+                </p>
                 <p ng-if="contact.user.mobile_no">
                     <b>M:</b> {{contact.user.mobile_no}}
                 </p>
@@ -86,14 +91,6 @@
                 </p>
                 <p ng-if="contact.user.email">
                     <b>E:</b> {{contact.user.email}}
-                </p>
-                <hr class="line" />
-                <p class="l-tags">
-                    <b>Class:</b>
-                    <span class="tag"
-                        ng-repeat="tag in contact.tags._embedded.items | filter:{employee_class:true} | filter:{active:true}">
-                        {{tag.name}}
-                    </span>
                 </p>
             </div>
         </div>
