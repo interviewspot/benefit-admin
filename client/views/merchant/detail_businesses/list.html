@@ -1,0 +1,56 @@
+<div class="page-tab page-client-user" data-ng-controller="BusinessesCtrl">
+    <div class="user-list">
+        <p class="marg-bot">Total No.  Businesses: <strong>{{businesses.total ? businesses.total : 0}}</strong></p>
+
+        <div class="t-r">
+            <a href="#/merchant/{{clientId}}/new-business" class="btn btn-brown">Add new business</a>
+        </div>
+        <div class="table-responsive tbl-1024" ng-show="businesses.total">
+            <table class="table tbl tbl-bg table-hover table-striped">
+                <tbody>
+                    <tr>
+                        <th class="text-center">Merchant Code</th>
+                        <th class="text-center">Name</th>
+                        <th class="text-center td-15">Actions</th>
+                    </tr>
+                    <tr ng-repeat="business in businesses._embedded.items">
+                        <td class="text-center"><a href="#/merchant/{{clientId}}/business/{{business.id}}">{{business.merchant_code}}</a></td>
+                        <td  class="text-center">{{business.name}}</td>
+                        <td class="td-control text-center td-15">
+                            <a><i class="fa fa-check"></i></a>
+                            |
+                            <a title="Ban"><i class="fa fa-ban"></i></a>
+                            |
+                            <a title="Delete User" ng-click="removeBusiness(business)"><i class="fa fa-trash-o"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <footer class="table-footer" ng-show="businesses.pages >= 2">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+            <span>
+                Show
+                <select data-ng-model="numPerPage"
+                        data-ng-options="num for num in numPerPageOpt"
+                        data-ng-change="onNPPChange()">
+                </select>
+                users / page
+            </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                ng-model="currentPage"
+                                total-items="businesses.total"
+                                max-size="4"
+                                ng-change="gotoPage(currentPage)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    <!-- END : PAGINATION -->
+    </div>
+</div>
