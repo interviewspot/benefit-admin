@@ -135,8 +135,11 @@ angular.module('app', [
             .when('/merchant/:clientId/campaigns', {
                 templateUrl: 'views/merchant/merchant-detail_campaigns.html'
             })
-            .when('/merchant/:clientId/businesses', {
+            .when('/merchant/:clientId/business', {
                 templateUrl: 'views/merchant/merchant-detail_businesses.html'
+            })
+            .when('/merchant/:clientId/business/:businessId', {
+                templateUrl: 'views/merchant/merchant-detail_business.html'
             })
 
 

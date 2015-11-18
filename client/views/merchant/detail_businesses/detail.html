@@ -1,0 +1,87 @@
+<!-- END : USER LIST -->
+<div class="user-edit" data-ng-controller="BusinessCtrl">
+    <h2 class="ttl-tab">
+        <a href="#/merchant/{{clientId}}/businesses/">Businesses</a>
+        <span class="sub-sep"><i class="fa fa fa-caret-right"></i></span>
+        <span>{{business.name}}</span>
+    </h2>
+    <form name="frm_update_business" class="frm_update_business" novalidate>
+    <div class="t-r marg-bot ">
+        <span class="msg-update">{{infoUpdated}} </span>
+        <button type="submit" class="btn btn-brown" ng-click="updateBusiness()">
+            <i class="fa fa-pencil"></i>
+            Submit to save
+        </button>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <button class="btn btn-edit" ng-click="deleteBusiness()">Delete</button>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <input type="hidden" ng-model="business.id" value="{{business.id}}">
+            <table class="table tbl table-striped">
+                <tbody>
+                    <tr>
+                        <th class="td-30">Name <span class="red">*</span></th>
+                        <td>
+                            <input type="text"
+                                name="bus_name"
+                                class="txt-ipt"
+                                ng-class="{txt_disabled : !isDisable}"
+                                ng-model="business.name"
+                                required>
+                            <p style="color:red" ng-show="frm_update_business.bus_name.$dirty && frm_update_business.bus_name.$invalid">
+                              <span ng-show="frm_update_business.bus_name.$error.required && frm_update_business.bus_name.$dirty">Name is required.</span>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Merchant Code <span class="red">*</span></th>
+                        <td><input type="text"
+                                name="bus_merchant_code"
+                                ng-model="business.merchant_code"
+                                class="txt-ipt"
+                                ng-class="{txt_disabled : !isDisable}"
+                                ng-pattern="/^[a-zA-Z\d\-\_]+$/"
+                                required>
+                            <p style="color:red">
+                                <span ng-show="frm_update_business.bus_merchant_code.$invalid  && frm_update_business.bus_merchant_code.$dirty">Merchant code is required without whitespace</span>
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- END: COL -->
+        <div class="col-xs-12 user-history">
+            <h2 class="ttl-tab">
+                <span>Redemption History</span>
+            </h2>
+            <table class="table tbl tbl-bg table-striped">
+                <tbody>
+                    <tr>
+                        <th class="text-center">Date/Time</th>
+                        <th>Merchant</th>
+                        <th>Item</th>
+                        <th>Location</th>
+                        <th>Category</th>
+                        <th>Est. Value</th>
+                        <th>Ref </th>
+                    </tr>
+                    <tr ng-repeat="redemption in clients_user_redemptions_list">
+                        <td>{{redemption.date}}</td>
+                        <td>{{redemption.merchant}}</td>
+                        <td>{{redemption.item}}</td>
+                        <td>{{redemption.location}}</td>
+                        <td>{{redemption.category}}</td>
+                        <td>{{redemption.est_save}}</td>
+                        <td>{{redemption.ref}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- END: HISTORY -->
+    </div>
+    </form>
+</div>
+<!-- END : USER EDIT -->

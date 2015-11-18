@@ -96,7 +96,7 @@ angular.module('app.merchants', [])
         # 2.1 TAB LINK
         _prefix_url  = '#/merchant/' + $scope.clientId
         $scope.page_tabUrls   =
-            "businesses" : _prefix_url + '/businesses'
+            "business" : _prefix_url + '/business'
             "info"       : _prefix_url + '/info'
             "outlets"    : _prefix_url + '/outlets'
             "offers"     : _prefix_url + '/offers'
