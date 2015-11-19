@@ -140,6 +140,7 @@ angular.module('app.users', [])
                 $scope.updateTags.position.title = pos.data.title
                 $scope.updateTags.position.active = pos.data.active
                 $scope.updateTags.position.employer = $scope.clientId
+                $scope.updateTags.position.handbook_contact = pos.data.handbook_contact
                 Users.get(pos.data._links.employee.href).then  (res) ->
                     if res.status != 200 || typeof res != 'object'
                         return
@@ -205,7 +206,7 @@ angular.module('app.users', [])
                     "username"   : $scope.user.username
                     "email"      : $scope.user.email
                     "code"       : $scope.user.code
-                    #"handbook_contact" : true,
+                    #"handbook_contact" : $scope.position.handbook_contact
                     #"enabled": true,
                     #"plain_password": null,
                     #"ssn": null
@@ -214,7 +215,6 @@ angular.module('app.users', [])
                     "date_added"     : date_added
                 }
             }
-
 
             $scope.updateTags.position.tags = {}
             numTag = 1
@@ -243,9 +243,9 @@ angular.module('app.users', [])
                 newData.user.birthday = birthday
 
 
+
             Users.put(_URL.list + '/' + $scope.user.id, newData).then  (res) ->
                 if res.status == 204
-                    console.log($scope.updateTags)
                     Users.put(_URL.detail + $scope.userId, $scope.updateTags).then  (res) ->
                         if res.status == 204
                             $scope.infoUpdated = 'Updated user successfully!'
@@ -254,7 +254,7 @@ angular.module('app.users', [])
                             , 300
                         return
                     , (error) ->
-                        $scope.infoUpdated = error.status + ': Error API, refresh & try again!'
+                        $scope.infoUpdated = error.status + ': Error update tags, refresh & try again!'
                 return
 
             , (error) ->

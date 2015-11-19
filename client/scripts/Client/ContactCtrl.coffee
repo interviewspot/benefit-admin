@@ -14,13 +14,17 @@ angular.module('app.contacts', [])
     '$scope', '$filter' , 'fetchTabData', 'fakeData', '$location', '$routeParams', 'ContactService', 'fetchContact', 'SearchUsers', 'fetchUsers', 'config' , '$q', '$modal',
     ($scope, $filter, fetchTabData, fakeData, $location, $routeParams, ContactService, fetchContact, SearchUsers, fetchUsers, config, $q, $modal) ->
 
+        _URL =
+            list   : config.path.baseURL + config.path.contacts.replace(":org_id", $routeParams.clientId) + '?search=position.handbookContact:1'
+
+
         # 1. Display list contacts
         $scope.loadContactList = ->
-            ContactService.get {org_id:$routeParams.clientId}, (data, getResponseHeaders) ->
-                if data._embedded.items.length
+            fetchContact.get(_URL.list).then (res) ->
+                if res.data._embedded.items.length
                     $scope.contacts = []
 
-                    angular.forEach data._embedded.items, (item, i) ->
+                    angular.forEach res.data._embedded.items, (item, i) ->
                         $scope.contacts[i] = {}
                         ((itemInstance) ->
                             fetchContact.get(itemInstance._links.employee.href).then  (res) ->

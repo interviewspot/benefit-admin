@@ -55,27 +55,17 @@
         <!-- END: COL -->
         <div class="col-xs-12 user-history">
             <h2 class="ttl-tab">
-                <span>Redemption History</span>
+                <span>Outlets</span>
             </h2>
             <table class="table tbl tbl-bg table-striped">
                 <tbody>
                     <tr>
-                        <th class="text-center">Date/Time</th>
-                        <th>Merchant</th>
-                        <th>Item</th>
-                        <th>Location</th>
-                        <th>Category</th>
-                        <th>Est. Value</th>
-                        <th>Ref </th>
+                        <th class="text-center">Name</th>
+                        <th>Contact No.</th>
                     </tr>
-                    <tr ng-repeat="redemption in clients_user_redemptions_list">
-                        <td>{{redemption.date}}</td>
-                        <td>{{redemption.merchant}}</td>
-                        <td>{{redemption.item}}</td>
-                        <td>{{redemption.location}}</td>
-                        <td>{{redemption.category}}</td>
-                        <td>{{redemption.est_save}}</td>
-                        <td>{{redemption.ref}}</td>
+                    <tr ng-repeat="outlet in clients_user_redemptions_list">
+                        <td>{{outlet.name}}</td>
+                        <td>{{outlet.contact_no}}</td>
                     </tr>
                 </tbody>
             </table>

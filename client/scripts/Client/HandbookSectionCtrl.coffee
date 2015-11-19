@@ -3,8 +3,8 @@ angular.module('app.handbook_section', [])
 # --------------------------------------------
 
 .controller('HandbookSectionCtrl', [
-    '$scope', '$routeParams', 'handbookService', 'clientService', 'sectionService', '$location', '$timeout', 'fetchHandbook'
-    ($scope, $routeParams, handbookService, clientService, sectionService, $location, $timeout, fetchHandbook) ->
+    '$scope', '$routeParams', 'handbookService', 'clientService', 'sectionService', '$location', '$timeout', 'fetchHandbook', 'config'
+    ($scope, $routeParams, handbookService, clientService, sectionService, $location, $timeout, fetchHandbook, config) ->
 
         orderSections = (items) ->
             treeList = []
@@ -60,13 +60,20 @@ angular.module('app.handbook_section', [])
 
         # ------------------------------
         # LOAD LIST SECTIONS
-        $scope.loadSections = ->
-            sectionService.query {org_id:$scope.clientId, hand_id:$scope.handbookId}, (data, getResponseHeaders) ->
-                if data._embedded.items.length > 0
+        _URL_sections =
+            list : config.path.baseURL + config.path.sections.replace(':org_id', $scope.clientId).replace(':hand_id', $scope.handbookId)
 
-                    $scope.ungroupSections = orderSections(data._embedded.items)
+        $scope.loadSections = (limit, goPage) ->
+            #console.log(limit + '/' + goPage)
+            fetchHandbook.get(_URL_sections.list + '?limit=' + limit + '&page=' + goPage).then  (res) ->
+                if res.data._embedded.items.length > 0
+                    #console.log(res)
+                    $scope.sections = {}
+                    $scope.sections.pages = res.data.pages
+                    $scope.sections.total = res.data.total
+                    $scope.ungroupSections = orderSections(res.data._embedded.items)
                     $scope.translateSections     = ungroupSection($scope.ungroupSections)
-                    sectionDatas           = data._embedded.items
+                    sectionDatas           = res.data._embedded.items
                     $scope.allSections = []
                     #translate
                     j = 0
@@ -89,7 +96,22 @@ angular.module('app.handbook_section', [])
                     $scope.ungroupSections = []
                     $scope.allSections = []
 
-        $scope.loadSections()
+        # 2. PAGING, setup paging
+        $scope.numPerPageOpt = [30, 50, 100, 200]
+        $scope.numPerPage    = $scope.numPerPageOpt[2]
+        $scope.currentPage   = 1
+        $scope.filteredUsers = []
+        $scope.currentPageUsers = []
+
+        # 2.1 On Number Per Page Change
+        $scope.onNPPChange = () ->
+            $scope.loadSections($scope.numPerPage, $scope.currentPage)
+
+      # 2.2 Goto PAGE
+        $scope.gotoPage = (page) ->
+            $scope.loadSections($scope.numPerPage, page)
+
+        $scope.loadSections($scope.numPerPage, $scope.currentPage)
 
         $scope.isUpdate = false
         $scope.isCreateSubSection = false

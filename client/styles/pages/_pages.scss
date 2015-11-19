@@ -1049,7 +1049,7 @@ hr.line {
         }
         &:last-child {
             &:after {
-                content: '.';
+                content: '';
             }
         }
     }
