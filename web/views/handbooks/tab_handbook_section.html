@@ -101,6 +101,30 @@
                     </span>
                 </div>
             </div>
+            <footer class="table-footer" ng-show="sections.pages >= 2">
+                <div class="row">
+                    <div class="col-md-6 page-num-info">
+                <span>
+                    Show
+                    <select data-ng-model="numPerPage"
+                            data-ng-options="num for num in numPerPageOpt"
+                            data-ng-change="onNPPChange()">
+                    </select>
+                    sections / page
+                </span>
+                    </div>
+                    <div class="col-md-6 text-right pagination-container">
+                        <pagination class="pagination-sm"
+                                    ng-model="currentPage"
+                                    total-items="sections.total"
+                                    max-size="4"
+                                    ng-change="gotoPage(currentPage)"
+                                    items-per-page="numPerPage"
+                                    rotate="false"
+                                    boundary-links="true"></pagination>
+                    </div>
+                </div>
+            </footer>
         </div><!-- END: TBL-div -->
 
         <div class="section-control">
