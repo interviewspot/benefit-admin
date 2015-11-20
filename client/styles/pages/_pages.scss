@@ -257,7 +257,7 @@ h2.ttl-tab {
     	display: block;
     }
 }
-.tbl-remove, .tbl-edit {
+.tbl-remove, .tbl-edit, .tbl-show-children {
 	@include opacity(0);
 	@include transition(all 0.2s linear);
 	@include transform(scale(0,0));
@@ -278,6 +278,10 @@ h2.ttl-tab {
 }
 .tbl-edit {
 	right: 30px;
+	line-height: 22px;
+}
+.tbl-show-children {
+	right: 60px;
 	line-height: 22px;
 }
 .client-tabs {
@@ -781,7 +785,7 @@ h2.ttl-tab {
     cursor: pointer;
     &:hover {
         background-color: #eee;
-        .tbl-remove, .tbl-edit {
+        .tbl-remove, .tbl-edit, .tbl-show-children {
             @include opacity(1);
             @include transform(scale(1,1));
         }

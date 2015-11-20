@@ -65,39 +65,38 @@ angular.module('app.handbook_section', [])
 
         $scope.loadSections = (limit, goPage) ->
             #console.log(limit + '/' + goPage)
-            fetchHandbook.get(_URL_sections.list + '?limit=' + limit + '&page=' + goPage).then  (res) ->
+            fetchHandbook.get(_URL_sections.list + '?search=section.parent{null}1&limit=' + limit + '&page=' + goPage).then  (res) ->
+                $scope.sections = {}
                 if res.data._embedded.items.length > 0
-                    #console.log(res)
-                    $scope.sections = {}
                     $scope.sections.pages = res.data.pages
                     $scope.sections.total = res.data.total
-                    $scope.ungroupSections = orderSections(res.data._embedded.items)
-                    $scope.translateSections     = ungroupSection($scope.ungroupSections)
-                    sectionDatas           = res.data._embedded.items
-                    $scope.allSections = []
-                    #translate
-                    j = 0
-                    while j < $scope.translateSections.length
-                        # GET TRANSLATIONS
-                        #$scope.newSection = $scope.translateSections[j]
-                        item = translateSection($scope.translateSections[j])
-                        $scope.allSections.push(item)
-                        j++
+                    $scope.sections.items = []
+                    angular.forEach res.data._embedded.items, (item)->
+                        item = translateSection(item)
+                        item.children = {}
+                        item.children.items = []
+                        item.children.total = 0
+                        item.children.show = false
 
-                    $scope.parentSection = []
-                    for i in [0 .. sectionDatas.length-1]
-                        if !sectionDatas[i]._links.parent && sectionDatas[i]
-                            $scope.parentSection.push({
-                                id: sectionDatas[i].id
-                                title: sectionDatas[i].title
-                                _links: sectionDatas[i]._links
-                            })
+                        if item._links.children
+                            fetchHandbook.get(item._links.children.href + '?limit=9999').then  (child) ->
+                                if child.data._embedded.items.length > 0
+                                    item.children.total = child.data.total
+                                    angular.forEach child.data._embedded.items, (child_item)->
+                                        item.children.items.push(translateSection(child_item))
+                            , (error) ->
+                                console.log error
+
+                        $scope.sections.items.push(item)
+                    #console.log($scope.sections)
                 else
-                    $scope.ungroupSections = []
-                    $scope.allSections = []
-
+                    $scope.sections.pages = 0
+                    $scope.sections.total = 0
+                    $scope.sections.items = []
+            , (error) ->
+                console.log error
         # 2. PAGING, setup paging
-        $scope.numPerPageOpt = [30, 50, 100, 200]
+        $scope.numPerPageOpt = [3, 5, 10, 20]
         $scope.numPerPage    = $scope.numPerPageOpt[2]
         $scope.currentPage   = 1
         $scope.filteredUsers = []
@@ -113,11 +112,26 @@ angular.module('app.handbook_section', [])
 
         $scope.loadSections($scope.numPerPage, $scope.currentPage)
 
+        # Get all parent for dropdownlist
+        $scope.parentSection = []
+        _loadAllParent = () ->
+            fetchHandbook.get(_URL_sections.list + '?search=section.parent{null}1&limit=9999').then  (child) ->
+                if child.data._embedded.items.length > 0
+                    angular.forEach child.data._embedded.items, (child_item)->
+                        $scope.parentSection.push(translateSection(child_item))
+            , (error) ->
+                console.log error
+        _loadAllParent()
+
         $scope.isUpdate = false
         $scope.isCreateSubSection = false
         $scope.selectedSec = null
 
-        $scope.editSection = (section, $index) ->
+        $scope.showChildren = (section) ->
+            section.children.show = !section.children.show
+
+        $scope.editSection = (section) ->
+            #console.log(section)
             if section.active  = true
                 section.status = 'Active'
             else
@@ -127,7 +141,7 @@ angular.module('app.handbook_section', [])
             section.description  = if section.translations['en_us'].description then section.translations['en_us'].description else section.description
             $scope.formSection = section
             #console.log($scope.formSection)
-            $scope.selectedSec = $index
+            $scope.selectedSec = section.id
 
             if section._links.parent
                 $scope.isCreateSubSection = true
@@ -164,10 +178,15 @@ angular.module('app.handbook_section', [])
 
         # DELETE section
         $scope.deleteSection = (section) ->
-            r = confirm("Do you want to delete this section: \"" + section.title + "\"?")
+            #console.log(section)
+            if section.translations['en_us'].title
+                title = section.translations['en_us'].title
+            else
+                title = section.title
+            r = confirm("Do you want to delete this section: \"" + title + "\"?")
             if r == true
                 sectionService.delete {org_id:$scope.clientId, hand_id:$scope.handbookId, section_id:section.id}, (res)->
-                    $scope.loadSections()
+                    $scope.loadSections($scope.numPerPage, $scope.currentPage)
 
 
         $scope.parentSelect = null
@@ -198,7 +217,7 @@ angular.module('app.handbook_section', [])
             # UPDATE section
             if $scope.isUpdate == true
                 sectionService.update {org_id:$scope.clientId, hand_id:$scope.handbookId, section_id:$scope.formSection.id}, sectionItem, (res)->
-                    $scope.loadSections()
+                    $scope.loadSections($scope.numPerPage, $scope.currentPage)
                     # display message
                     $scope.sectionUpdated = 'Update Success'
                     $timeout ()->
@@ -210,7 +229,7 @@ angular.module('app.handbook_section', [])
                 # SECTION LEVEL 1
                 if $scope.isCreateSubSection == true && $scope.isUpdate == false
                     sectionService.saveChild {org_id:$scope.clientId, hand_id:$scope.handbookId}, sectionItem, (res)->
-                        $scope.loadSections()
+                        $scope.loadSections($scope.numPerPage, $scope.currentPage)
                         # display message
                         $scope.sectionUpdated = 'Update Success'
                         $timeout ()->
@@ -222,7 +241,7 @@ angular.module('app.handbook_section', [])
                 # SECTION LEVEL 2
                 if $scope.isCreateSubSection == false && $scope.isUpdate == false
                     sectionService.save {org_id:$scope.clientId, hand_id:$scope.handbookId}, sectionItem, (res)->
-                        $scope.loadSections()
+                        $scope.loadSections($scope.numPerPage, $scope.currentPage)
                         # display message
                         $scope.sectionUpdated = 'Update Success'
                         $timeout ()->
