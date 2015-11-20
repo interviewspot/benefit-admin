@@ -85,7 +85,7 @@
                 ng-repeat="section in sections.items"
                 ng-class="{active: section.id == selectedSec}">
                 <div class="t-tr">
-                    <div class="t-td t-3">Section {{section.id}}</div>
+                    <div class="t-td t-3">Section {{section.version}}</div>
                     <div class="t-td t-ct" ng-bind-html="section.translations['en_us'].title ? section.translations['en_us'].title : section.title"></div>
                     <span ng-show="section.children.total > 0" title="Show all children" class="tbl-show-children" ng-click="showChildren(section)">
                         <i class="fa fa-sign-in"></i>
@@ -103,7 +103,7 @@
                     ng-class="{active: child_sec.id == selectedSec}">
                         <div class="t-tr">
                             <div class="t-td t-3">Sub-section</div>
-                            <div class="t-td t-2">{{section.id}}.{{child_sec.id}}</div>
+                            <div class="t-td t-2">{{section.version}}.{{child_sec.version}}</div>
                             <div class="t-td t-ct" ng-bind-html="child_sec.translations['en_us'].title ? child_sec.translations['en_us'].title : child_sec.title"></div>
                             <span title="Edit this section" class="tbl-edit" ng-click="editSection(child_sec)">
                                 <i class="fa fa-edit"></i>
