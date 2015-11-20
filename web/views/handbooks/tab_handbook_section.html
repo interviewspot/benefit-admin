@@ -1,5 +1,5 @@
 <div class="item-preview" ng-show="!showPreview" data-ng-controller="HandbookSectionCtrl">
-    <div class="col-md-8 col-sm-8 col-xs-6">
+    <div class="col-md-6 col-sm-6 col-xs-6">
         <span class="cap-note"
             ng-click="showPreview = !showPreview">
             Preview
@@ -47,7 +47,7 @@
                                 <select
                                 ng-model="parentSelect"
                                 ng-change="changedValue(parentSelect)"
-                                data-ng-options="option.id as option.title for option in parentSection">
+                                data-ng-options="option.id as option.translations['en_us'].title ? option.translations['en_us'].title : option.title for option in parentSection">
                                     <option value="">Select Parent</option>
                                 </select>
                             </td>
@@ -72,7 +72,7 @@
         </div>
         <!-- END : FORWARD -->
     </div>
-    <div class="col-md-4 col-sm-4 col-xs-6">
+    <div class="col-md-6 col-sm-6 col-xs-6">
         <!-- SECTION LIST -->
         <div class="tbl-div sction-list">
             <div class="tbl-r">
@@ -82,38 +82,42 @@
             </div>
 
             <div class="tbl-r sc-itm"
-                ng-repeat="(key, section) in allSections"
-                ng-class="{active: $index == selectedSec}"
-                ng-click="editSection(section, $index)">
-                <div class="t-tr" ng-if="!section._links.parent">
-                    <div class="t-td t-3">Section {{section.no}}</div>
+                ng-repeat="section in sections.items"
+                ng-class="{active: section.id == selectedSec}">
+                <div class="t-tr">
+                    <div class="t-td t-3">Section {{section.version}}</div>
                     <div class="t-td t-ct" ng-bind-html="section.translations['en_us'].title ? section.translations['en_us'].title : section.title"></div>
-                    <span class="tbl-remove" ng-click="deleteSection(section)">
+                    <span ng-show="section.children.total > 0" title="Show all children" class="tbl-show-children" ng-click="showChildren(section)">
+                        <i class="fa fa-sign-in"></i>
+                    </span>
+                    <span title="Edit this section" class="tbl-edit" ng-click="editSection(section)">
+                        <i class="fa fa-edit"></i>
+                    </span>
+                    <span title="Remove this section" class="tbl-remove" ng-click="deleteSection(section)">
                         <i class="fa fa-trash-o"></i>
                     </span>
                 </div>
-                <div class="t-tr" ng-if="section._links.parent">
-                    <div class="t-td t-3">Sub-section</div>
-                    <div class="t-td t-2">{{section.parent_no}}.{{section.no}}</div>
-                    <div class="t-td t-ct" ng-bind-html="section.translations['en_us'].title ? section.translations['en_us'].title : section.title"></div>
-                    <span class="tbl-remove" ng-click="deleteSection(section)">
-                        <i class="fa fa-trash-o"></i>
-                    </span>
+                <div ng-show="section.children.total > 0 && section.children.show">
+                    <div class="tbl-r sc-itm"
+                     ng-repeat="child_sec in section.children.items"
+                    ng-class="{active: child_sec.id == selectedSec}">
+                        <div class="t-tr">
+                            <div class="t-td t-3">Sub</div>
+                            <div class="t-td t-2">{{section.version}}.{{child_sec.version}}</div>
+                            <div class="t-td t-ct" ng-bind-html="child_sec.translations['en_us'].title ? child_sec.translations['en_us'].title : child_sec.title"></div>
+                            <span title="Edit this section" class="tbl-edit" ng-click="editSection(child_sec)">
+                                <i class="fa fa-edit"></i>
+                            </span>
+                            <span title="Remove this section" class="tbl-remove" ng-click="deleteSection(child_sec)">
+                                <i class="fa fa-trash-o"></i>
+                            </span>
+                        </div>
+                    </div>
                 </div>
             </div>
             <footer class="table-footer" ng-show="sections.pages >= 2">
                 <div class="row">
-                    <div class="col-md-6 page-num-info">
-                <span>
-                    Show
-                    <select data-ng-model="numPerPage"
-                            data-ng-options="num for num in numPerPageOpt"
-                            data-ng-change="onNPPChange()">
-                    </select>
-                    sections / page
-                </span>
-                    </div>
-                    <div class="col-md-6 text-right pagination-container">
+                    <div class="col-md-12  pagination-container">
                         <pagination class="pagination-sm"
                                     ng-model="currentPage"
                                     total-items="sections.total"
@@ -123,6 +127,17 @@
                                     rotate="false"
                                     boundary-links="true"></pagination>
                     </div>
+                    <div class="col-md-12 page-num-info text-center">
+                        <span>
+                            Show
+                            <select data-ng-model="numPerPage"
+                                    data-ng-options="num for num in numPerPageOpt"
+                                    data-ng-change="onNPPChange()">
+                            </select>
+                            sections / page
+                        </span>
+                    </div>
+
                 </div>
             </footer>
         </div><!-- END: TBL-div -->

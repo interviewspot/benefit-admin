@@ -102,7 +102,7 @@
                      ng-repeat="child_sec in section.children.items"
                     ng-class="{active: child_sec.id == selectedSec}">
                         <div class="t-tr">
-                            <div class="t-td t-3">Sub-section</div>
+                            <div class="t-td t-3">Sub</div>
                             <div class="t-td t-2">{{section.version}}.{{child_sec.version}}</div>
                             <div class="t-td t-ct" ng-bind-html="child_sec.translations['en_us'].title ? child_sec.translations['en_us'].title : child_sec.title"></div>
                             <span title="Edit this section" class="tbl-edit" ng-click="editSection(child_sec)">
@@ -117,17 +117,7 @@
             </div>
             <footer class="table-footer" ng-show="sections.pages >= 2">
                 <div class="row">
-                    <div class="col-md-6 page-num-info">
-                <span>
-                    Show
-                    <select data-ng-model="numPerPage"
-                            data-ng-options="num for num in numPerPageOpt"
-                            data-ng-change="onNPPChange()">
-                    </select>
-                    sections / page
-                </span>
-                    </div>
-                    <div class="col-md-6 text-right pagination-container">
+                    <div class="col-md-12  pagination-container">
                         <pagination class="pagination-sm"
                                     ng-model="currentPage"
                                     total-items="sections.total"
@@ -137,6 +127,17 @@
                                     rotate="false"
                                     boundary-links="true"></pagination>
                     </div>
+                    <div class="col-md-12 page-num-info text-center">
+                        <span>
+                            Show
+                            <select data-ng-model="numPerPage"
+                                    data-ng-options="num for num in numPerPageOpt"
+                                    data-ng-change="onNPPChange()">
+                            </select>
+                            sections / page
+                        </span>
+                    </div>
+
                 </div>
             </footer>
         </div><!-- END: TBL-div -->
