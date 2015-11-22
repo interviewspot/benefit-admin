@@ -104,7 +104,7 @@ angular.module('app.businesses', [])
 ])
 
 # --------------------------------------------
-# UserCtrl for single user page
+# BusinessCtrl for single business page
 # 1. GET BUSINESS by ID
 # 2. UPDATE BUSINESS
 # --------------------------------------------
@@ -125,7 +125,7 @@ angular.module('app.businesses', [])
         $scope.businessId   =  if $routeParams.businessId then $routeParams.businessId.trim() else false
 
         if !$scope.businessId
-            location.href = '#/merchant/' + $scope.clientId + '/businesses'
+            location.href = '#/merchant/' + $scope.clientId + '/business'
             return
 
         # 1. GET BUSINESS by ID
@@ -137,19 +137,19 @@ angular.module('app.businesses', [])
                 if bus.status != 200 || typeof bus != 'object'
                     return
                 $scope.business = bus.data
-                console.log(bus.data);
+                #console.log(bus.data);
                 if(bus.data._links.outlets)
                     Businesses.get(bus.data._links.outlets.href).then  (res) ->
                         if res.status != 200 || typeof res != 'object'
                             return
                         $scope.business.outlets = res.data
-                        console.log(res.data)
+                        #console.log(res.data)
                     , (error) ->
                         console.log error
             , (error) ->
                 console.log error
 
-        # 2. UPDATE USER
+        # 2. UPDATE BUSINESSS
         $scope.isDisable = true
         $scope.updateBusiness = () ->
             angular.forEach $scope.frm_update_business.$error.required, (field)->
@@ -171,7 +171,7 @@ angular.module('app.businesses', [])
                 alert error.status + ' : Error, refresh & try again !'
             return
 
-        # 3. DELETE USER
+        # 3. DELETE BUSINESS
         $scope.deleteBusiness = () ->
             r = confirm("Do you want to delete this business \"" + $scope.business.name + "\"?")
             if r == true
@@ -189,5 +189,109 @@ angular.module('app.businesses', [])
 
         # x. ONLOAD
         _getBusiness();
+
+])
+
+# --------------------------------------------
+# OutletCtrl for single outlet page
+# 1. GET OUTLET by ID
+# 2. UPDATE OUTLET
+# --------------------------------------------
+.controller('OutletCtrl', [
+    '$scope'
+    , '$filter'
+    , 'fetchTabData'
+    , '$location'
+    , '$routeParams'
+    , 'config'
+    , '$q'
+    , '$modal'
+    , 'Businesses'
+    , '$timeout'
+    ,
+    ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, $modal, Businesses, $timeout) ->
+        $scope.clientId =  $routeParams.clientId
+        $scope.businessId   =  if  $routeParams.businessId then $routeParams.businessId.trim() else false
+        $scope.outletId     =  if  $routeParams.outletId then $routeParams.outletId.trim() else false
+
+        if !$scope.businessId
+            location.href = '#/merchant/' + $scope.clientId + '/business'
+            return
+        if !$scope.outletId
+            location.href = '#/merchant/' + $scope.clientId + '/business/' + $scope.businessId
+            return
+
+        # 1. GET OUTLET by ID
+        _URL =
+            detail : config.path.baseURL + '/businesses/' + $scope.businessId + '/outlets/' + $scope.outletId
+
+        _getOutlet = () ->
+            Businesses.get(_URL.detail).then  (out) ->
+                if out.status != 200 || typeof out != 'object'
+                    return
+                $scope.outlet = out.data
+                #console.log(out.data);
+                if(out.data._links.location)
+                    Businesses.get(out.data._links.location.href).then  (loc) ->
+                        if loc.status != 200 || typeof loc != 'object'
+                            return
+                        $scope.outlet.location = loc.data
+                        $scope.outlet.location.addresses = {}
+                        if(loc.data._links.addresses)
+                            Businesses.get(loc.data._links.addresses.href).then  (add) ->
+                                if add.status != 200 || typeof add != 'object'
+                                    return
+                                $scope.outlet.location.addresses = add.data
+                                #console.log(loc.data)
+                            , (error) ->
+                                console.log error
+                        else
+                            $scope.outlet.location.addresses.total = 0
+                        #console.log(loc.data)
+                    , (error) ->
+                        console.log error
+            , (error) ->
+                console.log error
+
+        # 2. UPDATE OUTLET
+        $scope.isDisable = true
+        $scope.updateOutlet = () ->
+            angular.forEach $scope.frm_update_business.$error.required, (field)->
+                field.$dirty = true
+            if $scope.frm_update_business.$error.required.length || !$scope.frm_update_business.$valid
+                return false
+
+            new_data =
+                business :
+                    name            : $scope.business.name
+                    merchant_code   : $scope.business.merchant_code
+
+            #console.log new_data
+
+            Businesses.put(_URL.detail, new_data ).then  (res) ->
+                if typeof res == 'object' && res.status == 204
+                    $scope.infoUpdated = "Update Successfully!"
+            , (error) ->
+                alert error.status + ' : Error, refresh & try again !'
+            return
+
+        # 3. DELETE OUTLET
+        $scope.deleteOutlet = () ->
+            r = confirm("Do you want to delete this business \"" + $scope.business.name + "\"?")
+            if r == true
+                Businesses.delete(_URL.detail).then  (res) ->
+                    if typeof res == 'object' && res.status == 204
+                        $scope.infoUpdated = 'Deleted business successfully!'
+                        $timeout ()->
+                            clientId =  $routeParams.clientId
+                            $location.path('/merchant/' + clientId + '/business')
+                        , 300
+                        return
+                , (error) ->
+                    $scope.infoUpdated = error.status + ': Error, refresh & try again !'
+            return
+
+        # x. ONLOAD
+        _getOutlet();
 
 ])
