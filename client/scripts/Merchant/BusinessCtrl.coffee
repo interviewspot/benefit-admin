@@ -187,6 +187,32 @@ angular.module('app.businesses', [])
                     $scope.infoUpdated = error.status + ': Error, refresh & try again !'
             return
 
+        # 4. ADD OUTLET
+        $scope.submitNewOutlet = () ->
+            angular.forEach $scope.frm_create_outlet.$error.required, (field)->
+                field.$dirty = true
+            if $scope.frm_create_outlet.$error.required.length || !$scope.frm_create_outlet.$valid
+                return false
+
+            new_data =
+                outlet :
+                    name            : $scope.out.name
+                    contact_no      : $scope.out.contact_no
+                    business        : $scope.businessId
+
+            #console.log new_data
+
+            Businesses.post($scope.business._links.outlets.href, new_data ).then  (res) ->
+                if typeof res == 'object' && res.status == 201
+                    $timeout ()->
+                        location.reload()
+                    , 300
+                    return
+            , (error) ->
+                alert error.status + ' : Try again later'
+
+            return
+
         # x. ONLOAD
         _getBusiness();
 
@@ -256,15 +282,16 @@ angular.module('app.businesses', [])
         # 2. UPDATE OUTLET
         $scope.isDisable = true
         $scope.updateOutlet = () ->
-            angular.forEach $scope.frm_update_business.$error.required, (field)->
+            angular.forEach $scope.frm_update_outlet.$error.required, (field)->
                 field.$dirty = true
-            if $scope.frm_update_business.$error.required.length || !$scope.frm_update_business.$valid
+            if $scope.frm_update_outlet.$error.required.length || !$scope.frm_update_outlet.$valid
                 return false
 
             new_data =
-                business :
-                    name            : $scope.business.name
-                    merchant_code   : $scope.business.merchant_code
+                outlet :
+                    name            : $scope.outlet.name
+                    contact_no      : $scope.outlet.contact_no
+                    business        : $scope.businessId
 
             #console.log new_data
 
@@ -277,14 +304,15 @@ angular.module('app.businesses', [])
 
         # 3. DELETE OUTLET
         $scope.deleteOutlet = () ->
-            r = confirm("Do you want to delete this business \"" + $scope.business.name + "\"?")
+            r = confirm("Do you want to delete this outlet \"" + $scope.outlet.name + "\"?")
             if r == true
                 Businesses.delete(_URL.detail).then  (res) ->
                     if typeof res == 'object' && res.status == 204
                         $scope.infoUpdated = 'Deleted business successfully!'
                         $timeout ()->
                             clientId =  $routeParams.clientId
-                            $location.path('/merchant/' + clientId + '/business')
+                            businessId = $routeParams.businessId
+                            $location.path('/merchant/' + clientId + '/business/' + businessId)
                         , 300
                         return
                 , (error) ->
