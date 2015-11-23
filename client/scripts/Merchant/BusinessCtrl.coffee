@@ -201,8 +201,9 @@ angular.module('app.businesses', [])
                     business        : $scope.businessId
 
             #console.log new_data
+            console.log $scope.business
 
-            Businesses.post($scope.business._links.outlets.href, new_data ).then  (res) ->
+            Businesses.post($scope.business._links.self.href + '/outlets', new_data ).then  (res) ->
                 if typeof res == 'object' && res.status == 201
                     $timeout ()->
                         location.reload()
@@ -211,6 +212,21 @@ angular.module('app.businesses', [])
             , (error) ->
                 alert error.status + ' : Try again later'
 
+            return
+
+         # 3. DELETE OUTLET
+        $scope.removeOutlet = (outlet) ->
+            r = confirm("Do you want to delete this outlet \"" + outlet.name + "\"?")
+            if r == true
+                Businesses.delete(outlet._links.self.href).then  (res) ->
+                    if typeof res == 'object' && res.status == 204
+                        #$scope.infoUpdated = 'Deleted outlet successfully!'
+                        $timeout ()->
+                            window.location.reload()
+                        , 300
+                        return
+                , (error) ->
+                    alert error.status + ': Error, refresh & try again !'
             return
 
         # x. ONLOAD
@@ -256,7 +272,7 @@ angular.module('app.businesses', [])
                 if out.status != 200 || typeof out != 'object'
                     return
                 $scope.outlet = out.data
-                #console.log(out.data);
+                #console.log(out.data)
                 if(out.data._links.location)
                     Businesses.get(out.data._links.location.href).then  (loc) ->
                         if loc.status != 200 || typeof loc != 'object'
@@ -293,7 +309,7 @@ angular.module('app.businesses', [])
                     contact_no      : $scope.outlet.contact_no
                     business        : $scope.businessId
 
-            #console.log new_data
+            $scope.send_data = new_data
 
             Businesses.put(_URL.detail, new_data ).then  (res) ->
                 if typeof res == 'object' && res.status == 204
@@ -306,7 +322,7 @@ angular.module('app.businesses', [])
         $scope.deleteOutlet = () ->
             r = confirm("Do you want to delete this outlet \"" + $scope.outlet.name + "\"?")
             if r == true
-                Businesses.delete(_URL.detail).then  (res) ->
+                Businesses.delete($scope.outlet._links.self.href).then  (res) ->
                     if typeof res == 'object' && res.status == 204
                         $scope.infoUpdated = 'Deleted business successfully!'
                         $timeout ()->

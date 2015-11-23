@@ -1,7 +1,7 @@
 <!-- END : USER LIST -->
 <div class="user-edit" data-ng-controller="BusinessCtrl">
     <h2 class="ttl-tab">
-        <a href="#/merchant/{{clientId}}/businesses/">Businesses</a>
+        <a href="#/merchant/{{clientId}}/business/">Businesses</a>
         <span class="sub-sep"><i class="fa fa fa-caret-right"></i></span>
         <span>{{business.name}}</span>
     </h2>
@@ -57,21 +57,103 @@
             <h2 class="ttl-tab">
                 <span>Outlets</span>
             </h2>
+            <div class="t-r">
+                <a class="btn btn-brown"
+                   data-toggle="modal"
+                   data-target="#createOutlet">Add new outlet</a>
+            </div>
             <table class="table tbl tbl-bg table-striped">
                 <tbody>
                     <tr>
                         <th class="text-center">Name</th>
-                        <th>Contact No.</th>
+                        <th class="text-center">Contact No.</th>
+                        <th class="text-center td-15">Actions</th>
                     </tr>
-                    <tr ng-repeat="outlet in clients_user_redemptions_list">
-                        <td>{{outlet.name}}</td>
-                        <td>{{outlet.contact_no}}</td>
+                    <tr ng-repeat="outlet in business.outlets._embedded.items">
+                        <td class="text-center">{{outlet.name}}</td>
+                        <td class="text-center">{{outlet.contact_no}}</td>
+                        <td class="td-control text-center td-15">
+                            <a title="Edit Outlet" href="#/merchant/{{clientId}}/business/{{business.id}}/outlet/{{outlet.id}}"><i class="fa fa fa-pencil"></i></a>
+                            |
+                            <a title="Delete Outlet" ng-click="removeOutlet(outlet)"><i class="fa fa-trash-o"></i></a>
+                        </td>
                     </tr>
                 </tbody>
             </table>
+            <footer class="table-footer" ng-show="business.outlets.pages >= 2">
+                <div class="row">
+                    <div class="col-md-6 page-num-info">
+                <span>
+                    Show
+                    <select data-ng-model="numPerPage"
+                            data-ng-options="num for num in numPerPageOpt"
+                            data-ng-change="onNPPChange()">
+                    </select>
+                    users / page
+                </span>
+                    </div>
+                    <div class="col-md-6 text-right pagination-container">
+                        <pagination class="pagination-sm"
+                                    ng-model="currentPage"
+                                    total-items="business.outlets.total"
+                                    max-size="4"
+                                    ng-change="gotoPage(currentPage)"
+                                    items-per-page="numPerPage"
+                                    rotate="false"
+                                    boundary-links="true"></pagination>
+                    </div>
+                </div>
+            </footer>
+
         </div>
-        <!-- END: HISTORY -->
+        <!-- END: OUTLETS -->
     </div>
     </form>
+    <div id="createOutlet" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Create New Outlet</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form
+                                class="frm_create_outlet modal_frm"
+                                name="frm_create_outlet"
+                                novalidate
+                                ng-submit="submitNewOutlet()">
+                                <p>
+                                    <label>Name</label>
+                                    <input type="text"
+                                           class="ipt"
+                                           name="out_name"
+                                           ng-model="out.name"
+                                           required
+                                           ng-class='{txt_err : (frm_create_outlet.out_name.$invalid && frm_create_outlet.out_name.$dirty)}'
+                                            />
+                                </p>
+                                <p>
+                                    <label>Contact No</label>
+                                    <input type="text"
+                                           class="ipt"
+                                           name="out_contact_no"
+                                           ng-model="out.contact_no"
+                                           ng-minlength="4"
+                                           ng-pattern="/^[\d+ ]+$/"
+                                           required
+                                           ng-class='{txt_err : (frm_create_outlet.out_contact_no.$invalid && frm_create_outlet.out_contact_no.$dirty)}'
+                                           />
+                                </p>
+                                <br>
+                                <button type="submit" class="save btn-brown">
+                                    <i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;CREATE NEW OUTLET
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END : MODAL CREATE OUTLET-->
 </div>
-<!-- END : USER EDIT -->
+<!-- END : BUSINESS EDIT -->
