@@ -144,6 +144,9 @@ angular.module('app', [
             .when('/merchant/:clientId/business/:businessId/outlet/:outletId', {
                 templateUrl: 'views/merchant/merchant-detail_outlet.html'
             })
+            .when('/merchant/:clientId/business/:businessId/promotion/:promotionId', {
+                templateUrl: 'views/merchant/merchant-detail_promotion.html'
+            })
 
 
         # CLIENTS MANAGEMENT

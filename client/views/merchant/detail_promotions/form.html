@@ -1,0 +1,213 @@
+<!-- END : USER LIST -->
+<div class="user-edit" data-ng-controller="PromotionCtrl">
+    <h2 class="ttl-tab">
+        <a href="#/merchant/{{clientId}}/business/{{businessId}}">PROMOTIONS</a>
+        <span class="sub-sep"><i class="fa fa fa-caret-right"></i></span>
+        <span>{{promotion.title}}</span>
+    </h2>
+    <form name="frm_update_promotion" class="frm_update_promotion" novalidate>
+    <div class="t-r marg-bot ">
+        <span class="msg-update">{{infoUpdated}} </span>
+        <button type="submit" class="btn btn-brown" ng-click="updatePromotion()">
+            <i class="fa fa-pencil"></i>
+            Submit to save
+        </button>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <button class="btn btn-edit" ng-click="deletePromotion()">Delete</button>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <input type="hidden" ng-model="promotion.id" value="{{promotion.id}}">
+            <table class="table tbl table-striped">
+                <tbody>
+                    <tr>
+                        <th class="td-30">Title <span class="red">*</span></th>
+                        <td>
+                            <input type="text"
+                                name="pro_title"
+                                class="txt-ipt"
+                                ng-class="{txt_disabled : !isDisable}"
+                                ng-model="promotion.title"
+                                required>
+                            <p style="color:red">
+                              <span ng-show="frm_update_promotion.pro_title.$error.required && frm_update_promotion.pro_title.$dirty">Title is required.</span>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Discount Amount <span class="red">*</span></th>
+                        <td><input type="text"
+                                name="pro_discount_amount"
+                                ng-model="promotion.discount_amount"
+                                class="txt-ipt"
+                                ng-class="{txt_disabled : !isDisable}"
+                                required>
+                            <p style="color:red">
+                                <span ng-show="frm_update_promotion.pro_discount_amount.$invalid  && frm_update_promotion.pro_discount_amount.$dirty">Please input number</span>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Estimated Value <span class="red">*</span></th>
+                        <td><input type="text"
+                                name="pro_estimated_value"
+                                ng-model="promotion.estimated_value"
+                                class="txt-ipt"
+                                ng-class="{txt_disabled : !isDisable}"
+                                required>
+                            <p style="color:red">
+                                <span ng-show="frm_update_promotion.pro_estimated_value.$invalid  && frm_update_promotion.pro_estimated_value.$dirty">Please input number</span>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Effective From <span class="red">*</span></th>
+                        <td><input type="text"
+                                    name="pro_effective_from"
+                                    class="txt-ipt"
+                                    datepicker-popup="MM/dd/yyyy"
+                                    ng-model="promotion.effective_from"
+                                    is-open="datepickerStartOpened"
+                                    close-text="Close"
+                                    show-button-bar="false"
+                                    ng-click="openStartDatepicker($event)"
+                                    ng-class="{txt_disabled : !isDisable}"
+                                    required
+                                    />
+                            <p style="color:red">
+                                <span ng-show="frm_update_promotion.pro_effective_from.$invalid  && frm_update_promotion.pro_effective_from.$dirty">Please input number</span>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Expire On <span class="red">*</span></th>
+                        <td><input type="text"
+                                    name="pro_expire_on"
+                                    class="txt-ipt"
+                                    datepicker-popup="MM/dd/yyyy"
+                                    ng-model="promotion.expire_on"
+                                    is-open="datepickerEndOpened"
+                                    close-text="Close"
+                                    show-button-bar="false"
+                                    ng-click="openEndDatepicker($event)"
+                                    ng-class="{txt_disabled : !isDisable}"
+                                    required
+                                    />
+                            <p style="color:red">
+                                <span ng-show="frm_update_promotion.pro_effective_from.$invalid  && frm_update_promotion.pro_effective_from.$dirty">Please input number</span>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Active</th>
+                        <td>
+                            <input name="pro_active" type="checkbox" ng-model="promotion.active" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Type</th>
+                        <td>
+                            <select name="pro_type" class="txt-ipt" ng-model="promotion.type">
+                                <option ng-repeat="t in promotionTypes" value="{{t.id}}">{{t.title}}</option>
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- END: COL -->
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <table class="table tbl table-striped">
+                <tbody>
+                    <tr>
+                        <th class="td-30">Offer Limit <span class="red">*</span></th>
+                        <td><input type="number"
+                                name="pro_offer_limit"
+                                ng-model="promotion.offer_limit"
+                                class="txt-ipt"
+                                ng-class="{txt_disabled : !isDisable}"
+                                min="0"
+                                required>
+                            <p style="color:red">
+                                <span ng-show="frm_update_promotion.pro_offer_limit.$invalid  && frm_update_promotion.pro_offer_limit.$dirty">Please input number</span>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Weekly Limit <span class="red">*</span></th>
+                        <td><input type="number"
+                                name="pro_weekly_limit"
+                                ng-model="promotion.weekly_limit"
+                                class="txt-ipt"
+                                ng-class="{txt_disabled : !isDisable}"
+                                min="0"
+                                required>
+                            <p style="color:red">
+                                <span ng-show="frm_update_promotion.pro_weekly_limit.$invalid  && frm_update_promotion.pro_weekly_limit.$dirty">Please input number</span>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Monthly Limit <span class="red">*</span></th>
+                        <td><input type="number"
+                                name="pro_monthly_limit"
+                                ng-model="promotion.monthly_limit"
+                                class="txt-ipt"
+                                ng-class="{txt_disabled : !isDisable}"
+                                min="0"
+                                required>
+                            <p style="color:red">
+                                <span ng-show="frm_update_promotion.pro_monthly_limit.$invalid  && frm_update_promotion.pro_monthly_limit.$dirty">Please input number</span>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Yearly Limit <span class="red">*</span></th>
+                        <td><input type="number"
+                                name="pro_yearly_limit"
+                                ng-model="promotion.yearly_limit"
+                                class="txt-ipt"
+                                ng-class="{txt_disabled : !isDisable}"
+                                min="0"
+                                required>
+                            <p style="color:red">
+                                <span ng-show="frm_update_promotion.pro_yearly_limit.$invalid  && frm_update_promotion.pro_yearly_limit.$dirty">Please input number</span>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Organisation Limit <span class="red">*</span></th>
+                        <td><input type="number"
+                                name="pro_organisation_limit"
+                                ng-model="promotion.organisation_limit"
+                                class="txt-ipt"
+                                ng-class="{txt_disabled : !isDisable}"
+                                min="0"
+                                required>
+                            <p style="color:red">
+                                <span ng-show="frm_update_promotion.pro_organisation_limit.$invalid  && frm_update_promotion.pro_organisation_limit.$dirty">Please input number</span>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">User Limit <span class="red">*</span></th>
+                        <td><input type="number"
+                                name="pro_user_limit"
+                                ng-model="promotion.user_limit"
+                                class="txt-ipt"
+                                ng-class="{txt_disabled : !isDisable}"
+                                min="0"
+                                required>
+                            <p style="color:red">
+                                <span ng-show="frm_update_promotion.pro_user_limit.$invalid  && frm_update_promotion.pro_user_limit.$dirty">Please input number</span>
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- END: COL -->
+    </div>
+    </form>
+</div>
+<!-- END : BUSINESS EDIT -->

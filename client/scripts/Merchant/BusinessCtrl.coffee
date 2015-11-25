@@ -131,6 +131,8 @@ angular.module('app.businesses', [])
         # 1. GET BUSINESS by ID
         _URL =
             detail : config.path.baseURL + '/businesses/' + $scope.businessId
+            post_promotions: config.path.baseURL + '/promotions'
+            types   : config.path.baseURL + '/promotion/types'
 
         _getBusiness = () ->
             Businesses.get(_URL.detail).then  (bus) ->
@@ -138,6 +140,16 @@ angular.module('app.businesses', [])
                     return
                 $scope.business = bus.data
                 #console.log(bus.data);
+                # 1.1 GET PROMOTIONS
+                if(bus.data._links.promotions)
+                    Businesses.get(bus.data._links.promotions.href).then  (pro) ->
+                        if pro.status != 200 || typeof pro != 'object'
+                            return
+                        $scope.business.promotions = pro.data
+                        #console.log(res.data)
+                    , (error) ->
+                        console.log error
+                # 1.2 GET OUTLETS
                 if(bus.data._links.outlets)
                     Businesses.get(bus.data._links.outlets.href).then  (res) ->
                         if res.status != 200 || typeof res != 'object'
@@ -201,7 +213,7 @@ angular.module('app.businesses', [])
                     business        : $scope.businessId
 
             #console.log new_data
-            console.log $scope.business
+            #console.log $scope.business
 
             Businesses.post($scope.business._links.self.href + '/outlets', new_data ).then  (res) ->
                 if typeof res == 'object' && res.status == 201
@@ -214,11 +226,102 @@ angular.module('app.businesses', [])
 
             return
 
-         # 3. DELETE OUTLET
+        # 5. DELETE OUTLET
         $scope.removeOutlet = (outlet) ->
             r = confirm("Do you want to delete this outlet \"" + outlet.name + "\"?")
             if r == true
                 Businesses.delete(outlet._links.self.href).then  (res) ->
+                    if typeof res == 'object' && res.status == 204
+                        #$scope.infoUpdated = 'Deleted outlet successfully!'
+                        $timeout ()->
+                            window.location.reload()
+                        , 300
+                        return
+                , (error) ->
+                    alert error.status + ': Error, refresh & try again !'
+            return
+
+        # 6. ADD PROMOTION
+
+        $scope.submitNewPromotion = () ->
+            angular.forEach $scope.frm_create_promotion.$error.required, (field)->
+                field.$dirty = true
+            if $scope.frm_create_promotion.$error.required.length || !$scope.frm_create_promotion.$valid
+                return false
+
+            new_data =
+                promotion :
+                    title               : $scope.promotion.title
+                    discount_amount     : $scope.promotion.discount_amount
+                    estimated_value     : $scope.promotion.estimated_value
+                    offer_limit         : $scope.promotion.offer_limit
+                    weekly_limit        : $scope.promotion.weekly_limit
+                    monthly_limit       : $scope.promotion.monthly_limit
+                    yearly_limit        : $scope.promotion.yearly_limit
+                    organisation_limit  : $scope.promotion.organisation_limit
+                    user_limit          : $scope.promotion.user_limit
+                    #effective_from      : $scope.promotion.effective_from
+                    #expire_on           : $scope.promotion.expire_on
+                    active              : $scope.promotion.active
+                    type                : $scope.promotion.type
+                    business            : $scope.businessId
+
+            effective_from = $scope.promotion.effective_from || ''
+            if(effective_from != '')
+                effective_from = $filter('date')(new Date(effective_from), 'yyyy-MM-ddT00:00:00+0000')
+                new_data.promotion.effective_from = effective_from
+
+            expire_on = $scope.promotion.expire_on || ''
+            if(expire_on != '')
+                expire_on = $filter('date')(new Date(expire_on), 'yyyy-MM-ddT00:00:00+0000')
+                new_data.promotion.expire_on = expire_on
+
+            #console.log new_data
+
+            Businesses.post(_URL.post_promotions, new_data ).then  (res) ->
+                if typeof res == 'object' && res.status == 201
+                    $timeout ()->
+                        location.reload()
+                    , 300
+                    return
+            , (error) ->
+                alert error.status + ' : Try again later'
+
+            return
+
+        # 6.1 open date picker
+
+        # 6.1.1 for Effective From
+        $scope.openStartDatepicker  = ($event) ->
+            $event.preventDefault()
+            $event.stopPropagation()
+            $scope.datepickerStartOpened = true
+
+        # 6.1.2 for Expire On
+        $scope.openEndDatepicker  = ($event) ->
+            $event.preventDefault()
+            $event.stopPropagation()
+            $scope.datepickerEndOpened = true
+
+        # 6.2 get types for dropdown list
+        _getTypes = () ->
+            Businesses.get(_URL.types).then  (res) ->
+                if res.status != 200 || typeof res != 'object'
+                    return
+                #console.log(res.data)
+                if res.data._embedded.items.length > 0
+                    $scope.promotionTypes = res.data._embedded.items
+                else
+                    $scope.promotionTypes = []
+            , (error) ->
+                console.log error
+        _getTypes()
+
+        # 5. DELETE OUTLET
+        $scope.removePromotion = (promotion) ->
+            r = confirm("Do you want to delete this promotion \"" + promotion.title + "\"?")
+            if r == true
+                Businesses.delete(promotion._links.self.href).then  (res) ->
                     if typeof res == 'object' && res.status == 204
                         #$scope.infoUpdated = 'Deleted outlet successfully!'
                         $timeout ()->
@@ -238,6 +341,7 @@ angular.module('app.businesses', [])
 # OutletCtrl for single outlet page
 # 1. GET OUTLET by ID
 # 2. UPDATE OUTLET
+# 3. DELETE OUTLET
 # --------------------------------------------
 .controller('OutletCtrl', [
     '$scope'
@@ -309,7 +413,7 @@ angular.module('app.businesses', [])
                     contact_no      : $scope.outlet.contact_no
                     business        : $scope.businessId
 
-            $scope.send_data = new_data
+            #$scope.send_data = new_data
 
             Businesses.put(_URL.detail, new_data ).then  (res) ->
                 if typeof res == 'object' && res.status == 204
@@ -337,5 +441,150 @@ angular.module('app.businesses', [])
 
         # x. ONLOAD
         _getOutlet();
+
+])
+
+# --------------------------------------------
+# PromotionCtrl for single outlet page
+# 1. GET PROMOTION by ID
+# 2. UPDATE PROMOTION
+# --------------------------------------------
+.controller('PromotionCtrl', [
+    '$scope'
+    , '$filter'
+    , 'fetchTabData'
+    , '$location'
+    , '$routeParams'
+    , 'config'
+    , '$q'
+    , '$modal'
+    , 'Businesses'
+    , '$timeout'
+    ,
+    ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, $modal, Businesses, $timeout) ->
+        $scope.clientId =  $routeParams.clientId
+        $scope.businessId   =  if  $routeParams.businessId then $routeParams.businessId.trim() else false
+        $scope.promotionId     =  if  $routeParams.promotionId then $routeParams.promotionId.trim() else false
+
+        if !$scope.businessId
+            location.href = '#/merchant/' + $scope.clientId + '/business'
+            return
+        if !$scope.promotionId
+            location.href = '#/merchant/' + $scope.clientId + '/business/' + $scope.businessId
+            return
+
+        # 1. GET PROMOTION by ID
+        _URL =
+            detail : config.path.baseURL + '/promotions/' + $scope.promotionId
+            types   : config.path.baseURL + '/promotion/types'
+
+        _getPromotion = () ->
+            Businesses.get(_URL.detail).then  (pro) ->
+                if pro.status != 200 || typeof pro != 'object'
+                    return
+                $scope.promotion = pro.data
+                #console.log(pro.data)
+                if(pro.data._links.type)
+                    Businesses.get(pro.data._links.type.href).then  (type) ->
+                        if type.status != 200 || typeof type != 'object'
+                            return
+                        $scope.promotion.type = type.data.id
+                        #console.log($scope.promotion.type)
+                    , (error) ->
+                        console.log error
+            , (error) ->
+                console.log error
+
+        # 1.1 open date picker
+
+        # 1.1.1 for Effective From
+        $scope.openStartDatepicker  = ($event) ->
+            $event.preventDefault()
+            $event.stopPropagation()
+            $scope.datepickerStartOpened = true
+
+        # 1.1.1 for Expire On
+        $scope.openEndDatepicker  = ($event) ->
+            $event.preventDefault()
+            $event.stopPropagation()
+            $scope.datepickerEndOpened = true
+
+        # 1.2 get types for dropdown list
+        _getTypes = () ->
+            Businesses.get(_URL.types).then  (res) ->
+                if res.status != 200 || typeof res != 'object'
+                    return
+                #console.log(res.data)
+                if res.data._embedded.items.length > 0
+                    $scope.promotionTypes = res.data._embedded.items
+                else
+                    $scope.promotionTypes = []
+            , (error) ->
+                console.log error
+        _getTypes()
+
+        # 2. UPDATE PROMOTION
+        $scope.isDisable = true
+        $scope.updatePromotion = () ->
+            angular.forEach $scope.frm_update_promotion.$error.required, (field)->
+                field.$dirty = true
+            if $scope.frm_update_promotion.$error.required.length || !$scope.frm_update_promotion.$valid
+                return false
+
+            new_data =
+                promotion :
+                    title               : $scope.promotion.title
+                    discount_amount     : $scope.promotion.discount_amount
+                    estimated_value     : $scope.promotion.estimated_value
+                    offer_limit         : $scope.promotion.offer_limit
+                    weekly_limit        : $scope.promotion.weekly_limit
+                    monthly_limit       : $scope.promotion.monthly_limit
+                    yearly_limit        : $scope.promotion.yearly_limit
+                    organisation_limit  : $scope.promotion.organisation_limit
+                    user_limit          : $scope.promotion.user_limit
+                    #effective_from      : $scope.promotion.effective_from
+                    #expire_on           : $scope.promotion.expire_on
+                    active              : $scope.promotion.active
+                    type                : $scope.promotion.type
+                    business            : $scope.businessId
+
+            effective_from = $scope.promotion.effective_from || ''
+            if(effective_from != '')
+                effective_from = $filter('date')(new Date(effective_from), 'yyyy-MM-ddT00:00:00+0000')
+                new_data.promotion.effective_from = effective_from
+
+            expire_on = $scope.promotion.expire_on || ''
+            if(expire_on != '')
+                expire_on = $filter('date')(new Date(expire_on), 'yyyy-MM-ddT00:00:00+0000')
+                new_data.promotion.expire_on = expire_on
+
+            #console.log new_data
+
+            Businesses.put($scope.promotion._links.self.href, new_data ).then  (res) ->
+                if typeof res == 'object' && res.status == 204
+                    $scope.infoUpdated = "Update Successfully!"
+            , (error) ->
+                alert error.status + ' : Error, refresh & try again !'
+            return
+
+        # 3. DELETE PROMOTION
+        $scope.deletePromotion = () ->
+            r = confirm("Do you want to delete this promotion \"" + $scope.promotion.title + "\"?")
+            if r == true
+                Businesses.delete($scope.promotion._links.self.href).then  (res) ->
+                    if typeof res == 'object' && res.status == 204
+                        $scope.infoUpdated = 'Deleted promotion successfully!'
+                        $timeout ()->
+                            clientId =  $routeParams.clientId
+                            businessId = $routeParams.businessId
+                            $location.path('/merchant/' + clientId + '/business/' + businessId)
+                        , 300
+                        return
+                , (error) ->
+                    $scope.infoUpdated = error.status + ': Error, refresh & try again !'
+            return
+
+        # x. ONLOAD
+        _getPromotion();
 
 ])
