@@ -252,13 +252,13 @@ angular.module('app.businesses', [])
             new_data =
                 promotion :
                     title               : $scope.promotion.title
-                    discount_amount     : $scope.promotion.discount_amount
                     estimated_value     : $scope.promotion.estimated_value
-                    offer_limit         : $scope.promotion.offer_limit
-                    weekly_limit        : $scope.promotion.weekly_limit
-                    monthly_limit       : $scope.promotion.monthly_limit
-                    yearly_limit        : $scope.promotion.yearly_limit
-                    organisation_limit  : $scope.promotion.organisation_limit
+                    discount_amount     : $scope.promotion.discount_amount || 0
+                    offer_limit         : $scope.promotion.offer_limit || 0
+                    weekly_limit        : $scope.promotion.weekly_limit || 0
+                    monthly_limit       : $scope.promotion.monthly_limit || 0
+                    yearly_limit        : $scope.promotion.yearly_limit || 0
+                    organisation_limit  : $scope.promotion.organisation_limit || 0
                     user_limit          : $scope.promotion.user_limit
                     #effective_from      : $scope.promotion.effective_from
                     #expire_on           : $scope.promotion.expire_on
@@ -275,6 +275,7 @@ angular.module('app.businesses', [])
             if(expire_on != '')
                 expire_on = $filter('date')(new Date(expire_on), 'yyyy-MM-ddT00:00:00+0000')
                 new_data.promotion.expire_on = expire_on
+
 
             #console.log new_data
 
@@ -534,13 +535,13 @@ angular.module('app.businesses', [])
             new_data =
                 promotion :
                     title               : $scope.promotion.title
-                    discount_amount     : $scope.promotion.discount_amount
+                    discount_amount     : $scope.promotion.discount_amount || 0
                     estimated_value     : $scope.promotion.estimated_value
-                    offer_limit         : $scope.promotion.offer_limit
-                    weekly_limit        : $scope.promotion.weekly_limit
-                    monthly_limit       : $scope.promotion.monthly_limit
-                    yearly_limit        : $scope.promotion.yearly_limit
-                    organisation_limit  : $scope.promotion.organisation_limit
+                    offer_limit         : $scope.promotion.offer_limit || 0
+                    weekly_limit        : $scope.promotion.weekly_limit || 0
+                    monthly_limit       : $scope.promotion.monthly_limit || 0
+                    yearly_limit        : $scope.promotion.yearly_limit || 0
+                    organisation_limit  : $scope.promotion.organisation_limit || 0
                     user_limit          : $scope.promotion.user_limit
                     #effective_from      : $scope.promotion.effective_from
                     #expire_on           : $scope.promotion.expire_on
