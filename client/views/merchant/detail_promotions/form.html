@@ -35,15 +35,11 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="td-30">Discount Amount <span class="red">*</span></th>
-                        <td><input type="text"
-                                name="pro_discount_amount"
-                                ng-model="promotion.discount_amount"
-                                class="txt-ipt"
-                                ng-class="{txt_disabled : !isDisable}">
-                            <p style="color:red">
-                                <span ng-show="frm_update_promotion.pro_discount_amount.$invalid  && frm_update_promotion.pro_discount_amount.$dirty">Please input number</span>
-                            </p>
+                        <th class="td-30">Type</th>
+                        <td>
+                            <select name="pro_type" class="txt-ipt" ng-model="promotion.type">
+                                <option ng-repeat="t in promotionTypes" value="{{t.id}}">{{t.title}}</option>
+                            </select>
                         </td>
                     </tr>
                     <tr>
@@ -56,6 +52,31 @@
                                 required>
                             <p style="color:red">
                                 <span ng-show="frm_update_promotion.pro_estimated_value.$invalid  && frm_update_promotion.pro_estimated_value.$dirty">Please input number</span>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Offer Cat <span class="red">*</span></th>
+                        <td><input type="text"
+                                name="pro_offer_cat"
+                                ng-model="promotion.pro_offer_cat"
+                                class="txt-ipt"
+                                ng-class="{txt_disabled : !isDisable}"
+                                required>
+                            <p style="color:red">
+                                <span ng-show="frm_update_promotion.pro_pro_offer_cat.$invalid  && frm_update_promotion.pro_pro_offer_cat.$dirty">Offer Cat is required.</span>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Discount Amount <span class="red">*</span></th>
+                        <td><input type="text"
+                                name="pro_discount_amount"
+                                ng-model="promotion.discount_amount"
+                                class="txt-ipt"
+                                ng-class="{txt_disabled : !isDisable}">
+                            <p style="color:red">
+                                <span ng-show="frm_update_promotion.pro_discount_amount.$invalid  && frm_update_promotion.pro_discount_amount.$dirty">Please input number</span>
                             </p>
                         </td>
                     </tr>
@@ -104,11 +125,15 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="td-30">Type</th>
-                        <td>
-                            <select name="pro_type" class="txt-ipt" ng-model="promotion.type">
-                                <option ng-repeat="t in promotionTypes" value="{{t.id}}">{{t.title}}</option>
-                            </select>
+                        <th class="td-30">Redemptions Till Date <span class="red">*</span></th>
+                        <td><input type="text"
+                                name="pro_redemptions_till_date"
+                                ng-model="promotion.pro_redemptions_till_date"
+                                class="txt-ipt"
+                                ng-class="{txt_disabled : !isDisable}">
+                            <p style="color:red">
+                                <span ng-show="frm_update_promotion.pro_pro_redemptions_till_date.$invalid  && frm_update_promotion.pro_pro_redemptions_till_date.$dirty">Redemptions Till Date is required.</span>
+                            </p>
                         </td>
                     </tr>
                 </tbody>
@@ -129,6 +154,39 @@
                             <p style="color:red">
                                 <span ng-show="frm_update_promotion.pro_offer_limit.$invalid  && frm_update_promotion.pro_offer_limit.$dirty">Please input number</span>
                             </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Per</th>
+                        <td>
+                            <select name="pro_per_time" class="txt-ipt" ng-model="promotion.per_time">
+                                <option value="Offer">Offer</option>
+                                <option value="Month">Month</option>
+                                <option value="Year">Year</option>
+                                <option value="Default">Default</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Redemption Limit <span class="red">*</span></th>
+                        <td><input type="number"
+                                name="pro_redemption_limit"
+                                ng-model="promotion.redemption_limit"
+                                class="txt-ipt"
+                                ng-class="{txt_disabled : !isDisable}"
+                                min="0">
+                            <p style="color:red">
+                                <span ng-show="frm_update_promotion.pro_redemption_limit.$invalid  && frm_update_promotion.pro_redemption_limit.$dirty">Please input number</span>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Per</th>
+                        <td>
+                            <select name="pro_per_cate" class="txt-ipt" ng-model="promotion.per_cate">
+                                <option value="Company">Company</option>
+                                <option value="User">User</option>
+                            </select>
                         </td>
                     </tr>
                     <tr>
@@ -201,6 +259,16 @@
             </table>
         </div>
         <!-- END: COL -->
+        <div class="col-xs-12">
+            <h2 class="ttl-tab"><span>Redemption Info</span></h2>
+            <!-- END : EDITOR -->
+            <div text-angular ng-model="merchantoffer.dedemption"></div>
+        </div>
+        <div class="col-xs-12">
+            <h2 class="ttl-tab"><span>T&amp;Cs</span></h2>
+            <div text-angular ng-model="merchantoffer.tcs"></div>
+            <!-- END : EDITOR -->
+        </div>
     </div>
     </form>
 </div>

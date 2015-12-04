@@ -484,7 +484,7 @@ angular.module('app.businesses', [])
                 if pro.status != 200 || typeof pro != 'object'
                     return
                 $scope.promotion = pro.data
-                #console.log(pro.data)
+                console.log(pro.data)
                 if(pro.data._links.type)
                     Businesses.get(pro.data._links.type.href).then  (type) ->
                         if type.status != 200 || typeof type != 'object'
