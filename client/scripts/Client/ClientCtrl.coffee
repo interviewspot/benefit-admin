@@ -160,6 +160,7 @@ angular.module('app.clients', [])
 
           # SET LOGO
           logo_id = null
+
           if ($scope.$$childTail.uploadresponse)
             logo_id = $scope.$$childTail.uploadresponse.id
           else
