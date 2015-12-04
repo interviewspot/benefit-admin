@@ -14,22 +14,27 @@ angular.module('app.contacts', [])
     '$scope', '$filter' , 'fetchTabData', 'fakeData', '$location', '$routeParams', 'ContactService', 'fetchContact', 'SearchUsers', 'fetchUsers', 'config' , '$q', '$modal',
     ($scope, $filter, fetchTabData, fakeData, $location, $routeParams, ContactService, fetchContact, SearchUsers, fetchUsers, config, $q, $modal) ->
 
+        _URL =
+            list   : config.path.baseURL + config.path.contacts.replace(":org_id", $routeParams.clientId) + '?search=position.handbookContact:1'
+
+
         # 1. Display list contacts
         $scope.loadContactList = ->
-            ContactService.get {org_id:$routeParams.clientId}, (data, getResponseHeaders) ->
-                if data._embedded.items.length
+            fetchContact.get(_URL.list).then (res) ->
+                if res.data._embedded.items.length
                     $scope.contacts = []
-                    for i, item of data._embedded.items
+
+                    angular.forEach res.data._embedded.items, (item, i) ->
+                        $scope.contacts[i] = {}
                         ((itemInstance) ->
                             fetchContact.get(itemInstance._links.employee.href).then  (res) ->
+                                $scope.contacts[i]['position'] = itemInstance
+                                $scope.contacts[i]['user']     = res.data
+                                $scope.contacts[i]['alphabet'] = if res.data.first_name then res.data.first_name.charAt(0).toLowerCase() else res.data.username.charAt(0).toLowerCase()
 
-                                $scope.contacts.push({
-                                    'position' : itemInstance
-                                    'user'     : res.data
-                                    'alphabet' : if res.data.first_name then res.data.first_name.charAt(0).toLowerCase() else res.data.username.charAt(0).toLowerCase()
-                                })
+                                fetchContact.get(itemInstance._links.tags.href).then  (res) ->
+                                    $scope.contacts[i]['tags'] = res.data
                         )(item)
-
                 return
 
         if $routeParams.clientId

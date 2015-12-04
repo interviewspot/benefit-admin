@@ -52,6 +52,8 @@ angular.module('app', [
     'app.handbook_info'
     'app.users'
     'app.users.services'
+    'app.businesses'
+    'app.businesses.services'
     'app.employee'
     'app.notifications'
     'app.merchants.html' # REMOVE AFTER DONE LAYOUT
@@ -132,6 +134,18 @@ angular.module('app', [
             })
             .when('/merchant/:clientId/campaigns', {
                 templateUrl: 'views/merchant/merchant-detail_campaigns.html'
+            })
+            .when('/merchant/:clientId/business', {
+                templateUrl: 'views/merchant/merchant-detail_businesses.html'
+            })
+            .when('/merchant/:clientId/business/:businessId', {
+                templateUrl: 'views/merchant/merchant-detail_business.html'
+            })
+            .when('/merchant/:clientId/business/:businessId/outlet/:outletId', {
+                templateUrl: 'views/merchant/merchant-detail_outlet.html'
+            })
+            .when('/merchant/:clientId/business/:businessId/promotion/:promotionId', {
+                templateUrl: 'views/merchant/merchant-detail_promotion.html'
             })
 
 

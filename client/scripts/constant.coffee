@@ -15,6 +15,7 @@ angular.module('app.constant', [])
                 'contact'               : '/organisations/:org_id/positions/:position_id'
                 'users'                 : '/users'
                 'upload'                : '/api/providers/sonata.media.provider.'
+                'businesses'            : '/organisations/:org_id/businesses'
             }
         }
     )

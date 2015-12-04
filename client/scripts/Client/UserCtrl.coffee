@@ -47,9 +47,17 @@ angular.module('app.users', [])
                                 if res.status != 200 || typeof res != 'object'
                                     return
                                 #console.log(res)
+                                res.data.position_id = itemInstance.id
+                                Users.get(_URL_users.list + '/' + itemInstance.id + '/tags').then  (tag) ->
+                                    if tag.data._embedded.items.length > 0
+                                        tag_lst = []
+                                        angular.forEach tag.data._embedded.items, (tag)->
+                                            if(tag.employee_class)
+                                                tag_lst.push(tag.name)
+                                        res.data.employee_class = tag_lst.join(', ')
+                                , (error) ->
+                                    console.log error
                                 $scope.users.items.push(res.data)
-                                #$scope.users = res.data
-                                #$scope.users.items = res.data._embedded.items
                                 return
                             , (error) ->
                                 console.log error
@@ -112,6 +120,7 @@ angular.module('app.users', [])
     ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, $modal, UserService, Users, $timeout) ->
         $scope.clientId =  $routeParams.clientId
         $scope.userId   =  if $routeParams.userId then $routeParams.userId.trim() else false
+        $scope.updateTags = {}
 
         if !$scope.userId
             location.href = '#/clients/' + $scope.clientId
@@ -120,21 +129,43 @@ angular.module('app.users', [])
         # 1. GET USER by EMAIL
         _URL =
             list   : config.path.baseURL + config.path.users
-            detail : config.path.baseURL + config.path.users + '/'
+            detail : config.path.baseURL + config.path.contacts.replace(":org_id", $routeParams.clientId) + '/'
+            tags   : config.path.baseURL + '/tags'
 
         _getUser = () ->
-            Users.get(_URL.detail + $scope.userId).then  (res) ->
-                if res.status != 200 || typeof res != 'object'
+            Users.get(_URL.detail + $scope.userId).then  (pos) ->
+                if pos.status != 200 || typeof pos != 'object'
                     return
-                $scope.user = res.data
-                if($scope.user.birthday == "-0001-11-30T00:00:00+0655")
-                    $scope.user.birthday = ""
-                if($scope.user.date_added == "-0001-11-30T00:00:00+0655")
-                    $scope.user.date_added = ""
-                else
-                    $scope.user.date_added = $filter('date')(new Date($scope.user.date_added), 'MM/dd/yyyy')
-                console.log res.data
-                return
+                $scope.updateTags.position = {}
+                $scope.updateTags.position.title = pos.data.title
+                $scope.updateTags.position.active = pos.data.active
+                $scope.updateTags.position.employer = $scope.clientId
+                $scope.updateTags.position.handbook_contact = pos.data.handbook_contact
+                Users.get(pos.data._links.employee.href).then  (res) ->
+                    if res.status != 200 || typeof res != 'object'
+                        return
+                    $scope.user = res.data
+                    $scope.user.employee_class = []
+                    $scope.user.employee_function = []
+                    $scope.updateTags.position.employee = $scope.user.id
+                    if($scope.user.birthday == "-0001-11-30T00:00:00+0655")
+                        $scope.user.birthday = ""
+                    if($scope.user.date_added == "-0001-11-30T00:00:00+0655")
+                        $scope.user.date_added = ""
+                    else
+                        $scope.user.date_added = $filter('date')(new Date($scope.user.date_added), 'MM/dd/yyyy')
+                    #console.log res.data
+                    # get tags for user
+                    Users.get(_URL.detail + $scope.userId + '/tags').then  (tag) ->
+                        #console.log(tag.data._embedded.items)
+                        if tag.data._embedded.items.length > 0
+                            $scope.user.employee_class = $filter('filter')(tag.data._embedded.items, {employee_class:true})
+                            $scope.user.employee_function = $filter('filter')(tag.data._embedded.items,{employee_function:true})
+                    , (error) ->
+                        console.log error
+                    return
+                , (error) ->
+                    console.log error
             , (error) ->
                 console.log error
 
@@ -175,7 +206,7 @@ angular.module('app.users', [])
                     "username"   : $scope.user.username
                     "email"      : $scope.user.email
                     "code"       : $scope.user.code
-                    #"handbook_contact" : true,
+                    #"handbook_contact" : $scope.position.handbook_contact
                     #"enabled": true,
                     #"plain_password": null,
                     #"ssn": null
@@ -185,18 +216,45 @@ angular.module('app.users', [])
                 }
             }
 
+            $scope.updateTags.position.tags = {}
+            numTag = 1
+
+            angular.forEach $scope.user.employee_class, (tag)->
+                keyTag = "tag" + numTag
+                $scope.updateTags.position.tags[keyTag] = {}
+                $scope.updateTags.position.tags[keyTag].name = tag.name
+                $scope.updateTags.position.tags[keyTag].active = true
+                $scope.updateTags.position.tags[keyTag].employee_class = 1
+                $scope.updateTags.position.tags[keyTag].employee_function = 0
+                numTag++
+
+            angular.forEach $scope.user.employee_function, (tag)->
+                keyTag = "tag" + numTag
+                $scope.updateTags.position.tags[keyTag] = {}
+                $scope.updateTags.position.tags[keyTag].name = tag.name
+                $scope.updateTags.position.tags[keyTag].active = true
+                $scope.updateTags.position.tags[keyTag].employee_class = 0
+                $scope.updateTags.position.tags[keyTag].employee_function = 1
+                numTag++
+
             birthday = $scope.user.birthday || ''
             if(birthday != '')
                 birthday = $filter('date')(new Date(birthday), 'yyyy-MM-ddT00:00:00+0000')
                 newData.user.birthday = birthday
 
 
-            Users.put(_URL.detail + $scope.user.id, newData).then  (res) ->
+
+            Users.put(_URL.list + '/' + $scope.user.id, newData).then  (res) ->
                 if res.status == 204
-                    $scope.infoUpdated = 'Updated user successfully!'
-                    $timeout ()->
-                        $scope.infoUpdated = null
-                    , 300
+                    Users.put(_URL.detail + $scope.userId, $scope.updateTags).then  (res) ->
+                        if res.status == 204
+                            $scope.infoUpdated = 'Updated user successfully!'
+                            $timeout ()->
+                                $scope.infoUpdated = null
+                            , 300
+                        return
+                    , (error) ->
+                        $scope.infoUpdated = error.status + ': Error update tags, refresh & try again!'
                 return
 
             , (error) ->
@@ -208,11 +266,40 @@ angular.module('app.users', [])
 
                 _searchUserbyEntry('code', newData.user.code, checkError)
 
-        #open date picker
+        # 2.1 open date picker
         $scope.openDatepicker  = ($event) ->
             $event.preventDefault()
             $event.stopPropagation()
             $scope.datepickerOpened = true
+
+        # get tags list
+        $scope.tags = {}
+
+        $scope.tags.employee_class    = []
+        $scope.tags.employee_function = []
+        _getTags = () ->
+            Users.get(_URL.tags).then  (res) ->
+                if res.status != 200 || typeof res != 'object'
+                    return
+                angular.forEach res.data._embedded.items, (tag)->
+                    if tag.employee_class && tag.active
+                        $scope.tags.employee_class.push(tag)
+                    if tag.employee_function && tag.active
+                        $scope.tags.employee_function.push(tag)
+                return
+            , (error) ->
+                console.log error
+        _getTags()
+
+        $scope.tags.getEmployeeClass = (query) ->
+            deferred = $q.defer();
+            deferred.resolve($scope.tags.employee_class);
+            deferred.promise;
+
+        $scope.tags.getEmployeeFunction = (query) ->
+            deferred = $q.defer();
+            deferred.resolve($scope.tags.employee_function);
+            deferred.promise;
 
         # 3. DELETE USER
         $scope.deleteUser = () ->
@@ -261,12 +348,13 @@ angular.module('app.users', [])
 
         _URL =
             detail : config.path.baseURL + config.path.users
+            tags   : config.path.baseURL + '/tags'
 
         _searchUserbyEntry = (entry, searchVal, callback) ->
             if typeof callback != 'function'
                 return
             get_result = null
-            Users.get(_URL.list + '?search=user.' + entry + ':' + searchVal).then  (res) ->
+            Users.get(_URL.detail + '?search=user.' + entry + ':' + searchVal).then  (res) ->
                 if res.status == 200 && typeof res == 'object'
                     get_result = res.data
                     callback(get_result)
@@ -298,6 +386,30 @@ angular.module('app.users', [])
                                 }
                             }
 
+                            # add tags
+                            newContact.position.tags = {}
+                            numTag = 1
+
+                            angular.forEach $scope.user_tags.employee_class, (tag)->
+                                keyTag = "tag" + numTag
+                                newContact.position.tags[keyTag] = {}
+                                newContact.position.tags[keyTag].name = tag.name
+                                newContact.position.tags[keyTag].active = true
+                                newContact.position.tags[keyTag].employee_class = 1
+                                newContact.position.tags[keyTag].employee_function = 0
+                                numTag++
+
+                            angular.forEach $scope.user_tags.employee_function, (tag)->
+                                keyTag = "tag" + numTag
+                                newContact.position.tags[keyTag] = {}
+                                newContact.position.tags[keyTag].name = tag.name
+                                newContact.position.tags[keyTag].active = true
+                                newContact.position.tags[keyTag].employee_class = 0
+                                newContact.position.tags[keyTag].employee_function = 1
+                                numTag++
+
+                            #console.log(newContact)
+
                             # CREATE POSITION USER
                             ContactService.save {org_id:$scope.clientId}, newContact, (res)->
 
@@ -324,6 +436,34 @@ angular.module('app.users', [])
             $event.preventDefault()
             $event.stopPropagation()
             $scope.datepickerOpened = true
+
+        # get tags list
+        $scope.tags = {}
+        $scope.tags.employee_class    = []
+        $scope.tags.employee_function = []
+        _getTags = () ->
+            Users.get(_URL.tags).then  (res) ->
+                if res.status != 200 || typeof res != 'object'
+                    return
+                angular.forEach res.data._embedded.items, (tag)->
+                    if tag.employee_class && tag.active
+                        $scope.tags.employee_class.push(tag)
+                    if tag.employee_function && tag.active
+                        $scope.tags.employee_function.push(tag)
+                return
+            , (error) ->
+                console.log error
+        _getTags()
+
+        $scope.tags.getEmployeeClass = (query) ->
+            deferred = $q.defer();
+            deferred.resolve($scope.tags.employee_class);
+            deferred.promise;
+
+        $scope.tags.getEmployeeFunction = (query) ->
+            deferred = $q.defer();
+            deferred.resolve($scope.tags.employee_function);
+            deferred.promise;
 
         #By Input FRM
         $scope.submitCreateUser = ->

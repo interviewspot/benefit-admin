@@ -1,0 +1,365 @@
+<!-- END : USER LIST -->
+<div class="user-edit" data-ng-controller="BusinessCtrl">
+    <h2 class="ttl-tab">
+        <a href="#/merchant/{{clientId}}/business/">Businesses</a>
+        <span class="sub-sep"><i class="fa fa fa-caret-right"></i></span>
+        <span>{{business.name}}</span>
+    </h2>
+    <form name="frm_update_business" class="frm_update_business" novalidate>
+    <div class="t-r marg-bot ">
+        <span class="msg-update">{{infoUpdated}} </span>
+        <button type="submit" class="btn btn-brown" ng-click="updateBusiness()">
+            <i class="fa fa-pencil"></i>
+            Submit to save
+        </button>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <button class="btn btn-edit" ng-click="deleteBusiness()">Delete</button>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <input type="hidden" ng-model="business.id" value="{{business.id}}">
+            <table class="table tbl table-striped">
+                <tbody>
+                    <tr>
+                        <th class="td-30">Name <span class="red">*</span></th>
+                        <td>
+                            <input type="text"
+                                name="bus_name"
+                                class="txt-ipt"
+                                ng-class="{txt_disabled : !isDisable}"
+                                ng-model="business.name"
+                                required>
+                            <p style="color:red" ng-show="frm_update_business.bus_name.$dirty && frm_update_business.bus_name.$invalid">
+                              <span ng-show="frm_update_business.bus_name.$error.required && frm_update_business.bus_name.$dirty">Name is required.</span>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Merchant Code <span class="red">*</span></th>
+                        <td><input type="text"
+                                name="bus_merchant_code"
+                                ng-model="business.merchant_code"
+                                class="txt-ipt"
+                                ng-class="{txt_disabled : !isDisable}"
+                                ng-pattern="/^[a-zA-Z\d\-\_]+$/"
+                                required>
+                            <p style="color:red">
+                                <span ng-show="frm_update_business.bus_merchant_code.$invalid  && frm_update_business.bus_merchant_code.$dirty">Merchant code is required without whitespace</span>
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- END: COL -->
+        <div class="col-xs-12 user-history">
+            <h2 class="ttl-tab">
+                <span>Promotions</span>
+            </h2>
+            <div class="t-r">
+                <a class="btn btn-brown"
+                   data-toggle="modal"
+                   data-target="#createPromotion">Add new promotion</a>
+            </div>
+            <table class="table tbl tbl-bg table-striped">
+                <tbody>
+                    <tr>
+                        <th class="text-center">Title</th>
+                        <th class="text-center">Discount Amount</th>
+                        <th class="text-center">Estimated Value</th>
+                        <th class="text-center">Effective From</th>
+                        <th class="text-center">Expire On</th>
+                        <th class="text-center td-15">Actions</th>
+                    </tr>
+                    <tr ng-repeat="promotion in business.promotions._embedded.items">
+                        <td class="text-center">{{promotion.title}}</td>
+                        <td class="text-center">{{promotion.discount_amount}}</td>
+                        <td class="text-center">{{promotion.estimated_value}}</td>
+                        <td class="text-center">{{promotion.effective_from | date:'MM/dd/yyyy'}}</td>
+                        <td class="text-center">{{promotion.expire_on | date:'MM/dd/yyyy'}}</td>
+                        <td class="td-control text-center td-15">
+                            <a title="Edit Outlet" href="#/merchant/{{clientId}}/business/{{business.id}}/promotion/{{promotion.id}}"><i class="fa fa fa-pencil"></i></a>
+                            |
+                            <a title="Delete Outlet" ng-click="removePromotion(promotion)"><i class="fa fa-trash-o"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <footer class="table-footer" ng-show="business.outlets.pages >= 2">
+                <div class="row">
+                    <div class="col-md-6 page-num-info">
+                <span>
+                    Show
+                    <select data-ng-model="numPerPage"
+                            data-ng-options="num for num in numPerPageOpt"
+                            data-ng-change="onNPPChange()">
+                    </select>
+                    users / page
+                </span>
+                    </div>
+                    <div class="col-md-6 text-right pagination-container">
+                        <pagination class="pagination-sm"
+                                    ng-model="currentPage"
+                                    total-items="business.outlets.total"
+                                    max-size="4"
+                                    ng-change="gotoPage(currentPage)"
+                                    items-per-page="numPerPage"
+                                    rotate="false"
+                                    boundary-links="true"></pagination>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+        <!-- END: PROMOTIONS -->
+
+        <div class="col-xs-12 user-history">
+            <h2 class="ttl-tab">
+                <span>Outlets</span>
+            </h2>
+            <div class="t-r">
+                <a class="btn btn-brown"
+                   data-toggle="modal"
+                   data-target="#createOutlet">Add new outlet</a>
+            </div>
+            <table class="table tbl tbl-bg table-striped">
+                <tbody>
+                    <tr>
+                        <th class="text-center">Name</th>
+                        <th class="text-center">Contact No.</th>
+                        <th class="text-center td-15">Actions</th>
+                    </tr>
+                    <tr ng-repeat="outlet in business.outlets._embedded.items">
+                        <td class="text-center">{{outlet.name}}</td>
+                        <td class="text-center">{{outlet.contact_no}}</td>
+                        <td class="td-control text-center td-15">
+                            <a title="Edit Outlet" href="#/merchant/{{clientId}}/business/{{business.id}}/outlet/{{outlet.id}}"><i class="fa fa fa-pencil"></i></a>
+                            |
+                            <a title="Delete Outlet" ng-click="removeOutlet(outlet)"><i class="fa fa-trash-o"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <footer class="table-footer" ng-show="business.outlets.pages >= 2">
+                <div class="row">
+                    <div class="col-md-6 page-num-info">
+                <span>
+                    Show
+                    <select data-ng-model="numPerPage"
+                            data-ng-options="num for num in numPerPageOpt"
+                            data-ng-change="onNPPChange()">
+                    </select>
+                    users / page
+                </span>
+                    </div>
+                    <div class="col-md-6 text-right pagination-container">
+                        <pagination class="pagination-sm"
+                                    ng-model="currentPage"
+                                    total-items="business.outlets.total"
+                                    max-size="4"
+                                    ng-change="gotoPage(currentPage)"
+                                    items-per-page="numPerPage"
+                                    rotate="false"
+                                    boundary-links="true"></pagination>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+        <!-- END: OUTLETS -->
+    </div>
+    </form>
+    <div id="createOutlet" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Create New Outlet</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form
+                                class="frm_create_outlet modal_frm"
+                                name="frm_create_outlet"
+                                novalidate
+                                ng-submit="submitNewOutlet()">
+                                <p>
+                                    <label>Name</label>
+                                    <input type="text"
+                                           class="ipt"
+                                           name="out_name"
+                                           ng-model="out.name"
+                                           required
+                                           ng-class='{txt_err : (frm_create_outlet.out_name.$invalid && frm_create_outlet.out_name.$dirty)}'
+                                            />
+                                </p>
+                                <p>
+                                    <label>Contact No</label>
+                                    <input type="text"
+                                           class="ipt"
+                                           name="out_contact_no"
+                                           ng-model="out.contact_no"
+                                           ng-minlength="4"
+                                           ng-pattern="/^[\d+ ]+$/"
+                                           required
+                                           ng-class='{txt_err : (frm_create_outlet.out_contact_no.$invalid && frm_create_outlet.out_contact_no.$dirty)}'
+                                           />
+                                </p>
+                                <br>
+                                <button type="submit" class="save btn-brown">
+                                    <i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;CREATE NEW OUTLET
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END : MODAL CREATE OUTLET-->
+    <div id="createPromotion" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Create New Promotion</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form
+                                class="frm_create_promotion modal_frm"
+                                name="frm_create_promotion"
+                                novalidate
+                                ng-submit="submitNewPromotion()">
+                                <p>
+                                    <label>Title</label>
+                                    <input  type="text"
+                                            name="pro_title"
+                                            class="ipt"
+                                            ng-class='{txt_err : (frm_create_promotion.pro_title.$invalid && frm_create_promotion.pro_title.$dirty)}'
+                                            ng-model="promotion.title"
+                                            required>
+                                </p>
+                                <p>
+                                    <label>Discount Amount</label>
+                                    <input type="text"
+                                            name="pro_discount_amount"
+                                            ng-model="promotion.discount_amount"
+                                            class="ipt"
+                                            ng-class="{txt_err : (frm_create_promotion.pro_discount_amount.$invalid && frm_create_promotion.pro_discount_amount.$dirty)}">
+                                </p>
+                                <p>
+                                    <label>Estimated Value</label>
+                                    <input type="text"
+                                            name="pro_estimated_value"
+                                            ng-model="promotion.estimated_value"
+                                            class="ipt"
+                                            ng-class="{txt_err : (frm_create_promotion.pro_estimated_value.$invalid && frm_create_promotion.pro_estimated_value.$dirty)}"
+                                            required>
+                                </p>
+                                <p>
+                                    <label>Offer Limit</label>
+                                    <input type="number"
+                                        name="pro_offer_limit"
+                                        ng-model="promotion.offer_limit"
+                                        class="ipt"
+                                        ng-class="{txt_err : (frm_create_promotion.pro_offer_limit.$invalid && frm_create_promotion.pro_offer_limit.$dirty)}"
+                                        min="0">
+                                </p>
+                                <p>
+                                    <label>Weekly Limit</label>
+                                    <input type="number"
+                                            name="pro_weekly_limit"
+                                            ng-model="promotion.weekly_limit"
+                                            class="txt-ipt"
+                                            ng-class="{txt_err : (frm_create_promotion.pro_weekly_limit.$invalid && frm_create_promotion.pro_weekly_limit.$dirty)}"
+                                            min="0">
+                                </p>
+                                <p>
+                                    <label>Monthly Limit</label>
+                                    <input type="number"
+                                            name="pro_monthly_limit"
+                                            ng-model="promotion.monthly_limit"
+                                            class="txt-ipt"
+                                            ng-class="{txt_err : (frm_create_promotion.pro_monthly_limit.$invalid && frm_create_promotion.pro_monthly_limit.$dirty)}"
+                                            min="0">
+                                </p>
+                                <p>
+                                    <label>Yearly Limit</label>
+                                    <input type="number"
+                                            name="pro_yearly_limit"
+                                            ng-model="promotion.yearly_limit"
+                                            class="txt-ipt"
+                                            ng-class="{txt_err : (frm_create_promotion.pro_yearly_limit.$invalid && frm_create_promotion.pro_yearly_limit.$dirty)}"
+                                            min="0">
+                                </p>
+                                <p>
+                                    <label>Organisation Limit</label>
+                                    <input type="number"
+                                            name="pro_organisation_limit"
+                                            ng-model="promotion.organisation_limit"
+                                            class="txt-ipt"
+                                            ng-class="{txt_err : (frm_create_promotion.pro_organisation_limit.$invalid && frm_create_promotion.pro_organisation_limit.$dirty)}"
+                                            min="0">
+                                </p>
+                                <p>
+                                    <label>User Limit</label>
+                                    <input type="number"
+                                            name="pro_user_limit"
+                                            ng-model="promotion.user_limit"
+                                            class="txt-ipt"
+                                            ng-class="{txt_err : (frm_create_promotion.pro_user_limit.$invalid && frm_create_promotion.pro_user_limit.$dirty)}"
+                                            min="0"
+                                            required>
+                                </p>
+                                <p>
+                                    <label>Effective From</label>
+                                    <input type="text"
+                                        name="pro_effective_from"
+                                        class="txt-ipt"
+                                        datepicker-popup="MM/dd/yyyy"
+                                        ng-model="promotion.effective_from"
+                                        is-open="datepickerStartOpened"
+                                        close-text="Close"
+                                        show-button-bar="false"
+                                        ng-click="openStartDatepicker($event)"
+                                        ng-class="{txt_err : (frm_create_promotion.pro_effective_from.$invalid && frm_create_promotion.pro_effective_from.$dirty)}"
+                                        required
+                                        />
+                                </p>
+                                <p>
+                                    <label>Expire On</label>
+                                    <input type="text"
+                                            name="pro_expire_on"
+                                            class="txt-ipt"
+                                            datepicker-popup="MM/dd/yyyy"
+                                            ng-model="promotion.expire_on"
+                                            is-open="datepickerEndOpened"
+                                            close-text="Close"
+                                            show-button-bar="false"
+                                            ng-click="openEndDatepicker($event)"
+                                            ng-class="{txt_err : (frm_create_promotion.pro_expire_on.$invalid && frm_create_promotion.pro_expire_on.$dirty)}"
+                                            required
+                                            />
+                                </p>
+                                <p>
+                                    <label>Active</label>
+                                    <input name="pro_active" type="checkbox" ng-model="promotion.active" />
+                                </p>
+                                <p>
+                                    <label>Type</label>
+                                    <select name="pro_type" class="txt-ipt" ng-model="promotion.type">
+                                        <option ng-repeat="t in promotionTypes" value="{{t.id}}">{{t.title}}</option>
+                                    </select>
+                                </p>
+                                <br>
+                                <button type="submit" class="save btn-brown">
+                                    <i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;CREATE NEW PROMOTION
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END : MODAL CREATE PROMOTION-->
+</div>
+<!-- END : BUSINESS EDIT -->

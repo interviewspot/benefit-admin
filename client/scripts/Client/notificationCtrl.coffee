@@ -33,7 +33,9 @@ angular.module('app.notifications', [])
         _getNotifis = (limit, goPage) ->
             aREST.get(_URL_notifis.list + '?limit=' + limit + '&page=' + goPage).then  (res) ->
                 if typeof res.data._embedded == 'object' && res.data._embedded.items.length > 0
+                    #console.log(res.data)
                     $scope.notifis = res.data
+                    $scope.notifis._embedded.items =  $filter('orderBy')($scope.notifis._embedded.items, '-id', false)
 
                 else
                     console.log 'No data'
@@ -79,10 +81,13 @@ angular.module('app.notifications', [])
                 if typeof res == 'object' && res.status == 201
                     newMsg.message['created_at'] = 1
                     newMsg.message['isNew']      = 1
-                    $scope.notifis._embedded.items.unshift newMsg.message
-                    $timeout ()->
-                        $scope.notifis._embedded.items[0].isNew = 0
-                    , 3000
+                    if $scope.notifis._embedded.items.length
+                        $scope.notifis._embedded.items.unshift newMsg.message
+                        $timeout ()->
+                            $scope.notifis._embedded.items[0].isNew = 0
+                        , 3000
+                    else
+                        location.reload()
             , (error) ->
                 console.log error
 
@@ -97,17 +102,14 @@ angular.module('app.notifications', [])
             re_push = (pMsg) ->
                 aREST.get(notifi._links.push.href).then  (res) ->
                     if typeof res == 'object' && res.status == 200
-                        console.log res.data
-                        if pMsg.push.current < res.data.total
-                            pMsg.push.current = res.data.current++
+                        pMsg.push.current = res.data.current + 1
+                        if pMsg.push.current <= res.data.total
                             aREST.put(notifi._links.push.href, pMsg).then  (res) ->
-                                console.log res
                                 re_push(pMsg)
                             , (error) ->
-                                console.log error
                                 alert(error.data.message)
                         else
-                            return
+                            alert('The message has been delivered to employees in the company.')
                 , (error) ->
                     console.log error
             re_push(pushMsg)
@@ -117,6 +119,34 @@ angular.module('app.notifications', [])
             $scope.notifis._embedded.items[key]['shw_frm'] = !$scope.notifis._embedded.items[key]['shw_frm']
             return
 
+        # 7. Update notification
+        $scope.submitUpdateNotifi = (key) ->
+            newMsg = {
+                "message": {
+                    "subject": $scope.notifis._embedded.items[key].subject.trim(),
+                    "body": $scope.notifis._embedded.items[key].body.trim()
+                }
+            }
+            #console.log(newMsg)
+            aREST.put($scope.notifis._embedded.items[key]._links.self.href, newMsg).then  (res) ->
+                if typeof res == 'object' && res.status == 204
+                    $timeout ()->
+                        window.location.reload()
+                    , 500
+            , (error) ->
+                console.log error
+
+        # 8 Delete notification
+        $scope.deleteNotifi = (key) ->
+            r = confirm("Do you want to delete this notification \"" + $scope.notifis._embedded.items[key].subject.trim() + "\"?")
+            if r == true
+                aREST.delete($scope.notifis._embedded.items[key]._links.self.href).then  (res) ->
+                    if typeof res == 'object' && res.status == 204
+                        $timeout ()->
+                            window.location.reload()
+                        , 500
+                , (error) ->
+                    console.log error
 
         # x. ONLOAD LIST USERS
         _getNotifis($scope.numPerPage, $scope.currentPage);

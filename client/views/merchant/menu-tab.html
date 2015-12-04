@@ -1,6 +1,9 @@
 <li ng-class="{active : isActive('/merchant/' + clientId + '/info')}">
     <a href="{{page_tabUrls.info ? page_tabUrls.info : 'javascript:;'}}" title="Company Info">Company Info</a>
 </li>
+<li ng-class="{active : isActive('/merchant/' + clientId + '/business')}">
+    <a href="{{page_tabUrls.business ? page_tabUrls.business : 'javascript:;'}}" title="Businesses">Businesses</a>
+</li>
 <li ng-class="{active : isActive('/merchant/' + clientId + '/outlets')}">
     <a href="{{page_tabUrls.outlets ? page_tabUrls.outlets : 'javascript:;'}}" title="Outlets">Outlets</a>
 </li>
