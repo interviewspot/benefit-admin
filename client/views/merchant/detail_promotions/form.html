@@ -144,6 +144,26 @@
             <table class="table tbl table-striped">
                 <tbody>
                     <tr>
+                        <th class="td-30">Per</th>
+                        <td>
+                            <select name="pro_per_time" class="txt-ipt" >
+                                <option value="Default">Default</option>
+                                <option value="Offer">Offer</option>
+                                <option value="Month">Month</option>
+                                <option value="Year">Year</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Per</th>
+                        <td>
+                            <select name="pro_per_cate" class="txt-ipt">
+                                <option value="Company">Company</option>
+                                <option value="User">User</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
                         <th class="td-30">Offer Limit <span class="red">*</span></th>
                         <td><input type="number"
                                 name="pro_offer_limit"
@@ -157,17 +177,6 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="td-30">Per</th>
-                        <td>
-                            <select name="pro_per_time" class="txt-ipt" ng-model="promotion.per_time">
-                                <option value="Offer">Offer</option>
-                                <option value="Month">Month</option>
-                                <option value="Year">Year</option>
-                                <option value="Default">Default</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
                         <th class="td-30">Redemption Limit <span class="red">*</span></th>
                         <td><input type="number"
                                 name="pro_redemption_limit"
@@ -178,15 +187,6 @@
                             <p style="color:red">
                                 <span ng-show="frm_update_promotion.pro_redemption_limit.$invalid  && frm_update_promotion.pro_redemption_limit.$dirty">Please input number</span>
                             </p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="td-30">Per</th>
-                        <td>
-                            <select name="pro_per_cate" class="txt-ipt" ng-model="promotion.per_cate">
-                                <option value="Company">Company</option>
-                                <option value="User">User</option>
-                            </select>
                         </td>
                     </tr>
                     <tr>
