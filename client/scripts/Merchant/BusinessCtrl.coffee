@@ -478,18 +478,27 @@ angular.module('app.businesses', [])
         _URL =
             detail : config.path.baseURL + '/promotions/' + $scope.promotionId
             types   : config.path.baseURL + '/promotion/types'
+            outlets : config.path.baseURL + '/businesses/' + $scope.businessId + '/outlets'
 
         _getPromotion = () ->
             Businesses.get(_URL.detail).then  (pro) ->
                 if pro.status != 200 || typeof pro != 'object'
                     return
                 $scope.promotion = pro.data
-                console.log(pro.data)
+                #console.log(pro.data)
                 if(pro.data._links.type)
                     Businesses.get(pro.data._links.type.href).then  (type) ->
                         if type.status != 200 || typeof type != 'object'
                             return
                         $scope.promotion.type = type.data.id
+                        #console.log($scope.promotion.type)
+                    , (error) ->
+                        console.log error
+                if(pro.data._links.retail_outlets)
+                    Businesses.get(pro.data._links.retail_outlets.href).then  (out) ->
+                        if out.status != 200 || typeof out != 'object'
+                            return
+                        $scope.promotion.outlets = out.data._embedded.items
                         #console.log($scope.promotion.type)
                     , (error) ->
                         console.log error
@@ -583,6 +592,60 @@ angular.module('app.businesses', [])
                         return
                 , (error) ->
                     $scope.infoUpdated = error.status + ': Error, refresh & try again !'
+            return
+
+        # 4. GET OUTLETS SOURCE
+        $scope.getOutlets = (query) ->
+            Businesses.get(_URL.outlets + "?limit=99999").then  (res) ->
+                if res.status != 200 || typeof res != 'object'
+                    return []
+                #console.log(res.data)
+                if res.data._embedded.items.length > 0
+                    return res.data._embedded.items
+                else
+                    return []
+            , (error) ->
+                console.log error
+
+        # 5. INSERT NEW OUTLET
+        $scope.insertNewOutlet = () ->
+            angular.forEach $scope.frm_create_outlet.$error.required, (field)->
+                field.$dirty = true
+            if $scope.frm_create_outlet.$error.required.length || !$scope.frm_create_outlet.$valid
+                return false
+
+            if $scope.outlets.chosenList.length <= 0
+                $scope.displayError = true
+                return false
+
+            new_data =
+                promotion :
+                    title               : $scope.promotion.title
+                    discount_amount     : $scope.promotion.discount_amount || 0
+                    estimated_value     : $scope.promotion.estimated_value
+                    offer_limit         : $scope.promotion.offer_limit || 0
+                    weekly_limit        : $scope.promotion.weekly_limit || 0
+                    monthly_limit       : $scope.promotion.monthly_limit || 0
+                    yearly_limit        : $scope.promotion.yearly_limit || 0
+                    organisation_limit  : $scope.promotion.organisation_limit || 0
+                    user_limit          : $scope.promotion.user_limit
+                    effective_from      : $scope.promotion.effective_from
+                    expire_on           : $scope.promotion.expire_on
+                    active              : $scope.promotion.active
+                    type                : $scope.promotion.type
+                    business            : $scope.businessId
+            new_data.promotion.retail_outlets = []
+            angular.forEach $scope.outlets.chosenList, (outlet)->
+                new_data.promotion.retail_outlets.push(outlet.id)
+            $scope.insertData = new_data
+            Businesses.put($scope.promotion._links.self.href, new_data ).then  (res) ->
+                if typeof res == 'object' && res.status == 204
+                    $scope.infoUpdated = "Update Successfully!"
+                    $timeout ()->
+                        location.reload()
+                    , 300
+            , (error) ->
+                alert error.status + ' : Error, refresh & try again !'
             return
 
         # x. ONLOAD

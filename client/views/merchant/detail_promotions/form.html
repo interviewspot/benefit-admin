@@ -242,15 +242,13 @@
                         <th>Participating Outlets
                         </th>
                     </tr>
-                    <tr>
-                        <td>26 Seah Street</td>
-                    </tr>
-                    <tr>
-                        <td>Bedok Mall, Bedok Central</td>
+                    <tr ng-repeat="outlet in promotion.outlets">
+                        <td>{{outlet.name}}</td>
                     </tr>
                     <tr>
                         <td class="text-center">
-                            <span class="bt-edit">+ Outlets</span>
+                             <a data-toggle="modal"
+                                data-target="#insertOutlet"><span class="bt-edit">+ Outlets</span></a>
                         </td>
                     </tr>
                 </tbody>
@@ -264,11 +262,8 @@
                         <th>Participating Clients
                         </th>
                     </tr>
-                    <tr>
-                        <td>New client 1</td>
-                    </tr>
-                    <tr>
-                        <td>Bedok Mall, Bedok Central</td>
+                    <tr ng-repeat="outlet in promotion.outlets">
+                        <td>{{outlet.name}}</td>
                     </tr>
                     <tr>
                         <td class="text-center">
@@ -329,5 +324,43 @@
         </div>
     </div>
     </form>
+    <div id="insertOutlet" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Insert New Outlet</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form
+                                class="frm_create_outlet modal_frm"
+                                name="frm_create_outlet"
+                                novalidate
+                                ng-submit="insertNewOutlet()">
+                                <p>
+                                    <label>Outlets to insert</label>
+                                    <tags-input class="txt-ipt"
+                                        ng-model="outlets.chosenList"
+                                        name="outlets"
+                                        display-property="name"
+                                        replace-spaces-with-dashes="false"
+                                        add-from-autocomplete-only="true"
+                                        ng-class='{txt_err : displayError}'
+                                        required>
+                                      <auto-complete source="getOutlets($query)"></auto-complete>
+                                    </tags-input>
+                                </p>
+                                <!--p><pre>{{insertData | json}}</pre></p-->
+                                <br>
+                                <button type="submit" class="save btn-brown">
+                                    <i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;INSERT NEW OUTLET
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END : MODAL INSERT OUTLET-->
 </div>
 <!-- END : BUSINESS EDIT -->
