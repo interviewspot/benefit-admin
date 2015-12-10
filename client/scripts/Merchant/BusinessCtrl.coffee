@@ -634,9 +634,16 @@ angular.module('app.businesses', [])
                     active              : $scope.promotion.active
                     type                : $scope.promotion.type
                     business            : $scope.businessId
+
             new_data.promotion.retail_outlets = []
+            if($scope.promotion.outlets != undefined && $scope.promotion.outlets.length > 0)
+                angular.forEach $scope.outlets.chosenList, (outlet)->
+                    new_data.promotion.retail_outlets.push(outlet.id)
+
             angular.forEach $scope.outlets.chosenList, (outlet)->
-                new_data.promotion.retail_outlets.push(outlet.id)
+                if(new_data.promotion.retail_outlets.indexOf(outlet.id) == -1)
+                    new_data.promotion.retail_outlets.push(outlet.id)
+
             $scope.insertData = new_data
             Businesses.put($scope.promotion._links.self.href, new_data ).then  (res) ->
                 if typeof res == 'object' && res.status == 204
@@ -646,6 +653,45 @@ angular.module('app.businesses', [])
                     , 300
             , (error) ->
                 alert error.status + ' : Error, refresh & try again !'
+            return
+
+        # 6. REMOVE OUTLET
+        $scope.removeOutlet = (outlet) ->
+            r = confirm("Do you want to remove this outlet \"" + outlet.name + "\"?")
+            if r == true
+                new_data =
+                    promotion :
+                        title               : $scope.promotion.title
+                        discount_amount     : $scope.promotion.discount_amount || 0
+                        estimated_value     : $scope.promotion.estimated_value
+                        offer_limit         : $scope.promotion.offer_limit || 0
+                        weekly_limit        : $scope.promotion.weekly_limit || 0
+                        monthly_limit       : $scope.promotion.monthly_limit || 0
+                        yearly_limit        : $scope.promotion.yearly_limit || 0
+                        organisation_limit  : $scope.promotion.organisation_limit || 0
+                        user_limit          : $scope.promotion.user_limit
+                        effective_from      : $scope.promotion.effective_from
+                        expire_on           : $scope.promotion.expire_on
+                        active              : $scope.promotion.active
+                        type                : $scope.promotion.type
+                        business            : $scope.businessId
+
+                new_data.promotion.retail_outlets = []
+                if($scope.promotion.outlets.length > 0)
+                    angular.forEach $scope.promotion.outlets, (out)->
+                        if(out.id != outlet.id)
+                            new_data.promotion.retail_outlets.push(out.id)
+
+                #$scope.insertData = new_data
+                console.log(new_data)
+                Businesses.put($scope.promotion._links.self.href, new_data ).then  (res) ->
+                    if typeof res == 'object' && res.status == 204
+                        $scope.infoUpdated = "Delete Successfully!"
+                        #$timeout ()->
+                        #   location.reload()
+                        #, 300
+                , (error) ->
+                    alert error.status + ' : Error, refresh & try again !'
             return
 
         # x. ONLOAD
