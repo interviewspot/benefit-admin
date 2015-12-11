@@ -73,7 +73,7 @@
                         <th class="text-center td-15">Actions</th>
                     </tr>
                     <tr ng-repeat="promotion in business.promotions._embedded.items">
-                        <td class="text-center">{{promotion.title}}</td>
+                        <td class="text-center"><a title="Edit Outlet" href="#/merchant/{{clientId}}/business/{{business.id}}/promotion/{{promotion.id}}">{{promotion.title}}</a></td>
                         <td class="text-center">{{promotion.discount_amount}}</td>
                         <td class="text-center">{{promotion.estimated_value}}</td>
                         <td class="text-center">{{promotion.effective_from | date:'MM/dd/yyyy'}}</td>
@@ -131,7 +131,7 @@
                         <th class="text-center td-15">Actions</th>
                     </tr>
                     <tr ng-repeat="outlet in business.outlets._embedded.items">
-                        <td class="text-center">{{outlet.name}}</td>
+                        <td class="text-center"><a title="Edit Outlet" href="#/merchant/{{clientId}}/business/{{business.id}}/outlet/{{outlet.id}}">{{outlet.name}}</a></td>
                         <td class="text-center">{{outlet.contact_no}}</td>
                         <td class="td-control text-center td-15">
                             <a title="Edit Outlet" href="#/merchant/{{clientId}}/business/{{business.id}}/outlet/{{outlet.id}}"><i class="fa fa fa-pencil"></i></a>
