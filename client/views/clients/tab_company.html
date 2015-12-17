@@ -215,7 +215,7 @@
                     <i class="fa fa-times" ng-click="delBanner(banner)"></i>
                 </td>
             </tr>
-            <tr ng-show="isDisable && clientDetail.banners.length <= 5">
+            <tr ng-show="isDisable && (clientDetail.banners.length < 5 || !clientDetail.banners)">
                 <td class="text-center">
                     <upload-file
                         upload-url="urlUploadBanner"
