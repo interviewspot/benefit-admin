@@ -23,9 +23,9 @@ angular.module('app.maps.directives', [])
             # - setid
             # - center
             # - zoom
-            if (task == 'show') {
+            if task == 'show' 
                 # Do something in this task
-            }
+            
             # TASK SHOW ------------------ */
             # Options :
             # - setid
@@ -57,6 +57,53 @@ angular.module('app.maps.directives', [])
                     i++
                 #for ( i = 0; i < m_data.length; i++)
             return n_map
+        ,
+        displayRoute : (directSer, disrecDisp, map, data, scope) ->                
+            disrecDisp.setOptions({polylineOptions: data.polyline})
+            directSer.route
+                origin: data.start,
+                destination: data.end,
+                travelMode: google.maps.TravelMode.DRIVING
+            , (res, status)->
+                # Callback
+                if status == google.maps.DirectionsStatus.OK
+                    disrecDisp.setDirections(res);
+                    scope.$apply ()-> 
+                        scope.result_map = 
+                            markers : map_fn.showMarkerRoute(res, map),
+                            res     : map_fn.getResultRoute(res),
+                            map     : map
+                else 
+                    window.alert('Directions request failed due to ' + status);
+                    return
+        ,
+        getResultRoute : (res)->
+            return res.routes[0].legs[0]
+        ,
+        showMarkerRoute : (res, mapCanvas)->
+            markerArray = []
+            myRoute = res.routes[0].legs[0]
+
+            # ICON SET Dynamic later, use options
+            #icon_start  = 'images/marker_start.png'
+            #icon_end    = 'images/marker_end.png'
+
+            marker_start = new google.maps.Marker({
+                position: myRoute.steps[0].start_point,
+                map: mapCanvas,
+                #icon: icon_start
+            })
+            markerArray.push(marker_start)
+
+            marker_end = new google.maps.Marker({
+                position: myRoute.steps[myRoute.steps.length-1].start_point,
+                map: mapCanvas,
+                #icon: icon_end
+            })
+            markerArray.push(marker_end);
+
+            return markerArray
+            
 
     }
    # --------------------------------------------------------

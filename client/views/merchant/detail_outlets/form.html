@@ -49,6 +49,35 @@
                         </td>
                     </tr>
                     <tr>
+                        <th class="td-30">Address</th>
+                        <td>
+                            <!--input type="text"
+                                name="out_location"
+                                class="txt-ipt"
+                                ng-class="{txt_disabled : !isDisable}"
+                                value="Not Available Yet!"
+                                required-->
+                            <input type="text"
+                                name="out_address"
+                                ng-model="outlet.out_address"
+                                class="txt-ipt"
+                                ng-class="{txt_disabled : !isDisable}"
+                                ng-pattern="/^[\d ]+$/"
+                                required>
+                            <p style="color:red">
+                                <span ng-show="frm_update_outlet.out_address.$invalid  && frm_update_outlet.out_address.$dirty">Address is required.</span>
+                            </p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- END: COL -->
+        <div class="col-md-6 col-sm-6 col-xs-12">
+            <input type="hidden" ng-model="outlet.id" value="{{business.id}}">
+            <table class="table tbl table-striped">
+                <tbody>
+                    <tr>
                         <th class="td-30">Location</th>
                         <td>
                             <!--input type="text"
@@ -57,13 +86,19 @@
                                 ng-class="{txt_disabled : !isDisable}"
                                 value="Not Available Yet!"
                                 required-->
-                            <div ng-show="outlet.location && outlet.location.addresses.total > 0">
+                            <input type="text"
+                                name="out_location"
+                                ng-model="outlet.location"
+                                class="txt-ipt"
+                                required>
+                            <!-- <div ng-show="outlet.location && outlet.location.addresses.total > 0">
                                 <p ng-repeat="address in outlet.location.addresses._embedded.items">{{address.value}}</p>
-                            </div>
+                            </div> -->
                         </td>
                     </tr>
                 </tbody>
             </table>
+            <ng-gmap class="g-map" data="data_map" ng-result="res_map"></ng-gmap>
         </div>
         <!-- END: COL -->
     </div>

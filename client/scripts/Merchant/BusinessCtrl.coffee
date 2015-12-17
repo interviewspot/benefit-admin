@@ -343,6 +343,7 @@ angular.module('app.businesses', [])
 # 1. GET OUTLET by ID
 # 2. UPDATE OUTLET
 # 3. DELETE OUTLET
+# 4. MAPS
 # --------------------------------------------
 .controller('OutletCtrl', [
     '$scope'
@@ -439,6 +440,16 @@ angular.module('app.businesses', [])
                 , (error) ->
                     $scope.infoUpdated = error.status + ': Error, refresh & try again !'
             return
+        # 4. MAPS
+        $scope.data_map = {
+            task   : 'route',
+            center : {lat: 41.85, lng: -87.65},
+            zoom   : 6,
+            #route  : {
+                #start : 'Vesterbrogade 65, 1720 København V',
+                #end   : 'Islands Brygge St. (Metro)',
+            #}
+        }
 
         # x. ONLOAD
         _getOutlet();
