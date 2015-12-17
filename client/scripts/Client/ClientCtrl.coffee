@@ -3,8 +3,8 @@
 angular.module('app.clients', [])
 
 .controller('clientCtrl', [
-    '$scope', '$filter' , 'fetchTabData', 'fakeData', '$location', 'clientService', 'fetchHandbook', '$routeParams', '$route', 'config', 'Images', 'php', 'ClientAPI', 'Companies', 'Clients', 'handbookService',
-    ($scope, $filter, fetchTabData, fakeData, $location, clientService, fetchHandbook, $routeParams, $route, config, Images, php, ClientAPI, Companies, Clients, handbookService) ->
+    '$scope', '$filter' , 'fetchTabData', 'fakeData', '$location', 'clientService', 'fetchHandbook', '$routeParams', '$route', 'config', 'Images', 'php', 'ClientAPI', 'Companies', 'Clients', 'handbookService', '$timeout',
+    ($scope, $filter, fetchTabData, fakeData, $location, clientService, fetchHandbook, $routeParams, $route, config, Images, php, ClientAPI, Companies, Clients, handbookService, $timeout) ->
     # filter
 
       _URL_clients =
@@ -120,15 +120,18 @@ angular.module('app.clients', [])
               $scope.isCreateHandbook = true
 
           # GET LOGO URL
-          if typeof data._links.logo_url == 'object' && data._links.logo_url.href
-            Images.get(data._links.logo_url.href).then  (res) ->
+          $scope.clientDetail = data
+          #console.log(data)
+          if typeof data._links.logo == 'object' && data._links.logo.href
+            Images.get(data._links.logo.href).then  (res) ->
               if res.status != 200 || typeof res != 'object'
                   return
                 logo_id_arr = php.explode('/media/', data._links.logo.href)
-                $scope.clientDetail = data
-                $scope.urlUpload    = $scope.clientDetail._links.logo.href
+
+                $scope.urlUpload    = $scope.clientDetail._links['logo.post'].href
+                #console.log(res.data)
                 $scope.clientDetail['logo_url'] = res.data.url
-                $scope.clientDetail['logo']     = logo_id_arr[1]
+                $scope.clientDetail['logo']     = res.data.logo.id
 
               return
             , (error) ->
@@ -136,6 +139,21 @@ angular.module('app.clients', [])
           else
             $scope.clientDetail = data
             $scope.urlUpload    = config.path.baseURL + config.path.upload + 'image/media'
+
+          # GET BANNER URL
+          if typeof data._links.banners == 'object' && data._links.banners.href
+            Images.get(data._links.banners.href).then  (res) ->
+              if res.status != 200 || typeof res != 'object'
+                    return
+                #console.log(res.data)
+              $scope.urlUploadBanner    = $scope.clientDetail._links['banners.post'].href
+              $scope.clientDetail['banners']     = res.data
+
+              return
+            , (error) ->
+              console.log error
+          else
+            $scope.urlUploadBanner    = config.path.baseURL + config.path.upload + 'image/media'
 
           $scope.ClientPage.tabUrls   =
             "info" : '#/clients/' + data.id + '/info'
@@ -193,6 +211,17 @@ angular.module('app.clients', [])
             logo_id = $scope.clientDetail.logo
 
           sm_client_data.organisation['logo'] = logo_id
+
+          # SET BANNER
+          banner_id = null
+
+          if ($scope.$$childTail.uploadbanner)
+            banner_id = $scope.$$childTail.uploadbanner.id
+          else
+            banner_id = $scope.clientDetail.banners
+
+          sm_client_data.organisation['banners'] = banner_id
+          console.log(sm_client_data.organisation)
 
           #return
           # return
@@ -254,6 +283,22 @@ angular.module('app.clients', [])
           Images.delete($scope.clientDetail._links.logo.href).then  (res) ->
             if res.status == 204
               $scope.clientDetail.logo = null
+            return
+          , (error) ->
+            console.log error
+            if error.status == 500
+              $scope.clientDetail.logo = null
+      # DEL BANNER
+      $scope.delBanner = (banner) ->
+        #console.log $scope.clientDetail._links
+        # $scope.clientDetail._links.logo.href
+        if typeof $scope.clientDetail._links.banners == 'object' && $scope.clientDetail._links.banners.href
+
+          Images.delete($scope.clientDetail._links.banners.href + '/' + banner.banner.id).then  (res) ->
+            if res.status == 204
+                $timeout ()->
+                    location.reload()
+                , 300
             return
           , (error) ->
             console.log error
