@@ -57,6 +57,7 @@ angular.module('app', [
     'app.employee'
     'app.notifications'
     'app.merchants.html' # REMOVE AFTER DONE LAYOUT
+    'app.maps.directives' # directive maps
     #'app.offerdirective' # DIRECTIVE FORM OFFER
     #Khai bao app khi tao
 
