@@ -127,7 +127,6 @@ angular.module('app.clients', [])
               if res.status != 200 || typeof res != 'object'
                   return
                 logo_id_arr = php.explode('/media/', data._links.logo.href)
-
                 $scope.urlUpload    = $scope.clientDetail._links['logo.post'].href
                 #console.log(res.data)
                 $scope.clientDetail['logo_url'] = res.data.url
@@ -137,8 +136,7 @@ angular.module('app.clients', [])
             , (error) ->
               console.log error
           else
-            $scope.clientDetail = data
-            $scope.urlUpload    = config.path.baseURL + config.path.upload + 'image/media'
+            $scope.urlUpload    = $scope.clientDetail._links['logo.post'].href
 
           # GET BANNER URL
           if typeof data._links.banners == 'object' && data._links.banners.href
@@ -153,7 +151,7 @@ angular.module('app.clients', [])
             , (error) ->
               console.log error
           else
-            $scope.urlUploadBanner    = config.path.baseURL + config.path.upload + 'image/media'
+            $scope.urlUploadBanner    = $scope.clientDetail._links['banners.post'].href
 
           $scope.ClientPage.tabUrls   =
             "info" : '#/clients/' + data.id + '/info'
@@ -208,7 +206,7 @@ angular.module('app.clients', [])
           if ($scope.$$childTail.uploadresponse)
             logo_id = $scope.$$childTail.uploadresponse.id
           else
-            logo_id = $scope.clientDetail.logo
+            logo_id = $scope.clientDetail.logo.id
 
           sm_client_data.organisation['logo'] = logo_id
 
