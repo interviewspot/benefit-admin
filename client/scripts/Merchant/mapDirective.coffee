@@ -4,6 +4,13 @@ angular.module('app.maps.directives', [])
 
 .directive('ngGmap', [ ->
     # MAP Fn -----------------------------------------------
+    # 1. INIT MAP
+    # 1.1 FUNCTION INIT MAP
+    # 1.2 GET ADDRESS 
+    # 1.3 SHOW LOCATION INTO MAP
+    # ----------------------------
+    
+    # 1.1 FUNCTION INIT MAP
     geocoder = new google.maps.Geocoder()
     map = undefined
     latLng = undefined
@@ -47,6 +54,7 @@ angular.module('app.maps.directives', [])
                 return
             return
         ,
+        # 1.2 GET ADDRESS 
         showAddress : (val) ->
           infoWindow.close()
           geocoder.geocode { 'address': val }, (results, status) ->
@@ -58,10 +66,11 @@ angular.module('app.maps.directives', [])
             return
           return
         ,
+
+        # 1.3 SHOW LOCATION INTO MAP
         geocode : (position) ->
           geocoder.geocode { latLng: position }, (responses) ->
             html = ''
-            #window.location.hash = '#' + marker.getPosition().lat() + ',' + marker.getPosition().lng()
             if responses and responses.length > 0
               html += '<h3>Postal Address</h3><hr/>' + responses[0].formatted_address
             else
@@ -70,11 +79,13 @@ angular.module('app.maps.directives', [])
             map.panTo marker.getPosition()
             infoWindow.setContent '<div id=\'iw\'>' + html + '</div>'
             infoWindow.open map, marker
+
             # set lat long for input location
             $('.txt-location').val( marker.getPosition().lat() + ' , ' + marker.getPosition().lng() )
             return
           return
-    # 1. DIRECTIVE INIT MAP
+
+    # 1. INIT MAP
     gmapLink = (scope, element, attrs) ->
         # init map
         map_id  = $(element).find('.load-map').attr 'id'
