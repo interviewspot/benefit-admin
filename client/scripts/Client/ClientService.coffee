@@ -412,8 +412,9 @@ angular.module('app.client.services', [])
                         }
                         # response
                         .then (res)->
-                          $scope.result = res.data
-                          $scope.progressPercentage = 0
+                            console.log res
+                            $scope.result = res.data
+                            $scope.progressPercentage = 0
 
                         # error
                         , (error)->
