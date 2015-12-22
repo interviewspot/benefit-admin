@@ -129,9 +129,14 @@ angular.module('app.clients', [])
                 logo_id_arr = php.explode('/media/', data._links.logo.href)
                 $scope.urlUpload    = $scope.clientDetail._links['logo.post'].href
                 #console.log(res.data)
-                $scope.clientDetail['logo_url'] = res.data.url
-                $scope.clientDetail['logo']     = res.data.logo.id
-
+                $scope.clientDetail['logo']     = res.data.id
+                if typeof res.data._links.url == 'object' && res.data._links.url.href
+                    Images.get(data._links.logo.href + '/url').then  (url) ->
+                        if url.status != 200 || typeof url != 'object'
+                            return
+                        $scope.clientDetail['logo_url'] = url.data.url
+                    , (error) ->
+                        console.log error
               return
             , (error) ->
               console.log error
@@ -143,10 +148,23 @@ angular.module('app.clients', [])
             Images.get(data._links.banners.href).then  (res) ->
               if res.status != 200 || typeof res != 'object'
                     return
-                #console.log(res.data)
+              #console.log(res.data)
               $scope.urlUploadBanner    = $scope.clientDetail._links['banners.post'].href
-              $scope.clientDetail['banners']     = res.data
-
+              console.log($scope.urlUploadBanner)
+              $scope.clientDetail['banners'] = []
+              if res.data._embedded.items.length > 0
+                    angular.forEach res.data._embedded.items, (itm)->
+                        banner = itm
+                        if typeof itm._links.url && itm._links.url.href
+                            Images.get(config.path.baseURL + itm._links.url.href).then (url) ->
+                                if url.status != 200 || typeof url != 'object'
+                                    return
+                                banner['banner_url'] = url.data.url
+                                $scope.clientDetail['banners'].push(itm)
+                            , (error) ->
+                                console.log error
+                        $scope.clientDetail['banners'].push(banner)
+              #console.log($scope.clientDetail['banners'])
               return
             , (error) ->
               console.log error

@@ -211,7 +211,7 @@
             </tr>
             <tr ng-if="clientDetail.banners.length > 0" ng-repeat="banner in clientDetail.banners" ng-cloak>
                 <td class="text-center td-logo">
-                    <img ng-src="{{banner.src}}" alt="{{clientDetail.name}}"/>
+                    <img ng-src="{{banner.banner_url}}" alt="{{clientDetail.name}}"/>
                     <i class="fa fa-times" ng-click="delBanner(banner)"></i>
                 </td>
             </tr>
