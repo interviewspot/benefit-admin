@@ -153,17 +153,17 @@ angular.module('app.clients', [])
               console.log($scope.urlUploadBanner)
               $scope.clientDetail['banners'] = []
               if res.data._embedded.items.length > 0
-                    angular.forEach res.data._embedded.items, (itm)->
-                        banner = itm
-                        if typeof itm._links.url && itm._links.url.href
-                            Images.get(config.path.baseURL + itm._links.url.href).then (url) ->
-                                if url.status != 200 || typeof url != 'object'
-                                    return
-                                banner['banner_url'] = url.data.url
-                                $scope.clientDetail['banners'].push(itm)
+                    angular.forEach res.data._embedded.items, (itm) ->
+                        b = itm
+                        if typeof b._links.url == 'object' && b._links.url.href
+                            Images.get(config.path.baseURL + b._links.url.href).then  (bn) ->
+                                if bn.status == 200 || typeof bn == 'object'
+                                    b['banner_url'] = bn.data.url
+                                    #console.log(b)
+                                    $scope.clientDetail['banners'].push(b)
                             , (error) ->
                                 console.log error
-                        $scope.clientDetail['banners'].push(banner)
+                        #$scope.clientDetail['banners'] = res.data._embedded.items
               #console.log($scope.clientDetail['banners'])
               return
             , (error) ->
@@ -198,8 +198,10 @@ angular.module('app.clients', [])
 
         # Check data & update
         if $scope.clients_edit == false && $scope.clientDetail.id
+            $scope.updateClient()
 
-          #id_img =
+      # function update client (include update/delete logo/banner)
+      $scope.updateClient = (task, obj) ->
           sm_client_data = {
             "organisation":
                 "admin_user": null,  # Change this real ID
@@ -220,12 +222,12 @@ angular.module('app.clients', [])
 
           # SET LOGO
           logo_id = null
-
-          if ($scope.$$childTail.uploadresponse)
-            console.log($scope.$$childTail.uploadresponse)
-            logo_id = $scope.$$childTail.uploadresponse.id
-          else
-            logo_id = $scope.clientDetail.logo.id
+          if task != "delete_logo"
+              if ($scope.$$childTail.uploadresponse)
+                #console.log($scope.$$childTail.uploadresponse)
+                logo_id = $scope.$$childTail.uploadresponse.logo_id
+              else
+                logo_id = $scope.clientDetail.logo.id
 
           sm_client_data.organisation['logo'] = logo_id
 
@@ -237,17 +239,36 @@ angular.module('app.clients', [])
           else
             banner_id = []
             angular.forEach $scope.clientDetail.banners, (bn)->
-                banner_id.push(bn.id)
+                if task != "delete_banner" || bn.id != obj.id
+                    banner_id.push(bn.id)
 
           sm_client_data.organisation['banners'] = banner_id
           console.log(sm_client_data.organisation)
 
-          #return
-          # return
-          # GO TO UPDATE
           clientService.update {org_id:$scope.clientDetail.id}, sm_client_data, (res) ->
-            if typeof res.organisation == 'object' && res.organisation.logo
-              location.reload()
+            if typeof res.organisation == 'object'
+              if task == "delete_logo"
+                Images.delete($scope.clientDetail._links.logo.href).then  (res) ->
+                    if res.status == 204
+                        location.reload()
+                    return
+                , (error) ->
+                    console.log error
+                    if error.status == 500
+                      $scope.clientDetail.logo = null
+              else if task == "delete_banner" && typeof obj == 'object'
+                Images.delete(config.path.baseURL + obj._links.self.href).then  (res) ->
+                    if res.status == 204
+                        $timeout ()->
+                            location.reload()
+                        , 300
+                    return
+                , (error) ->
+                    console.log error
+                    if error.status == 500
+                      $scope.clientDetail.logo = null
+              else
+                location.reload()
               return
           , (error) ->
               alert error.status + ' : Try later and new company code'
@@ -295,34 +316,16 @@ angular.module('app.clients', [])
 
       # DEL LOGO
       $scope.delLogo   = () ->
-        console.log $scope.clientDetail._links
-        # $scope.clientDetail._links.logo.href
         if typeof $scope.clientDetail._links.logo == 'object' && $scope.clientDetail._links.logo.href
+          $scope.updateClient("delete_logo", null)
 
-          Images.delete($scope.clientDetail._links.logo.href).then  (res) ->
-            if res.status == 204
-              $scope.clientDetail.logo = null
-            return
-          , (error) ->
-            console.log error
-            if error.status == 500
-              $scope.clientDetail.logo = null
       # DEL BANNER
       $scope.delBanner = (banner) ->
         #console.log $scope.clientDetail._links
         # $scope.clientDetail._links.logo.href
         if typeof $scope.clientDetail._links.banners == 'object' && $scope.clientDetail._links.banners.href
+            $scope.updateClient("delete_banner", banner)
 
-          Images.delete($scope.clientDetail._links.banners.href + '/' + banner.banner.id).then  (res) ->
-            if res.status == 204
-                $timeout ()->
-                    location.reload()
-                , 300
-            return
-          , (error) ->
-            console.log error
-            if error.status == 500
-              $scope.clientDetail.logo = null
 
       # DEL CLIENT
       $scope.deleteClient   = (client) ->

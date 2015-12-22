@@ -411,9 +411,9 @@ angular.module('app.client.services', [])
                             }
                         }
                         # response
-                        .then (res, headers)->
-                          console.log(res)
+                        .then (res)->
                           $scope.result = res.data
+                          $scope.result.logo_id = res.headers().location.split('/')[2]
                           $scope.progressPercentage = 0
 
                         # error
