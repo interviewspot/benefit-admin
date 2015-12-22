@@ -129,7 +129,7 @@ angular.module('app.clients', [])
                 logo_id_arr = php.explode('/media/', data._links.logo.href)
                 $scope.urlUpload    = $scope.clientDetail._links['logo.post'].href
                 #console.log(res.data)
-                $scope.clientDetail['logo']     = res.data.id
+                $scope.clientDetail['logo']     = res.data
                 if typeof res.data._links.url == 'object' && res.data._links.url.href
                     Images.get(data._links.logo.href + '/url').then  (url) ->
                         if url.status != 200 || typeof url != 'object'
@@ -222,6 +222,7 @@ angular.module('app.clients', [])
           logo_id = null
 
           if ($scope.$$childTail.uploadresponse)
+            console.log($scope.$$childTail.uploadresponse)
             logo_id = $scope.$$childTail.uploadresponse.id
           else
             logo_id = $scope.clientDetail.logo.id
@@ -234,7 +235,9 @@ angular.module('app.clients', [])
           if ($scope.$$childTail.uploadbanner)
             banner_id = $scope.$$childTail.uploadbanner.id
           else
-            banner_id = $scope.clientDetail.banners
+            banner_id = []
+            angular.forEach $scope.clientDetail.banners, (bn)->
+                banner_id.push(bn.id)
 
           sm_client_data.organisation['banners'] = banner_id
           console.log(sm_client_data.organisation)
