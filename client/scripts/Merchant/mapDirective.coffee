@@ -93,6 +93,10 @@ angular.module('app.maps.directives', [])
         # get location from address
         address_val = $(element).closest('.col-md-6').siblings('.col-md-6').find('.txt-address').val()
         map_fn.showAddress address_val
+        # get address
+        $('.get_address').on 'click' , ()->
+            add_val = $(this).siblings('.txt-address').val()
+            map_fn.showAddress add_val
         return
     # ------------------------------------------
     # *

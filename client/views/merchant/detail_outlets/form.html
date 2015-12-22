@@ -64,7 +64,7 @@
                                 ng-class="{txt_disabled : !isDisable}"
                                 ng-pattern="/^[\d ]+$/"
                                 required>
-                            <span style="font-size: 12px;">( Use address as location )</span>
+                            <span style="font-size: 12px;" class="get_address">( Use address as location )</span>
                             <p style="color:red">
                                 <span ng-show="frm_update_outlet.out_address.$invalid  && frm_update_outlet.out_address.$dirty">Address is required.</span>
                             </p>
@@ -89,7 +89,6 @@
                                 required-->
                             <input type="text"
                                 name="out_location"
-                                ng-model="outlet.location"
                                 class="txt-ipt txt-location"
                                 required>
                             <!-- <div ng-show="outlet.location && outlet.location.addresses.total > 0">

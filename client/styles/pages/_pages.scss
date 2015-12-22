@@ -1077,3 +1077,15 @@ hr.line {
     width: 100%;
     height: 400px;
 }
+.get_address {
+    cursor: pointer;
+    background-color: #CFAE79;
+    padding: 5px 10px;
+    color: #fff;
+    display: inline-block;
+    margin-top: 5px;
+    border-radius: 4px;
+    &:hover {
+        background-color: #bbb;
+    }
+}
