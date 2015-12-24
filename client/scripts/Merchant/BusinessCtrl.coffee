@@ -372,30 +372,31 @@ angular.module('app.businesses', [])
         # 1. GET OUTLET by ID
         _URL =
             detail : config.path.baseURL + '/businesses/' + $scope.businessId + '/outlets/' + $scope.outletId
+            address_post : config.path.baseURL + '/addresses'
 
         _getOutlet = () ->
             Businesses.get(_URL.detail).then  (out) ->
                 if out.status != 200 || typeof out != 'object'
                     return
                 $scope.outlet = out.data
+                $scope.outlet.address_text = ""
                 #console.log(out.data)
                 if(out.data._links.location)
                     Businesses.get(out.data._links.location.href).then  (loc) ->
                         if loc.status != 200 || typeof loc != 'object'
                             return
                         $scope.outlet.location = loc.data
-                        $scope.outlet.location.addresses = {}
+                        $scope.outlet.location_latlng = loc.data.geo_lat + " , " + loc.data.geo_lng
                         if(loc.data._links.addresses)
                             Businesses.get(loc.data._links.addresses.href).then  (add) ->
                                 if add.status != 200 || typeof add != 'object'
                                     return
-                                $scope.outlet.location.addresses = add.data
-                                #console.log(loc.data)
+                                $scope.outlet.location.address = add.data._embedded.items[0]
+                                $scope.outlet.address_text = add.data._embedded.items[0].value
+                                #console.log(add.data)
                             , (error) ->
                                 console.log error
-                        else
-                            $scope.outlet.location.addresses.total = 0
-                        #console.log(loc.data)
+                        console.log($scope.outlet)
                     , (error) ->
                         console.log error
             , (error) ->
@@ -409,20 +410,105 @@ angular.module('app.businesses', [])
             if $scope.frm_update_outlet.$error.required.length || !$scope.frm_update_outlet.$valid
                 return false
 
-            new_data =
-                outlet :
-                    name            : $scope.outlet.name
-                    contact_no      : $scope.outlet.contact_no
-                    business        : $scope.businessId
+            if $scope.outlet.location_latlng && $scope.outlet.location_latlng != ""
+                latlng = $scope.outlet.location_latlng.split(",")
+                lat = latlng[0].trim()
+                lng = latlng[1].trim()
 
-            #$scope.send_data = new_data
+            $scope.send_data = new_data
 
-            Businesses.put(_URL.detail, new_data ).then  (res) ->
-                if typeof res == 'object' && res.status == 204
-                    $scope.infoUpdated = "Update Successfully!"
-            , (error) ->
-                alert error.status + ' : Error, refresh & try again !'
-            return
+            # outlet da co location
+            if $scope.outlet.location
+                new_data =
+                    outlet :
+                        name            : $scope.outlet.name
+                        contact_no      : $scope.outlet.contact_no
+                        business        : $scope.businessId
+                        location        : $scope.outlet.location.id
+
+                new_location =
+                    location :
+                        name            : $scope.outlet.location.name
+                        geo_lat         : lat
+                        geo_lng         : lng
+                        enabled         : 1
+
+                console.log(new_location)
+                Businesses.put(_URL.detail, new_data ).then  (res) ->
+                    if typeof res == 'object' && res.status == 204
+                        if new_location
+                            Businesses.put($scope.outlet.location._links.self.href, new_location ).then  (loc) ->
+                                if typeof loc == 'object' && loc.status == 204
+                                    if $scope.outlet.location._links.addresses
+                                        _put_address($scope.outlet.location, $scope.outlet.location.address)
+                                    else
+                                        _post_address($scope.outlet.location.id, $scope.outlet.address_text)
+                                    $scope.infoUpdated = "Update Successfully!"
+                        else
+                            $scope.infoUpdated = "Update Successfully!"
+                , (error) ->
+                    alert error.status + ' : Error, refresh & try again !'
+                return
+            else
+            # outlet chua co location
+                new_location =
+                    location :
+                        name            : $scope.outlet.address_text
+                        geo_lat         : lat
+                        geo_lng         : lng
+                        enabled         : 1
+                $q.all([
+                    _post_location(new_location, $scope.outlet)
+                ]).then (data) ->
+                    new_data =
+                        outlet :
+                            name            : $scope.outlet.name
+                            contact_no      : $scope.outlet.contact_no
+                            business        : $scope.businessId
+                            location        : data[0]
+                    _post_address(data[0], $scope.outlet.address_text)
+                    Businesses.put(_URL.detail, new_data ).then  (res) ->
+                        if typeof res == 'object' && res.status == 204
+                            $scope.infoUpdated = "Update Successfully!"
+                    , (error) ->
+                        alert error.status + ' : Error, refresh & try again !'
+
+        # 2.1 POST LOCATION
+        _post_location = (location, outlet) ->
+            deferred = $q.defer()
+            if outlet._links['location.post']
+                Businesses.post(outlet._links['location.post'].href, location).then  (loc) ->
+                    if typeof loc == 'object' && loc.status == 201
+                        location_id = loc.headers().location.split('/')[2]
+                        deferred.resolve(location_id)
+                , (error) ->
+                    alert error.status + ' : Cannot create location!'
+            return deferred.promise
+
+        # 2.2 POST ADDRESS
+        _post_address = (location_id, value) ->
+            new_address =
+                address :
+                    value       : value,
+                    location    : location_id
+            console.log(new_address)
+            if location_id
+                Businesses.post(_URL.address_post, new_address).then  (add) ->
+                    return
+                , (error) ->
+                    alert error.status + ' : Cannot create address !'
+
+        # 2.3 PUT ADDRESS
+        _put_address = (location, address) ->
+            new_address =
+                address :
+                    value       : $scope.outlet.address_text,
+                    location    : location.id
+            if address._links.self
+                Businesses.put(address._links.self.href, new_address).then  (add) ->
+                    return
+                , (error) ->
+                    alert error.status + ' : Cannot update address !'
 
         # 3. DELETE OUTLET
         $scope.deleteOutlet = () ->

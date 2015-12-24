@@ -150,7 +150,7 @@ angular.module('app.clients', [])
                     return
               #console.log(res.data)
               $scope.urlUploadBanner    = $scope.clientDetail._links['banners.post'].href
-              console.log($scope.urlUploadBanner)
+              #console.log($scope.urlUploadBanner)
               $scope.clientDetail['banners'] = []
               if res.data._embedded.items.length > 0
                     angular.forEach res.data._embedded.items, (itm) ->
@@ -198,7 +198,7 @@ angular.module('app.clients', [])
 
         # Check data & update
         if $scope.clients_edit == false && $scope.clientDetail.id
-            $scope.updateClient()
+            $scope.updateClient("", null)
 
       # function update client (include update/delete logo/banner)
       $scope.updateClient = (task, obj) ->
@@ -232,16 +232,15 @@ angular.module('app.clients', [])
           sm_client_data.organisation['logo'] = logo_id
 
           # SET BANNER
-          banner_id = null
-
-          if ($scope.$$childTail.uploadbanner)
-            banner_id = $scope.$$childTail.uploadbanner.id
-          else
-            banner_id = []
-            angular.forEach $scope.clientDetail.banners, (bn)->
+          banner_id = []
+          if $scope.clientDetail.banners && $scope.clientDetail.banners.length > 0
+              angular.forEach $scope.clientDetail.banners, (bn)->
                 if task != "delete_banner" || bn.id != obj.id
                     banner_id.push(bn.id)
-
+              if ($scope.$$childTail.uploadbanner)
+                banner_id.push($scope.$$childTail.uploadbanner.logo_id)
+          else
+            banner_id = $scope.$$childTail.uploadbanner.logo_id
           sm_client_data.organisation['banners'] = banner_id
           console.log(sm_client_data.organisation)
 
@@ -268,8 +267,9 @@ angular.module('app.clients', [])
                     if error.status == 500
                       $scope.clientDetail.logo = null
               else
-                location.reload()
-              return
+                $timeout ()->
+                    location.reload()
+                , 300
           , (error) ->
               alert error.status + ' : Try later and new company code'
 
