@@ -439,8 +439,8 @@ angular.module('app.businesses', [])
                 new_location =
                     location :
                         name            : $scope.outlet.location.name
-                        geo_lat         : lat
-                        geo_lng         : lng
+                        geo_lat         : $scope.resultmap.lat
+                        geo_lng         : $scope.resultmap.long
                         enabled         : 1
 
                 console.log(new_location)
@@ -464,8 +464,8 @@ angular.module('app.businesses', [])
                 new_location =
                     location :
                         name            : $scope.outlet.address_text
-                        geo_lat         : lat
-                        geo_lng         : lng
+                        geo_lat         : $scope.resultmap.lat
+                        geo_lng         : $scope.resultmap.long
                         enabled         : 1
                 $q.all([
                     _post_location(new_location, $scope.outlet)

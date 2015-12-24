@@ -67,7 +67,7 @@ angular.module('app.maps.directives', [])
               marker.setPosition results[0].geometry.location
               map_fn.geocode results[0].geometry.location,scope
             else
-              alert 'Sorry but Google Maps could not find this location.'
+              console.log 'Sorry but Google Maps could not find this location.'
             return
           return
         ,
