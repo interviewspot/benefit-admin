@@ -409,6 +409,8 @@ angular.module('app.businesses', [])
             if $scope.frm_update_outlet.$error.required.length || !$scope.frm_update_outlet.$valid
                 return false
 
+            console.log $scope.resultmap
+
             new_data =
                 outlet :
                     name            : $scope.outlet.name

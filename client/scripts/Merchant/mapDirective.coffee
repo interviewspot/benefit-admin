@@ -16,8 +16,11 @@ angular.module('app.maps.directives', [])
     latLng = undefined
     marker = undefined
     infoWindow = undefined
+    _scope = null
     map_fn = 
-        initMap : (mapID, lat, lng, hideinfo ) ->
+        _scope  : null
+        initMap : (mapID, lat, lng, hideinfo, scope) ->
+            #_scope = scope
 
             myOptions = 
                 zoom: 12
@@ -40,27 +43,29 @@ angular.module('app.maps.directives', [])
 
             infoWindow = new (google.maps.InfoWindow)(content: '<div id="iw"><strong>Instructions:</strong><br /><br />Click and drag this red marker anywhere to know the approximate postal address of that location.</div>')
             if hideinfo
-                map_fn.geocode latLng
+                map_fn.geocode latLng,scope
             else
                 infoWindow.open map, marker
 
             google.maps.event.addListener marker, 'dragstart', (e) ->
                 infoWindow.close()
                 return
+
             google.maps.event.addListener marker, 'dragend', (e) ->
                 point = marker.getPosition()
                 map.panTo point
-                map_fn.geocode point
+                #console.log scope
+                map_fn.geocode point,scope
                 return
             return
         ,
         # 1.2 GET ADDRESS 
-        showAddress : (val) ->
+        showAddress : (val, scope) ->
           infoWindow.close()
           geocoder.geocode { 'address': val }, (results, status) ->
             if status == google.maps.GeocoderStatus.OK
               marker.setPosition results[0].geometry.location
-              map_fn.geocode results[0].geometry.location
+              map_fn.geocode results[0].geometry.location,scope
             else
               alert 'Sorry but Google Maps could not find this location.'
             return
@@ -68,7 +73,7 @@ angular.module('app.maps.directives', [])
         ,
 
         # 1.3 SHOW LOCATION INTO MAP
-        geocode : (position) ->
+        geocode : (position, scope) ->
           geocoder.geocode { latLng: position }, (responses) ->
             html = ''
             if responses and responses.length > 0
@@ -82,22 +87,39 @@ angular.module('app.maps.directives', [])
 
             # set lat long for input location
             $('.txt-location').val( marker.getPosition().lat() + ' , ' + marker.getPosition().lng() )
+            #console.log scope
+            scope.result = {
+                long: marker.getPosition().lng()
+                lat: marker.getPosition().lat()
+            }
             return
-          return
 
     # 1. INIT MAP
     gmapLink = (scope, element, attrs) ->
         # init map
+        #scope.result = null
+        #console.log "ssssss"
+        #console.log scope
         map_id  = $(element).find('.load-map').attr 'id'
-        map_fn.initMap map_id, 41.85, -87.65
+        map_fn.initMap map_id, 41.85, -87.65, false, scope
         # get location from address
         address_val = $(element).closest('.col-md-6').siblings('.col-md-6').find('.txt-address').val()
-        map_fn.showAddress address_val
+        map_fn.showAddress address_val,scope
         # get address
         $('.get_address').on 'click' , ()->
             add_val = $(this).siblings('.txt-address').val()
-            map_fn.showAddress add_val
+            map_fn.showAddress add_val,scope
         return
+
+    gmapCtrl = [
+        '$scope', '$http', '$timeout'
+        ,($scope, $http, $timeout)->
+            $scope.$watch 'result', (nv)->
+                if (nv)
+                    #console.log nv
+                    $scope.result = nv
+
+    ] # END of controller
     # ------------------------------------------
     # *
     # RETURN DIRECTIVE
@@ -106,10 +128,10 @@ angular.module('app.maps.directives', [])
         restrict: 'E',
         scope   : {
             data   : '=',
-            result : '=ngResult'
+            result : '=ngResultmap'
         },
         templateUrl: 'views/merchant/detail_outlets/ng_gmap.html',
-        #controller : gmapCtrl,
+        controller : gmapCtrl,
         link: gmapLink
     };
 ])
