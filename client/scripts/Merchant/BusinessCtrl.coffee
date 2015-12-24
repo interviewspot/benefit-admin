@@ -403,8 +403,12 @@ angular.module('app.businesses', [])
                 console.log error
 
         # 2. UPDATE OUTLET
+        $scope.lnglat = null
+        $scope.$watch 'resultmap', (nv)->
+            $scope.lnglat = nv
         $scope.isDisable = true
         $scope.updateOutlet = () ->
+
             angular.forEach $scope.frm_update_outlet.$error.required, (field)->
                 field.$dirty = true
             if $scope.frm_update_outlet.$error.required.length || !$scope.frm_update_outlet.$valid
@@ -414,6 +418,13 @@ angular.module('app.businesses', [])
                 latlng = $scope.outlet.location_latlng.split(",")
                 lat = latlng[0].trim()
                 lng = latlng[1].trim()
+
+            console.log $scope.lnglat
+
+            new_data =
+                outlet :
+                    name            : $scope.outlet.name
+                    contact_no      : $scope.outlet.contact_no
 
             $scope.send_data = new_data
 
