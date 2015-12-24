@@ -362,6 +362,7 @@ angular.module('app.businesses', [])
         $scope.businessId   =  if  $routeParams.businessId then $routeParams.businessId.trim() else false
         $scope.outletId     =  if  $routeParams.outletId then $routeParams.outletId.trim() else false
 
+
         if !$scope.businessId
             location.href = '#/merchant/' + $scope.clientId + '/business'
             return
@@ -403,9 +404,7 @@ angular.module('app.businesses', [])
                 console.log error
 
         # 2. UPDATE OUTLET
-        $scope.lnglat = null
-        $scope.$watch 'resultmap', (nv)->
-            $scope.lnglat = nv
+        # $scope.resultmap = {}
         $scope.isDisable = true
         $scope.updateOutlet = () ->
 
@@ -414,12 +413,12 @@ angular.module('app.businesses', [])
             if $scope.frm_update_outlet.$error.required.length || !$scope.frm_update_outlet.$valid
                 return false
 
-            if $scope.outlet.location_latlng && $scope.outlet.location_latlng != ""
-                latlng = $scope.outlet.location_latlng.split(",")
-                lat = latlng[0].trim()
-                lng = latlng[1].trim()
+            # if $scope.outlet.location_latlng && $scope.outlet.location_latlng != ""
+            #     latlng = $scope.outlet.location_latlng.split(",")
+            #     lat = latlng[0].trim()
+            #     lng = latlng[1].trim()
 
-            console.log $scope.lnglat
+            console.log $scope.resultmap
 
             new_data =
                 outlet :

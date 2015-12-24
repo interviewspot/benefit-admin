@@ -18,7 +18,7 @@ angular.module('app.maps.directives', [])
     infoWindow = undefined
     _scope = null
     map_fn = 
-        _scope  : null
+        #_scope  : null
         initMap : (mapID, lat, lng, hideinfo, scope) ->
             #_scope = scope
 
@@ -87,19 +87,19 @@ angular.module('app.maps.directives', [])
 
             # set lat long for input location
             $('.txt-location').val( marker.getPosition().lat() + ' , ' + marker.getPosition().lng() )
-            console.log scope
-            scope.result = {
-                long: marker.getPosition().lng()
-                lat: marker.getPosition().lat()
-            }
+
+
+            scope.$apply ()->
+                scope.result = {
+                    long: marker.getPosition().lng()
+                    lat: marker.getPosition().lat()
+                }
+
             return
 
     # 1. INIT MAP
     gmapLink = (scope, element, attrs) ->
         # init map
-        #scope.result = null
-        #console.log "ssssss"
-        #console.log scope
         map_id  = $(element).find('.load-map').attr 'id'
         map_fn.initMap map_id, 41.85, -87.65, false, scope
         # get location from address
@@ -109,13 +109,18 @@ angular.module('app.maps.directives', [])
         $('.get_address').on 'click' , ()->
             add_val = $(this).siblings('.txt-address').val()
             map_fn.showAddress add_val,scope
+
         return
 
     gmapCtrl = [
         '$scope', '$http', '$timeout'
         ,($scope, $http, $timeout)->
+            $scope.result = {}
             $scope.$watch 'result', (nv)->
-                #$scope.result = nv
+                if nv
+                    $scope.result = nv
+            return
+
 
     ] # END of controller
     # ------------------------------------------
