@@ -59,12 +59,12 @@
                                 required-->
                             <input type="text"
                                 name="out_address"
-                                value="71 Lê Thánh Tôn, Hồ Chí Minh, Việt Nam"
+                                value="{{outlet.address_text}}"
+                                ng-model = "outlet.address_text"
                                 class="txt-ipt txt-address"
                                 ng-class="{txt_disabled : !isDisable}"
-                                ng-pattern="/^[\d ]+$/"
                                 required>
-                            <span style="font-size: 12px;" class="get_address">( Use address as location )</span>
+                            <span style="font-size: 12px;" class="get_address">Use address as location </span>
                             <p style="color:red">
                                 <span ng-show="frm_update_outlet.out_address.$invalid  && frm_update_outlet.out_address.$dirty">Address is required.</span>
                             </p>
@@ -90,15 +90,12 @@
                             <input type="text"
                                 name="out_location"
                                 class="txt-ipt txt-location"
-                                required>
-                            <!-- <div ng-show="outlet.location && outlet.location.addresses.total > 0">
-                                <p ng-repeat="address in outlet.location.addresses._embedded.items">{{address.value}}</p>
-                            </div> -->
+                                ng-model="outlet.location_latlng">
                         </td>
                     </tr>
                 </tbody>
             </table>
-            <ng-gmap class="g-map"></ng-gmap>
+            <ng-gmap class="g-map" data="outlet.location" ng-resultmap="resultmap"></ng-gmap>
         </div>
         <!-- END: COL -->
     </div>
