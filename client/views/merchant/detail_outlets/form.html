@@ -64,7 +64,7 @@
                                 class="txt-ipt txt-address"
                                 ng-class="{txt_disabled : !isDisable}"
                                 required>
-                            <span style="font-size: 12px;" class="get_address">( Use address as location )</span>
+                            <span style="font-size: 12px;" class="get_address">Use address as location </span>
                             <p style="color:red">
                                 <span ng-show="frm_update_outlet.out_address.$invalid  && frm_update_outlet.out_address.$dirty">Address is required.</span>
                             </p>
@@ -95,7 +95,7 @@
                     </tr>
                 </tbody>
             </table>
-            <ng-gmap class="g-map" ng-resultmap="resultmap"></ng-gmap>
+            <ng-gmap class="g-map" data="outlet.location" ng-resultmap="resultmap"></ng-gmap>
         </div>
         <!-- END: COL -->
     </div>

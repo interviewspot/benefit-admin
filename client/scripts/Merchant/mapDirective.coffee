@@ -104,6 +104,15 @@ angular.module('app.maps.directives', [])
         map_fn.initMap map_id, 41.85, -87.65, false, scope
         # get location from address
         address_val = $(element).closest('.col-md-6').siblings('.col-md-6').find('.txt-address').val()
+
+        scope.$watch 'data', (nv)->
+            if(nv)
+                geo_position = {
+                    lat : nv.geo_lat
+                    lng : nv.geo_lng
+                }
+                map_fn.geocode geo_position
+        #console.log scope.data.geo_lng
         map_fn.showAddress address_val,scope
         # get address
         $('.get_address').on 'click' , ()->
