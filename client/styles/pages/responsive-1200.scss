@@ -22,6 +22,12 @@
     .blk-preview {
         margin-top: 40px;
     }
+    .tbl-w1000 {
+    	width: 1000px;
+    }
+    .tbl-w800 {
+    	width: 800px;
+    }
 }
 @media (max-width: 1024px) {
     .tbl-1024 {
@@ -29,4 +35,16 @@
             width: 1000px;
         }
     }
+    tags-input .tags .tag-item {
+    	font-size: 12px !important;
+    }
+}
+
+@media (max-width: 992px) {
+	.tbl-w1000.tbl-w800 {
+		width: 800px;
+	}
+	.tb-w800 {
+		width: 800px;
+	}
 }
