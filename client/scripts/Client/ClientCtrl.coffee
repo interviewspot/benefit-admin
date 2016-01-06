@@ -78,7 +78,7 @@ angular.module('app.clients', [])
                 "description"  : handbook.translations[handbook.locale].description
                 "organisation" : clientId
                 "locale"       : handbook.locale
-                "active"       : handbook.active
+                "enabled"      : handbook.enabled
             }
         }
 
@@ -103,7 +103,7 @@ angular.module('app.clients', [])
                 $scope.isCreateHandbook = true
                 return
               $scope.handbooks = res.data._embedded.items
-              #console.log($scope.handbooks)
+              console.log($scope.handbooks)
 
               # GET TRANSLATIONS
               angular.forEach $scope.handbooks, (item, i) ->

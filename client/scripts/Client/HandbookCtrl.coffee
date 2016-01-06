@@ -37,6 +37,7 @@ angular.module('app.handbooks', [])
             fetchHandbook.get(data._links.translations.href).then  (res) ->
                 if res.status != 200 || typeof res != 'object'
                     return
+
                 $scope.handbook['translations'] = res.data
                 return
             , (error) ->
@@ -58,10 +59,11 @@ angular.module('app.handbooks', [])
                     "description"  : $scope.handbook.translations[$scope.handbook.locale].description
                     "organisation" : $scope.clientId
                     "locale"       : $scope.handbook.locale
+                    "enabled"      : $scope.handbook.enabled
                 }
             }
-            delete updateData.handbook._links 
-            delete updateData.handbook.id
+            #delete updateData.handbook._links
+            #delete updateData.handbook.id
             updateData.handbook['organisation'] = $scope.clientId
             console.log updateData
             handbookService.update {org_id:$scope.clientId, hand_id:$scope.handbookId}, updateData, (res) ->

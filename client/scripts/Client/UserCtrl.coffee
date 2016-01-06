@@ -380,7 +380,7 @@ angular.module('app.users', [])
                                 "position": {
                                     "title"   : "Position of " + user.username
                                     "employee": res.data.id
-                                    "active"  : true
+                                    "enabled"  : true
                                     "employer": $scope.clientId
                                     "handbook_contact" : true
                                 }

@@ -53,7 +53,7 @@ angular.module('app.handbook_info', [])
                     "description"  : $scope.handbook.translations[$scope.handbook.locale].description
                     "organisation" : $scope.clientId
                     "locale"       : $scope.handbook.locale
-                    "active"       : $scope.handbook.active
+                    "enabled"      : $scope.handbook.enabled
                 }
             }
 
@@ -64,7 +64,7 @@ angular.module('app.handbook_info', [])
                 $scope.infoUpdated = 'Update Success'
                 $timeout ()->
                     $scope.infoUpdated = null
-                , 500
+                , 1000
             , (error) ->
                 $scope.infoUpdated = error.status + ': Error, refresh & try again !'
 
