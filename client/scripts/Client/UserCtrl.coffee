@@ -6,7 +6,10 @@ angular.module('app.users', [])
 # 2. PAGING, setup paging
 # 2.1 On Number Per Page Change
 # 2.2 Goto PAGE
-# 3. ONLOAD LIST USERS
+# 3. DELETE USER
+# 4. Enable / unEn USER
+# x. ONLOAD LIST USERS
+# ___| _getUsers
 # --------------------------------------------
 .controller('UsersCtrl', [
     '$scope'
@@ -93,8 +96,46 @@ angular.module('app.users', [])
                 , (error) ->
                     alert(error.status + ': Error, refresh & try again !')
             return
+        # 4. Enabled / unEn
+        $scope.enabUser = (user, i) ->
+            r = confirm("Do you want to change this user \"" + user.email + "\"?")
+            if r == true
+                _updateUser(user, i)
+            return
+        # 4.1 Update User
+        _updateUser = (user, i) ->
+            newData = {
+                "user": {
+                    "first_name" : user.first_name
+                    "last_name"  : user.last_name
+                    "username"   : user.username
+                    "email"      : user.email
+                    "code"       : user.code
+                    #"handbook_contact" : $scope.position.handbook_contact
+                    #"plain_password": null,
+                    #"ssn": null
+                    "mobile_no"      : user.mobile_no || ''
+                    "office_no"      : user.office_no || ''
+                    "enabled": !user.enabled
+                    "date_added" : $filter('date')(new Date(user.date_added), 'yyyy-MM-ddT00:00:00+0000')
+                }
+            }
 
-        # 4. ONLOAD LIST USERS
+            Users.put(user._links.self.href, newData).then  (res) ->
+                if res.status == 204
+                    $scope.infoUpdated = 'Updated user '+user.email+' successfully!'
+                    $scope.users.items[i].enabled = newData.user.enabled
+                    $timeout ()->
+                        $scope.infoUpdated = null
+                    , 2000
+                return
+            , (error) ->
+                $scope.infoUpdated = error.status + ': Error updating, refresh & try again!'
+                $timeout ()->
+                    $scope.infoUpdated = null
+                , 2000
+
+        # x. ONLOAD LIST USERS
         _getUsers($scope.numPerPage, $scope.currentPage);
 
         return
@@ -215,7 +256,7 @@ angular.module('app.users', [])
                     "date_added"     : date_added
                 }
             }
-
+            console.log newData
             $scope.updateTags.position.tags = {}
             numTag = 1
 

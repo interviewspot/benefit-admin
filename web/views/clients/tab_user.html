@@ -1,16 +1,22 @@
 <div class="page-tab page-client-user" data-ng-controller="UsersCtrl">
     <div class="user-list">
-        <p class="marg-bot">Total No.  User: <strong>{{users.total ? users.total : 0}}</strong></p>
-        <p class="user-sts">
-            <span class="active">Active</span>
-            <span>Un-Active</span>
-            <span>De-Active</span>
-        </p>
-        <div class="t-r">
+        <div class="row">
+            <br/>
+            <p class="marg-bot col-md-4 col-sm-4">Total No.  User: <strong>{{users.total ? users.total : 0}}</strong></p>
+            <p class="user-sts col-md-8 col-sm-8 t-r">
+                <span class="active">Active</span>
+                <span>Un-Active</span>
+                <span>De-Active</span>
+            </p>
+        </div>
+        <br/>
+        <div class="t-r clearfix">
+            <span class="f-l msg-update" ng-show="infoUpdated" >{{infoUpdated}}</span>
             <a href="#/clients/{{clientId}}/new-user" class="btn btn-brown">Add new user</a>
         </div>
-        <div class="table-responsive tbl-1024" ng-show="users.total">
-            <table class="table tbl tbl-bg table-hover table-striped">
+
+        <div class="table-responsive" ng-show="users.total">
+            <table class="table tbl tbl-w1000 tbl-bg table-hover table-striped">
                 <tbody>
                     <tr>
                         <th class="text-center">Email</th>
@@ -22,7 +28,7 @@
                         <th class="text-center td-18">Date Added</th>
                         <th class="text-center td-15">Actions</th>
                     </tr>
-                    <tr ng-repeat="user in users.items">
+                    <tr ng-repeat="(i, user) in users.items">
                         <td><a href="#/clients/{{clientId}}/user/{{user.position_id}}">{{user.email}}</a></td>
                         <td  class="text-center">{{user.first_name}}</td>
                         <td  class="text-center">{{user.last_name}}</td>
@@ -34,7 +40,11 @@
                         </td>
                         <td  class="text-center td-18" ng-if="!getTime(user.date_added)">-</td>
                         <td class="td-control text-center td-15">
-                            <a><i class="fa fa-check"></i></a>
+                            <a title="Enabled/Not"
+                                ng-click="enabUser(user, i)">
+                                <i class="fa fa-check" ng-show="user.enabled"></i>
+                                <i class="fa fa-times" ng-show="!user.enabled"></i>
+                            </a>
                             |
                             <a title="Ban"><i class="fa fa-ban"></i></a>
                             |
