@@ -28,6 +28,12 @@
     .tbl-w800 {
     	width: 800px;
     }
+    .table-responsive {
+    	margin-bottom: 20px;
+    }
+    .btn-add-user {
+    	margin-bottom: 10px;
+    }
 }
 @media (max-width: 1024px) {
     .tbl-1024 {
@@ -46,5 +52,146 @@
 	}
 	.tb-w800 {
 		width: 800px;
+	}
+}
+@media (max-width: 900px) {
+	.col-outlet {
+		width: 100%;
+		margin-bottom: 10px;
+	}
+}
+@media (max-width: 860px) {
+	.col-promotion, .col-user {
+		width: 100%;	
+	}
+	.cpn-left, .cpn-right, .notifi-list, .notifi-form {
+		width: 100%;
+	}
+	.cpn-left, .notifi-list {
+		margin-bottom: 30px;
+	}
+	.td-20 {
+		width: 30%;
+	}
+	.employ-filter {
+		.emp-filter {
+	    	width: 100%;
+	    }
+	    .emply-add {
+	    	position: relative;
+	    }
+	    .frm-employ-filter {
+	    	.col-xs-6 {
+	    		width: 50%;
+	    		margin-bottom: 20px;
+	    	}
+	    }
+	}
+}
+@media (max-width: 767px) {
+	.header-container {
+		> .top-header {
+			.header-horizon {
+				display: none;
+			}
+			.menu-button {
+				right: auto;
+				left: 15px;
+			}
+			.top-nav {
+				.nav-right {
+					position: absolute;
+					top: 20px;
+					right: 15px;
+					color: #fff;
+				}
+			}
+			.logo {
+			    border-bottom: 4px solid #CFAE79
+			}
+		}
+	}
+	.app {
+		> .main-container {
+			> .content-container {
+				margin-left: 0;
+			}
+		}
+	}
+	.on-canvas {
+		#nav-container {
+		    top: 79px;
+		    z-index: 100;
+		    left: 0;
+		    right: 0;
+		}
+		.main-container {
+			#content {
+				margin-left: 0;
+				margin-right: 0;
+			}
+		}
+	}
+}
+@media (max-width: 400px) {
+	.header-container {
+		> .top-header {
+			.login_name {
+				display: none;
+			}
+		}
+	}
+	.merchant-list, .clients_list {
+		.cap-note {
+			position: relative;
+		}
+	}
+	.clients_list {
+		.table-responsive {
+			margin-top: 20px;
+		}
+	}
+	.user-list {
+		p {
+			&.marg-bot {
+				margin-bottom: 20px;
+			}
+		}
+	}
+	.page-num-info {
+		margin-bottom: 10px;
+	}
+}
+@media(max-width: 340px) {
+	.tb-mb400 {
+		width: 350px;
+	}
+	.frm_update_promotion, .frm_update_outlet, .frm-updateuser {
+		.btn-brown, .btn-edit {
+			display: block;
+		}
+	}
+	.frm_update_business {
+		.t-r {
+			.btn-brown, .btn-edit {
+				display: block;
+			}		
+		}
+	}
+	.g-map {
+		height: 300px;
+		.load-map {
+			height: 300px;
+		}
+	}
+	.btn-add-user {
+		margin-top: 10px;
+	}
+	.employ-filter {
+		.frm-employ-filter {
+			.col-xs-6 {
+				width: 100%;
+			}
+		}
 	}
 }
