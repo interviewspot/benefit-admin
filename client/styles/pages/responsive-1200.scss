@@ -97,17 +97,26 @@
 			.menu-button {
 				right: auto;
 				left: 15px;
+				.icon-bar {
+					background-color: #000;
+				}
+				&:hover {
+					background-color: #CFAE79;
+					.icon-bar {
+						background-color: #fff;
+					}
+				}
 			}
 			.top-nav {
 				.nav-right {
 					position: absolute;
 					top: 20px;
 					right: 15px;
-					color: #fff;
 				}
 			}
 			.logo {
-			    border-bottom: 4px solid #CFAE79
+			    border-bottom: 4px solid #CFAE79;
+			    background-color: #fff;
 			}
 		}
 	}
