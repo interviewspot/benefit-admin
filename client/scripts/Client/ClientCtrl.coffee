@@ -357,6 +357,7 @@ angular.module('app.clients', [])
 
         if $scope.frm_create_clients.$error.required.length
           return false
+        $scope.co.enabled = true
         co_data =
           organisation : $scope.co
         Companies.post(config.path.baseURL + config.path.clients, co_data ).then  (res) ->
