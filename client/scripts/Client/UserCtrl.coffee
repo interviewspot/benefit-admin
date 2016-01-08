@@ -468,6 +468,8 @@ angular.module('app.users', [])
                 checkError = (datajson) ->
                     if typeof datajson == 'object' && datajson._embedded.items.length
                         $scope.infoUpdated = error.status + ': Verification code existed, refresh & try again!'
+                    else if error.data.errors.children.email
+                        $scope.infoUpdated = error.status + ': Email is already used.'
                     else
                         $scope.infoUpdated = error.status + ': Error API, refresh & try again!'
 
