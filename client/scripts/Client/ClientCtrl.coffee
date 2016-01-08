@@ -231,7 +231,7 @@ angular.module('app.clients', [])
                 #console.log($scope.$$childTail.uploadresponse)
                 logo_id = $scope.$$childTail.uploadresponse.logo_id
               else
-                logo_id = $scope.clientDetail.logo.id
+                logo_id = if $scope.clientDetail.logo then $scope.clientDetail.logo.id else null
 
           sm_client_data.organisation['logo'] = logo_id
 
@@ -244,7 +244,7 @@ angular.module('app.clients', [])
               if ($scope.$$childTail.uploadbanner)
                 banner_id.push($scope.$$childTail.uploadbanner.logo_id)
           else
-            banner_id = $scope.$$childTail.uploadbanner.logo_id
+            banner_id = if $scope.$$childTail.uploadbanner then $scope.$$childTail.uploadbanner.logo_id else null
           sm_client_data.organisation['banners'] = banner_id
           #console.log(sm_client_data.organisation)
 
