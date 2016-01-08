@@ -16,7 +16,7 @@
         <button class="btn btn-edit" ng-click="deleteBusiness()">Delete</button>
     </div>
     <div class="row">
-        <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="col-md-6 col-sm-12 col-xs-12">
             <input type="hidden" ng-model="business.id" value="{{business.id}}">
             <table class="table tbl table-striped">
                 <tbody>
@@ -62,30 +62,32 @@
                    data-toggle="modal"
                    data-target="#createPromotion">Add new promotion</a>
             </div>
-            <table class="table tbl tbl-bg table-striped">
-                <tbody>
-                    <tr>
-                        <th class="text-center">Title</th>
-                        <th class="text-center">Discount Amount</th>
-                        <th class="text-center">Estimated Value</th>
-                        <th class="text-center">Effective From</th>
-                        <th class="text-center">Expire On</th>
-                        <th class="text-center td-15">Actions</th>
-                    </tr>
-                    <tr ng-repeat="promotion in business.promotions._embedded.items">
-                        <td class="text-center"><a title="Edit Outlet" href="#/merchant/{{clientId}}/business/{{business.id}}/promotion/{{promotion.id}}">{{promotion.title}}</a></td>
-                        <td class="text-center">{{promotion.discount_amount}}</td>
-                        <td class="text-center">{{promotion.estimated_value}}</td>
-                        <td class="text-center">{{promotion.effective_from | date:'MM/dd/yyyy'}}</td>
-                        <td class="text-center">{{promotion.expire_on | date:'MM/dd/yyyy'}}</td>
-                        <td class="td-control text-center td-15">
-                            <a title="Edit Outlet" href="#/merchant/{{clientId}}/business/{{business.id}}/promotion/{{promotion.id}}"><i class="fa fa fa-pencil"></i></a>
-                            |
-                            <a title="Delete Outlet" ng-click="removePromotion(promotion)"><i class="fa fa-trash-o"></i></a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table tb-w800 tbl tbl-bg table-striped">
+                    <tbody>
+                        <tr>
+                            <th class="text-center">Title</th>
+                            <th class="text-center">Discount Amount</th>
+                            <th class="text-center">Estimated Value</th>
+                            <th class="text-center">Effective From</th>
+                            <th class="text-center">Expire On</th>
+                            <th class="text-center td-15">Actions</th>
+                        </tr>
+                        <tr ng-repeat="promotion in business.promotions._embedded.items">
+                            <td class="text-center"><a title="Edit Outlet" href="#/merchant/{{clientId}}/business/{{business.id}}/promotion/{{promotion.id}}">{{promotion.title}}</a></td>
+                            <td class="text-center">{{promotion.discount_amount}}</td>
+                            <td class="text-center">{{promotion.estimated_value}}</td>
+                            <td class="text-center">{{promotion.effective_from | date:'MM/dd/yyyy'}}</td>
+                            <td class="text-center">{{promotion.expire_on | date:'MM/dd/yyyy'}}</td>
+                            <td class="td-control text-center td-15">
+                                <a title="Edit Outlet" href="#/merchant/{{clientId}}/business/{{business.id}}/promotion/{{promotion.id}}"><i class="fa fa fa-pencil"></i></a>
+                                |
+                                <a title="Delete Outlet" ng-click="removePromotion(promotion)"><i class="fa fa-trash-o"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             <footer class="table-footer" ng-show="business.outlets.pages >= 2">
                 <div class="row">
                     <div class="col-md-6 page-num-info">
@@ -123,24 +125,26 @@
                    data-toggle="modal"
                    data-target="#createOutlet">Add new outlet</a>
             </div>
-            <table class="table tbl tbl-bg table-striped">
-                <tbody>
-                    <tr>
-                        <th class="text-center">Name</th>
-                        <th class="text-center">Contact No.</th>
-                        <th class="text-center td-15">Actions</th>
-                    </tr>
-                    <tr ng-repeat="outlet in business.outlets._embedded.items">
-                        <td class="text-center"><a title="Edit Outlet" href="#/merchant/{{clientId}}/business/{{business.id}}/outlet/{{outlet.id}}">{{outlet.name}}</a></td>
-                        <td class="text-center">{{outlet.contact_no}}</td>
-                        <td class="td-control text-center td-15">
-                            <a title="Edit Outlet" href="#/merchant/{{clientId}}/business/{{business.id}}/outlet/{{outlet.id}}"><i class="fa fa fa-pencil"></i></a>
-                            |
-                            <a title="Delete Outlet" ng-click="removeOutlet(outlet)"><i class="fa fa-trash-o"></i></a>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="table tb-w800 tbl tbl-bg table-striped">
+                    <tbody>
+                        <tr>
+                            <th class="text-center">Name</th>
+                            <th class="text-center">Contact No.</th>
+                            <th class="text-center td-15">Actions</th>
+                        </tr>
+                        <tr ng-repeat="outlet in business.outlets._embedded.items">
+                            <td class="text-center"><a title="Edit Outlet" href="#/merchant/{{clientId}}/business/{{business.id}}/outlet/{{outlet.id}}">{{outlet.name}}</a></td>
+                            <td class="text-center">{{outlet.contact_no}}</td>
+                            <td class="td-control text-center td-15">
+                                <a title="Edit Outlet" href="#/merchant/{{clientId}}/business/{{business.id}}/outlet/{{outlet.id}}"><i class="fa fa fa-pencil"></i></a>
+                                |
+                                <a title="Delete Outlet" ng-click="removeOutlet(outlet)"><i class="fa fa-trash-o"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             <footer class="table-footer" ng-show="business.outlets.pages >= 2">
                 <div class="row">
                     <div class="col-md-6 page-num-info">

@@ -202,6 +202,10 @@ angular.module('app.clients', [])
 
       # function update client (include update/delete logo/banner)
       $scope.updateClient = (task, obj) ->
+          if $scope.clientDetail.redemption_password && $scope.clientDetail.redemption_password.length != 4
+            alert 'Please entry 4 chars in Redemption password'
+            return
+
           sm_client_data = {
             "organisation":
                 "admin_user": null,  # Change this real ID
@@ -216,7 +220,7 @@ angular.module('app.clients', [])
                 "user_contact_no": if $scope.clientDetail.user_contact_no then $scope.clientDetail.user_contact_no else null,
                 "client_since": if $scope.clientDetail.client_since then $scope.clientDetail.client_since else null,
                 "office_hours": if $scope.clientDetail.office_hours then $scope.clientDetail.office_hours else null,
-                "redemption_password": "4444",
+                "redemption_password": if $scope.clientDetail.redemption_password then $scope.clientDetail.redemption_password else null,
                 "about_company": if $scope.clientDetail.about_company then $scope.clientDetail.about_company  else null
           }
 
@@ -242,7 +246,7 @@ angular.module('app.clients', [])
           else
             banner_id = $scope.$$childTail.uploadbanner.logo_id
           sm_client_data.organisation['banners'] = banner_id
-          console.log(sm_client_data.organisation)
+          #console.log(sm_client_data.organisation)
 
           clientService.update {org_id:$scope.clientDetail.id}, sm_client_data, (res) ->
             if typeof res.organisation == 'object'

@@ -3,7 +3,9 @@
         <h1 class="ttl-page">{{client.name}}</h1>
         <div class="panel panel-default">
             <div class="panel-body lv1">
-                <ul class="nav nav-tabs" ng-include="'views/merchant/menu-tab.html'"></ul>
+                <div class="table-responsive">
+                    <ul class="tb-mb400 nav nav-tabs" ng-include="'views/merchant/menu-tab.html'"></ul>
+                </div>
                 <div ng-include="'views/merchant/detail_promotions/form.html'"></div>
             </div>
             <!-- /.panel-body -->

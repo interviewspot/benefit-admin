@@ -163,6 +163,20 @@
                                 ></td>
                     </tr>
                     <tr>
+                        <th class="td-30">Pin Code</th>
+                        <td><input type="text"
+                                name="four_digit_pin"
+                                class="txt-ipt"
+                                required
+                                placeholder="Pin code 4 chars"
+                                ng-minlength="4"
+                                ng-maxlength="4"
+                                ng-model="user.four_digit_pin"
+                                ng-pattern="/^[a-z\d\-\_]+$/"
+                                ng-class="{txt_err : frm_updateuser.four_digit_pin.$invalid}"
+                                ></td>
+                    </tr>
+                    <tr>
                         <th class="td-30">Redemptions</th>
                         <td><input type="text"
                                 value="Not Available Yet!"

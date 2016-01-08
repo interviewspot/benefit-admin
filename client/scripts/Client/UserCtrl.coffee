@@ -254,9 +254,10 @@ angular.module('app.users', [])
                     "mobile_no"      : $scope.user.mobile_no || ''
                     "office_no"      : $scope.user.office_no || ''
                     "date_added"     : date_added
+                    "four_digit_pin" : $scope.user.four_digit_pin || ''
                 }
             }
-            console.log newData
+            #console.log newData
             $scope.updateTags.position.tags = {}
             numTag = 1
 

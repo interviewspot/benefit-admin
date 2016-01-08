@@ -16,7 +16,7 @@
         <button class="btn btn-edit" ng-click="deleteUser()">Delete</button>
     </div>
     <div class="row">
-        <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="col-md-6 col-sm-6 col-xs-12 col-user">
             <input type="hidden" ng-model="user.id" value="{{user.id}}">
             <table class="table tbl table-striped">
                 <tbody>
@@ -109,7 +109,7 @@
             </table>
         </div>
         <!-- END: COL -->
-        <div class="col-md-6 col-sm-6 col-xs-12">
+        <div class="col-md-6 col-sm-6 col-xs-12 col-user">
             <table class="table tbl table-striped">
                 <tbody>
                     <tr>
@@ -160,6 +160,20 @@
                                 ng-model="user.code"
                                 ng-pattern="/^[a-z\d\-\_]+$/"
                                 ng-class="{txt_err : frm_updateuser.code.$invalid}"
+                                ></td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Pin Code</th>
+                        <td><input type="text"
+                                name="four_digit_pin"
+                                class="txt-ipt"
+                                required
+                                placeholder="Pin code 4 chars"
+                                ng-minlength="4"
+                                ng-maxlength="4"
+                                ng-model="user.four_digit_pin"
+                                ng-pattern="/^[a-z\d\-\_]+$/"
+                                ng-class="{txt_err : frm_updateuser.four_digit_pin.$invalid}"
                                 ></td>
                     </tr>
                     <tr>

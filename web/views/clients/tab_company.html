@@ -1,3 +1,4 @@
+<br />
 <form name="co_info_frm">
 <div class="col-md-8 col-sm-8 col-xs-12 cpn-left">
 
@@ -122,6 +123,18 @@
                             class="txt-ipt"
                             ng-disabled="!isDisable"
                             ng-class="{txt_disabled : !isDisable}">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td-30">Redemption password</td>
+                    <td>
+                        <input type="text"
+                            ng-model="clientDetail.redemption_password"
+                            class="txt-ipt"
+                            ng-disabled="!isDisable"
+                            ng-class="{txt_disabled : !isDisable}"
+                            ngMaxlength="4" ngMinlength="4"
+                            ng-required="true" size="4" >
                     </td>
                 </tr>
                 <tr>
