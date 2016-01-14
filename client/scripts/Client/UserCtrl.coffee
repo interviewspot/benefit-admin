@@ -41,18 +41,21 @@ angular.module('app.users', [])
         _getUsers = (limit, goPage) ->
 
             fetchContact.get(_URL_users.list + '?limit=' + limit + '&page=' + goPage).then  (res) ->
-                #console.log(res)
+                console.log(_URL_users.list)
                 if res.data._embedded.items.length
-                    $scope.users = res.data
-                    #console.log _URL_users.list
+                    $scope.users = res.data;
                     $scope.users.items = []
+                    console.log($scope.users)
                     for i, item of res.data._embedded.items
                         ((itemInstance) ->
                             Users.get(itemInstance._links.employee.href).then  (res) ->
                                 if res.status != 200 || typeof res != 'object'
                                     return
                                 #console.log(res)
-                                res.data.position_id = itemInstance.id
+                                res.data.position_data = itemInstance
+                                $scope.users.items.push(res.data)
+
+                                # GET TAGS
                                 Users.get(_URL_users.list + '/' + itemInstance.id + '/tags').then  (tag) ->
                                     if tag.data._embedded.items.length > 0
                                         tag_lst = []
@@ -60,9 +63,10 @@ angular.module('app.users', [])
                                             if(tag.employee_class)
                                                 tag_lst.push(tag.name)
                                         res.data.employee_class = tag_lst.join(', ')
+                                        res.data.tags           = tag.data._embedded.items
                                 , (error) ->
                                     console.log error
-                                $scope.users.items.push(res.data)
+
                                 return
                             , (error) ->
                                 console.log error
@@ -101,8 +105,8 @@ angular.module('app.users', [])
         # 4. Enabled / unEn
         $scope.enabUser = (user, i) ->
             r = confirm("Do you want to change this user \"" + user.email + "\"?")
-            ###console.log(user)
-            return###
+            console.log(user)
+
             if r == true
                 _updateUser(user, i)
             return
@@ -125,12 +129,28 @@ angular.module('app.users', [])
                 }
             }
 
+
+            if user.tags.length
+                uTags = {}
+                numTag = 1
+                angular.forEach user.tags, (tag)->
+                    keyTag = "tag" + numTag
+                    uTags[keyTag] = {}
+                    uTags[keyTag].name = tag.name
+                    uTags[keyTag].enabled = tag.enabled
+                    uTags[keyTag].employee_class = tag.employee_class
+                    uTags[keyTag].employee_function = tag.employee_function
+                    numTag++
+            else
+                uTags = null
+
             updateContact = {
                 "position": {
                     "employee": user.id
                     "enabled": !user.enabled
                     "employer": $scope.clientId
                     "handbook_contact" : true
+                    "tags" : uTags
                 }
             }
 
@@ -138,7 +158,7 @@ angular.module('app.users', [])
 
             Users.put(user._links.self.href, newData).then  (res) ->
                 if res.status == 204
-                    Users.put(_URL_users.list+'/'+user.position_id, updateContact).then  (res) ->
+                    Users.put(_URL_users.list+'/'+user.position_data.id, updateContact).then  (res) ->
                         if res.status == 204
                             $scope.infoUpdated = 'Updated user '+user.email+' successfully!'
                             $scope.users.items[i].enabled = newData.user.enabled
@@ -219,7 +239,7 @@ angular.module('app.users', [])
                     Users.get(_URL.detail + $scope.userId + '/tags').then  (tag) ->
                         #console.log(tag.data._embedded.items)
                         if tag.data._embedded.items.length > 0
-                            $scope.user.employee_class = $filter('filter')(tag.data._embedded.items, {employee_class:true})
+                            $scope.user.employee_class    = $filter('filter')(tag.data._embedded.items, {employee_class:true})
                             $scope.user.employee_function = $filter('filter')(tag.data._embedded.items,{employee_function:true})
                     , (error) ->
                         console.log error
@@ -267,7 +287,7 @@ angular.module('app.users', [])
                     "email"      : $scope.user.email
                     "code"       : $scope.user.code
                     #"handbook_contact" : $scope.position.handbook_contact
-                    #"enabled": true,
+                    "enabled": $scope.user.enabled
                     #"plain_password": null,
                     #"ssn": null
                     "mobile_no"      : $scope.user.mobile_no || ''
@@ -284,7 +304,7 @@ angular.module('app.users', [])
                 keyTag = "tag" + numTag
                 $scope.updateTags.position.tags[keyTag] = {}
                 $scope.updateTags.position.tags[keyTag].name = tag.name
-                $scope.updateTags.position.tags[keyTag].active = true
+                $scope.updateTags.position.tags[keyTag].enabled = true
                 $scope.updateTags.position.tags[keyTag].employee_class = 1
                 $scope.updateTags.position.tags[keyTag].employee_function = 0
                 numTag++
@@ -292,8 +312,8 @@ angular.module('app.users', [])
             angular.forEach $scope.user.employee_function, (tag)->
                 keyTag = "tag" + numTag
                 $scope.updateTags.position.tags[keyTag] = {}
-                $scope.updateTags.position.tags[keyTag].name = tag.name
-                $scope.updateTags.position.tags[keyTag].active = true
+                $scope.updateTags.position.tags[keyTag].name    = tag.name
+                $scope.updateTags.position.tags[keyTag].enabled = true
                 $scope.updateTags.position.tags[keyTag].employee_class = 0
                 $scope.updateTags.position.tags[keyTag].employee_function = 1
                 numTag++
@@ -312,7 +332,7 @@ angular.module('app.users', [])
                             $scope.infoUpdated = 'Updated user successfully!'
                             $timeout ()->
                                 $scope.infoUpdated = null
-                            , 300
+                            , 2000
                         return
                     , (error) ->
                         $scope.infoUpdated = error.status + ': Error update tags, refresh & try again!'
@@ -455,7 +475,7 @@ angular.module('app.users', [])
                                 keyTag = "tag" + numTag
                                 newContact.position.tags[keyTag] = {}
                                 newContact.position.tags[keyTag].name = tag.name
-                                newContact.position.tags[keyTag].active = true
+                                newContact.position.tags[keyTag].enabled = true
                                 newContact.position.tags[keyTag].employee_class = 1
                                 newContact.position.tags[keyTag].employee_function = 0
                                 numTag++
@@ -464,7 +484,7 @@ angular.module('app.users', [])
                                 keyTag = "tag" + numTag
                                 newContact.position.tags[keyTag] = {}
                                 newContact.position.tags[keyTag].name = tag.name
-                                newContact.position.tags[keyTag].active = true
+                                newContact.position.tags[keyTag].enabled = true
                                 newContact.position.tags[keyTag].employee_class = 0
                                 newContact.position.tags[keyTag].employee_function = 1
                                 numTag++

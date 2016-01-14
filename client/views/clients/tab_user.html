@@ -14,7 +14,8 @@
             <span class="f-l msg-update" ng-show="infoUpdated" >{{infoUpdated}}</span>
             <a href="#/clients/{{clientId}}/new-user" class="btn btn-brown btn-add-user">Add new user</a>
         </div>      
-        <div class="table-responsive" ng-show="users.total">
+
+        <div class="table-responsive" ng-show="users.items.length">
             <table class="table tbl tbl-w1000 tbl-bg table-hover table-striped">
                 <tbody>
                     <tr>
@@ -28,7 +29,7 @@
                         <th class="text-center td-15">Actions</th>
                     </tr>
                     <tr ng-repeat="(i, user) in users.items">
-                        <td><a href="#/clients/{{clientId}}/user/{{user.position_id}}">{{user.email}}</a></td>
+                        <td><a href="#/clients/{{clientId}}/user/{{user.position_data.id}}">{{user.email}}</a></td>
                         <td  class="text-center">{{user.first_name}}</td>
                         <td  class="text-center">{{user.last_name}}</td>
                         <td  class="text-center">{{user.mobile_no ? user.mobile_no : '-'}}</td>
