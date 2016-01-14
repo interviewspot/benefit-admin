@@ -62,8 +62,8 @@
     <!-- END: CREATE CONTACT -->
 
     <!-- START: LIST CONTACT -->
-    <div class="col-md-6 col-sm-6 col-xs-12" ng-repeat="(i, item) in contacts | groupBy : 'alphabet'">
-        <div class="ctc-itm">
+    <div class="col-md-6 col-sm-6 col-xs-12" ng-repeat="(i, item) in contacts | groupBy : 'alphabet'" >
+        <div class="ctc-itm" >
             <h2>{{i}}</h2>
             <div class="ctc-content" ng-repeat="contact in item">
                 <div class="ctc-control">
@@ -75,11 +75,11 @@
                 <h3>{{contact.user.first_name}}  {{contact.user.last_name}}</h3>
                 <p class="ctc-add l-tags">Singapore,
                     <span class="tag"
-                        ng-repeat="tag in contact.tags._embedded.items | filter:{employee_class:true} | filter:{active:true}">
+                        ng-repeat="tag in contact.tags._embedded.items | filter:{employee_class:true} | filter:{enabled:true}">
                         {{tag.name}}
                     </span>
                     <span class="tag"
-                        ng-repeat="tag in contact.tags._embedded.items | filter:{employee_function:true} | filter:{active:true}">
+                        ng-repeat="tag in contact.tags._embedded.items | filter:{employee_function:true} | filter:{enabled:true}">
                         {{tag.name}}
                     </span>
                 </p>

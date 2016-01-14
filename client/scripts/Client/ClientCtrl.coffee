@@ -23,8 +23,8 @@ angular.module('app.clients', [])
                 return
 
       # 2. PAGING, setup paging
-      $scope.numPerPageOpt = [3, 5, 10, 20]
-      $scope.numPerPage    = $scope.numPerPageOpt[0]
+      $scope.numPerPageOpt = [5, 10, 20, 30]
+      $scope.numPerPage    = $scope.numPerPageOpt[1]
       $scope.currentPage   = 1
       $scope.filteredUsers = []
       $scope.currentPageUsers = []

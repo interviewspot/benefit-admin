@@ -15,12 +15,13 @@ angular.module('app.contacts', [])
     ($scope, $filter, fetchTabData, fakeData, $location, $routeParams, ContactService, fetchContact, SearchUsers, fetchUsers, config, $q, $modal) ->
 
         _URL =
-            list   : config.path.baseURL + config.path.contacts.replace(":org_id", $routeParams.clientId) + '?search=position.handbookContact:1'
+            list   : config.path.baseURL + config.path.contacts.replace(":org_id", $routeParams.clientId) + '?search=position.handbookContact:1,position.enabled:1'
 
 
         # 1. Display list contacts
         $scope.loadContactList = ->
             fetchContact.get(_URL.list).then (res) ->
+                console.log _URL.list
                 if res.data._embedded.items.length
                     $scope.contacts = []
 
@@ -31,7 +32,7 @@ angular.module('app.contacts', [])
                                 $scope.contacts[i]['position'] = itemInstance
                                 $scope.contacts[i]['user']     = res.data
                                 $scope.contacts[i]['alphabet'] = if res.data.first_name then res.data.first_name.charAt(0).toLowerCase() else res.data.username.charAt(0).toLowerCase()
-
+                                console.log $scope.contacts[i]['position']
                                 fetchContact.get(itemInstance._links.tags.href).then  (res) ->
                                     $scope.contacts[i]['tags'] = res.data
                         )(item)
@@ -86,7 +87,7 @@ angular.module('app.contacts', [])
                 "position": {
                     "title"   : $scope.contact.title
                     "employee": $scope.srch_users[$scope.contact.email]
-                    "active"  : true
+                    "enabled"  : true
                     "employer": $routeParams.clientId
                     "handbook_contact" : true
                 }
@@ -186,7 +187,7 @@ angular.module('app.contacts', [])
                 "position": {
                     "title": contact.position.title
                     "employee": $scope.srch_users[$scope.contact.user.email]
-                    "active": true
+                    "enabled": true
                     "employer": $routeParams.clientId
                     "handbook_contact" : true
                 }

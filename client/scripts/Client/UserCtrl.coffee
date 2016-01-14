@@ -29,7 +29,8 @@ angular.module('app.users', [])
         $scope.clientId =  $routeParams.clientId
         _URL_users =
             #list : config.path.baseURL + config.path.users
-            list : config.path.baseURL + config.path.contacts.replace(":org_id", $routeParams.clientId)
+            list     : config.path.baseURL + config.path.contacts.replace(":org_id", $routeParams.clientId)
+
 
         # GET STAMPTIME FROM RFC 822 timetype
         $scope.getTime = (ndate) ->
@@ -43,6 +44,7 @@ angular.module('app.users', [])
                 #console.log(res)
                 if res.data._embedded.items.length
                     $scope.users = res.data
+                    #console.log _URL_users.list
                     $scope.users.items = []
                     for i, item of res.data._embedded.items
                         ((itemInstance) ->
@@ -99,6 +101,8 @@ angular.module('app.users', [])
         # 4. Enabled / unEn
         $scope.enabUser = (user, i) ->
             r = confirm("Do you want to change this user \"" + user.email + "\"?")
+            ###console.log(user)
+            return###
             if r == true
                 _updateUser(user, i)
             return
@@ -121,13 +125,28 @@ angular.module('app.users', [])
                 }
             }
 
+            updateContact = {
+                "position": {
+                    "employee": user.id
+                    "enabled": !user.enabled
+                    "employer": $scope.clientId
+                    "handbook_contact" : true
+                }
+            }
+
+
+
             Users.put(user._links.self.href, newData).then  (res) ->
                 if res.status == 204
-                    $scope.infoUpdated = 'Updated user '+user.email+' successfully!'
-                    $scope.users.items[i].enabled = newData.user.enabled
-                    $timeout ()->
-                        $scope.infoUpdated = null
-                    , 2000
+                    Users.put(_URL_users.list+'/'+user.position_id, updateContact).then  (res) ->
+                        if res.status == 204
+                            $scope.infoUpdated = 'Updated user '+user.email+' successfully!'
+                            $scope.users.items[i].enabled = newData.user.enabled
+                            $timeout ()->
+                                $scope.infoUpdated = null
+                            , 2000
+                    , (error) ->
+                        $scope.infoUpdated = error.status + ' : Error updating, refresh & try again!'
                 return
             , (error) ->
                 $scope.infoUpdated = error.status + ': Error updating, refresh & try again!'
