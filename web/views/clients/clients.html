@@ -18,7 +18,7 @@
                           <th class="text-center">CS</th>
                           <th class="text-center">Actions</th>
                       </tr>
-                      <tr ng-repeat="client in clients_list" >
+                      <tr ng-repeat="(i, client) in clients_list" >
                           <td class="text-center">
                               <a href="#/clients/{{client.id}}/info">
                                   {{client.name}}
@@ -36,7 +36,11 @@
                               Not Available Yet!
                           </td>
                           <td class="text-center td-control">
-                              <a><i class="fa fa-check"></i></a>
+                              <a title="Enabled/Not"
+                                ng-click="enabClient(client, i)">
+                                <i class="fa fa-check" ng-show="client.enabled"></i>
+                                <i class="fa fa-times" ng-show="!client.enabled"></i>
+                              </a>
                               |
                               <a title="Assign CS"><i class="fa fa-sign-in"></i></a>
                               |

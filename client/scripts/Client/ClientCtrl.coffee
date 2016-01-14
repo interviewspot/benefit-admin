@@ -67,7 +67,11 @@ angular.module('app.clients', [])
 
       $scope.createNewVersion = ->
         $scope.isCreateHandbook = not $scope.isCreateHandbook
+
       $scope.changePublished = (handbook, clientId)->
+        r = confirm("Do you want to change this Handbook ?")
+        if !r
+          return
         handbook.locale = 'en-us'
         #console.log(handbook)
         updateData = {
@@ -147,7 +151,7 @@ angular.module('app.clients', [])
           if typeof data._links.banners == 'object' && data._links.banners.href
             Images.get(data._links.banners.href).then  (res) ->
               if res.status != 200 || typeof res != 'object'
-                    return
+                return
               #console.log(res.data)
               $scope.urlUploadBanner    = $scope.clientDetail._links['banners.post'].href
               #console.log($scope.urlUploadBanner)
@@ -190,6 +194,60 @@ angular.module('app.clients', [])
       $scope.isUserUpload = false
       $scope.isDetailUpload = false
 
+      ## UPDATE ENABLE CLIENT -----------------------------------
+      $scope.enabClient = (client, i) ->
+        r = confirm("Do you want to change this company?")
+        if !r
+          return
+
+        # SETUP LOGO ID
+        logo_id_arr = null
+        if client._links.logo
+          logo_id_arr = php.explode '/media/', client._links.logo.href
+          logo_id_arr = logo_id_arr[1]
+
+        # SETUP JSON
+        sm_client_data = {
+          "organisation":
+              "admin_user": null  # Change this real ID
+              "parent": null
+              "name": if client.name then client.name else null
+              "code": if client.code then client.code  else null
+              "reg_no": if client.reg_no then client.reg_no  else null
+              "head_office_no": if client.head_office_no then client.head_office_no else null
+              "billingAddress": if client.billing_address then client.billing_address else null
+              "office_address" : if client.office_address then client.office_address else null
+              "reservation_email": if client.reservation_email then client.reservation_email else null
+              "user_contact_no": if client.user_contact_no then client.user_contact_no else null
+              "client_since": if client.client_since then client.client_since else null
+              "office_hours": if client.office_hours then client.office_hours else null
+              "redemption_password": if client.redemption_password then client.redemption_password else null
+              "about_company": if client.about_company then client.about_company  else null
+              "enabled" : !client.enabled
+              "logo": logo_id_arr
+        }
+
+        banners_id_arr = null
+        if client._links.banners
+          Images.get(client._links.banners.href).then  (res) ->
+            if res.status == 200 && typeof res == 'object'
+              banners_id_arr = []
+              angular.forEach res.data._embedded.items, (banner)->
+                banners_id_arr.push(banner.id)
+              sm_client_data.organisation.banners = banners_id_arr
+              # UPDATE
+              clientService.update {org_id:client.id}, sm_client_data, (res) ->
+                $scope.clients_list[i].enabled = sm_client_data.organisation.enabled
+              , (error) ->
+                alert error.status + ' : Try later after refreshing!'
+        else
+          # UPDATE
+          clientService.update {org_id:client.id}, sm_client_data, (res) ->
+            $scope.clients_list[i].enabled = sm_client_data.organisation.enabled
+          , (error) ->
+            alert error.status + ' : Try later after refreshing!'
+
+      ## UPDATE CLIENT ------------------------------------------
       # function edit
       $scope.clients_edit = false
       $scope.editClient = (clients_edit) ->
@@ -208,20 +266,21 @@ angular.module('app.clients', [])
 
           sm_client_data = {
             "organisation":
-                "admin_user": null,  # Change this real ID
-                "parent": null,
-                "name": if $scope.clientDetail.name then $scope.clientDetail.name else null,
-                "code": if $scope.clientDetail.code then $scope.clientDetail.code  else null,
-                "reg_no": if $scope.clientDetail.reg_no then $scope.clientDetail.reg_no  else null,
-                "head_office_no": if $scope.clientDetail.head_office_no then $scope.clientDetail.head_office_no else null,
-                "billingAddress": if $scope.clientDetail.billing_address then $scope.clientDetail.billing_address else null,
-                "office_address" : if $scope.clientDetail.office_address then $scope.clientDetail.office_address else null,
-                "reservation_email": if $scope.clientDetail.reservation_email then $scope.clientDetail.reservation_email else null ,
-                "user_contact_no": if $scope.clientDetail.user_contact_no then $scope.clientDetail.user_contact_no else null,
-                "client_since": if $scope.clientDetail.client_since then $scope.clientDetail.client_since else null,
-                "office_hours": if $scope.clientDetail.office_hours then $scope.clientDetail.office_hours else null,
-                "redemption_password": if $scope.clientDetail.redemption_password then $scope.clientDetail.redemption_password else null,
+                "admin_user": null  # Change this real ID
+                "parent": null
+                "name": if $scope.clientDetail.name then $scope.clientDetail.name else null
+                "code": if $scope.clientDetail.code then $scope.clientDetail.code  else null
+                "reg_no": if $scope.clientDetail.reg_no then $scope.clientDetail.reg_no  else null
+                "head_office_no": if $scope.clientDetail.head_office_no then $scope.clientDetail.head_office_no else null
+                "billingAddress": if $scope.clientDetail.billing_address then $scope.clientDetail.billing_address else null
+                "office_address" : if $scope.clientDetail.office_address then $scope.clientDetail.office_address else null
+                "reservation_email": if $scope.clientDetail.reservation_email then $scope.clientDetail.reservation_email else null
+                "user_contact_no": if $scope.clientDetail.user_contact_no then $scope.clientDetail.user_contact_no else null
+                "client_since": if $scope.clientDetail.client_since then $scope.clientDetail.client_since else null
+                "office_hours": if $scope.clientDetail.office_hours then $scope.clientDetail.office_hours else null
+                "redemption_password": if $scope.clientDetail.redemption_password then $scope.clientDetail.redemption_password else null
                 "about_company": if $scope.clientDetail.about_company then $scope.clientDetail.about_company  else null
+                "enabled" : $scope.clientDetail.enabled || null
           }
 
           # SET LOGO
@@ -271,6 +330,8 @@ angular.module('app.clients', [])
                     if error.status == 500
                       $scope.clientDetail.logo = null
               else
+                console.log sm_client_data
+                return
                 $timeout ()->
                     location.reload()
                 , 300
@@ -289,22 +350,6 @@ angular.module('app.clients', [])
           fetchHandbook.delete handbook._links.self.href
           .then (res) ->
             $route.reload()
-
-
-      # fakedata clients page
-      fakeDT = fakeData.clients_data
-      #$scope.clients_list = fakeDT.clients_list
-      #
-      $scope.dt_tab_company = fakeDT.clients_tab_company
-      $scope.dt_tab_user_list = fakeDT.clients_tab_user_list
-      $scope.clients_tab_user_uploads = fakeDT.clients_tab_user_uploads
-      $scope.clients_user_upload_detail = fakeDT.clients_user_upload_detail
-      $scope.clients_user_detail = fakeDT.clients_user_detail
-      $scope.clients_user_redemptions_list = fakeDT.clients_user_redemptions_list
-      $scope.dt_tab_handbook_list = fakeDT.clients_tab_handbook_list
-      $scope.dt_tab_handbook_info = fakeDT.clients_tab_handbook_info
-      $scope.clients_tab_handbook_general = fakeDT.clients_tab_handbook_general
-      $scope.clients_tab_handbook_section = fakeDT.clients_tab_handbook_section
 
       # END MASHNASH --------------------------
       # ---------------------------------------
