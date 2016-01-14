@@ -119,6 +119,7 @@ angular.module('app.users', [])
                     "username"   : user.username
                     "email"      : user.email
                     "code"       : user.code
+                    "four_digit_pin" : user.four_digit_pin || ''
                     #"handbook_contact" : $scope.position.handbook_contact
                     #"plain_password": null,
                     #"ssn": null
