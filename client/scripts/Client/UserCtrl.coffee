@@ -288,7 +288,7 @@ angular.module('app.users', [])
                     "email"      : $scope.user.email
                     "code"       : $scope.user.code
                     #"handbook_contact" : $scope.position.handbook_contact
-                    "enabled": $scope.user.enabled
+                    "enabled":      $scope.user.enabled
                     #"plain_password": null,
                     #"ssn": null
                     "mobile_no"      : $scope.user.mobile_no || ''
@@ -298,6 +298,14 @@ angular.module('app.users', [])
                 }
             }
             #console.log newData
+            $scope.updateTags.position = {
+                "title": "Position of " + $scope.user.username
+                "employee": $scope.user.id
+                "enabled" : $scope.user.enabled
+                "employer": $scope.clientId
+                "handbook_contact" : true
+            }
+
             $scope.updateTags.position.tags = {}
             numTag = 1
 
