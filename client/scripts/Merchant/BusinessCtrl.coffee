@@ -262,7 +262,7 @@ angular.module('app.businesses', [])
                     user_limit          : $scope.promotion.user_limit
                     #effective_from      : $scope.promotion.effective_from
                     #expire_on           : $scope.promotion.expire_on
-                    active              : $scope.promotion.active
+                    enabled             : $scope.promotion.enabled
                     type                : $scope.promotion.type
                     business            : $scope.businessId
 
@@ -661,7 +661,7 @@ angular.module('app.businesses', [])
                     user_limit          : $scope.promotion.user_limit
                     #effective_from      : $scope.promotion.effective_from
                     #expire_on           : $scope.promotion.expire_on
-                    active              : $scope.promotion.active
+                    enabled              : $scope.promotion.enabled
                     type                : $scope.promotion.type
                     business            : $scope.businessId
 
@@ -738,7 +738,7 @@ angular.module('app.businesses', [])
                     user_limit          : $scope.promotion.user_limit
                     effective_from      : $scope.promotion.effective_from
                     expire_on           : $scope.promotion.expire_on
-                    active              : $scope.promotion.active
+                    enabled              : $scope.promotion.enabled
                     type                : $scope.promotion.type
                     business            : $scope.businessId
 
@@ -779,7 +779,7 @@ angular.module('app.businesses', [])
                         user_limit          : $scope.promotion.user_limit
                         effective_from      : $scope.promotion.effective_from
                         expire_on           : $scope.promotion.expire_on
-                        active              : $scope.promotion.active
+                        enabled              : $scope.promotion.enabled
                         type                : $scope.promotion.type
                         business            : $scope.businessId
 
