@@ -326,6 +326,8 @@ angular.module('app.users', [])
                 $scope.updateTags.position.tags[keyTag].employee_class = 0
                 $scope.updateTags.position.tags[keyTag].employee_function = 1
                 numTag++
+            $scope.updateTags.position.enabled = $scope.user.enabled
+
 
             birthday = $scope.user.birthday || ''
             if(birthday != '')
@@ -336,6 +338,7 @@ angular.module('app.users', [])
 
             Users.put(_URL.list + '/' + $scope.user.id, newData).then  (res) ->
                 if res.status == 204
+
                     Users.put(_URL.detail + $scope.userId, $scope.updateTags).then  (res) ->
                         if res.status == 204
                             $scope.infoUpdated = 'Updated user successfully!'
