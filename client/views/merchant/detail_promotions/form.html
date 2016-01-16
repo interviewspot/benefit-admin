@@ -56,13 +56,13 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="td-30">Offer Cat <span class="red">*</span></th>
+                        <th class="td-30">Offer Cat</th>
                         <td><input type="text"
                                 name="pro_offer_cat"
                                 ng-model="promotion.pro_offer_cat"
                                 class="txt-ipt"
                                 ng-class="{txt_disabled : !isDisable}"
-                                required>
+                                >
                             <p style="color:red">
                                 <span ng-show="frm_update_promotion.pro_pro_offer_cat.$invalid  && frm_update_promotion.pro_pro_offer_cat.$dirty">Offer Cat is required.</span>
                             </p>
@@ -188,7 +188,7 @@
                     <tr>
                         <th class="td-30">Active</th>
                         <td>
-                            <input name="pro_active" type="checkbox" ng-model="promotion.active" />
+                            <input name="pro_active" type="checkbox" ng-model="promotion.enabled" />
                         </td>
                     </tr>
                     <tr>

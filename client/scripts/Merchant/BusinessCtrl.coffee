@@ -265,6 +265,7 @@ angular.module('app.businesses', [])
                     enabled             : $scope.promotion.enabled
                     type                : $scope.promotion.type
                     business            : $scope.businessId
+                    every_outlet_included : true
 
             effective_from = $scope.promotion.effective_from || ''
             if(effective_from != '')
