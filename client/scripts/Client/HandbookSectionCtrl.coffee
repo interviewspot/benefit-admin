@@ -71,6 +71,8 @@ angular.module('app.handbook_section', [])
                     $scope.sections.pages = res.data.pages
                     $scope.sections.total = res.data.total
                     $scope.sections.items = []
+                    console.log "==========="
+                    console.log res.data._embedded.items
                     angular.forEach res.data._embedded.items, (item)->
                         item = translateSection(item)
                         item.children = {}
@@ -81,6 +83,7 @@ angular.module('app.handbook_section', [])
                         if item._links.children
                             fetchHandbook.get(item._links.children.href + '?limit=9999').then  (child) ->
                                 if child.data._embedded.items.length > 0
+                                    console.log child.data._embedded.items
                                     item.children.total = child.data.total
                                     angular.forEach child.data._embedded.items, (child_item)->
                                         item.children.items.push(translateSection(child_item))
@@ -131,11 +134,7 @@ angular.module('app.handbook_section', [])
             section.children.show = !section.children.show
 
         $scope.editSection = (section) ->
-            #console.log(section)
-            if section.active  = true
-                section.status = 'Active'
-            else
-                section.status = 'Disabled'
+            console.log(section)
 
             section.title      = if section.translations['en_us'].title then section.translations['en_us'].title else section.title
             section.description  = if section.translations['en_us'].description then section.translations['en_us'].description else section.description
@@ -204,15 +203,11 @@ angular.module('app.handbook_section', [])
                     handbook    : $scope.handbookId
                     parent      : $scope.parentSelect
                     locale      : 'en_us'
+                    enabled     : $scope.formSection.enabled
                 }
             }
 
-            console.log(sectionItem)
-
-            if $scope.formSection.status = 'Active'
-                sectionItem.section.active = true
-            else
-                sectionItem.section.active = false
+            console.log sectionItem
 
             # UPDATE section
             if $scope.isUpdate == true
