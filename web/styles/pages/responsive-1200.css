@@ -1,1 +1,219 @@
-@media (max-width: 1200px){.lv1>.nav-tabs>li>a{font-size:14px;padding:10px}.section-control a:first-child{margin-bottom:10px}.cap-note{top:0}.blk-preview{margin-top:40px}.tbl-w1000{width:1000px}.tbl-w800{width:800px}.table-responsive{margin-bottom:20px}.btn-add-user{margin-bottom:10px}}@media (max-width: 1024px){.tbl-1024 .table{width:1000px}tags-input .tags .tag-item{font-size:12px !important}}@media (max-width: 992px){.tbl-w1000.tbl-w800{width:800px}.tb-w800{width:800px}}@media (max-width: 900px){.col-outlet{width:100%;margin-bottom:10px}}@media (max-width: 860px){.col-promotion,.col-user{width:100%}.cpn-left,.cpn-right,.notifi-list,.notifi-form{width:100%}.cpn-left,.notifi-list{margin-bottom:30px}.td-20{width:30%}.employ-filter .emp-filter{width:100%}.employ-filter .emply-add{position:relative}.employ-filter .frm-employ-filter .col-xs-6{width:50%;margin-bottom:20px}}@media (max-width: 767px){.header-container>.top-header .header-horizon{display:none}.header-container>.top-header .menu-button{right:auto;left:15px}.header-container>.top-header .menu-button .icon-bar{background-color:#000}.header-container>.top-header .menu-button:hover{background-color:#CFAE79}.header-container>.top-header .menu-button:hover .icon-bar{background-color:#fff}.header-container>.top-header .top-nav .nav-right{position:absolute;top:20px;right:15px}.header-container>.top-header .logo{border-bottom:4px solid #CFAE79;background-color:#fff}.app>.main-container>.content-container{margin-left:0}.on-canvas #nav-container{top:79px;z-index:100;left:0;right:0}.on-canvas .main-container #content{margin-left:0;margin-right:0}}@media (max-width: 400px){.header-container>.top-header .login_name{display:none}.merchant-list .cap-note,.clients_list .cap-note{position:relative}.clients_list .table-responsive{margin-top:20px}.user-list p.marg-bot{margin-bottom:20px}.page-num-info{margin-bottom:10px}}@media (max-width: 340px){.tb-mb400{width:350px}.frm_update_promotion .btn-brown,.frm_update_promotion .btn-edit,.frm_update_outlet .btn-brown,.frm_update_outlet .btn-edit,.frm-updateuser .btn-brown,.frm-updateuser .btn-edit{display:block}.frm_update_business .t-r .btn-brown,.frm_update_business .t-r .btn-edit{display:block}.g-map{height:300px}.g-map .load-map{height:300px}.btn-add-user{margin-top:10px}.employ-filter .frm-employ-filter .col-xs-6{width:100%}}
+@media (max-width: 1200px) {
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\000035}}
+  .lv1 > .nav-tabs > li > a {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\0000314}}
+  .section-control a:first-child {
+    margin-bottom: 10px;
+  }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\0000319}}
+  .cap-note {
+    top: 0;
+  }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\0000322}}
+  .blk-preview {
+    margin-top: 40px;
+  }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\0000325}}
+  .tbl-w1000 {
+    width: 1000px;
+  }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\0000328}}
+  .tbl-w800 {
+    width: 800px;
+  }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\0000331}}
+  .table-responsive {
+    margin-bottom: 20px;
+  }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\0000334}}
+  .btn-add-user {
+    margin-bottom: 10px;
+  }
+}
+@media (max-width: 1024px) {
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\0000340}}
+  .tbl-1024 .table {
+    width: 1000px;
+  }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\0000344}}
+  tags-input .tags .tag-item {
+    font-size: 12px !important;
+  }
+}
+@media (max-width: 992px) {
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\0000350}}
+  .tbl-w1000.tbl-w800 {
+    width: 800px;
+  }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\0000353}}
+  .tb-w800 {
+    width: 800px;
+  }
+}
+@media (max-width: 900px) {
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\0000358}}
+  .col-outlet {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+@media (max-width: 860px) {
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\0000364}}
+  .col-promotion, .col-user {
+    width: 100%;
+  }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\0000367}}
+  .cpn-left, .cpn-right, .notifi-list, .notifi-form {
+    width: 100%;
+  }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\0000370}}
+  .cpn-left, .notifi-list {
+    margin-bottom: 30px;
+  }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\0000373}}
+  .td-20 {
+    width: 30%;
+  }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\0000377}}
+  .employ-filter .emp-filter {
+    width: 100%;
+  }
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\0000380}}
+  .employ-filter .emply-add {
+    position: relative;
+  }
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\0000384}}
+  .employ-filter .frm-employ-filter .col-xs-6 {
+    width: 50%;
+    margin-bottom: 20px;
+  }
+}
+@media (max-width: 767px) {
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\0000394}}
+  .header-container > .top-header .header-horizon {
+    display: none;
+  }
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\0000397}}
+  .header-container > .top-header .menu-button {
+    right: auto;
+    left: 15px;
+  }
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\00003100}}
+  .header-container > .top-header .menu-button .icon-bar {
+    background-color: #000;
+  }
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\00003103}}
+  .header-container > .top-header .menu-button:hover {
+    background-color: #CFAE79;
+  }
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\00003105}}
+  .header-container > .top-header .menu-button:hover .icon-bar {
+    background-color: #fff;
+  }
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\00003111}}
+  .header-container > .top-header .top-nav .nav-right {
+    position: absolute;
+    top: 20px;
+    right: 15px;
+  }
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\00003117}}
+  .header-container > .top-header .logo {
+    border-bottom: 4px solid #CFAE79;
+    background-color: #fff;
+  }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\00003125}}
+  .app > .main-container > .content-container {
+    margin-left: 0;
+  }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\00003131}}
+  .on-canvas #nav-container {
+    top: 79px;
+    z-index: 100;
+    left: 0;
+    right: 0;
+  }
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\00003138}}
+  .on-canvas .main-container #content {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+@media (max-width: 400px) {
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\00003148}}
+  .header-container > .top-header .login_name {
+    display: none;
+  }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\00003154}}
+  .merchant-list .cap-note, .clients_list .cap-note {
+    position: relative;
+  }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\00003159}}
+  .clients_list .table-responsive {
+    margin-top: 20px;
+  }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\00003165}}
+  .user-list p.marg-bot {
+    margin-bottom: 20px;
+  }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\00003170}}
+  .page-num-info {
+    margin-bottom: 10px;
+  }
+}
+@media (max-width: 340px) {
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\00003175}}
+  .tb-mb400 {
+    width: 350px;
+  }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\00003179}}
+  .frm_update_promotion .btn-brown, .frm_update_promotion .btn-edit, .frm_update_outlet .btn-brown, .frm_update_outlet .btn-edit, .frm-updateuser .btn-brown, .frm-updateuser .btn-edit {
+    display: block;
+  }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\00003185}}
+  .frm_update_business .t-r .btn-brown, .frm_update_business .t-r .btn-edit {
+    display: block;
+  }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\00003190}}
+  .g-map {
+    height: 300px;
+  }
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\00003192}}
+  .g-map .load-map {
+    height: 300px;
+  }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\00003196}}
+  .btn-add-user {
+    margin-top: 10px;
+  }
+
+@media -sass-debug-info{filename{font-family:file\:\/\/E\:\/projects\/a_benefit_admin\/benefit-admin\/client\/styles\/pages\/responsive-1200\.scss}line{font-family:\00003201}}
+  .employ-filter .frm-employ-filter .col-xs-6 {
+    width: 100%;
+  }
+}

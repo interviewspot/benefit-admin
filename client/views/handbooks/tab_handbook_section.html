@@ -41,14 +41,14 @@
                                 />
                             </td>
                         </tr>
-                        <tr ng-show="isCreateSubSection">
+                        <tr >
                             <td class="td-20 td-bold">Section Parent:</td>
                             <td>
                                 <select
                                 ng-model="parentSelect"
                                 ng-change="changedValue(parentSelect)"
-                                data-ng-options="option.id as option.translations['en_us'].title ? option.translations['en_us'].title : option.title for option in parentSection">
-                                    <option value="">Select Parent</option>
+                                ng-options="option.id as option.translations['en_us'].title ? option.translations['en_us'].title : option.title for option in parentSection">
+                                     <option value="">-- Parent section --</option>
                                 </select>
                             </td>
                         </tr>

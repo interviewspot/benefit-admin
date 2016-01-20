@@ -213,7 +213,7 @@ angular.module('app', [
         # x-password: p@ssword
         $sceDelegateProvider.resourceUrlWhitelist(['self', 'https://api.sg-benefits.com/**'])
         $httpProvider.defaults.headers.common = {
-            'x-username': 'rootadmin'
-            'x-password': 'rootp@ssword'
+            'x-username': 'kenneth.yap@ap.magenta-consulting.com'
+            'x-password': 'p@ssword'
         }
 ])
