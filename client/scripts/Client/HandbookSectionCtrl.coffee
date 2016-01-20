@@ -127,7 +127,7 @@ angular.module('app.handbook_section', [])
         _loadAllParent()
 
         $scope.isUpdate = false
-        $scope.isCreateSubSection = false
+        $scope.isCreateSubSection = true
         $scope.selectedSec = null
 
         $scope.showChildren = (section) ->
@@ -217,6 +217,10 @@ angular.module('app.handbook_section', [])
                     $scope.sectionUpdated = 'Update Success'
                     $timeout ()->
                         $scope.sectionUpdated = null
+                        if $scope.parentSelect
+                            $scope.parentSection = []
+                            _loadAllParent()
+
                     , 1000
                 , (error) ->
                     $scope.sectionUpdated = error.status + ': Error, refresh & try again !'
@@ -226,9 +230,11 @@ angular.module('app.handbook_section', [])
                     sectionService.saveChild {org_id:$scope.clientId, hand_id:$scope.handbookId}, sectionItem, (res)->
                         $scope.loadSections($scope.numPerPage, $scope.currentPage)
                         # display message
-                        $scope.sectionUpdated = 'Update Success'
+                        $scope.sectionUpdated = 'Submit Success'
                         $timeout ()->
                             $scope.sectionUpdated = null
+                            $scope.parentSection = []
+                            _loadAllParent()
                         , 1000
                     , (error) ->
                         $scope.sectionUpdated = error.status + ': Error, refresh & try again !'
@@ -238,9 +244,10 @@ angular.module('app.handbook_section', [])
                     sectionService.save {org_id:$scope.clientId, hand_id:$scope.handbookId}, sectionItem, (res)->
                         $scope.loadSections($scope.numPerPage, $scope.currentPage)
                         # display message
-                        $scope.sectionUpdated = 'Update Success'
+                        $scope.sectionUpdated = 'Submit Success'
                         $timeout ()->
                             $scope.sectionUpdated = null
+                            #location.reload()
                         , 1000
                     , (error) ->
                         $scope.sectionUpdated = error.status + ': Error, refresh & try again !'
