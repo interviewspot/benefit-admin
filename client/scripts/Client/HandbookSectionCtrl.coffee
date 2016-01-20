@@ -71,8 +71,7 @@ angular.module('app.handbook_section', [])
                     $scope.sections.pages = res.data.pages
                     $scope.sections.total = res.data.total
                     $scope.sections.items = []
-                    console.log "==========="
-                    console.log res.data._embedded.items
+
                     angular.forEach res.data._embedded.items, (item)->
                         item = translateSection(item)
                         item.children = {}
