@@ -455,9 +455,11 @@
 
             console.log('/js/jquery.fileupload.js:455 set username,password');
             console.log(options);
-            options.username = 'kenneth.yap@ap.magenta-consulting.com';
-            //options.username = 'testuser';
+            //options.username = 'kenneth.yap@ap.magenta-consulting.com';
+            options.username = 'testuser';
             options.password = 'p@ssword';
+            //options.method = 'PUT';
+
             paramName = 'binaryContent';
             options.paramName = 'binaryContent';
             //if (options.username) {
@@ -510,21 +512,23 @@
                             formData.append(field.name, field.value);
                         });
                     }
-                    if (options.blob) { console.log('options blob true ');
+                    if (options.blob) {
+                        console.log('options blob true ');
                         formData.append(paramName, options.blob, file.name);
-                    } else { console.log('options blob false ');
+                    } else {
+                        console.log('options blob false ');
                         $.each(options.files, function (index, file) {
                             // This check allows the tests to run with
                             // dummy objects:
                             if (that._isInstanceOf('File', file) ||
                                 that._isInstanceOf('Blob', file)) {
 
-                                formData.append('name','medium name 1');
-                                formData.append('description','medium name 1');
-                                formData.append('enabled','1');
-                                formData.append('copyright','copyright informations');
-                                formData.append('authorName','medium author name');
-                                formData.append('cdnIsFlushable','1');
+                                formData.append('name', 'medium name 1');
+                                formData.append('description', 'medium name 1');
+                                formData.append('enabled', '1');
+                                formData.append('copyright', 'copyright informations');
+                                formData.append('authorName', 'medium author name');
+                                formData.append('cdnIsFlushable', '1');
 
                                 formData.append(
                                     //($.type(options.paramName) === 'array' &&

@@ -405,8 +405,8 @@ angular.module('app.client.services', [])
                             data:
                                 binaryContent: nv
                             headers:{
-                                "x-username" : 'kenneth.yap@ap.magenta-consulting.com'
-                                "x-password" : 'p@ssword'
+                                "x-username" : 'rootadmin'
+                                "x-password" : 'rootp@ssword'
                                 "Content-Type": if nv.type != '' then nv.type else 'application/octet-stream'
                             }
                         }
