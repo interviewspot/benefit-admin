@@ -130,8 +130,16 @@ angular.module('app.users', [])
                 }
             }
 
+            updateContact = {
+                "position": {
+                    "employee": user.id
+                    "enabled": !user.enabled
+                    "employer": $scope.clientId
+                    "handbook_contact" : user.position_data.position_data
+                }
+            }
 
-            if user.tags.length
+            if user.tags
                 uTags = {}
                 numTag = 1
                 angular.forEach user.tags, (tag)->
@@ -142,19 +150,7 @@ angular.module('app.users', [])
                     uTags[keyTag].employee_class = tag.employee_class
                     uTags[keyTag].employee_function = tag.employee_function
                     numTag++
-            else
-                uTags = null
-
-            updateContact = {
-                "position": {
-                    "employee": user.id
-                    "enabled": !user.enabled
-                    "employer": $scope.clientId
-                    "handbook_contact" : true
-                    "tags" : uTags
-                }
-            }
-
+                updateContact.position["tags"] = uTags
 
 
             Users.put(user._links.self.href, newData).then  (res) ->
@@ -214,20 +210,27 @@ angular.module('app.users', [])
             tags   : config.path.baseURL + '/tags'
 
         _getUser = () ->
+            # GET POS
             Users.get(_URL.detail + $scope.userId).then  (pos) ->
                 if pos.status != 200 || typeof pos != 'object'
                     return
+
                 $scope.updateTags.position = {}
                 $scope.updateTags.position.title = pos.data.title
                 $scope.updateTags.position.active = pos.data.active
                 $scope.updateTags.position.employer = $scope.clientId
                 $scope.updateTags.position.handbook_contact = pos.data.handbook_contact
+
+                # GET USER
                 Users.get(pos.data._links.employee.href).then  (res) ->
                     if res.status != 200 || typeof res != 'object'
                         return
                     $scope.user = res.data
+                    $scope.user.position_data = pos.data
                     $scope.user.employee_class = []
                     $scope.user.employee_function = []
+                    console.log $scope.user
+
                     $scope.updateTags.position.employee = $scope.user.id
                     if($scope.user.birthday == "-0001-11-30T00:00:00+0655")
                         $scope.user.birthday = ""
@@ -303,7 +306,7 @@ angular.module('app.users', [])
                 "employee": $scope.user.id
                 "enabled" : $scope.user.enabled
                 "employer": $scope.clientId
-                "handbook_contact" : true
+                "handbook_contact" : $scope.user.position_data.handbook_contact
             }
 
             $scope.updateTags.position.tags = {}

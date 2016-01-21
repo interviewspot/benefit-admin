@@ -33,8 +33,8 @@
                         <td  class="text-center">{{user.first_name}}</td>
                         <td  class="text-center">{{user.last_name}}</td>
                         <td  class="text-center">{{user.mobile_no ? user.mobile_no : '-'}}</td>
-                        <td  class="text-center">{{user.code ? user.code : 'Not Available Yet!'}}</td>
-                        <td  class="text-center">{{user.employee_class ? user.employee_class : 'Not Available Yet!'}}</td>
+                        <td  class="text-center">{{user.code ? user.code : '-'}}</td>
+                        <td  class="text-center">{{user.employee_class ? user.employee_class : '-'}}</td>
                         <td  class="text-center td-18" ng-if="getTime(user.date_added)">
                             {{getTime(user.date_added) | date:'MM.dd.yyyy'}}
                         </td>
