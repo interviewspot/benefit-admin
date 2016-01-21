@@ -198,12 +198,20 @@
                                 ng-class="{txt_disabled : !isDisable}"></td>
                     </tr>
                     <tr>
-                    <th class="td-30">Show Contact:</th>
-                    <td>
-                        <input type="checkbox"
-                            name="handbook_contact"
-                            ng-model="user.enabled"/>
-                    </td>
+                        <th class="td-30">Enabled / Not:</th>
+                        <td>
+                            <input type="checkbox"
+                                name="user_enabled"
+                                ng-model="user.enabled"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Show in Handbook Contacts:</th>
+                        <td>
+                            <input type="checkbox"
+                                name="handbook_contact"
+                                ng-model="user.position_data.handbook_contact"/>
+                        </td>
                     </tr>
                 </tbody>
             </table>
