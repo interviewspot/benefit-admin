@@ -132,7 +132,8 @@ angular.module('app.businesses', [])
         _URL =
             detail : config.path.baseURL + '/businesses/' + $scope.businessId
             post_promotions: config.path.baseURL + '/promotions'
-            types   : config.path.baseURL + '/promotion/types'
+            types  : config.path.baseURL + '/promotion/types'
+            tags   : config.path.baseURL + '/tags'
 
         _getBusiness = () ->
             Businesses.get(_URL.detail).then  (bus) ->
@@ -158,8 +159,56 @@ angular.module('app.businesses', [])
                         #console.log(res.data)
                     , (error) ->
                         console.log error
+                # 1.3 GET TYPES
+                if(bus.data._links.types)
+                    Businesses.get(bus.data._links.types.href).then  (types) ->
+                        if types.data._embedded.items.length > 0
+                            $scope.business.types = types.data._embedded.items;
+                        else 
+                            $scope.business.types = []
+                    , (error) ->
+                        console.log error
+
+                # 1.4 GET CATEGORIES
+                if(bus.data._links.types)
+                    Businesses.get(bus.data._links.tags.href).then  (tags) ->
+                        if tags.data._embedded.items.length > 0
+                            $scope.business.tags = tags.data._embedded.items;
+                        else 
+                            $scope.business.tags = []
+                    , (error) ->
+                        console.log error
             , (error) ->
                 console.log error
+
+        # 1.5 GET TAG LIST FOR AUTOCOMPLETE
+        $scope.tags = {}
+
+        $scope.tags.business_type    = []
+        $scope.tags.business_category = []
+        _getTags = () ->
+            Businesses.get(_URL.tags).then  (res) ->
+                if res.status != 200 || typeof res != 'object'
+                    return
+                angular.forEach res.data._embedded.items, (tag)->
+                    if tag.business_type && tag.enabled
+                        $scope.tags.business_type.push(tag)
+                    if tag.business_category && tag.enabled
+                        $scope.tags.business_category.push(tag)
+                return
+            , (error) ->
+                console.log error
+        _getTags()
+
+        $scope.tags.getBusinessType = (query) ->
+            deferred = $q.defer()
+            deferred.resolve($scope.tags.business_type)
+            deferred.promise
+
+        $scope.tags.getBusinessCategory = (query) ->
+            deferred = $q.defer();
+            deferred.resolve($scope.tags.business_category);
+            deferred.promise;
 
         # 2. UPDATE BUSINESSS
         $scope.isDisable = true
@@ -174,8 +223,28 @@ angular.module('app.businesses', [])
                     name            : $scope.business.name
                     merchant_code   : $scope.business.merchant_code
 
-            #console.log new_data
+            numType = 1
+            new_data.business.types = {}
+            angular.forEach $scope.business.types, (tag)->
+                keyType = "types" + numType
+                new_data.business.types[keyType] = {}
+                new_data.business.types[keyType].name = tag.name
+                new_data.business.types[keyType].enabled = true
+                new_data.business.types[keyType].business_type = 1
+                new_data.business.types[keyType].business_category = 0
+                numType++
 
+            numTag = 1
+            new_data.business.tags = {}
+            angular.forEach $scope.business.tags, (tag)->
+                keyTag = "tag" + numTag
+                new_data.business.tags[keyTag] = {}
+                new_data.business.tags[keyTag].name    = tag.name
+                new_data.business.tags[keyTag].enabled = true
+                new_data.business.tags[keyTag].business_type = 0
+                new_data.business.tags[keyTag].business_category = 1
+                numTag++
+            #console.log(new_data)
             Businesses.put(_URL.detail, new_data ).then  (res) ->
                 if typeof res == 'object' && res.status == 204
                     $scope.infoUpdated = "Update Successfully!"
