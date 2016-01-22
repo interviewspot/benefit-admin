@@ -222,6 +222,8 @@ angular.module('app.businesses', [])
                 business :
                     name            : $scope.business.name
                     merchant_code   : $scope.business.merchant_code
+                    owner           : $scope.clientId
+                    enabled         : true
 
             numType = 1
             new_data.business.types = {}
@@ -244,7 +246,8 @@ angular.module('app.businesses', [])
                 new_data.business.tags[keyTag].business_type = 0
                 new_data.business.tags[keyTag].business_category = 1
                 numTag++
-            #console.log(new_data)
+            console.log(new_data)
+
             Businesses.put(_URL.detail, new_data ).then  (res) ->
                 if typeof res == 'object' && res.status == 204
                     $scope.infoUpdated = "Update Successfully!"
