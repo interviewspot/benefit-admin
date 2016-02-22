@@ -819,7 +819,7 @@ angular.module('app.businesses', [])
 
             new_data.promotion.retail_outlets = []
             if($scope.promotion.outlets != undefined && $scope.promotion.outlets.length > 0)
-                angular.forEach $scope.outlets.chosenList, (outlet)->
+                angular.forEach $scope.promotion.outlets, (outlet)->
                     new_data.promotion.retail_outlets.push(outlet.id)
 
             angular.forEach $scope.outlets.chosenList, (outlet)->
@@ -827,6 +827,7 @@ angular.module('app.businesses', [])
                     new_data.promotion.retail_outlets.push(outlet.id)
 
             $scope.insertData = new_data
+            
             Businesses.put($scope.promotion._links.self.href, new_data ).then  (res) ->
                 if typeof res == 'object' && res.status == 204
                     $scope.infoUpdated = "Update Successfully!"
@@ -865,13 +866,13 @@ angular.module('app.businesses', [])
                             new_data.promotion.retail_outlets.push(out.id)
 
                 #$scope.insertData = new_data
-                console.log(new_data)
+                #console.log(new_data)
                 Businesses.put($scope.promotion._links.self.href, new_data ).then  (res) ->
                     if typeof res == 'object' && res.status == 204
                         $scope.infoUpdated = "Delete Successfully!"
-                        #$timeout ()->
-                        #   location.reload()
-                        #, 300
+                        $timeout ()->
+                           location.reload()
+                        , 300
                 , (error) ->
                     alert error.status + ' : Error, refresh & try again !'
             return
