@@ -460,6 +460,7 @@ angular.module('app.businesses', [])
                         if loc.status != 200 || typeof loc != 'object'
                             return
                         $scope.outlet.location = loc.data
+                        console.log loc.data
                         $scope.outlet.location_latlng = loc.data.geo_lat + " , " + loc.data.geo_lng
                         if(loc.data._links.addresses)
                             Businesses.get(loc.data._links.addresses.href).then  (add) ->
@@ -574,7 +575,7 @@ angular.module('app.businesses', [])
                 address :
                     value       : value,
                     location    : location_id
-            console.log(new_address)
+            console.log new_address
             if location_id
                 Businesses.post(_URL.address_post, new_address).then  (add) ->
                     return
@@ -587,6 +588,7 @@ angular.module('app.businesses', [])
                 address :
                     value       : $scope.outlet.address_text,
                     location    : location.id
+            console.log new_address
             if address._links.self
                 Businesses.put(address._links.self.href, new_address).then  (add) ->
                     return

@@ -46144,7 +46144,7 @@ angular.module('ui.tinymce', [])
   }]);
 
 ;
-/*!
+/*! 
  * angular-loading-bar v0.8.0
  * https://chieffancypants.github.io/angular-loading-bar
  * Copyright (c) 2015 Wes Cruver
