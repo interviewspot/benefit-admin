@@ -240,11 +240,18 @@ angular.module('app.users', [])
                         $scope.user.date_added = $filter('date')(new Date($scope.user.date_added), 'MM/dd/yyyy')
                     #console.log res.data
                     # get tags for user
-                    Users.get(_URL.detail + $scope.userId + '/tags').then  (tag) ->
-                        #console.log(tag.data._embedded.items)
-                        if tag.data._embedded.items.length > 0
-                            $scope.user.employee_class    = $filter('filter')(tag.data._embedded.items, {employee_class:true})
-                            $scope.user.employee_function = $filter('filter')(tag.data._embedded.items,{employee_function:true})
+                    Users.get($scope.user.position_data._links.employee_classes.href).then  (classes) ->
+                        #console.log(classes.data._embedded.items)
+                        if classes.data._embedded.items.length > 0
+                            $scope.user.employee_class    = classes.data._embedded.items
+                            #$scope.user.employee_function = $filter('filter')(tag.data._embedded.items,{employee_function:true})
+                    , (error) ->
+                        console.log error
+                    Users.get($scope.user.position_data._links.employee_functions.href).then  (functions) ->
+                        #console.log(classes.data._embedded.items)
+                        if functions.data._embedded.items.length > 0
+                            $scope.user.employee_function    = functions.data._embedded.items
+                            #$scope.user.employee_function = $filter('filter')(tag.data._embedded.items,{employee_function:true})
                     , (error) ->
                         console.log error
                     return
@@ -309,25 +316,26 @@ angular.module('app.users', [])
                 "handbook_contact" : $scope.user.position_data.handbook_contact
             }
 
-            $scope.updateTags.position.tags = {}
+            $scope.updateTags.position.employee_classes = {}
+            $scope.updateTags.position.employee_functions = {}
             numTag = 1
 
             angular.forEach $scope.user.employee_class, (tag)->
                 keyTag = "tag" + numTag
-                $scope.updateTags.position.tags[keyTag] = {}
-                $scope.updateTags.position.tags[keyTag].name = tag.name
-                $scope.updateTags.position.tags[keyTag].enabled = true
-                $scope.updateTags.position.tags[keyTag].employee_class = 1
-                $scope.updateTags.position.tags[keyTag].employee_function = 0
+                $scope.updateTags.position.employee_classes[keyTag] = {}
+                $scope.updateTags.position.employee_classes[keyTag].name = tag.name
+                #$scope.updateTags.position.tags[keyTag].enabled = true
+                $scope.updateTags.position.employee_classes[keyTag].employee_class = 1
+                #$scope.updateTags.position.tags[keyTag].employee_function = 0
                 numTag++
 
             angular.forEach $scope.user.employee_function, (tag)->
                 keyTag = "tag" + numTag
-                $scope.updateTags.position.tags[keyTag] = {}
-                $scope.updateTags.position.tags[keyTag].name    = tag.name
-                $scope.updateTags.position.tags[keyTag].enabled = true
-                $scope.updateTags.position.tags[keyTag].employee_class = 0
-                $scope.updateTags.position.tags[keyTag].employee_function = 1
+                $scope.updateTags.position.employee_functions[keyTag] = {}
+                $scope.updateTags.position.employee_functions[keyTag].name    = tag.name
+                #$scope.updateTags.position.tags[keyTag].enabled = true
+                #$scope.updateTags.position.tags[keyTag].employee_class = 0
+                $scope.updateTags.position.employee_functions[keyTag].employee_function = 1
                 numTag++
             $scope.updateTags.position.enabled = $scope.user.enabled
 
@@ -336,7 +344,6 @@ angular.module('app.users', [])
             if(birthday != '')
                 birthday = $filter('date')(new Date(birthday), 'yyyy-MM-ddT00:00:00+0000')
                 newData.user.birthday = birthday
-
 
 
             Users.put(_URL.list + '/' + $scope.user.id, newData).then  (res) ->
@@ -377,10 +384,11 @@ angular.module('app.users', [])
             Users.get(_URL.tags).then  (res) ->
                 if res.status != 200 || typeof res != 'object'
                     return
+                console.log(res)
                 angular.forEach res.data._embedded.items, (tag)->
-                    if tag.employee_class && tag.active
+                    if tag.employee_class && tag.enabled
                         $scope.tags.employee_class.push(tag)
-                    if tag.employee_function && tag.active
+                    if tag.employee_function && tag.enabled
                         $scope.tags.employee_function.push(tag)
                 return
             , (error) ->

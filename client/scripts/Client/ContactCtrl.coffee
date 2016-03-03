@@ -33,8 +33,10 @@ angular.module('app.contacts', [])
                                 $scope.contacts[i]['user']     = res.data
                                 $scope.contacts[i]['alphabet'] = if res.data.first_name then res.data.first_name.charAt(0).toLowerCase() else res.data.username.charAt(0).toLowerCase()
                                 console.log $scope.contacts[i]['position']
-                                fetchContact.get(itemInstance._links.tags.href).then  (res) ->
-                                    $scope.contacts[i]['tags'] = res.data
+                                fetchContact.get(itemInstance._links.employee_classes.href).then  (res) ->
+                                    $scope.contacts[i]['employee_classes'] = res.data
+                                fetchContact.get(itemInstance._links.employee_functions.href).then  (res) ->
+                                    $scope.contacts[i]['employee_functions'] = res.data
                         )(item)
                 return
 
