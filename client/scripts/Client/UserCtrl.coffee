@@ -51,19 +51,18 @@ angular.module('app.users', [])
                             Users.get(itemInstance._links.employee.href).then  (res) ->
                                 if res.status != 200 || typeof res != 'object'
                                     return
-                                #console.log(res)
+                                console.log(res)
                                 res.data.position_data = itemInstance
                                 $scope.users.items.push(res.data)
 
                                 # GET TAGS
-                                Users.get(_URL_users.list + '/' + itemInstance.id + '/tags').then  (tag) ->
+                                Users.get(res.data.position_data._links.employee_classes.href).then  (tag) ->
                                     if tag.data._embedded.items.length > 0
                                         tag_lst = []
                                         angular.forEach tag.data._embedded.items, (tag)->
-                                            if(tag.employee_class)
-                                                tag_lst.push(tag.name)
+                                            tag_lst.push(tag.name)
                                         res.data.employee_class = tag_lst.join(', ')
-                                        res.data.tags           = tag.data._embedded.items
+                                        res.data.employee_classes = tag.data._embedded.items
                                 , (error) ->
                                     console.log error
 
@@ -139,18 +138,18 @@ angular.module('app.users', [])
                 }
             }
 
-            if user.tags
+            if user.employee_classes
                 uTags = {}
                 numTag = 1
-                angular.forEach user.tags, (tag)->
+                angular.forEach user.employee_classes, (tag)->
                     keyTag = "tag" + numTag
                     uTags[keyTag] = {}
                     uTags[keyTag].name = tag.name
-                    uTags[keyTag].enabled = tag.enabled
+                    #uTags[keyTag].enabled = tag.enabled
                     uTags[keyTag].employee_class = tag.employee_class
-                    uTags[keyTag].employee_function = tag.employee_function
+                    #uTags[keyTag].employee_function = tag.employee_function
                     numTag++
-                updateContact.position["tags"] = uTags
+                updateContact.position["employee_classes"] = uTags
 
 
             Users.put(user._links.self.href, newData).then  (res) ->
