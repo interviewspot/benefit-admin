@@ -51,38 +51,8 @@
                 </tbody>
             </table>
         </div>
-        <!-- END: COL 1 -->
 
-        <div class="col-md-6 col-sm-12 col-xs-12">
-            <table class="table tbl table-striped">
-                <tbody>
-                    <tr>
-                        <th class="td-30">Business type</th>
-                        <td>
-                            <tags-input class="txt-ipt"
-                                ng-model="business.types"
-                                display-property="name"
-                                replace-spaces-with-dashes="false">
-                              <auto-complete source="tags.getBusinessType($query)"></auto-complete>
-                            </tags-input>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th class="td-30">Business category</th>
-                        <td>
-                            <tags-input class="txt-ipt"
-                                ng-model="business.tags"
-                                display-property="name"
-                                replace-spaces-with-dashes="false">
-                              <auto-complete source="tags.getBusinessCategory($query)"></auto-complete>
-                            </tags-input>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <!-- END: COL 2 -->
+        <!-- END: COL -->
         <div class="col-xs-12 user-history">
             <h2 class="ttl-tab">
                 <span>Promotions</span>
