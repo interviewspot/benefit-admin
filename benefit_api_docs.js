@@ -8,8 +8,13 @@ x-username: magenta
 x-password: kenneth
 x-mode: org_code
 
-x-username:ml.leong@sg.magenta-consulting.com
+/* NTU */
+x-username: ml.leong@sg.magenta-consulting.com
 x-password: p@ssword
+
+x-username: admin@magentapulse.com
+x-password: p@ssword
+
 User
 pass p@ssword
 
@@ -694,3 +699,25 @@ job_listing
 ->
 Title
 Description
+
+
+/* NTU */
+{
+  "intro_video_gallery": {
+    "name": "test gallery 1",
+    "context": "default",
+    "enabled":1,
+    "default_format": "default_medium",
+    "gallery_has_medias": {
+      "galleryhasmedia1": {
+        "media":158,
+        "position":1,
+        "enabled":1
+      }
+    }
+  }
+}
+
+[9:31:31 AM] Bib - angular: day la json de post 1 intro_video_gallery trong 1 job_candidate
+[9:32:01 AM] Bib - angular: ve phan interface thi khi clck vao button Video Introduction M cho hien thi ra list cac introduction_videos va hien thi checkbox cho nguoi ta chon videos ma nguoi ta muon submit
+[9:32:56 AM] Bib - angular: nhap title vao (slide 11)
