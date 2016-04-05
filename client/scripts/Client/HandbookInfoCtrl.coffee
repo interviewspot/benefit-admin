@@ -82,7 +82,7 @@ angular.module('app.handbook_info', [])
                     "description"  : $scope.handbook.description
                     "organisation" : $scope.clientId
                     "locale"       : $scope.handbook.locale
-                    "active"       : $scope.handbook.active
+                    "enabled"       : $scope.handbook.enabled
                 }
             }
 
