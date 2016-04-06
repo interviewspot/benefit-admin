@@ -128,6 +128,7 @@ angular.module('app.handbook_section', [])
         $scope.isUpdate = false
         $scope.isCreateSubSection = true
         $scope.selectedSec = null
+        $scope.uploadButtonLabel = "Upload Section Images"
 
         $scope.showChildren = (section) ->
             section.children.show = !section.children.show
@@ -135,8 +136,8 @@ angular.module('app.handbook_section', [])
         $scope.editSection = (section) ->
             console.log(section)
 
-            section.title      = if section.translations['en_us'].title then section.translations['en_us'].title else section.title
-            section.description  = if section.translations['en_us'].description then section.translations['en_us'].description else section.description
+            section.title      = if (section.translations['en_us'] && section.translations['en_us'].title) then section.translations['en_us'].title else section.title
+            section.description  = if (section.translations['en_us'] && section.translations['en_us'].description) then section.translations['en_us'].description else section.description
             $scope.formSection = section
             #console.log($scope.formSection)
             $scope.selectedSec = section.id
@@ -151,6 +152,10 @@ angular.module('app.handbook_section', [])
                 $scope.isCreateSubSection = false
                 $scope.parentSelect = null
             $scope.isUpdate = true
+
+            # Upload contents
+            $scope.urlUpload = ""
+            $scope.uploadResponse = ""
 
         $scope.changedValue = (id) ->
             $scope.parentSelect = id

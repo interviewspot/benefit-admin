@@ -52,6 +52,23 @@
                                 </select>
                             </td>
                         </tr>
+                        <!--tr ng-if="clientDetail.banners.length > 0" ng-repeat="banner in clientDetail.banners" ng-cloak>
+                            <td class="text-center td-logo">
+                                <img ng-src="{{banner.banner_url}}" alt="{{clientDetail.name}}"/>
+                                <i class="fa fa-times" ng-click="delBanner(banner)"></i>
+                            </td>
+                        </tr-->
+                        <tr ng-show="isUpdate">
+                            <td class="td-20 td-bold">Images:</td>
+                            <td class="text-center">
+                                <upload-file
+                                    upload-url="urlUpload"
+                                    ng-uploadresponse="uploadResponse"
+                                    ng-label="uploadButtonLabel"
+                                    ng-progress-color="'#CFAE79'">
+                                </upload-file>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
                 <!-- END : TBL -->
