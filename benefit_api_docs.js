@@ -8,9 +8,14 @@ x-username: magenta
 x-password: kenneth
 x-mode: org_code
 
-x-username:ml.leong@sg.magenta-consulting.com
+/* NTU */
+x-username: ml.leong@sg.magenta-consulting.com
 x-password: p@ssword
-User 
+
+x-username: admin@magentapulse.com
+x-password: p@ssword
+
+User
 pass p@ssword
 
 {
@@ -66,12 +71,12 @@ name: "100 ly chinh thang, ho chi minh, viet nam"
 }
 
 
-entries_1/:id/entries_2/:id 
+entries_1/:id/entries_2/:id
 
 cứ nhét "entry_1" : "id of entry 1"
 
-{ 
-"organisation": {	 
+{
+"organisation": {
   "name": "Magenta Consulting testing",
   "code": "m0012",
   "reg_no": "reg00123",
@@ -112,7 +117,7 @@ reservation_email: "Chris.ho@emint.com"
 {
  "section":
 {
-  
+
   "version": "1",
   "title": "section 1",
   "active": true,
@@ -127,7 +132,7 @@ reservation_email: "Chris.ho@emint.com"
       "title": "section 1222",
       "active": true,
       "description": "desciption of title 12222",
-      "parent": null, 
+      "parent": null,
       "handbook": 1
     }
 }
@@ -140,9 +145,9 @@ reservation_email: "Chris.ho@emint.com"
   	"lastName": "Exist",
   	"username": "cylois",
   	"email": "cylois.kyeo@api.testing.com",
-  	"enabled": true,  
+  	"enabled": true,
   	"plainPassword": "123456",
-  	"ssn": null  	
+  	"ssn": null
 	}
 }
 
@@ -231,29 +236,29 @@ reservation_email: "Chris.ho@emint.com"
 
 
 
-{ "organisation":{ 
-    "adminUser":null, 
-    "parent":null, 
-    "location":null, 
-    "logo":null, 
-    "name":"Magenta Consulting", 
-    "code":"magenta", 
-    "regNo":null, 
-    "headOfficeNo":null, 
-    "billingAddress": null, 
-    "reservationEmail": null, 
-    "userContactNo": null , 
-    "clientSince": null, 
-    "officeHours": null, 
-    "redemptionPassword": null, 
-    "aboutCompany": null 
-    } 
+{ "organisation":{
+    "adminUser":null,
+    "parent":null,
+    "location":null,
+    "logo":null,
+    "name":"Magenta Consulting",
+    "code":"magenta",
+    "regNo":null,
+    "headOfficeNo":null,
+    "billingAddress": null,
+    "reservationEmail": null,
+    "userContactNo": null ,
+    "clientSince": null,
+    "officeHours": null,
+    "redemptionPassword": null,
+    "aboutCompany": null
+    }
 }
 
-{  
+{
   "organisation": {
-      "adminUser": 9,  
-      "parent": null,      
+      "adminUser": 9,
+      "parent": null,
       "logo": 67,
       "name": "AAA Corp.",
       "code": "65587895",
@@ -270,8 +275,8 @@ reservation_email: "Chris.ho@emint.com"
   }
 }
 
-{  
-   "organisation":{  
+{
+   "organisation":{
       "adminUser":9,
       "parent":null,
       "name":"Magenta Consulting",
@@ -290,10 +295,10 @@ reservation_email: "Chris.ho@emint.com"
    }
 }
 
-{  
+{
   "organisation": {
-      "adminUser": 9,  
-      "parent": null,      
+      "adminUser": 9,
+      "parent": null,
       "logo": 66,
       "name": "Magenta Consulting",
       "code": "magenta",
@@ -311,10 +316,10 @@ reservation_email: "Chris.ho@emint.com"
 }
 
 
-{  
+{
   "organisation": {
-      "adminUser": 9,  
-      "parent": null,      
+      "adminUser": 9,
+      "parent": null,
       "logo": 65,
       "name": "Bullworks Pte Ltd",
       "code": "65587895",
@@ -332,15 +337,15 @@ reservation_email: "Chris.ho@emint.com"
 }
 
 
-{  
-  "organisation": {  
-  "admin_user": null,  
+{
+  "organisation": {
+  "admin_user": null,
   "name": "BBBBB Co.",
   "code": "1234",
   "reg_no": "199452264G",
   "head_office_no": "65587895",
   "billing_address": "29A Seah Street, Singapore 556587",
-  "reservation_email": "Chris.ho@emint.com",  
+  "reservation_email": "Chris.ho@emint.com",
   "about_company": null
   }
 }
@@ -362,7 +367,7 @@ reservation_email: "Chris.ho@emint.com"
 }
 
 
-// UPDATE HINH. 
+// UPDATE HINH.
 "medium.logo.post": {
   "href": "https://api.sg-benefits.com/media/sonata.media.provider.image/media"
 },
@@ -376,8 +381,8 @@ dùng: medium.logo.post
   "url": "http://s3-ap-southeast-1.amazonaws.com/magenta-consulting.com/local//0001/01/94d833c11755dae5cad8534b3bc967b143bc7b86.png"
 }
 
-{  
-  "organisation": { 
+{
+  "organisation": {
     "aboutCompany": "<p>Great. Now I don’t really need to add all the plugins, remove them, or worry about platforms. I can just run my scripts by doing node tasks<b>/platforms.js;</b></p><p><br/></p><p> or node tasks/plugins.js to have it set up my project as stated in my package.json file.</p>"
     "adminUser": 9
     "billingAddress": "29A Seah Street, Singapore 556583"
@@ -423,7 +428,7 @@ dùng: medium.logo.post
 
 Notifications.
 {
-  "message": {       
+  "message": {
     "subject": "Title 1",
     "body": "ABc de dfsfsgsgssg"
   }
@@ -431,8 +436,8 @@ Notifications.
 
 
 
-Eligraphics. is a leading global interactive entertainment 
-software company. EG delivers games, content and online services for Internet-connected consoles, 
+Eligraphics. is a leading global interactive entertainment
+software company. EG delivers games, content and online services for Internet-connected consoles,
 personal computers, mobile phones and tablets.
 
 Eg. is recognized for critically acclaimed, high-quality blockbuster franchises such as Dragon Age and Plants vs. Zombies .
@@ -459,7 +464,37 @@ Eg. is recognized for critically acclaimed, high-quality blockbuster franchises 
     }
   }
 }
+/* Bi lap lai cai tags */
+{
+  "position": {
+    "title": "Position of test5",
+    "enabled": true,
+    "employer": "1",
+    "employee": "2",
+    "employee_classes": {
+      "tag1": {
+        "name": "class 2aaaa",
+          "employee_class": true
+      },
+      "tag2": {
+        "name": "class 3aaaaa",
+          "employee_class": true
+      }
+    },
 
+    "employee_functions": {
+      "tag1": {
+        "name": "fn 2aaaa",
+          "employee_function": true
+
+      },
+      "tag2": {
+        "name": "fn 3aaaaa",
+          "employee_function": true
+      }
+    }
+  }
+}
 
 {
 "business": {
@@ -472,7 +507,7 @@ Eg. is recognized for critically acclaimed, high-quality blockbuster franchises 
 
 {
 	"position": {
-	  
+
 	  "active": true,
 	  "handbook_contact": true,
 	  "title": "1 ddddddddddddddd",
@@ -551,24 +586,24 @@ https://api.sg-benefits.com/organisations/2/positions?search=position.handbookCo
 
 
 *Các URL post có trong JSON outlet đi sâu vào có POST location và address.
-*Để gắn 1 outlet chưa có location -> có location. 
-1- post location. Trước khi làm -> lấy ID trong header -> location -> submit | làm việc 2 trước (res.headers()) 
-2- post address. lấy ID trong header -> location (res.headers()) 
+*Để gắn 1 outlet chưa có location -> có location.
+1- post location. Trước khi làm -> lấy ID trong header -> location -> submit | làm việc 2 trước (res.headers())
+2- post address. lấy ID trong header -> location (res.headers())
 
 *Khi PUT 1 outlet.
-Gắn lại ID cho location. nếu hong có thay đổi. 
-- có đổi location. 
-thì phải làm quy trình PUT location. 
--> và PUT address. 
+Gắn lại ID cho location. nếu hong có thay đổi.
+- có đổi location.
+thì phải làm quy trình PUT location.
+-> và PUT address.
 
-*1 OUTLET mới - create new. 
+*1 OUTLET mới - create new.
 - POST location trước. lấy ID. (POST location)
 - POST address. lấy id. (POST address)
-- Sau đó gắn address cho location (PUT location). 
-- gắn ID location -> OUTLET JSON. (POST location). 
+- Sau đó gắn address cho location (PUT location).
+- gắn ID location -> OUTLET JSON. (POST location).
 
 POST location:
-{ 
+{
   "location": {
     "enabled": 1,
     "name": "location 1222222",
@@ -578,8 +613,8 @@ POST location:
 }
 
 POST 1 ADDRESS:
-{ 
-  "address" : {  
+{
+  "address" : {
     "value": "372/2A CMT8 p10 q3"
     "location" 2
   }
@@ -640,7 +675,7 @@ video/webm
           "business_category" : false
         }
     },
-    "tags" : {       
+    "tags" : {
         "tag_02" : {
           "name" : "Kids",
           "enabled" : true,
@@ -650,8 +685,8 @@ video/webm
     }
   }
 }
-  
-// GET OUTLET by type.   
+
+// GET OUTLET by type.
 https://api.sg-benefits.com/promotion/outlets?search=businessType.id:49
 
 
@@ -659,8 +694,33 @@ https://api.sg-benefits.com/promotion/outlets?search=businessType.id:49
 Slide 3"
 user->
 job_candidates
--> 
+->
 job_listing
--> 
+->
 Title
 Description
+
+
+/* NTU */
+{
+  "intro_video_gallery": {
+    "name": "test gallery 1",
+    "context": "default",
+    "enabled":1,
+    "default_format": "default_medium",
+    "gallery_has_medias": {
+      "galleryhasmedia1": {
+        "media":158,
+        "position":1,
+        "enabled":1
+      }
+    }
+  }
+}
+
+[9:31:31 AM] Bib - angular: day la json de post 1 intro_video_gallery trong 1 job_candidate
+[9:32:01 AM] Bib - angular: ve phan interface thi khi clck vao button Video Introduction M cho hien thi ra list cac introduction_videos va hien thi checkbox cho nguoi ta chon videos ma nguoi ta muon submit
+[9:32:56 AM] Bib - angular: nhap title vao (slide 11)
+
+IONIC PINCH ZOOM
+http://codepen.io/mikekoro/pen/dPYWvQ
