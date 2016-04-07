@@ -724,3 +724,8 @@ Description
 
 IONIC PINCH ZOOM
 http://codepen.io/mikekoro/pen/dPYWvQ
+
+
+
+ORDER:
+sort=object.field:asc, object.field2:desc .....
