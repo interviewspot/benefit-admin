@@ -129,6 +129,9 @@ angular.module('app.handbook_section', [])
         $scope.isCreateSubSection = true
         $scope.selectedSec = null
         $scope.uploadButtonLabel = "Upload Section Images"
+        $scope.urlUpload = ""
+        $scope.uploadResponse = ""
+        $scope.readyToUpload = false
 
         $scope.showChildren = (section) ->
             section.children.show = !section.children.show
@@ -152,10 +155,30 @@ angular.module('app.handbook_section', [])
                 $scope.isCreateSubSection = false
                 $scope.parentSelect = null
             $scope.isUpdate = true
+            $scope.readyToUpload = false
 
-            # Upload contents
-            $scope.urlUpload = ""
-            $scope.uploadResponse = ""
+        $scope.addNewImage = () ->
+            content = {
+                "content": {
+                    "title":"Image of " + $scope.formSection.title,
+                    "image_id":"",
+                    "html_text":"",
+                    "enabled":"1",
+                    "section": $scope.formSection.id,
+                    "locale":"en_us"
+                }               
+            }
+            if($scope.formSection._links.contents)
+                fetchHandbook.post($scope.formSection._links.contents.href, content).then  (res) ->
+                    if typeof res == 'object' && res.status == 201
+                        fetchHandbook.get(config.path.baseURL + res.headers().location).then (content) ->
+                            if content.data._links.image
+                                $scope.urlUpload = content.data._links.image.href
+                                $scope.readyToUpload = true
+                        , (error) ->
+                            console.log error
+                , (error) ->
+                    console.log error
 
         $scope.changedValue = (id) ->
             $scope.parentSelect = id
