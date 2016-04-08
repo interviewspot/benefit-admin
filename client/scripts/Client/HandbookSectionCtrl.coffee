@@ -65,7 +65,10 @@ angular.module('app.handbook_section', [])
 
         $scope.loadSections = (limit, goPage) ->
             #console.log(limit + '/' + goPage)
-            fetchHandbook.get(_URL_sections.list + '?search=section.parent{null}1&limit=' + limit + '&page=' + goPage).then  (res) ->
+            fetchHandbook.get(_URL_sections.list + '?search=section.parent{null}1'
+                                                 + '&limit=' + limit
+                                                 + '&page=' + goPage
+                                                 + '&sort=section.ordering:asc').then  (res) ->
                 $scope.sections = {}
                 if res.data._embedded.items.length > 0
                     $scope.sections.pages = res.data.pages
@@ -80,7 +83,9 @@ angular.module('app.handbook_section', [])
                         item.children.show = false
 
                         if item._links.children
-                            fetchHandbook.get(item._links.children.href + '?limit=9999').then  (child) ->
+                            fetchHandbook.get(item._links.children.href
+                                                + '?limit=9999'
+                                                + '&sort=section.ordering:asc').then  (child) ->
                                 if child.data._embedded.items.length > 0
                                     console.log child.data._embedded.items
                                     item.children.total = child.data.total
