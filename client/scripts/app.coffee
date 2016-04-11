@@ -56,6 +56,7 @@ angular.module('app', [
     'app.businesses.services'
     'app.employee'
     'app.notifications'
+    'app.login'
     'app.merchants.html' # REMOVE AFTER DONE LAYOUT
     'app.maps.directives' # directive maps
     #'app.offerdirective' # DIRECTIVE FORM OFFER
@@ -96,7 +97,8 @@ angular.module('app', [
             'clients/client-insurance',
             'clients/client-healthcare',
             'clients/client-notifications',
-            'clients/client-imerchant'
+            'clients/client-imerchant',
+            'login/login'
         ]
 
         setRoutes = (route) ->
@@ -202,6 +204,12 @@ angular.module('app', [
         $routeProvider
             .when('/employees', {
                 templateUrl: 'views/employee/employee.html'
+            })
+
+        # LOGIN
+        $routeProvider
+            .when('/login', {
+                templateUrl: 'views/login/login.html'
             })
 
             .otherwise( redirectTo: '/404' )
