@@ -8,7 +8,7 @@ x-username: magenta
 x-password: kenneth
 x-mode: org_code
 
-x-username:ml.leong@sg.magenta-consulting.com
+x-username: ml.leong@sg.magenta-consulting.com
 x-password: p@ssword
 User 
 pass p@ssword
@@ -664,3 +664,15 @@ job_listing
 -> 
 Title
 Description
+
+
+POST 1 CONTENT
+{"content": {
+"title":"ss",  // Khi up hình là Image of Section mấy đó. dc ghép chữ.
+"image_id":"", // De trong
+"html_text":"ss", // De trong
+"enabled":"1",
+"section":"1", // id cua section dang làm. như vậy, section đc tạo rồi mới show chỗ up hình.
+
+"locale":"en_us"
+}}
