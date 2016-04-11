@@ -704,7 +704,7 @@ Title
 Description
 
 
-<<<<<<< HEAD
+
 POST 1 CONTENT
 {"content": {
 "title":"ss",  // Khi up hình là Image of Section mấy đó. dc ghép chữ.
@@ -715,7 +715,6 @@ POST 1 CONTENT
 
 "locale":"en_us"
 }}
-=======
 /* NTU */
 {
   "intro_video_gallery": {
@@ -744,4 +743,4 @@ http://codepen.io/mikekoro/pen/dPYWvQ
 
 ORDER:
 sort=object.field:asc, object.field2:desc .....
->>>>>>> origin/master
+
