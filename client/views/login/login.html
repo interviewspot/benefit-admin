@@ -1,15 +1,15 @@
-<section class="blk-login-wrap">
+<section class="blk-login-wrap"  data-ng-controller="loginCtrl">
   <div class="login-inner">
     <form class="frm-login">
       <header class="login-logo"><a href="#"><img src="images/logo.png" alt=""></a></header>
       <!-- END: LOGO-->
       <section class="login-content">
         <div class="lg-itm"><i class="fa fa-user"></i>
-          <input type="text" placeholder="Username" class="ipt">
+          <input type="text" ng-model="username" placeholder="Username" class="ipt">
         </div>
         <!-- END : ITM-->
         <div class="lg-itm"><i class="fa fa-lock"></i>
-          <input type="password" placeholder="Password" class="ipt">
+          <input type="password" ng-model="password" placeholder="Password" class="ipt">
         </div>
         <!-- END : ITM-->
         <div class="lg-itm clearfix">
@@ -18,7 +18,7 @@
             <label for="chk-remem">Remember me</label>
           </div>
           <div class="lg-button t-r">
-            <input type="submit" value="login" class="btn btn-brown uppercase">
+            <input type="submit" value="login" ng-click="doLogin()" class="btn btn-brown uppercase">
           </div>
         </div>
         <!-- END : ITM-->

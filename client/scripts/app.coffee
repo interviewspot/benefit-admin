@@ -20,6 +20,7 @@ angular.module('app', [
     'angular.filter'
     'ngTouch'
     'angular-loading-bar'
+    'LocalStorageModule'
     
     # Custom modules
     'app.constant'
@@ -220,8 +221,8 @@ angular.module('app', [
         # x-username: kenneth.yap@ap.magenta-consulting.com
         # x-password: p@ssword
         $sceDelegateProvider.resourceUrlWhitelist(['self', 'https://api.sg-benefits.com/**'])
-        $httpProvider.defaults.headers.common = {
-            'x-username': 'kenneth.yap@ap.magenta-consulting.com'
-            'x-password': 'p@ssword'
-        }
+        #$httpProvider.defaults.headers.common = {
+        #    'x-username': 'kenneth.yap@ap.magenta-consulting.com'
+        #    'x-password': 'p@ssword'
+        #}
 ])
