@@ -212,6 +212,11 @@ angular.module('app', [
             .when('/login', {
                 templateUrl: 'views/login/login.html'
             })
+            .when('/logout', {
+                templateUrl: 'views/login/login.html'
+                title : 'Logout'
+                controller: 'logoutCtrl'
+            })
 
             .otherwise( redirectTo: '/404' )
 

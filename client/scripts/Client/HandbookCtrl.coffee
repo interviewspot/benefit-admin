@@ -5,8 +5,10 @@ angular.module('app.handbooks', [])
 # 1. manage list contacts
 # 2. Autocomplete email
 .controller('HandbookCtrl', [
-    '$scope', '$routeParams', 'fetchHandbook', 'handbookService', 'clientService', 'sectionService', '$location', '$timeout',
-    ($scope, $routeParams, fetchHandbook, handbookService, clientService, sectionService, $location, $timeout) ->
+    '$scope', '$routeParams', 'fetchHandbook', 'handbookService', 'clientService', 'sectionService', '$location', '$timeout', 'authHandler'
+    ($scope, $routeParams, fetchHandbook, handbookService, clientService, sectionService, $location, $timeout, authHandler) ->
+        # 0. Authorize
+        #authHandler.checkLoggedIn()
 
         # GET PARAM FROM URL
         $scope.clientId   = $routeParams.clientId
@@ -30,6 +32,7 @@ angular.module('app.handbooks', [])
         # ------------------------------------------------------------------
 
         handbookService.get {org_id:$scope.clientId, hand_id:$scope.handbookId}, (data, getResponseHeaders) ->
+
             $scope.handbook = data
             $scope.handbook.locale = 'en-us'
 
@@ -39,6 +42,10 @@ angular.module('app.handbooks', [])
                     return
 
                 $scope.handbook['translations'] = res.data
+
+                if $scope.handbook.translations['en-us'] 
+                    $scope.handbook.title = $scope.handbook.translations['en-us'].title
+
                 return
             , (error) ->
                 console.log error
@@ -51,12 +58,20 @@ angular.module('app.handbooks', [])
 
         $scope.submitHandbookInfo = ->
 
+            if $scope.handbook.translations[$scope.handbook.locale]
+                title = $scope.handbook.translations[$scope.handbook.locale].title
+            else title = $scope.handbook.title
+
+            if $scope.handbook.translations[$scope.handbook.locale]
+                desc = $scope.handbook.translations[$scope.handbook.locale].description
+            else desc = $scope.handbook.description
+
             updateData = {
                 "handbook": {
                     "version"      : $scope.handbook.version
-                    "title"        : $scope.handbook.translations[$scope.handbook.locale].title
+                    "title"        : title
                     "year"         : $scope.handbook.year
-                    "description"  : $scope.handbook.translations[$scope.handbook.locale].description
+                    "description"  : desc
                     "organisation" : $scope.clientId
                     "locale"       : $scope.handbook.locale
                     "enabled"      : $scope.handbook.enabled

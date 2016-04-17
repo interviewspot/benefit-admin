@@ -227,6 +227,8 @@ angular.module('app.users.services', [])
                 $location.path '/login'
                 return
             else
+                delete $http.defaults.headers.common['x-username']
+                delete $http.defaults.headers.common['x-password']
                 $http.defaults.headers.common['x-session'] = user.user.session_key
     }
 ])

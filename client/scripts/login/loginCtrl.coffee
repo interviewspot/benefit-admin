@@ -38,3 +38,11 @@ angular.module('app.login', [])
                 alert(error.status + ': Error, refresh & try again !')
             
 ])
+
+.controller 'logoutCtrl', [
+    '$scope', '$location', 'localStorageService', '$http'
+    ($scope, $location, localStorageService, $http)->
+        localStorageService.set 'user', null
+        delete $http.defaults.headers.common['x-session']
+        $location.path '/login'
+]
