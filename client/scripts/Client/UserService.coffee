@@ -218,12 +218,14 @@ angular.module('app.users.services', [])
     }
 ])
 
-.factory('authHandler', [ '$http', '$q', '$resource', 'localStorageService', ($http, $q, $resource, localStorageService) ->
+.factory('authHandler', [ '$http', '$q', '$resource', 'localStorageService', '$location', ($http, $q, $resource, localStorageService, $location) ->
     return {
         checkLoggedIn : () ->
             user = localStorageService.get 'user'
+            console.log user
 
             if !user or typeof user != 'object'
+                delete $http.defaults.headers.common['x-session']
                 $location.path '/login'
                 return
             else

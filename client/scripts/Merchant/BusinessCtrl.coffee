@@ -19,8 +19,11 @@ angular.module('app.businesses', [])
     , '$modal'
     , 'Businesses'
     , 'fetchContact'
-    , '$timeout',
-    ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, $modal, Businesses, fetchContact, $timeout) ->
+    , '$timeout'
+    , 'authHandler',
+    ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, $modal, Businesses, fetchContact, $timeout, authHandler) ->
+        # 0. Authorize
+        authHandler.checkLoggedIn()
 
         $scope.clientId =  $routeParams.clientId
         _URL_businesses =

@@ -3,9 +3,11 @@ angular.module('app.handbook_info', [])
 # --------------------------------------------
 
 .controller('HandbookInfoCtrl', [
-    '$scope', '$routeParams', 'fetchHandbook', 'handbookService', 'clientService', 'sectionService', '$location', '$timeout',
-    ($scope, $routeParams, fetchHandbook, handbookService, clientService, sectionService, $location, $timeout) ->
-
+    '$scope', '$routeParams', 'fetchHandbook', 'handbookService', 'clientService', 'sectionService', '$location', '$timeout', 'authHandler'
+    ($scope, $routeParams, fetchHandbook, handbookService, clientService, sectionService, $location, $timeout, authHandler) ->
+        # 0. Authorize
+        authHandler.checkLoggedIn()
+        
         $scope.clientId   = $routeParams.clientId
         $scope.handbookId = $routeParams.handbookId
         $scope.isNewHandBook = false

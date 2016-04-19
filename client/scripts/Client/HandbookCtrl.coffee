@@ -8,7 +8,7 @@ angular.module('app.handbooks', [])
     '$scope', '$routeParams', 'fetchHandbook', 'handbookService', 'clientService', 'sectionService', '$location', '$timeout', 'authHandler'
     ($scope, $routeParams, fetchHandbook, handbookService, clientService, sectionService, $location, $timeout, authHandler) ->
         # 0. Authorize
-        #authHandler.checkLoggedIn()
+        authHandler.checkLoggedIn()
 
         # GET PARAM FROM URL
         $scope.clientId   = $routeParams.clientId

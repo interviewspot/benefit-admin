@@ -22,13 +22,15 @@
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
 
-        <section data-ng-include=" 'views/header.html' " id="header" class="header-container" data-ng-class=" {'header-fixed': admin.fixedHeader} " data-ng-controller="HeaderCtrl"></section>
+        <section ng-show="!isLogin" data-ng-include=" 'views/header.html' " id="header" class="header-container" data-ng-class=" {'header-fixed': admin.fixedHeader} " data-ng-controller="HeaderCtrl"></section>
+
+        <section ng-show="isLogin" id="header-login"></section>
 
         <div class="main-container">
-            <aside data-ng-include=" 'views/nav.html' " id="nav-container" class="nav-container" data-ng-class=" {'nav-fixed': admin.fixedSidebar, 'nav-horizontal': admin.menu === 'horizontal', 'nav-vertical': admin.menu === 'vertical'}">
+            <aside ng-show="!isLogin" data-ng-include=" 'views/nav.html' " id="nav-container" class="nav-container" data-ng-class=" {'nav-fixed': admin.fixedSidebar, 'nav-horizontal': admin.menu === 'horizontal', 'nav-vertical': admin.menu === 'vertical'}">
             </aside>
 
-            <section data-ng-view id="content" class="content-container animate-fade-up"></section>
+            <section data-ng-view id="content" class="content-container animate-fade-up" ng-class="{'content-login' : isLogin }"></section>
         </div>
 
 

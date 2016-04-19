@@ -15,9 +15,11 @@ angular.module('app.merchants', [])
     , '$routeParams'
     , 'config'
     , 'Companies'
-    ($scope, $filter, $location, $routeParams, config, Companies) ->
+    , 'authHandler'
+    ($scope, $filter, $location, $routeParams, config, Companies, authHandler) ->
 
-
+        # 0. Authorize
+        authHandler.checkLoggedIn()
 
         # 1. GET COMPANIES Fn
         _getCompanies = (limit, goPage) ->

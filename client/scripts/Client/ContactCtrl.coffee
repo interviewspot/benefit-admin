@@ -11,12 +11,14 @@ angular.module('app.contacts', [])
 # 7. Delete multi-selected contact
 # --------------------------------------------
 .controller('ContactCtrl', [
-    '$scope', '$filter' , 'fetchTabData', 'fakeData', '$location', '$routeParams', 'ContactService', 'fetchContact', 'SearchUsers', 'fetchUsers', 'config' , '$q', '$modal',
-    ($scope, $filter, fetchTabData, fakeData, $location, $routeParams, ContactService, fetchContact, SearchUsers, fetchUsers, config, $q, $modal) ->
+    '$scope', '$filter' , 'fetchTabData', 'fakeData', '$location', '$routeParams', 'ContactService', 'fetchContact', 'SearchUsers', 'fetchUsers', 'config' , '$q', '$modal', 'authHandler'
+    ($scope, $filter, fetchTabData, fakeData, $location, $routeParams, ContactService, fetchContact, SearchUsers, fetchUsers, config, $q, $modal, authHandler) ->
 
         _URL =
             list   : config.path.baseURL + config.path.contacts.replace(":org_id", $routeParams.clientId) + '?search=position.handbookContact:1,position.enabled:1'
 
+        # 0. Authorize
+        authHandler.checkLoggedIn()
 
         # 1. Display list contacts
         $scope.loadContactList = ->
@@ -153,8 +155,11 @@ angular.module('app.contacts', [])
 # EDIT CONTACT CTRL
 # in MODAL BOX
 .controller('ContactFormCtrl', [
-    '$scope', '$routeParams', 'fetchContact', 'config', '$modalInstance', 'fetchUsers', '$q','contact'
-    ($scope, $routeParams, fetchContact, config, $modalInstance, fetchUsers, $q, contact) ->
+    '$scope', '$routeParams', 'fetchContact', 'config', '$modalInstance', 'fetchUsers', '$q','contact', 'authHandler'
+    ($scope, $routeParams, fetchContact, config, $modalInstance, fetchUsers, $q, contact, authHandler) ->
+        # 0. Authorize
+        authHandler.checkLoggedIn()
+
         $scope.contact = contact
         $scope.srch_users   =
             'email' : 0
