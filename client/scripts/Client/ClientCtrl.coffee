@@ -3,9 +3,11 @@
 angular.module('app.clients', [])
 
 .controller('clientCtrl', [
-    '$scope', '$filter' , 'fetchTabData', 'fakeData', '$location', 'clientService', 'fetchHandbook', '$routeParams', '$route', 'config', 'Images', 'php', 'ClientAPI', 'Companies', 'Clients', 'handbookService', '$timeout',
-    ($scope, $filter, fetchTabData, fakeData, $location, clientService, fetchHandbook, $routeParams, $route, config, Images, php, ClientAPI, Companies, Clients, handbookService, $timeout) ->
+    '$scope', '$filter' , 'fetchTabData', 'fakeData', '$location', 'clientService', 'fetchHandbook', '$routeParams', '$route', 'config', 'Images', 'php', 'ClientAPI', 'Companies', 'Clients', 'handbookService', '$timeout', 'authHandler'
+    ($scope, $filter, fetchTabData, fakeData, $location, clientService, fetchHandbook, $routeParams, $route, config, Images, php, ClientAPI, Companies, Clients, handbookService, $timeout, authHandler) ->
     # filter
+      # 0. Authorize
+      authHandler.checkLoggedIn()
 
       _URL_clients =
             list : config.path.baseURL + config.path.clients
@@ -72,30 +74,40 @@ angular.module('app.clients', [])
         r = confirm("Do you want to change this Handbook ?")
         if !r
           return
+
         handbook.locale = 'en-us'
-        #console.log(handbook)
+        #console.log handbook
+
+        if handbook.translations[handbook.locale]
+          title = handbook.translations[handbook.locale].title
+        else title = handbook.title
+
+        if handbook.translations[handbook.locale]
+          desc = handbook.translations[handbook.locale].description
+        else desc = handbook.description
+
         updateData = {
             "handbook": {
                 "version"      : handbook.version
-                "title"        : handbook.translations[handbook.locale].title
+                "title"        : title
                 "year"         : handbook.year
-                "description"  : handbook.translations[handbook.locale].description
+                "description"  : desc
                 "organisation" : clientId
                 "locale"       : handbook.locale
                 "enabled"      : handbook.enabled
             }
         }
 
-        #onsole.log(updateData)
+        #console.log(updateData)
 
         handbookService.update {org_id:clientId, hand_id:handbook.id}, updateData, (res) ->
-            # display message
-            $scope.infoUpdated = 'Update Success'
-            #$timeout ()->
-            #    $scope.infoUpdated = null
-            #, 500
+            if res.status == 204
+                $timeout ()->
+                    location.reload()
+                , 300
+            return
         , (error) ->
-            $scope.infoUpdated = error.status + ': Error, refresh & try again !'
+            alert error.status + ': Error, refresh & try again !'
 
       $scope.ClientPage =
         tabUrls : {}
@@ -107,7 +119,7 @@ angular.module('app.clients', [])
                 $scope.isCreateHandbook = true
                 return
               $scope.handbooks = res.data._embedded.items
-              console.log($scope.handbooks)
+              #console.log($scope.handbooks)
 
               # GET TRANSLATIONS
               angular.forEach $scope.handbooks, (item, i) ->
@@ -153,7 +165,7 @@ angular.module('app.clients', [])
               if res.status != 200 || typeof res != 'object'
                 return
               #console.log(res.data)
-              $scope.urlUploadBanner    = $scope.clientDetail._links['banners.post'].href
+              $scope.urlUploadBanner    = $scope.clientDetail._links['banners'].href
               #console.log($scope.urlUploadBanner)
               $scope.clientDetail['banners'] = []
               if res.data._embedded.items.length > 0
@@ -168,12 +180,12 @@ angular.module('app.clients', [])
                             , (error) ->
                                 console.log error
                         #$scope.clientDetail['banners'] = res.data._embedded.items
-              #console.log($scope.clientDetail['banners'])
+              #console.log $scope.clientDetail
               return
             , (error) ->
               console.log error
           else
-            $scope.urlUploadBanner    = $scope.clientDetail._links['banners.post'].href
+            $scope.urlUploadBanner    = $scope.clientDetail._links['banners'].href
 
           $scope.ClientPage.tabUrls   =
             "info" : '#/clients/' + data.id + '/info'
@@ -305,7 +317,8 @@ angular.module('app.clients', [])
           else
             banner_id = if $scope.$$childTail.uploadbanner then $scope.$$childTail.uploadbanner.logo_id else null
           sm_client_data.organisation['banners'] = banner_id
-          #console.log(sm_client_data.organisation)
+          
+          console.log(sm_client_data.organisation)
 
           clientService.update {org_id:$scope.clientDetail.id}, sm_client_data, (res) ->
             if typeof res.organisation == 'object'

@@ -20,6 +20,7 @@ angular.module('app', [
     'angular.filter'
     'ngTouch'
     'angular-loading-bar'
+    'LocalStorageModule'
     
     # Custom modules
     'app.constant'
@@ -56,6 +57,7 @@ angular.module('app', [
     'app.businesses.services'
     'app.employee'
     'app.notifications'
+    'app.login'
     'app.merchants.html' # REMOVE AFTER DONE LAYOUT
     'app.maps.directives' # directive maps
     #'app.offerdirective' # DIRECTIVE FORM OFFER
@@ -96,7 +98,8 @@ angular.module('app', [
             'clients/client-insurance',
             'clients/client-healthcare',
             'clients/client-notifications',
-            'clients/client-imerchant'
+            'clients/client-imerchant',
+            'login/login'
         ]
 
         setRoutes = (route) ->
@@ -204,6 +207,17 @@ angular.module('app', [
                 templateUrl: 'views/employee/employee.html'
             })
 
+        # LOGIN
+        $routeProvider
+            .when('/login', {
+                templateUrl: 'views/login/login.html'
+            })
+            .when('/logout', {
+                templateUrl: 'views/login/login.html'
+                title : 'Logout'
+                controller: 'logoutCtrl'
+            })
+
             .otherwise( redirectTo: '/404' )
 
         # HateoasInterceptorProvider.transformAllResponses()
@@ -212,8 +226,8 @@ angular.module('app', [
         # x-username: kenneth.yap@ap.magenta-consulting.com
         # x-password: p@ssword
         $sceDelegateProvider.resourceUrlWhitelist(['self', 'https://api.sg-benefits.com/**'])
-        $httpProvider.defaults.headers.common = {
-            'x-username': 'kenneth.yap@ap.magenta-consulting.com'
-            'x-password': 'p@ssword'
-        }
+        #$httpProvider.defaults.headers.common = {
+        #    'x-username': 'kenneth.yap@ap.magenta-consulting.com'
+        #    'x-password': 'p@ssword'
+        #}
 ])

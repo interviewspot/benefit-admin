@@ -2,7 +2,7 @@ angular.module('app.constant', [])
     .factory('config', ->
         return {
             path : {
-                'baseURL'               : 'http://api-live.sg-benefits.com'
+                'baseURL'               : 'https://api.sg-benefits.com'
                 'clients'               : '/organisations'
                 'client'                : '/organisations/:org_id'
                 'handbooks'             : '/organisations/:org_id/handbooks'

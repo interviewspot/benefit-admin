@@ -80,11 +80,14 @@ angular.module('app.users.services', [])
 
 .factory('aREST', [ '$http', '$q', '$resource', ($http, $q, $resource) ->
     return {
-        get : (url) ->
+        get : (username, password, url) ->
             d = $q.defer()
             $http({
                 method: 'GET'
                 url: url
+                headers:
+                    'x-username': username
+                    'x-password': password
             })
             .then (res) ->
                 d.resolve(res)
@@ -93,12 +96,15 @@ angular.module('app.users.services', [])
                 d.reject(error)
                 return
             d.promise
-         post : (url, data) ->
+        post : (username, password, url, data) ->
             d = $q.defer()
             $http({
                 method: 'POST'
                 url: url
                 data: data
+                headers:
+                    'x-username': username
+                    'x-password': password
             })
             .then (res) ->
                 d.resolve(res)
@@ -107,25 +113,32 @@ angular.module('app.users.services', [])
                 d.reject(error)
                 return
             d.promise
-        put : (url, data) ->
+        put : (username, password , url, data) ->
             d = $q.defer()
             $http({
                 method: 'PUT'
                 url: url
                 data: data
+                headers:
+                    'x-username': username
+                    'x-password': password
             })
             .then (res) ->
+                console.log res
                 d.resolve(res)
                 return
             , (error) ->
                 d.reject(error)
                 return
             d.promise
-        delete : (url) ->
+        delete : (args, url) ->
             d = $q.defer()
             $http({
                 method: 'DELETE'
                 url: url
+                headers:
+                    'x-username': username
+                    'x-password': password
             })
             .then (res) ->
                 d.resolve(res)
@@ -134,6 +147,91 @@ angular.module('app.users.services', [])
                 d.reject(error)
                 return
             d.promise
+    }
+])
+
+.factory('gREST', [ '$http', '$q', '$resource', ($http, $q, $resource) ->
+    return {
+        get : (session, url) ->
+            d = $q.defer()
+            $http({
+                method: 'GET'
+                url: url
+                headers:
+                    'x-session': session
+            })
+            .then (res) ->
+                d.resolve(res)
+                return
+            , (error) ->
+                d.reject(error)
+                return
+            d.promise
+        post : (session, url, data) ->
+            d = $q.defer()
+            $http({
+                method: 'POST'
+                url: url
+                data: data
+                headers:
+                    'x-session': session
+            })
+            .then (res) ->
+                d.resolve(res)
+                return
+            , (error) ->
+                d.reject(error)
+                return
+            d.promise
+        put : (session , url, data) ->
+            d = $q.defer()
+            $http({
+                method: 'PUT'
+                url: url
+                data: data
+                headers:
+                    'x-session': session
+            })
+            .then (res) ->
+                console.log res
+                d.resolve(res)
+                return
+            , (error) ->
+                d.reject(error)
+                return
+            d.promise
+        delete : (session, url) ->
+            d = $q.defer()
+            $http({
+                method: 'DELETE'
+                url: url
+                headers:
+                    'x-session': session
+            })
+            .then (res) ->
+                d.resolve(res)
+                return
+            , (error) ->
+                d.reject(error)
+                return
+            d.promise
+    }
+])
+
+.factory('authHandler', [ '$http', '$q', '$resource', 'localStorageService', '$location', ($http, $q, $resource, localStorageService, $location) ->
+    return {
+        checkLoggedIn : () ->
+            user = localStorageService.get 'user'
+            console.log user
+
+            if !user or typeof user != 'object'
+                delete $http.defaults.headers.common['x-session']
+                $location.path '/login'
+                return
+            else
+                delete $http.defaults.headers.common['x-username']
+                delete $http.defaults.headers.common['x-password']
+                $http.defaults.headers.common['x-session'] = user.user.session_key
     }
 ])
 ##

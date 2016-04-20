@@ -4,8 +4,8 @@ angular.module('app.controllers', [])
 
 # overall control
 .controller('AppCtrl', [
-    '$scope', '$rootScope', '$route', '$document',
-    ($scope, $rootScope, $route, $document) ->
+    '$scope', '$rootScope', '$route', '$document', '$location',
+    ($scope, $rootScope, $route, $document, $location) ->
         $window = $(window)
 
         $scope.main =
@@ -53,6 +53,10 @@ angular.module('app.controllers', [])
         $rootScope.$on("$routeChangeSuccess", (event, currentRoute, previousRoute) ->
             $document.scrollTo(0, 0);
         )
+        console.log $location.path()
+        $scope.isLogin = false
+        if $location.path() == '/login'
+            $scope.isLogin = true
 ])
 
 .controller('HeaderCtrl', [

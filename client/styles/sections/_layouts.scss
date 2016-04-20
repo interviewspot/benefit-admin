@@ -98,6 +98,9 @@ html {
             margin-left: 0;
             // @include transition(none);
             margin-left: 200px;
+            &.content-login {
+                margin-left: 0;
+            }
         }
 
     }

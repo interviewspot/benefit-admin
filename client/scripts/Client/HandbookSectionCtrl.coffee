@@ -171,7 +171,7 @@ angular.module('app.handbook_section', [])
                     "enabled":"1",
                     "section": $scope.formSection.id,
                     "locale":"en_us"
-                }               
+                }
             }
             if($scope.formSection._links.contents)
                 fetchHandbook.post($scope.formSection._links.contents.href, content).then  (res) ->
