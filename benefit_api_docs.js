@@ -1,6 +1,6 @@
 Content-Type: application/json
 Accept: application/hal+json, application/json, */*; q=0.01
-x-username:kenneth.yap@ap.magenta-consulting.com
+x-username:kenneth.yap@ap.magenta-consulting.com / rootadmin
 x-password: p@ssword
 
 
@@ -17,6 +17,7 @@ x-password: p@ssword
 
 x-username: admin@magentapulse.com
 x-password: p@ssword
+x-org     : magenta
 
 User
 pass p@ssword
