@@ -71,11 +71,11 @@ angular.module('app.merchants', [])
     , '$routeParams'
     , 'config'
     , 'Companies'
-    ($scope, $filter, $location, $routeParams, config, Companies) ->
-        console.log 'OK'
+    , 'authHandler'
+    ($scope, $filter, $location, $routeParams, config, Companies, authHandler) ->
         $scope.clientId =  $routeParams.clientId
-        console.log $scope.clientId
-
+        # 0. Authorize
+        authHandler.checkLoggedIn()
 
         # 1. GET COMPANIES Fn
         _getCompany = (clientId) ->

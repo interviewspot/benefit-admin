@@ -8,6 +8,7 @@ angular.module('app.login', [])
 
         $scope.username = ""
         $scope.password = ""
+        localStorageService.cookie.remove 'user'
 
         $scope.doLogin = ->
 
@@ -25,9 +26,9 @@ angular.module('app.login', [])
                         console.log res 
 
                         # save it to localStorage after remove all security 
-                        localStorageService.set 'user',
-                            user     : res.data
-
+                        localStorageService.cookie.set 'user'
+                            ,user     : res.data
+                            ,1
                         # go to home page
                         $location.path '/clients'
 
@@ -42,7 +43,7 @@ angular.module('app.login', [])
 .controller 'logoutCtrl', [
     '$scope', '$location', 'localStorageService', '$http'
     ($scope, $location, localStorageService, $http)->
-        localStorageService.set 'user', null
+        localStorageService.cookie.remove 'user'
         delete $http.defaults.headers.common['x-session']
         $location.path '/login'
 ]

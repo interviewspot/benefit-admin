@@ -318,7 +318,7 @@ angular.module('app.clients', [])
             banner_id = if $scope.$$childTail.uploadbanner then $scope.$$childTail.uploadbanner.logo_id else null
           sm_client_data.organisation['banners'] = banner_id
           
-          console.log(sm_client_data.organisation)
+          console.log(sm_client_data)
 
           clientService.update {org_id:$scope.clientDetail.id}, sm_client_data, (res) ->
             if typeof res.organisation == 'object'

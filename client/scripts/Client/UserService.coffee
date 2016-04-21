@@ -221,7 +221,7 @@ angular.module('app.users.services', [])
 .factory('authHandler', [ '$http', '$q', '$resource', 'localStorageService', '$location', ($http, $q, $resource, localStorageService, $location) ->
     return {
         checkLoggedIn : () ->
-            user = localStorageService.get 'user'
+            user = localStorageService.cookie.get 'user'
             console.log user
 
             if !user or typeof user != 'object'

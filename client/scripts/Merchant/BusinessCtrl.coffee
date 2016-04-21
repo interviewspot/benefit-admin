@@ -122,14 +122,17 @@ angular.module('app.businesses', [])
     , '$modal'
     , 'Businesses'
     , '$timeout'
-    ,
-    ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, $modal, Businesses, $timeout) ->
+    , 'authHandler'
+    ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, $modal, Businesses, $timeout, authHandler) ->
         $scope.clientId =  $routeParams.clientId
         $scope.businessId   =  if $routeParams.businessId then $routeParams.businessId.trim() else false
 
         if !$scope.businessId
             location.href = '#/merchant/' + $scope.clientId + '/business'
             return
+
+        # 0. Authorize
+        authHandler.checkLoggedIn()
 
         # 1. GET BUSINESS by ID
         _URL =
@@ -432,8 +435,8 @@ angular.module('app.businesses', [])
     , '$modal'
     , 'Businesses'
     , '$timeout'
-    ,
-    ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, $modal, Businesses, $timeout) ->
+    , 'authHandler'
+    ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, $modal, Businesses, $timeout, authHandler) ->
         $scope.clientId =  $routeParams.clientId
         $scope.businessId   =  if  $routeParams.businessId then $routeParams.businessId.trim() else false
         $scope.outletId     =  if  $routeParams.outletId then $routeParams.outletId.trim() else false
@@ -445,6 +448,9 @@ angular.module('app.businesses', [])
         if !$scope.outletId
             location.href = '#/merchant/' + $scope.clientId + '/business/' + $scope.businessId
             return
+
+        # 0. Authorize
+        authHandler.checkLoggedIn()
 
         # 1. GET OUTLET by ID
         _URL =
@@ -646,8 +652,8 @@ angular.module('app.businesses', [])
     , '$modal'
     , 'Businesses'
     , '$timeout'
-    ,
-    ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, $modal, Businesses, $timeout) ->
+    , 'authHandler'
+    ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, $modal, Businesses, $timeout, authHandler) ->
         $scope.clientId =  $routeParams.clientId
         $scope.businessId   =  if  $routeParams.businessId then $routeParams.businessId.trim() else false
         $scope.promotionId     =  if  $routeParams.promotionId then $routeParams.promotionId.trim() else false
@@ -658,6 +664,9 @@ angular.module('app.businesses', [])
         if !$scope.promotionId
             location.href = '#/merchant/' + $scope.clientId + '/business/' + $scope.businessId
             return
+
+        # 0. Authorize
+        authHandler.checkLoggedIn()
 
         # 1. GET PROMOTION by ID
         _URL =

@@ -4,8 +4,8 @@ angular.module('app.controllers', [])
 
 # overall control
 .controller('AppCtrl', [
-    '$scope', '$rootScope', '$route', '$document', '$location',
-    ($scope, $rootScope, $route, $document, $location) ->
+    '$scope', '$rootScope', '$route', '$document', '$location', 'localStorageService'
+    ($scope, $rootScope, $route, $document, $location, localStorageService) ->
         $window = $(window)
 
         $scope.main =
@@ -53,10 +53,15 @@ angular.module('app.controllers', [])
         $rootScope.$on("$routeChangeSuccess", (event, currentRoute, previousRoute) ->
             $document.scrollTo(0, 0);
         )
-        console.log $location.path()
-        $scope.isLogin = false
-        if $location.path() == '/login'
+
+        # console.log $location.path()
+        user = localStorageService.cookie.get 'user'
+        if !user or typeof user != 'object'
             $scope.isLogin = true
+        else 
+            $scope.isLogin = false
+            $scope.user = user
+            #console.log($scope.user)
 ])
 
 .controller('HeaderCtrl', [
