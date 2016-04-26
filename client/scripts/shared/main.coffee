@@ -54,7 +54,7 @@ angular.module('app.controllers', [])
             $document.scrollTo(0, 0);
         )
 
-        # console.log $location.path()
+        console.log $location.path()
         user = localStorageService.cookie.get 'user'
         if !user or typeof user != 'object'
             $scope.isLogin = true

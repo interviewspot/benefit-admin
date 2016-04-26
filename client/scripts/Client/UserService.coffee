@@ -227,7 +227,7 @@ angular.module('app.users.services', [])
             if !user or typeof user != 'object'
                 delete $http.defaults.headers.common['x-session']
                 $location.path '/login'
-                return
+                window.location.reload()
             else
                 delete $http.defaults.headers.common['x-username']
                 delete $http.defaults.headers.common['x-password']
