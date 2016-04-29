@@ -195,15 +195,17 @@ angular.module('app.handbook_section', [])
             $scope.formSection = {
                 description: ''
                 title: ''
-                version: ''
+                ordering: ''
                 status: ''
             }
             $scope.parentSelect = null
 
+            ##Content
+
         $scope.formSection = {
             description: ''
             title: ''
-            version: ''
+            ordering: ''
             status: ''
         }
 
@@ -231,7 +233,7 @@ angular.module('app.handbook_section', [])
                 section: {
                     description : ($scope.formSection.description)
                     title       : ($scope.formSection.title)
-                    version     : $scope.formSection.version
+                    ordering     : $scope.formSection.version
                     handbook    : $scope.handbookId
                     parent      : $scope.parentSelect
                     locale      : 'en_us'
@@ -284,6 +286,44 @@ angular.module('app.handbook_section', [])
                     , (error) ->
                         $scope.sectionUpdated = error.status + ': Error, refresh & try again !'
 
+
+        ##Content
+        $scope.contents = []
+        $scope.content = {
+            "title":"Image of " + $scope.formSection.title,
+            "image_id":"",
+            "html_text":'',
+            "enabled":"1",
+            "section": $scope.formSection.id,
+            "locale":"en_us"
+        }
+        $scope.submitContent = (content) ->
+            content = {
+                "content": content
+            }
+            if($scope.formSection._links.contents)
+                fetchHandbook.post($scope.formSection._links.contents.href, content).then  (res) ->
+                    if typeof res == 'object' && res.status == 201
+                        fetchHandbook.get(config.path.baseURL + res.headers().location).then (content) ->
+                            console.log content
+                        , (error) ->
+                            console.log error
+                , (error) ->
+                    console.log error
+
+                    
+        ##Add new
+        $scope.addContent = () ->
+            newContent = $scope.content
+            $scope.contents.push(newContent)
+            $scope.content = {
+                "title":"Image of " + $scope.formSection.title,
+                "image_id":"",
+                "html_text":'',
+                "enabled":"1",
+                "section": $scope.formSection.id,
+                "locale":"en_us"
+            }
 
 
 ])

@@ -33,7 +33,7 @@
                             <td>
                                 <input
                                 type="text"
-                                ng-model="formSection.version"
+                                ng-model="formSection.ordering"
                                 class="txt-ipt ipt"
                                 required=""
                                 name="sec_no"
@@ -74,6 +74,7 @@
                     </tbody>
                 </table>
                 <!-- END : TBL -->
+                <span>Description</span>
                 <div text-angular
                     ng-model="formSection.description"></div>
                 <!-- <textarea ui-tinymce data-ng-model="formSection.description"></textarea> -->
@@ -88,6 +89,22 @@
                     </span>
                 </p>
             </form>
+                <div ng-show="isUpdate">
+                    <div data-ng-repeat="content in contents track by $index">
+                        <form  name="frm_section_content"  class="modal_frm" ng-submit="submitContent(content,$index)" novalidate>
+                            <span>Content</span>
+                            <div  text-angular ng-model="content.html_text"></div>
+                            <button type="submit"
+                                    class="save btn-brown">
+                                <i class="fa fa-save"></i>&nbsp;&nbsp;SAVE
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            <button ng-click="addContent()" type="button"
+                    class="save btn-brown">
+                <i class="fa fa-save"></i>&nbsp;&nbsp;ADD CONTENT
+            </button>
         </div>
         <!-- END : FORWARD -->
     </div>
