@@ -45,7 +45,7 @@ angular.module('app.handbooks', [])
 
                 if $scope.handbook.translations['en-us'] 
                     $scope.handbook.title = $scope.handbook.translations['en-us'].title
-
+                    $scope.handbook.description = $scope.handbook.translations['en-us'].description
                 return
             , (error) ->
                 console.log error
@@ -58,20 +58,12 @@ angular.module('app.handbooks', [])
 
         $scope.submitHandbookInfo = ->
 
-            if $scope.handbook.translations[$scope.handbook.locale]
-                title = $scope.handbook.translations[$scope.handbook.locale].title
-            else title = $scope.handbook.title
-
-            if $scope.handbook.translations[$scope.handbook.locale]
-                desc = $scope.handbook.translations[$scope.handbook.locale].description
-            else desc = $scope.handbook.description
-
             updateData = {
                 "handbook": {
                     "version"      : $scope.handbook.version
-                    "title"        : title
+                    "title"        : $scope.handbook.title
                     "year"         : $scope.handbook.year
-                    "description"  : desc
+                    "description"  : $scope.handbook.description
                     "organisation" : $scope.clientId
                     "locale"       : $scope.handbook.locale
                     "enabled"      : $scope.handbook.enabled

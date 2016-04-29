@@ -52,9 +52,9 @@ angular.module('app.handbook_section', [])
             return newItem
 
         sectionCompare = (a,b) ->
-            if (a.version < b.version)
+            if (a.ordering < b.ordering)
                 return -1;
-            if (a.version > b.version)
+            if (a.ordering > b.ordering)
                 return 1;
             return 0;
 
@@ -195,7 +195,7 @@ angular.module('app.handbook_section', [])
             $scope.formSection = {
                 description: ''
                 title: ''
-                version: ''
+                ordering: ''
                 status: ''
             }
             $scope.parentSelect = null
@@ -203,7 +203,7 @@ angular.module('app.handbook_section', [])
         $scope.formSection = {
             description: ''
             title: ''
-            version: ''
+            ordering: ''
             status: ''
         }
 
@@ -231,7 +231,7 @@ angular.module('app.handbook_section', [])
                 section: {
                     description : ($scope.formSection.description)
                     title       : ($scope.formSection.title)
-                    version     : $scope.formSection.version
+                    ordering     : $scope.formSection.ordering
                     handbook    : $scope.handbookId
                     parent      : $scope.parentSelect
                     locale      : 'en_us'

@@ -17,11 +17,14 @@ angular.module('app.clients', [])
             Clients.get(_URL_clients.list + '?limit=' + limit + '&page=' + goPage).then  (res) ->
                 if res.status != 200 || typeof res != 'object'
                     return
+
                 $scope.clients = res.data
                 $scope.clients_list = res.data._embedded.items
                 return
             , (error) ->
                 console.log error
+                $location.path '/login'
+                window.location.reload()
                 return
 
       # 2. PAGING, setup paging
@@ -119,31 +122,31 @@ angular.module('app.clients', [])
                 $scope.isCreateHandbook = true
                 return
               $scope.handbooks = res.data._embedded.items
-              #console.log($scope.handbooks)
+              console.log($scope.handbooks)
 
               # GET TRANSLATIONS
               angular.forEach $scope.handbooks, (item, i) ->
-                Clients.get(item._links.translations.href).then  (res) ->
-                  if res.status != 200 || typeof res != 'object'
+                if item.id > 0 && item._links.translations
+                  Clients.get(item._links.translations.href).then  (res) ->
+                    if res.status != 200 || typeof res != 'object'
+                      return
+                    $scope.handbooks[i]['translations'] = res.data
                     return
-                  $scope.handbooks[i]['translations'] = res.data
-                  return
-                , (error) ->
-                  console.log error
-                  return
+                  , (error) ->
+                    console.log error
+                    return
 
           else
               $scope.isCreateHandbook = true
 
           # GET LOGO URL
           $scope.clientDetail = data
-          #console.log(data)
           if typeof data._links.logo == 'object' && data._links.logo.href
             Images.get(data._links.logo.href).then  (res) ->
               if res.status != 200 || typeof res != 'object'
                   return
                 logo_id_arr = php.explode('/media/', data._links.logo.href)
-                $scope.urlUpload    = $scope.clientDetail._links['logo.post'].href
+                $scope.urlUpload    = $scope.clientDetail._links['logo'].href
                 #console.log(res.data)
                 $scope.clientDetail['logo']     = res.data
                 if typeof res.data._links.url == 'object' && res.data._links.url.href
@@ -157,7 +160,7 @@ angular.module('app.clients', [])
             , (error) ->
               console.log error
           else
-            $scope.urlUpload    = $scope.clientDetail._links['logo.post'].href
+            $scope.urlUpload    = $scope.clientDetail._links['logo'].href
 
           # GET BANNER URL
           if typeof data._links.banners == 'object' && data._links.banners.href

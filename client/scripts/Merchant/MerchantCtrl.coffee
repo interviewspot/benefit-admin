@@ -32,6 +32,8 @@ angular.module('app.merchants', [])
                 return
             , (error) ->
                 console.log error
+                $location.path '/login'
+                window.location.reload()
 
         # 2. PAGING, setup paging
         $scope.numPerPageOpt = [3, 5, 10, 20]

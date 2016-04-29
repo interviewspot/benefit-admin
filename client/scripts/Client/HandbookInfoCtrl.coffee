@@ -34,6 +34,7 @@ angular.module('app.handbook_info', [])
 
                     if $scope.handbook.translations['en-us'] 
                         $scope.handbook.title = $scope.handbook.translations['en-us'].title
+                        $scope.handbook.description = $scope.handbook.translations['en-us'].description
                     return
                 , (error) ->
                     console.log error
@@ -50,26 +51,19 @@ angular.module('app.handbook_info', [])
             if $scope.frm_crt_handbook.$error.required.length
                 return false
 
-            if $scope.handbook.translations[$scope.handbook.locale]
-                title = $scope.handbook.translations[$scope.handbook.locale].title
-            else title = $scope.handbook.title
-
-            if $scope.handbook.translations[$scope.handbook.locale]
-                desc = $scope.handbook.translations[$scope.handbook.locale].description
-            else desc = $scope.handbook.description
-
             updateData = {
                 "handbook": {
                     "version"      : $scope.handbook.version
-                    "title"        : title
+                    "title"        : $scope.handbook.title
                     "year"         : $scope.handbook.year
-                    "description"  : desc
+                    "description"  : $scope.handbook.description 
                     "organisation" : $scope.clientId
                     "locale"       : $scope.handbook.locale
                     "enabled"      : $scope.handbook.enabled
                 }
             }
 
+            console.log($scope.handbook);
             console.log(updateData)
 
             handbookService.update {org_id:$scope.clientId, hand_id:$scope.handbookId}, updateData, (res) ->
