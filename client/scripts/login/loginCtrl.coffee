@@ -26,16 +26,22 @@ angular.module('app.login', [])
                         if typeof res != 'object' || res.status != 200
                             return
 
-                        console.log res 
-
                         # save it to localStorage after remove all security 
                         localStorageService.cookie.set 'user'
                             ,user     : res.data
                             ,1
-                        # go to home page
+
                         $rootScope.isLoggedIn = true;
-                        $location.path '/clients'
-#                        $route.reload()
+                        $scope.roles = res.data.roles
+                        aREST.get($scope.username, $scope.password, config.path.baseURL + system.data._links.logged_in_position.href).then  (position) ->
+                            aREST.get($scope.username, $scope.password,position.data._links.employer.href).then  (employer) ->
+                                # go to home page
+                                if $scope.roles[0] == 'ROLE_ADMIN'
+                                    $location.path '/clients'
+                                    $route.reload()
+                                else
+                                    $location.path '/clients/'+employer.data.id+'/info'
+                                    $route.reload()
 
 
                     ,(error) ->

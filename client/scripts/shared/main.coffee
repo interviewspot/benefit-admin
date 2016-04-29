@@ -60,7 +60,10 @@ angular.module('app.controllers', [])
         if !user or typeof user != 'object'
             $scope.isLogin = true
             $rootScope.isLoggedIn = false;
-        else 
+        else
+            $rootScope.isAdmin = false;
+            if user.user.roles[0] == 'ROLE_ADMIN'
+                $rootScope.isAdmin = true;
             $scope.user = user
             $scope.isLogin = false
             $rootScope.isLoggedIn = true;

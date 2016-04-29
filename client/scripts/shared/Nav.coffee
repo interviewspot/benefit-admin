@@ -113,10 +113,10 @@ angular.module('app.nav', [])
                         $li = $link.parent('li')
                         href = $link.attr('href')
 
-                        if ($li.hasClass('active'))
-                            $li.removeClass('active')
-                        if path.indexOf(href) is 0
-                            $li.addClass('active')
+#                        if ($li.hasClass('active'))
+#                            $li.removeClass('active')
+#                        if path.indexOf(href) is 0
+#                            $li.addClass('active')
                     )
 
                 highlightActive(links, $location.path())
