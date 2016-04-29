@@ -8,7 +8,8 @@ angular.module('app.login', [])
 
         $scope.username = ""
         $scope.password = ""
-        $rootScope.isLogin = true
+        
+        $rootScope.isLoggedIn = false
         
         localStorageService.cookie.remove 'user'
 
@@ -32,8 +33,9 @@ angular.module('app.login', [])
                             ,user     : res.data
                             ,1
                         # go to home page
+                        $rootScope.isLoggedIn = true;
                         $location.path '/clients'
-                        $route.reload()
+#                        $route.reload()
 
 
                     ,(error) ->
@@ -49,7 +51,7 @@ angular.module('app.login', [])
     ($scope, $location, localStorageService, $http,$route,$rootScope)->
         localStorageService.cookie.remove 'user'
         delete $http.defaults.headers.common['x-session']
-        $rootScope.isLogin = false
+        $rootScope.isLoggedIn = false
         $location.path '/login'
         $route.reload()
 ]

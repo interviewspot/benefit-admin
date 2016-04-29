@@ -30,7 +30,7 @@
         <![endif]-->
 
         <section
-            ng-show="!isLogin"
+            ng-show="isLoggedIn"
             data-ng-include=" 'views/header.html' "
             id="header"
             class="header-container "
@@ -39,25 +39,22 @@
             ></section>
 
         <section
-        ng-show="isLogin"
+        ng-show="!isLoggedIn"
         id="header-login"
         ></section>
 
         <div class="main-container">
-            <aside nav1
-                id="nav-container"
-                class="nav-container"
-                data-ng-class=" {'nav-fixed': admin.fixedSidebar, 'nav-horizontal': admin.menu === 'horizontal', 'nav-vertical': admin.menu === 'vertical'}">
+            <aside
+                    ng-show="isLoggedIn"
+                    data-ng-include=" 'views/nav.html' "
+                    id="nav-container"
+                    class="nav-container"
+                    data-ng-class=" {'nav-fixed': admin.fixedSidebar, 'nav-horizontal': admin.menu === 'horizontal', 'nav-vertical': admin.menu === 'vertical'}">
             </aside>
-
-            <!--<aside id="nav-container" class="nav-container" nav1=""-->
-                   <!--data-ng-class=" {'nav-fixed': admin.fixedSidebar, 'nav-horizontal': admin.menu === 'horizontal', 'nav-vertical': admin.menu === 'vertical'}">-->
-
-            <!--</aside>-->
             <section data-ng-view
                      id="content"
                      class="content-container animate-fade-up"
-                     ng-class="{'content-login' : isLogin }"></section>
+                     ng-class="{'content-login' : !isLoggedIn }"></section>
         </div>
 
 

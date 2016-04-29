@@ -55,13 +55,15 @@ angular.module('app.controllers', [])
         )
 
         console.log $location.path()
+
         user = localStorageService.cookie.get 'user'
         if !user or typeof user != 'object'
             $scope.isLogin = true
+            $rootScope.isLoggedIn = false;
         else 
-            $scope.isLogin = false
             $scope.user = user
-            #console.log($scope.user)
+            $scope.isLogin = false
+            $rootScope.isLoggedIn = true;
 ])
 
 .controller('HeaderCtrl', [
