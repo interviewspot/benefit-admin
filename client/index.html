@@ -44,14 +44,16 @@
         ></section>
 
         <div class="main-container">
-            <aside
-                ng-show="!isLogin"
-                data-ng-include=" 'views/nav.html' "
+            <aside nav1
                 id="nav-container"
                 class="nav-container"
                 data-ng-class=" {'nav-fixed': admin.fixedSidebar, 'nav-horizontal': admin.menu === 'horizontal', 'nav-vertical': admin.menu === 'vertical'}">
             </aside>
 
+            <!--<aside id="nav-container" class="nav-container" nav1=""-->
+                   <!--data-ng-class=" {'nav-fixed': admin.fixedSidebar, 'nav-horizontal': admin.menu === 'horizontal', 'nav-vertical': admin.menu === 'vertical'}">-->
+
+            <!--</aside>-->
             <section data-ng-view
                      id="content"
                      class="content-container animate-fade-up"
@@ -152,6 +154,7 @@
         <script src="scripts/services/phpjsService.js"></script>
         <script src="scripts/Employee/employeeCtrl.js"></script>
         <script src="scripts/login/loginCtrl.js"></script>
+        <script src="scripts/Common/navDirective.js"></script>
         <!-- endbuild -->
     </body>
 </html>

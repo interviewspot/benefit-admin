@@ -3,12 +3,12 @@
 angular.module('app.login', [])
 
 .controller('loginCtrl', [
-    '$scope', 'aREST', 'config', 'localStorageService', '$location', '$route'
-    ($scope, aREST, config, localStorageService, $location, $route) ->
+    '$scope', 'aREST', 'config', 'localStorageService', '$location', '$route','$rootScope'
+    ($scope, aREST, config, localStorageService, $location, $route,$rootScope) ->
 
         $scope.username = ""
         $scope.password = ""
-        $scope.isLogin = true
+        $rootScope.isLogin = true
         
         localStorageService.cookie.remove 'user'
 
@@ -33,7 +33,8 @@ angular.module('app.login', [])
                             ,1
                         # go to home page
                         $location.path '/clients'
-                        window.location.reload()
+                        $route.reload()
+
 
                     ,(error) ->
                         alert(error.status + ': Error, refresh & try again !')
@@ -44,10 +45,11 @@ angular.module('app.login', [])
 ])
 
 .controller 'logoutCtrl', [
-    '$scope', '$location', 'localStorageService', '$http'
-    ($scope, $location, localStorageService, $http)->
+    '$scope', '$location', 'localStorageService', '$http','$route','$rootScope'
+    ($scope, $location, localStorageService, $http,$route,$rootScope)->
         localStorageService.cookie.remove 'user'
         delete $http.defaults.headers.common['x-session']
+        $rootScope.isLogin = false
         $location.path '/login'
-        window.location.reload()
+        $route.reload()
 ]
