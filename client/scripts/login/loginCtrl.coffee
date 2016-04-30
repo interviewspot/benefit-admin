@@ -36,7 +36,7 @@ angular.module('app.login', [])
                         aREST.get($scope.username, $scope.password, config.path.baseURL + system.data._links.logged_in_position.href).then  (position) ->
                             aREST.get($scope.username, $scope.password,position.data._links.employer.href).then  (employer) ->
                                 # go to home page
-                                if $scope.roles[0] == 'ROLE_ADMIN'
+                                if $scope.roles.indexOf('ROLE_ADMIN') >=0 or $scope.roles.indexOf('ROLE_HR_ADMIN') >=0
                                     $location.path '/clients'
                                     $route.reload()
                                 else

@@ -59,7 +59,7 @@ angular.module('app.handbook_section', [])
             return 0;
 
         # ------------------------------
-        # LOAD LIST SECTIONS
+        # LOAD LIST of SECTIONS
         _URL_sections =
             list : config.path.baseURL + config.path.sections.replace(':org_id', $scope.clientId).replace(':hand_id', $scope.handbookId)
 
@@ -233,7 +233,7 @@ angular.module('app.handbook_section', [])
                 section: {
                     description : ($scope.formSection.description)
                     title       : ($scope.formSection.title)
-                    ordering     : $scope.formSection.version
+                    ordering     : $scope.formSection.ordering
                     handbook    : $scope.handbookId
                     parent      : $scope.parentSelect
                     locale      : 'en_us'

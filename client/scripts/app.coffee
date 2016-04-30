@@ -67,7 +67,8 @@ angular.module('app', [
     'ngFileUpload'
     'app.phpjs.services'
 ])
-    
+
+
 .config([
     '$routeProvider', 'HateoasInterceptorProvider', 'HateoasInterfaceProvider', '$sceDelegateProvider', '$httpProvider',
     ($routeProvider, HateoasInterceptorProvider, HateoasInterfaceProvider, $sceDelegateProvider, $httpProvider) ->
