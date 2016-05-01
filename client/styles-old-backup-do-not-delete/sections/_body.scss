@@ -1,0 +1,73 @@
+body {
+    background: url('../images/bg-pattern/bg-pattern4.png') repeat #fff;
+}
+a {
+    color: #CFAE79;
+    @include transition(all 0.2s linear);
+    &:hover {
+        text-decoration: none;
+        color: #9A7F53;
+    }
+}
+// fullscreen, hide header and sidebar
+.body-wide {
+
+    #header,
+    #nav-container {
+        display: none;
+    }
+
+    > .main-container {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    #content {
+        z-index: 2;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        margin: 0;
+    }
+
+    // hide intro
+    .introjs-overlay,
+    .introjs-helperLayer {
+        display: none;
+    }
+}
+// lock screen
+.body-lock {
+    #content {
+        background: url('../images/background/5.jpg') no-repeat center center fixed; 
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
+}
+.title-info
+{
+    width: 150px;
+}
+.panel-body{
+    .col-lg-12,.col-lg-10,.col-lg-2
+    {
+        padding-top: 2px;
+        padding-left: 0;
+    }
+}
+.col-lg-6{
+    padding-left: 0;
+}
+.deleteImage{
+    margin-bottom: 34px;
+    margin-left: 15px;
+}
+.createEdit{
+    margin-bottom: 8px;
+}

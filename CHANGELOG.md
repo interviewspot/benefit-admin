@@ -1,7 +1,22 @@
 
 ### Changelogs
 
-**Version 1.6.0** (latest)
+*Note: If you have any question, please feel free to [contact me](https://wrapbootstrap.com/user/arousing), I’ll be glad to help*
+
+
+**VERSION 2.0.0** (11/28/2015)
+
+* Feat: Completely rewrite the script in plain JavaScript
+* Feat: Upgrade all bower components to latest version, including angular (1.4.x), angular-bootstrap (0.14.x), font-awesome (4.5.x), textAngular (1.4.x) etc.
+* Feat: Replace custom i18n module with angular-translate (2.8.x)
+* Feat: Add page preloader
+* Feat: Upgrade NPM packages to latest version
+* Fix: Update button page markup
+* Docs: Update documentation
+
+--- 
+
+**VERSION 1.6.0** (02/28/2015)
 
 * Feat: Update Bower packages
 * Fix: Reset scroll position on a route change.

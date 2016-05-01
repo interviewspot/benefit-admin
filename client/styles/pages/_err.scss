@@ -1,3 +1,12 @@
+.body-err {
+    #content {
+        > .view-container {
+            height: 100%;
+            width: 100%
+        }
+    }    
+}
+
 
 .page-err {
     position: relative;

@@ -17,7 +17,9 @@
             display: block;
             padding: 15px;
             font-size: 14px;
-            &:hover {
+            &:hover,
+            &:active,
+            &:focus {
                 cursor: pointer;
                 text-decoration: none;
             }
