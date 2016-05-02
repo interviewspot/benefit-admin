@@ -4,10 +4,15 @@ $boxed_layout_width:    1200px;
 $screen-sm-max:         ($screen-sm - 1);
 
 // Top header
-$header_height:             50px;
-$header_container_bg:       $dark;
+$header_height:             80px;
+$header_container_bg:       #ffffff;
 
 $main_container_bg:         #f9f9f9;
 
 // Sidebar
 $sidebar_bg:                #f1f1f1;
+$nav_top:             110px;
+$nav_left:             25px;
+
+// COLOR
+$brown: #CFAE79;

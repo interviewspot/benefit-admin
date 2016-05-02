@@ -8,10 +8,16 @@ See README.md or https://github.com/fraywing/textAngular/wiki for requirements a
 */
 
 /* add generic styling for the editor */
+body > input.ta-hidden-input {
+    display: none;
+}
 .ui-editor {
 
     .ta-toolbar {
         margin: 0 0 10px;
+        > .btn-group {
+            margin-bottom: 5px;
+        }             
     }
 
     &.ta-root.focussed > .ta-scroll-window.form-control {

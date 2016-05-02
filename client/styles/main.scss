@@ -1,8 +1,12 @@
 
 @import 
     "global/var"                        // global variables
-,   "bootstrap/bootstrap/mixins"   // Bootstrap mixins
+,   "bootstrap-sass/bootstrap"          // Bootstrap
 ,   "bourbon/bourbon"                   // mixins
+, 	"fonts/font-awesome"				// fonts
+
+    // UI, uses Bootstrap's variables
+,   "ui/ui"
 
     // Plugins, overrides plugins' style
 ,   "plugins/bootstrap-slider"
@@ -15,7 +19,7 @@
 ,   "plugins/morris"
 ,   "plugins/jqvmap"
 ,   "plugins/ng-tags-input"
-,   "plugins/angular-loading-bar"
+,   "plugins/intro"
 
     // Pages
 ,   "global/var-pages"
@@ -29,6 +33,7 @@
 ,   "pages/ui"
 ,   "pages/invoice"
 ,   "pages/demo"
+,   "pages/animation"
 
     // sections
 ,   "sections/layouts"
@@ -39,4 +44,7 @@
 ,   "sections/nav-min"
 ,   "sections/header"
 ,   "sections/body"
+
+	// responsive
+,   "pages/responsive-1200"
 ;

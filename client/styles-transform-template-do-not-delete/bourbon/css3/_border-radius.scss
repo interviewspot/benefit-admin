@@ -20,11 +20,3 @@
   @include prefixer(border-top-right-radius, $radii, spec);
   @include prefixer(border-bottom-right-radius, $radii, spec);
 }
-
-@mixin border-radius($radii){
-	-webkit-border-radius: $radii;
-	-moz-border-radius: $radii;
-	-o-border-radius: $radii;
-	-ms-border-radius: $radii;
-	border-radius: $radii;
-}

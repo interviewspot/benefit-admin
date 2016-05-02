@@ -3,8 +3,8 @@
     // @media (min-width:$screen-sm) {
     //     height: $header_height;
     // }
-    background-color: $header_container_bg;
-
+    background-color: $reverse;
+    height: 80px;
     > .top-header {
         // shared
         a {
@@ -40,9 +40,11 @@
                 display: inline-block;
                 width: 220px;
                 background-color: transparent;
-                border-right: 1px solid rgba(255,255,255,.1);
             }
-
+            img  {
+                border-radius: 50%;
+                border: 3px solid #fff;
+            }
             > a {
                 font-size: 24px;
                 vertical-align: middle;
@@ -95,7 +97,7 @@
         .dropdown-menu.panel {
             padding: 0;
             white-space: nowrap;
-            
+
             .panel-heading,
             .panel-footer {
                 padding: 10px 15px;
@@ -121,13 +123,18 @@
             width: 100%;
             padding: 50px 0 0;
             @media (min-width: $screen-sm) {
-                padding: 0 0 0 220px;
+                padding: 20px 20px 20px 220px;
             }
 
             > ul {
                 margin-bottom: 0;
             }
-
+            span {
+                display: block;
+                line-height: 15px;
+                list-style-type: none;
+                font-size: 12px;
+            }
             // 
             .nav-left,
             .nav-right {
@@ -138,7 +145,7 @@
                     float: left;
                     &.nav-profile {
                         > a {
-                            padding: 10px 15px;
+                            padding: 10px 10px;
                         }
                         .hidden-xs {
                             padding-right: 8px;
@@ -147,7 +154,7 @@
                             width: 18px;
                             font-size: 16px;
                             margin-right: 5px;
-                        } 
+                        }
                     }
 
                     > .toggle-min {
@@ -227,6 +234,7 @@
             // 
             .nav-right {
                 padding: 0;
+                margin-top: -10px;
                 > li {
                     > a {
                         width: 50px;
@@ -237,6 +245,9 @@
                 .badge-info {
                     background-color: transparent;
                 }
+            }
+            .login-name{
+                padding-top: 15px;
             }
         }
 
@@ -262,7 +273,16 @@
             }
         }
 
-
+        //
+        .header-horizon{
+            background-color: #CFAE79;
+            height: 10px;
+            width: 100%;
+            margin-top: 35px;
+        }
+        .login_name{
+            padding-top: 15px;
+        }
     }
 
 }

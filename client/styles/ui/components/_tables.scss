@@ -35,52 +35,15 @@
                     color: $skin;
                 }                
             }
-            .fa-angle-up,
-            .fa-angle-down {
-                position: absolute;
-                color: #999;
-                font-size: 16px;
-                font-weight: bold;
 
-                &:hover {
-                    color: $skin;
-                    cursor: pointer;
-                }
-                &.active {
-                    color: $skin;
-                }                  
-            }
-            .ti-angle-up,
-            .ti-angle-down {
-                position: absolute;
-                color: #999;
-                font-size: 16px;
-                font-weight: bold;
-
-                &:hover {
-                    color: $skin;
-                    cursor: pointer;
-                }
-                &.active {
-                    color: $skin;
-                }                  
-            }
-
-            .glyphicon-chevron-up,
-            .fa-angle-up,
-            .ti-angle-up {
+            .glyphicon-chevron-up {
                 top: 4px;
                 right: 5px;
             }
-            .fa-angle-down,
-            .ti-angle-down {
-                top: 18px;
-                right: 5px;
-            }                       
             .glyphicon-chevron-down {
                 top: 18px;
-                right: 6px;                
-            }
+                right: 6px;
+            }                       
         }
     }
 
