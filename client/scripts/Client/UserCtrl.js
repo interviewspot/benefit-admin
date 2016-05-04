@@ -1,6 +1,7 @@
 (function() {
   'use strict';
-  angular.module('app.users', []).controller('UsersCtrl', [
+  angular.module('app.users', [])
+      .controller('UsersCtrl', [
     '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', '$modal', 'UserService', 'Users', 'fetchContact', '$timeout', function($scope, $filter, fetchTabData, $location, $routeParams, config, $q, $modal, UserService, Users, fetchContact, $timeout) {
       var _URL_users, _getUsers, _updateUser;
       $scope.clientId = $routeParams.clientId;
@@ -28,7 +29,7 @@
                 }
                 res.data.position_data = itemInstance;
                 $scope.users.items.push(res.data);
-                Users.get(_URL_users.list + '/' + itemInstance.id + '/tags').then(function(tag) {
+                Users.get(_URL_users.list + '/' + itemInstance.id + '/classes').then(function(tag) {
                   var tag_lst;
                   if (tag.data._embedded.items.length > 0) {
                     tag_lst = [];
@@ -184,7 +185,7 @@
             $scope.user.position_data = pos.data;
             $scope.user.employee_class = [];
             $scope.user.employee_function = [];
-            console.log($scope.user);
+
             $scope.updateTags.position.employee = $scope.user.id;
             if ($scope.user.birthday === "-0001-11-30T00:00:00+0655") {
               $scope.user.birthday = "";
@@ -194,13 +195,19 @@
             } else {
               $scope.user.date_added = $filter('date')(new Date($scope.user.date_added), 'MM/dd/yyyy');
             }
-            Users.get(_URL.detail + $scope.userId + '/tags').then(function(tag) {
+            Users.get(_URL.detail + $scope.userId + '/functions').then(function(tag) {
               if (tag.data._embedded.items.length > 0) {
-                $scope.user.employee_class = $filter('filter')(tag.data._embedded.items, {
-                  employee_class: true
-                });
                 return $scope.user.employee_function = $filter('filter')(tag.data._embedded.items, {
                   employee_function: true
+                });
+              }
+            }, function(error) {
+              return console.log(error);
+            });
+            Users.get(_URL.detail + $scope.userId + '/classes').then(function(tag) {
+              if (tag.data._embedded.items.length > 0) {
+                return $scope.user.employee_class = $filter('filter')(tag.data._embedded.items, {
+                  employee_class: true
                 });
               }
             }, function(error) {
@@ -269,26 +276,27 @@
           "employer": $scope.clientId,
           "handbook_contact": $scope.user.position_data.handbook_contact
         };
-        $scope.updateTags.position.tags = {};
+        $scope.updateTags.position.employee_classes = {};
+        $scope.updateTags.position.employee_functions = {};
         numTag = 1;
         angular.forEach($scope.user.employee_class, function(tag) {
           var keyTag;
           keyTag = "tag" + numTag;
-          $scope.updateTags.position.tags[keyTag] = {};
-          $scope.updateTags.position.tags[keyTag].name = tag.name;
-          $scope.updateTags.position.tags[keyTag].enabled = true;
-          $scope.updateTags.position.tags[keyTag].employee_class = 1;
-          $scope.updateTags.position.tags[keyTag].employee_function = 0;
+          $scope.updateTags.position.employee_classes[keyTag] = {};
+          $scope.updateTags.position.employee_classes[keyTag].name = tag.name;
+          $scope.updateTags.position.employee_classes[keyTag].enabled = true;
+          $scope.updateTags.position.employee_classes[keyTag].employee_class = 1;
+          $scope.updateTags.position.employee_classes[keyTag].employee_function = 0;
           return numTag++;
         });
         angular.forEach($scope.user.employee_function, function(tag) {
           var keyTag;
           keyTag = "tag" + numTag;
-          $scope.updateTags.position.tags[keyTag] = {};
-          $scope.updateTags.position.tags[keyTag].name = tag.name;
-          $scope.updateTags.position.tags[keyTag].enabled = true;
-          $scope.updateTags.position.tags[keyTag].employee_class = 0;
-          $scope.updateTags.position.tags[keyTag].employee_function = 1;
+          $scope.updateTags.position.employee_functions[keyTag] = {};
+          $scope.updateTags.position.employee_functions[keyTag].name = tag.name;
+          $scope.updateTags.position.employee_functions[keyTag].enabled = true;
+          $scope.updateTags.position.employee_functions[keyTag].employee_class = 0;
+          $scope.updateTags.position.employee_functions[keyTag].employee_function = 1;
           return numTag++;
         });
         $scope.updateTags.position.enabled = $scope.user.enabled;
@@ -389,6 +397,8 @@
       var _URL, _getTags, _insertUser, _searchUserbyEntry;
       $scope.clientId = $routeParams.clientId;
       $scope.isExcel = false;
+      $scope.user.handbook_contact = true;
+      $scope.user.enabled = true;
       _URL = {
         detail: config.path.baseURL + config.path.users,
         tags: config.path.baseURL + '/tags'
@@ -427,29 +437,33 @@
                     "employee": res.data.id,
                     "enabled": true,
                     "employer": $scope.clientId,
-                    "handbook_contact": true
+                    "handbook_contact": $scope.user.handbook_contact,
+                    "email_address": $scope.user.email,
+                    "mobile_phone": $scope.user.mobile_no || '',
+                    "office_phone": $scope.user.office_no || '',
                   }
                 };
-                newContact.position.tags = {};
+                newContact.position.employee_classes = {};
+                newContact.position.employee_functions = {};
                 numTag = 1;
                 angular.forEach($scope.user_tags.employee_class, function(tag) {
                   var keyTag;
                   keyTag = "tag" + numTag;
-                  newContact.position.tags[keyTag] = {};
-                  newContact.position.tags[keyTag].name = tag.name;
-                  newContact.position.tags[keyTag].enabled = true;
-                  newContact.position.tags[keyTag].employee_class = 1;
-                  newContact.position.tags[keyTag].employee_function = 0;
+                  newContact.position.employee_classes[keyTag] = {};
+                  newContact.position.employee_classes[keyTag].name = tag.name;
+                  newContact.position.employee_classes[keyTag].enabled = true;
+                  newContact.position.employee_classes[keyTag].employee_class = 1;
+                  newContact.position.employee_classes[keyTag].employee_function = 0;
                   return numTag++;
                 });
                 angular.forEach($scope.user_tags.employee_function, function(tag) {
                   var keyTag;
                   keyTag = "tag" + numTag;
-                  newContact.position.tags[keyTag] = {};
-                  newContact.position.tags[keyTag].name = tag.name;
-                  newContact.position.tags[keyTag].enabled = true;
-                  newContact.position.tags[keyTag].employee_class = 0;
-                  newContact.position.tags[keyTag].employee_function = 1;
+                  newContact.position.employee_functions[keyTag] = {};
+                  newContact.position.employee_functions[keyTag].name = tag.name;
+                  newContact.position.employee_functions[keyTag].enabled = true;
+                  newContact.position.employee_functions[keyTag].employee_class = 0;
+                  newContact.position.employee_functions[keyTag].employee_function = 1;
                   return numTag++;
                 });
                 return ContactService.save({
@@ -473,7 +487,63 @@
             if (typeof datajson === 'object' && datajson._embedded.items.length) {
               return $scope.infoUpdated = error.status + ': Verification code existed, refresh & try again!';
             } else if (error.data.errors.children.email) {
-              return $scope.infoUpdated = error.status + ': Email is already used.';
+
+              //-------------------------------------------------------------------------
+              return Users.get(_URL.detail + '/' + user.email.trim()).then(function(res) {
+                var newContact, numTag;
+                $scope.infoUpdated = 'Created New';
+                if (res.status === 200 && typeof res === 'object') {
+                  newContact = {
+                    "position": {
+                      "title": "Position of " + user.username,
+                      "employee": res.data.id,
+                      "enabled": true,
+                      "employer": $scope.clientId,
+                      "handbook_contact": $scope.user.handbook_contact,
+                      "email_address": $scope.user.email,
+                      "mobile_phone": $scope.user.mobile_no || '',
+                      "office_phone": $scope.user.office_no || '',
+                    }
+                  };
+                  newContact.position.employee_classes = {};
+                  newContact.position.employee_functions = {};
+                  numTag = 1;
+                  angular.forEach($scope.user_tags.employee_class, function(tag) {
+                    var keyTag;
+                    keyTag = "tag" + numTag;
+                    newContact.position.employee_classes[keyTag] = {};
+                    newContact.position.employee_classes[keyTag].name = tag.name;
+                    newContact.position.employee_classes[keyTag].enabled = true;
+                    newContact.position.employee_classes[keyTag].employee_class = 1;
+                    newContact.position.employee_classes[keyTag].employee_function = 0;
+                    return numTag++;
+                  });
+                  angular.forEach($scope.user_tags.employee_function, function(tag) {
+                    var keyTag;
+                    keyTag = "tag" + numTag;
+                    newContact.position.employee_functions[keyTag] = {};
+                    newContact.position.employee_functions[keyTag].name = tag.name;
+                    newContact.position.employee_functions[keyTag].enabled = true;
+                    newContact.position.employee_functions[keyTag].employee_class = 0;
+                    newContact.position.employee_functions[keyTag].employee_function = 1;
+                    return numTag++;
+                  });
+                  return ContactService.save({
+                    org_id: $scope.clientId
+                  }, newContact, function(res) {
+                    if (typeof res === 'object' && res.code === 201) {
+                      return $timeout(function() {
+                        return $location.path('/clients/' + $scope.clientId + '/user');
+                      }, 500);
+                    }
+                  },function(error){
+                    return $scope.infoUpdated = error.status + ': Email is already used.';
+                  });
+                }
+              }, function(error) {
+                return alert('API error connection: Not yet create user for this client');
+              });
+              //---------------------------------------------------------------------------------------
             } else {
               return $scope.infoUpdated = error.status + ': Error API, refresh & try again!';
             }
@@ -528,15 +598,17 @@
           return false;
         }
         $scope.isExcel = false;
+
+        var code = $scope.user.code == undefined || $scope.user.code == ""  ? php.randomString(6, 'a#') : $scope.user.code;
         user = {
           "first_name": $scope.user.first_name,
           "last_name": $scope.user.last_name,
           "username": $scope.user.username,
           "email": $scope.user.email,
-          "enabled": true,
+          "enabled": $scope.user.enabled,
           "plain_password": $scope.user.password,
           "ssn": null,
-          "code": php.randomString(6, 'a#'),
+          "code": code,
           "mobile_no": $scope.user.mobile_no || '',
           "office_no": $scope.user.office_no || '',
           "date_added": $filter('date')(new Date(), 'yyyy-MM-ddT00:00:00+0000')
