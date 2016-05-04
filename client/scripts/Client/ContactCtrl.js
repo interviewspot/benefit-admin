@@ -69,7 +69,7 @@
         angular.forEach($scope.frm_contact.$error.required, function(field) {
           return field.$dirty = true;
         });
-        if ($scope.frm_contact.$error.required.length) {
+        if ($scope.frm_contact.$error.required) {
           return false;
         }
         newContact = {

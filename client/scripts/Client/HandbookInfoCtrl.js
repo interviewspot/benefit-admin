@@ -46,7 +46,7 @@
         angular.forEach($scope.frm_crt_handbook.$error.required, function(field) {
           return field.$dirty = true;
         });
-        if ($scope.frm_crt_handbook.$error.required.length) {
+        if ($scope.frm_crt_handbook.$error.required) {
           return false;
         }
         if ($scope.handbook.translations[$scope.handbook.locale]) {
@@ -88,7 +88,7 @@
         angular.forEach($scope.frm_crt_handbook.$error.required, function(field) {
           return field.$dirty = true;
         });
-        if ($scope.frm_crt_handbook.$error.required.length) {
+        if ($scope.frm_crt_handbook.$error.required) {
           return false;
         }
         newData = {

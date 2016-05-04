@@ -53,7 +53,7 @@
         angular.forEach($scope.frm_create_business.$error.required, function(field) {
           return field.$dirty = true;
         });
-        if ($scope.frm_create_business.$error.required.length || !$scope.frm_create_business.$valid) {
+        if ($scope.frm_create_business.$error.required || !$scope.frm_create_business.$valid) {
           return false;
         }
         new_data = {
@@ -182,7 +182,7 @@
         angular.forEach($scope.frm_update_business.$error.required, function(field) {
           return field.$dirty = true;
         });
-        if ($scope.frm_update_business.$error.required.length || !$scope.frm_update_business.$valid) {
+        if ($scope.frm_update_business.$error.required || !$scope.frm_update_business.$valid) {
           return false;
         }
         new_data = {
@@ -249,7 +249,7 @@
         angular.forEach($scope.frm_create_outlet.$error.required, function(field) {
           return field.$dirty = true;
         });
-        if ($scope.frm_create_outlet.$error.required.length || !$scope.frm_create_outlet.$valid) {
+        if ($scope.frm_create_outlet.$error.required || !$scope.frm_create_outlet.$valid) {
           return false;
         }
         new_data = {
@@ -289,7 +289,7 @@
         angular.forEach($scope.frm_create_promotion.$error.required, function(field) {
           return field.$dirty = true;
         });
-        if ($scope.frm_create_promotion.$error.required.length || !$scope.frm_create_promotion.$valid) {
+        if ($scope.frm_create_promotion.$error.required || !$scope.frm_create_promotion.$valid) {
           return false;
         }
         new_data = {
@@ -431,7 +431,7 @@
         angular.forEach($scope.frm_update_outlet.$error.required, function(field) {
           return field.$dirty = true;
         });
-        if ($scope.frm_update_outlet.$error.required.length || !$scope.frm_update_outlet.$valid) {
+        if ($scope.frm_update_outlet.$error.required || !$scope.frm_update_outlet.$valid) {
           return false;
         }
         console.log($scope.resultmap);
@@ -657,7 +657,7 @@
         angular.forEach($scope.frm_update_promotion.$error.required, function(field) {
           return field.$dirty = true;
         });
-        if ($scope.frm_update_promotion.$error.required.length || !$scope.frm_update_promotion.$valid) {
+        if ($scope.frm_update_promotion.$error.required || !$scope.frm_update_promotion.$valid) {
           return false;
         }
         new_data = {
@@ -732,7 +732,7 @@
         angular.forEach($scope.frm_create_outlet.$error.required, function(field) {
           return field.$dirty = true;
         });
-        if ($scope.frm_create_outlet.$error.required.length || !$scope.frm_create_outlet.$valid) {
+        if ($scope.frm_create_outlet.$error.required || !$scope.frm_create_outlet.$valid) {
           return false;
         }
         if ($scope.outlets.chosenList.length <= 0) {

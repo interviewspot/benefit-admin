@@ -236,7 +236,7 @@
         angular.forEach($scope.frm_updateuser.$error.required, function(field) {
           return field.$dirty = true;
         });
-        if ($scope.frm_updateuser.$error.required.length || $scope.frm_updateuser.$invalid) {
+        if ($scope.frm_updateuser.$error.required || $scope.frm_updateuser.$invalid) {
           return false;
         }
         user_code = $scope.user.code;
@@ -524,7 +524,7 @@
         angular.forEach($scope.frm_adduser.$error.required, function(field) {
           return field.$dirty = true;
         });
-        if ($scope.frm_adduser.$error.required.length) {
+        if ($scope.frm_adduser.$error.required) {
           return false;
         }
         $scope.isExcel = false;

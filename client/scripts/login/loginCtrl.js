@@ -19,15 +19,18 @@
               localStorageService.cookie.set('user', {
                 user: res.data
               }, 1);
+              $rootScope.user = localStorageService.cookie.get('user');
               $rootScope.isLoggedIn = true;
               $scope.roles = res.data.roles;
               return aREST.get($scope.username, $scope.password, config.path.baseURL + system.data._links.logged_in_position.href).then(function(position) {
                 return aREST.get($scope.username, $scope.password, position.data._links.employer.href).then(function(employer) {
                   if ($scope.roles.indexOf('ROLE_ADMIN') >= 0 || $scope.roles.indexOf('ROLE_HR_ADMIN') >= 0) {
                     $location.path('/clients');
+                    $rootScope.isAdmin = true;
                     return $route.reload();
                   } else {
                     $location.path('/clients/' + employer.data.id + '/info');
+                    $rootScope.isAdmin = false;
                     return $route.reload();
                   }
                 });

@@ -396,7 +396,7 @@
         angular.forEach($scope.frm_create_clients.$error.required, function(field) {
           return field.$dirty = true;
         });
-        if ($scope.frm_create_clients.$error.required.length) {
+        if ($scope.frm_create_clients.$error.required) {
           return false;
         }
         $scope.co.enabled = true;
