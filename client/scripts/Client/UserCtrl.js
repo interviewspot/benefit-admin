@@ -177,11 +177,13 @@
           $scope.updateTags.position.active = pos.data.active;
           $scope.updateTags.position.employer = $scope.clientId;
           $scope.updateTags.position.handbook_contact = pos.data.handbook_contact;
+          $scope.updateTags.position.enabled = pos.data.enabled;
           return Users.get(pos.data._links.employee.href).then(function(res) {
             if (res.status !== 200 || typeof res !== 'object') {
               return;
             }
             $scope.user = res.data;
+            $scope.user.roles = res.data.roles[0];
             $scope.user.position_data = pos.data;
             $scope.user.employee_class = [];
             $scope.user.employee_function = [];
@@ -255,26 +257,31 @@
         } else {
           date_added = $filter('date')(new Date($scope.user.date_added), 'yyyy-MM-ddT00:00:00+0000');
         }
+        var roles = [];
+        roles.push($scope.user.roles);
         newData = {
           "user": {
+            "roles":roles,
             "first_name": $scope.user.first_name,
             "last_name": $scope.user.last_name,
             "username": $scope.user.username,
             "email": $scope.user.email,
             "code": $scope.user.code,
-            "enabled": $scope.user.enabled,
+            "enabled": true,
             "mobile_no": $scope.user.mobile_no || '',
             "office_no": $scope.user.office_no || '',
             "date_added": date_added,
             "four_digit_pin": $scope.user.four_digit_pin || ''
           }
         };
+        var isHr = $scope.user.roles=='ROLE_HR_ADMIN' ? true:false;
         $scope.updateTags.position = {
           "title": "Position of " + $scope.user.username,
           "employee": $scope.user.id,
-          "enabled": $scope.user.enabled,
+          "enabled": String($scope.updateTags.position.enabled),
           "employer": $scope.clientId,
-          "handbook_contact": $scope.user.position_data.handbook_contact
+          "handbook_contact": String($scope.user.position_data.handbook_contact),
+          "hr_admin":String(isHr)
         };
         $scope.updateTags.position.employee_classes = {};
         $scope.updateTags.position.employee_functions = {};
@@ -299,7 +306,6 @@
           $scope.updateTags.position.employee_functions[keyTag].employee_function = 1;
           return numTag++;
         });
-        $scope.updateTags.position.enabled = $scope.user.enabled;
         birthday = $scope.user.birthday || '';
         if (birthday !== '') {
           birthday = $filter('date')(new Date(birthday), 'yyyy-MM-ddT00:00:00+0000');
@@ -431,16 +437,18 @@
               var newContact, numTag;
               $scope.infoUpdated = 'Created New';
               if (res.status === 200 && typeof res === 'object') {
+                var isHr = res.data.roles[0]=='ROLE_HR_ADMIN' ? true:false;
                 newContact = {
                   "position": {
                     "title": "Position of " + user.username,
                     "employee": res.data.id,
-                    "enabled": true,
+                    "enabled": String($scope.user.enabled),
                     "employer": $scope.clientId,
-                    "handbook_contact": $scope.user.handbook_contact,
+                    "handbook_contact": String($scope.user.handbook_contact),
                     "email_address": $scope.user.email,
                     "mobile_phone": $scope.user.mobile_no || '',
                     "office_phone": $scope.user.office_no || '',
+                    "hr_admin":String(isHr)
                   }
                 };
                 newContact.position.employee_classes = {};
@@ -470,9 +478,9 @@
                   org_id: $scope.clientId
                 }, newContact, function(res) {
                   if (typeof res === 'object' && res.code === 201) {
-                    return $timeout(function() {
+                    // return $timeout(function() {
                       return $location.path('/clients/' + $scope.clientId + '/user');
-                    }, 500);
+                    // }, 500);
                   }
                 });
               }
@@ -493,16 +501,18 @@
                 var newContact, numTag;
                 $scope.infoUpdated = 'Created New';
                 if (res.status === 200 && typeof res === 'object') {
+                  var isHr = res.data.roles[0]=='ROLE_HR_ADMIN' ? true:false;
                   newContact = {
                     "position": {
                       "title": "Position of " + user.username,
                       "employee": res.data.id,
-                      "enabled": true,
+                      "enabled": String($scope.user.enabled),
                       "employer": $scope.clientId,
-                      "handbook_contact": $scope.user.handbook_contact,
+                      "handbook_contact": String($scope.user.handbook_contact),
                       "email_address": $scope.user.email,
                       "mobile_phone": $scope.user.mobile_no || '',
                       "office_phone": $scope.user.office_no || '',
+                      "hr_admin":String(isHr)
                     }
                   };
                   newContact.position.employee_classes = {};
@@ -600,12 +610,15 @@
         $scope.isExcel = false;
 
         var code = $scope.user.code == undefined || $scope.user.code == ""  ? php.randomString(6, 'a#') : $scope.user.code;
+        var roles = [];
+        roles.push($scope.user.roles);
         user = {
+          "roles":roles,
           "first_name": $scope.user.first_name,
           "last_name": $scope.user.last_name,
           "username": $scope.user.username,
           "email": $scope.user.email,
-          "enabled": $scope.user.enabled,
+          "enabled": true,
           "plain_password": $scope.user.password,
           "ssn": null,
           "code": code,

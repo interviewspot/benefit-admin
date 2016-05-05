@@ -202,7 +202,7 @@
                         <td>
                             <input type="checkbox"
                                 name="user_enabled"
-                                ng-model="user.enabled"/>
+                                ng-model="updateTags.position.enabled"/>
                         </td>
                     </tr>
                     <tr>
@@ -211,6 +211,16 @@
                             <input type="checkbox"
                                 name="handbook_contact"
                                 ng-model="user.position_data.handbook_contact"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Role</th>
+                        <td>
+                            <select ng-model="user.roles">
+                                <option value="">Regular User</option>
+                                <option value="ROLE_HR_ADMIN">--Hr Admin</option>
+                                <option value="ROLE_ADMIN">----System Admin</option>
+                            </select>
                         </td>
                     </tr>
                 </tbody>
