@@ -278,10 +278,10 @@
         $scope.updateTags.position = {
           "title": "Position of " + $scope.user.username,
           "employee": $scope.user.id,
-          "enabled": String($scope.updateTags.position.enabled),
+          "enabled": $scope.updateTags.position.enabled,
           "employer": $scope.clientId,
-          "handbook_contact": String($scope.user.position_data.handbook_contact),
-          "hr_admin":String(isHr)
+          "handbook_contact": $scope.user.position_data.handbook_contact,
+          "hr_admin":isHr
         };
         $scope.updateTags.position.employee_classes = {};
         $scope.updateTags.position.employee_functions = {};
@@ -442,13 +442,13 @@
                   "position": {
                     "title": "Position of " + user.username,
                     "employee": res.data.id,
-                    "enabled": String($scope.user.enabled),
+                    "enabled": $scope.user.enabled,
                     "employer": $scope.clientId,
-                    "handbook_contact": String($scope.user.handbook_contact),
+                    "handbook_contact": $scope.user.handbook_contact,
                     "email_address": $scope.user.email,
                     "mobile_phone": $scope.user.mobile_no || '',
                     "office_phone": $scope.user.office_no || '',
-                    "hr_admin":String(isHr)
+                    "hr_admin":isHr
                   }
                 };
                 newContact.position.employee_classes = {};
@@ -506,13 +506,13 @@
                     "position": {
                       "title": "Position of " + user.username,
                       "employee": res.data.id,
-                      "enabled": String($scope.user.enabled),
+                      "enabled": $scope.user.enabled,
                       "employer": $scope.clientId,
-                      "handbook_contact": String($scope.user.handbook_contact),
+                      "handbook_contact": $scope.user.handbook_contact,
                       "email_address": $scope.user.email,
                       "mobile_phone": $scope.user.mobile_no || '',
                       "office_phone": $scope.user.office_no || '',
-                      "hr_admin":String(isHr)
+                      "hr_admin":isHr
                     }
                   };
                   newContact.position.employee_classes = {};
