@@ -512,7 +512,7 @@
                       "email_address": $scope.user.email,
                       "mobile_phone": $scope.user.mobile_no || '',
                       "office_phone": $scope.user.office_no || '',
-                      "hr_admin":isHr
+                      "hr_admin":isHr 
                     }
                   };
                   newContact.position.employee_classes = {};

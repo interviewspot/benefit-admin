@@ -58,19 +58,19 @@
                                 <i class="fa fa-times" ng-click="delBanner(banner)"></i>
                             </td>
                         </tr-->
-                        <tr ng-show="isUpdate">
-                            <td class="td-20 td-bold">Images:</td>
-                            <td class="text-center">
-                                <button type="button" ng-show="!readyToUpload" ng-click="addNewImage()" class="btn-brown">Add new image</button>
-                                <upload-file
-                                    ng-show="readyToUpload"
-                                    upload-url="urlUpload"
-                                    ng-uploadresponse="uploadResponse"
-                                    ng-label="uploadButtonLabel"
-                                    ng-progress-color="'#CFAE79'">
-                                </upload-file>
-                            </td>
-                        </tr>
+                        <!--<tr ng-show="isUpdate">-->
+                            <!--<td class="td-20 td-bold">Images:</td>-->
+                            <!--<td class="text-center">-->
+                                <!--<button type="button" ng-show="!readyToUpload" ng-click="addNewImage()" class="btn-brown">Add new image</button>-->
+                                <!--<upload-file-->
+                                    <!--ng-show="readyToUpload"-->
+                                    <!--upload-url="urlUpload"-->
+                                    <!--ng-uploadresponse="uploadResponse"-->
+                                    <!--ng-label="uploadButtonLabel"-->
+                                    <!--ng-progress-color="'#CFAE79'">-->
+                                <!--</upload-file>-->
+                            <!--</td>-->
+                        <!--</tr>-->
                     </tbody>
                 </table>
                 <!-- END : TBL -->
@@ -91,20 +91,60 @@
             </form>
                 <div ng-show="isUpdate">
                     <div data-ng-repeat="content in contents track by $index">
-                        <form  name="frm_section_content"  class="modal_frm" ng-submit="submitContent(content,$index)" novalidate>
+                        <form ng-show="content.html_text!='none'"  name="frm_section_content"  class="modal_frm" ng-submit="submitContent(content,$index)" novalidate>
                             <span>Content</span>
-                            <div  text-angular ng-model="content.html_text"></div>
-                            <button type="submit"
-                                    class="save btn-brown">
-                                <i class="fa fa-save"></i>&nbsp;&nbsp;SAVE
-                            </button>
+                            <div ng-bind-html="content.html_text"></div>
+                            <!--<div  text-angular ng-model="content.html_text"></div>-->
+                            <!--<p></p>-->
+                            <!--<button type="submit"-->
+                                    <!--class="save btn-brown">-->
+                                <!--<i class="fa fa-save"></i>&nbsp;&nbsp;SAVE CONTENT-->
+                            <!--</button>-->
                         </form>
+                        <img ng-show="content.html_text=='none'" width="60px" ng-src="{{content.url}}" />
                     </div>
+                    <hr>
+                    <p></p>
+                    <p></p>
+                    <p></p>
+                    <p></p>
+
+                        <button ng-show="content.html_text!='none'" type="button" ng-show="!readyToUpload" ng-click="addNewImage(contents.length)" class="btn-brown">Add
+                            new image
+                        </button>
+                        <upload-file
+                                ng-show="readyToUpload"
+                                upload-url="urlUpload"
+                                ng-uploadresponse="uploadResponse"
+                                ng-label="uploadButtonLabel"
+                                ng-progress-color="'#CFAE79'">
+                        </upload-file>
                 </div>
+             <p></p>
             <button ng-click="addContent()" type="button"
                     class="save btn-brown">
-                <i class="fa fa-save"></i>&nbsp;&nbsp;ADD CONTENT
+                Add new content
             </button>
+
+
+
+             <ul dnd-list="list">
+                 <!-- The dnd-draggable directive makes an element draggable and will
+                      transfer the object that was assigned to it. If an element was
+                      dragged away, you have to remove it from the original list
+                      yourself using the dnd-moved attribute -->
+                 <li ng-repeat="item in list"
+                     dnd-draggable="item"
+                     dnd-moved="list.splice($index, 1)"
+                     dnd-effect-allowed="move"
+                     dnd-selected="models.selected = item"
+                     ng-class="{'selected': models.selected === item}"
+                 >
+                     {{item.label}}
+                 </li>
+             </ul>
+
+
         </div>
         <!-- END : FORWARD -->
     </div>

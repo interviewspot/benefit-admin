@@ -146,28 +146,35 @@
                 return section.children.show = !section.children.show;
             };
 
+            $scope.contents = [];
             $scope.editSection = function (section) {
-                $scope.isUpdate = true;
                 $scope.contents = [];
-                console.log(section);
+                $scope.isUpdate = true;
                 section.title = section.translations['en_us'] != undefined ? section.translations['en_us'].title : section.title;
                 section.description = section.translations['en_us'] != undefined ? section.translations['en_us'].description : section.description;
                 $scope.formSection = section;
                 $scope.selectedSec = section.id;
 
                 //get content
-                return fetchHandbook.get($scope.formSection._links.contents.href).then(function (contents) {
+                return fetchHandbook.get($scope.formSection._links.contents.href + "?sort=content.ordering:asc").then(function (contents) {
                     angular.forEach(contents.data._embedded.items, function (content, key) {
-                        if (content.html_text != undefined) {
-                            if (content._links != undefined) {
-                                fetchHandbook.get(content._links.translations.href).then(function (translations) {
-                                    content.html_text = translations.data.en_us.htmlText;
-                                    console.log(translations);
-                                }, function (error) {
-                                    return console.log(error);
-                                });
-                            }
-                            $scope.contents.push(content);
+                        content.url = "";
+                        if (content._links != undefined) {
+                            fetchHandbook.get(content._links.translations.href).then(function (translations) {
+                                content.html_text = translations.data.en_us.htmlText;
+                                if (content._links.image_url != undefined) {
+                                    fetchHandbook.get(content._links.image_url.href + "?locale=en_us").then(function (image) {
+                                        content.url = image.data.image_url;
+                                        $scope.contents.push(content);
+                                    }, function (error) {
+                                        return console.log(error);
+                                    });
+                                }
+                            }, function (error) {
+                                return console.log(error);
+                            });
+
+
                         }
                     });
                     console.log($scope.contents);
@@ -191,16 +198,17 @@
                 $scope.isUpdate = true;
                 return $scope.readyToUpload = false;
             };
-            $scope.addNewImage = function () {
+            $scope.addNewImage = function (ordering) {
                 var content;
                 content = {
                     "content": {
                         "title": "Image of " + $scope.formSection.title,
                         "image_id": "",
-                        "html_text": "",
+                        "html_text": "none",
                         "enabled": "1",
                         "section": $scope.formSection.id,
-                        "locale": "en_us"
+                        "locale": "en_us",
+                        "ordering": ordering,
                     }
                 };
                 if ($scope.formSection._links.contents) {
@@ -208,7 +216,7 @@
                         if (typeof res === 'object' && res.status === 201) {
                             return fetchHandbook.get(config.path.baseURL + res.headers().location).then(function (content) {
                                 if (content.data._links.image) {
-                                    $scope.urlUpload = content.data._links.image.href;
+                                    $scope.urlUpload = content.data._links.image.href + "?locale=en_us";
                                     return $scope.readyToUpload = true;
                                 }
                             }, function (error) {
@@ -332,14 +340,13 @@
                 }
             };
 
-
             $scope.content = {
                 "title": "Image of " + $scope.formSection.title,
                 "image_id": "",
                 "html_text": '',
                 "enabled": "1",
                 "section": $scope.formSection.id,
-                "locale": "en_us"
+                "locale": "en_us",
             };
             $scope.submitContent = function (content) {
                 content = {
@@ -352,8 +359,10 @@
                         content.content.image_id = "";
                         content.content.section = $scope.formSection.id;
                         content.content.locale = "en_us";
+                        content.content.ordering = $scope.contents.length;
                         delete content.content._links;
                         delete content.content.id;
+                        delete content.content.url;
                         return fetchHandbook.put(urlEdit, content).then(function (res) {
                             if (res.status === 204) {
                                 return console.log('ok men');
@@ -363,6 +372,7 @@
                         });
                     } else {
                         //post
+                        content.content.ordering = $scope.contents.length;
                         return fetchHandbook.post($scope.formSection._links.contents.href, content).then(function (res) {
                             if (typeof res === 'object' && res.status === 201) {
                                 return fetchHandbook.get(config.path.baseURL + res.headers().location).then(function (content) {
@@ -378,9 +388,9 @@
                 }
             };
             return $scope.addContent = function () {
-                console.log($scope.contents);
                 var newContent;
                 newContent = $scope.content;
+                var order = $scope.contents.length;
                 $scope.contents.push(newContent);
                 return $scope.content = {
                     "title": "Image of " + $scope.formSection.title,
@@ -391,6 +401,41 @@
                     "locale": "en_us"
                 };
             };
+
+
+            // draft drop
+            // $scope.models = {
+            //     selected: null,
+            //     lists: {"A": []}
+            // };
+
+            // Generate initial model
+            for (var i = 1; i <= 3; ++i) {
+                $scope.models.lists.A.push({label: "Item A" + i});
+            }
+
+            // Model to JSON for demo purpose
+            $scope.$watch('models', function(model) {
+                $scope.modelAsJson = angular.toJson(model, true);
+            }, true);
+            ////////////////
+            console.log('running');
+
+            function Directives(module) {
+                var directives = [];
+                var invokes = angular.module(module)._invokeQueue;
+                for (var i in invokes) {
+                    if (invokes[i][1] === "directive") directives.push(invokes[i][2]);
+                }
+                return directives;
+            }
+            //
+            // for (var j in module.requires) {
+            //     Directives(module.requires[j], directives);
+            // }
+            console.log(Directives('app'));
+
+
         }
     ]);
 

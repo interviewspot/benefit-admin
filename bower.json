@@ -39,7 +39,8 @@
     "angular-wizard": "~0.6.1",
     "jquery.sparkline": "~2.1.2",
     "ng-file-upload": "~12.0.4",
-    "js-xlsx": "~0.8.0"
+    "js-xlsx": "~0.8.0",
+    "angular-drag-and-drop-lists": "~1.4.0"
   },
   "devDependencies": {
     "bourbon": "~4.2.0",
