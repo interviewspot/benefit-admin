@@ -141,14 +141,14 @@
             $scope.uploadButtonLabel = "Upload Section Images";
             $scope.urlUpload = "";
             $scope.uploadResponse = "";
-            $scope.readyToUpload = false;
+            $rootScope.readyToUpload = false;
             $scope.showChildren = function (section) {
                 return section.children.show = !section.children.show;
             };
 
-            $scope.contents = [];
+            $rootScope.contents = [];
             $scope.editSection = function (section) {
-                $scope.contents = [];
+                $rootScope.contents = [];
                 $scope.isUpdate = true;
                 section.title = section.translations['en_us'] != undefined ? section.translations['en_us'].title : section.title;
                 section.description = section.translations['en_us'] != undefined ? section.translations['en_us'].description : section.description;
@@ -165,7 +165,7 @@
                                 if (content._links.image_url != undefined) {
                                     fetchHandbook.get(content._links.image_url.href + "?locale=en_us").then(function (image) {
                                         content.url = image.data.image_url;
-                                        $scope.contents.push(content);
+                                        $rootScope.contents.push(content);
                                     }, function (error) {
                                         return console.log(error);
                                     });
@@ -196,8 +196,10 @@
                     $scope.parentSelect = null;
                 }
                 $scope.isUpdate = true;
-                return $scope.readyToUpload = false;
+                return $rootScope.readyToUpload = false;
             };
+            $scope.contentImage = {};
+            $scope.contentImageLink = '';
             $scope.addNewImage = function (ordering) {
                 var content;
                 content = {
@@ -217,7 +219,9 @@
                             return fetchHandbook.get(config.path.baseURL + res.headers().location).then(function (content) {
                                 if (content.data._links.image) {
                                     $scope.urlUpload = content.data._links.image.href + "?locale=en_us";
-                                    return $scope.readyToUpload = true;
+                                    $scope.contentImage = content.data;
+                                    $scope.contentImageLink = content.data._links.image_url.href + "?locale=en_us";
+                                    return $rootScope.readyToUpload = true;
                                 }
                             }, function (error) {
                                 return console.log(error);
@@ -391,7 +395,7 @@
                 var newContent;
                 newContent = $scope.content;
                 var order = $scope.contents.length;
-                $scope.contents.push(newContent);
+                $rootScope.contents.push(newContent);
                 return $scope.content = {
                     "title": "Image of " + $scope.formSection.title,
                     "image_id": "",

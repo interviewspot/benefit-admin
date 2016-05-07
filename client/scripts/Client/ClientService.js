@@ -403,7 +403,7 @@
     'Upload', function(Upload) {
       var controller, link;
       controller = [
-        '$scope', '$http', '$timeout', function($scope, $http, $timeout) {
+        '$scope', '$http', '$timeout','$rootScope','fetchHandbook', function($scope, $http, $timeout,$rootScope,fetchHandbook) {
           var defaultLabel;
           defaultLabel = $scope.label.toString();
           $scope.fileName = '';
@@ -425,6 +425,19 @@
               }).then(function(res) {
                 $scope.result = res.data;
                 $scope.result.logo_id = res.headers().location.split('/')[2];
+
+                fetchHandbook.get($scope.contentImageLink).then(function (image) {
+                  $scope.contentImage.url = image.data.image_url;
+                  $rootScope.contents.push($scope.contentImage);
+                  $rootScope.readyToUpload = false;
+                  $scope.file = {};
+                }, function (error) {
+                  return console.log(error);
+                });
+
+
+                console.log('check scrope');
+                console.log($rootScope.contents);
                 return $scope.progressPercentage = 0;
               }, function(error) {
                 console.error(error);
@@ -462,6 +475,8 @@
         'restrict': 'E',
         'scope': {
           'uploadUrl': '=uploadUrl',
+          'contentImage': '=contentImage',
+          'contentImageLink': '=contentImageLink',
           'color': '=ngProgressColor',
           'label': '=ngLabel',
           'result': '=ngUploadresponse'
