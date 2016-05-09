@@ -4,84 +4,84 @@
             ng-click="showPreview = !showPreview">
             Preview
         </span-->
-         <div class="sec-itm blk-preview" ng-show="!isForward">
+        <div class="sec-itm blk-preview" ng-show="!isForward">
             <form name="frm_section" class="modal_frm" ng-submit="submitSection()" novalidate>
                 <table class="table tbl table-striped">
                     <tbody>
-                        <tr>
-                            <td class="td-20 td-bold">Section Title:</td>
-                            <td>
-                                <input type="text"
-                                name="sec_title"
-                                ng-model="formSection.title"
-                                required=""
-                                class="txt-ipt ipt"
-                                ng-class='{txt_err : (frm_section.sec_title.$invalid && frm_section.sec_title.$dirty)}'/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="td-20 td-bold">Status:</td>
-                            <td>
-                                <!-- <input type="text" ng-model="formSection.active" class="txt-ipt"/> -->
-                                <label>
-                                    <input type="checkbox" ng-model="formSection.enabled"> Active / Deactive
-                                </label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="td-20 td-bold">Section No:</td>
-                            <td>
-                                <input
-                                type="text"
-                                ng-model="formSection.ordering"
-                                class="txt-ipt ipt"
-                                required=""
-                                name="sec_no"
-                                ng-class='{txt_err : (frm_section.sec_no.$invalid && frm_section.sec_no.$dirty)}'
-                                />
-                            </td>
-                        </tr>
-                        <tr >
-                            <td class="td-20 td-bold">Section Parent:</td>
-                            <td>
-                                <select
-                                ng-model="parentSelect"
-                                ng-change="changedValue(parentSelect)"
-                                ng-options="option.id as option.translations['en_us'].title ? option.translations['en_us'].title : option.title for option in parentSection">
-                                     <option value="">-- Parent section --</option>
-                                </select>
-                            </td>
-                        </tr>
-                        <!--tr ng-if="clientDetail.banners.length > 0" ng-repeat="banner in clientDetail.banners" ng-cloak>
-                            <td class="text-center td-logo">
-                                <img ng-src="{{banner.banner_url}}" alt="{{clientDetail.name}}"/>
-                                <i class="fa fa-times" ng-click="delBanner(banner)"></i>
-                            </td>
-                        </tr-->
-                        <!--<tr ng-show="isUpdate">-->
-                            <!--<td class="td-20 td-bold">Images:</td>-->
-                            <!--<td class="text-center">-->
-                                <!--<button type="button" ng-show="!readyToUpload" ng-click="addNewImage()" class="btn-brown">Add new image</button>-->
-                                <!--<upload-file-->
-                                    <!--ng-show="readyToUpload"-->
-                                    <!--upload-url="urlUpload"-->
-                                    <!--ng-uploadresponse="uploadResponse"-->
-                                    <!--ng-label="uploadButtonLabel"-->
-                                    <!--ng-progress-color="'#CFAE79'">-->
-                                <!--</upload-file>-->
-                            <!--</td>-->
-                        <!--</tr>-->
+                    <tr>
+                        <td class="td-20 td-bold">Section Title:</td>
+                        <td>
+                            <input type="text"
+                                   name="sec_title"
+                                   ng-model="formSection.title"
+                                   required=""
+                                   class="txt-ipt ipt"
+                                   ng-class='{txt_err : (frm_section.sec_title.$invalid && frm_section.sec_title.$dirty)}'/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td-20 td-bold">Status:</td>
+                        <td>
+                            <!-- <input type="text" ng-model="formSection.active" class="txt-ipt"/> -->
+                            <label>
+                                <input type="checkbox" ng-model="formSection.enabled"> Active / Deactive
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td-20 td-bold">Section No:</td>
+                        <td>
+                            <input
+                                    type="text"
+                                    ng-model="formSection.ordering"
+                                    class="txt-ipt ipt"
+                                    required=""
+                                    name="sec_no"
+                                    ng-class='{txt_err : (frm_section.sec_no.$invalid && frm_section.sec_no.$dirty)}'
+                            />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="td-20 td-bold">Section Parent:</td>
+                        <td>
+                            <select
+                                    ng-model="parentSelect"
+                                    ng-change="changedValue(parentSelect)"
+                                    ng-options="option.id as option.translations['en_us'].title ? option.translations['en_us'].title : option.title for option in parentSection">
+                                <option value="">-- Parent section --</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <!--tr ng-if="clientDetail.banners.length > 0" ng-repeat="banner in clientDetail.banners" ng-cloak>
+                        <td class="text-center td-logo">
+                            <img ng-src="{{banner.banner_url}}" alt="{{clientDetail.name}}"/>
+                            <i class="fa fa-times" ng-click="delBanner(banner)"></i>
+                        </td>
+                    </tr-->
+                    <!--<tr ng-show="isUpdate">-->
+                    <!--<td class="td-20 td-bold">Images:</td>-->
+                    <!--<td class="text-center">-->
+                    <!--<button type="button" ng-show="!readyToUpload" ng-click="addNewImage()" class="btn-brown">Add new image</button>-->
+                    <!--<upload-file-->
+                    <!--ng-show="readyToUpload"-->
+                    <!--upload-url="urlUpload"-->
+                    <!--ng-uploadresponse="uploadResponse"-->
+                    <!--ng-label="uploadButtonLabel"-->
+                    <!--ng-progress-color="'#CFAE79'">-->
+                    <!--</upload-file>-->
+                    <!--</td>-->
+                    <!--</tr>-->
                     </tbody>
                 </table>
                 <!-- END : TBL -->
                 <span>Description</span>
                 <div text-angular
-                    ng-model="formSection.description"></div>
+                     ng-model="formSection.description"></div>
                 <!-- <textarea ui-tinymce data-ng-model="formSection.description"></textarea> -->
                 <!-- END : EDITOR -->
                 <p class="tp-20">
                     <button type="submit"
-                        class="save btn-brown">
+                            class="save btn-brown">
                         <i class="fa fa-save"></i>&nbsp;&nbsp;SAVE SECTION
                     </button>
                     <span class="msg-update">
@@ -89,63 +89,100 @@
                     </span>
                 </p>
             </form>
-                <div ng-show="isUpdate">
-                    <div data-ng-repeat="content in contents track by $index">
-                        <form ng-show="content.html_text!='none'"  name="frm_section_content"  class="modal_frm" ng-submit="submitContent(content,$index)" novalidate>
-                            <span>Content</span>
-                            <div ng-bind-html="content.html_text"></div>
-                            <!--<div  text-angular ng-model="content.html_text"></div>-->
-                            <!--<p></p>-->
-                            <!--<button type="submit"-->
-                                    <!--class="save btn-brown">-->
-                                <!--<i class="fa fa-save"></i>&nbsp;&nbsp;SAVE CONTENT-->
-                            <!--</button>-->
-                        </form>
-                        <img ng-show="content.html_text=='none'" width="60px" ng-src="{{content.url}}" />
+            <hr>
+            <div ng-show="isUpdate">
+
+
+                <!--<div data-ng-repeat="content in contents track by $index">-->
+                <!--<form ng-show="content.html_text!='none'"  name="frm_section_content"  class="modal_frm" ng-submit="submitContent(content,$index)" novalidate>-->
+                <!--<span>Content</span>-->
+                <!--<div ng-bind-html="content.html_text"></div>-->
+                <!--&lt;!&ndash;<div  text-angular ng-model="content.html_text"></div>&ndash;&gt;-->
+                <!--&lt;!&ndash;<p></p>&ndash;&gt;-->
+                <!--&lt;!&ndash;<button type="submit"&ndash;&gt;-->
+                <!--&lt;!&ndash;class="save btn-brown">&ndash;&gt;-->
+                <!--&lt;!&ndash;<i class="fa fa-save"></i>&nbsp;&nbsp;SAVE CONTENT&ndash;&gt;-->
+                <!--&lt;!&ndash;</button>&ndash;&gt;-->
+                <!--</form>-->
+                <!--<img ng-show="content.html_text=='none'" width="60px" ng-src="{{content.url}}" />-->
+                <!--</div>-->
+
+                <div class="simpleDemo">
+
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Contents</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div data-ng-show="contents.length > 0">
+                                <button ng-click="updateOrderingContent()" class="btn-brown">
+                                    Update Ordering
+                                </button>
+                                <hr>
+                                <br>
+                            </div>
+                            <div data-ng-show="contents.length == 0">
+                                No Contents
+                            </div>
+                            <ul dnd-list="contents">
+                                <li ng-repeat="content in contents"
+                                    dnd-draggable="content"
+                                    dnd-moved="contents.splice($index, 1)"
+                                    dnd-effect-allowed="move"
+                                >
+                                    <form ng-show="content != 'undefined' && content.html_text!='none'"
+                                          name="frm_section_content" class="modal_frm"
+                                          ng-submit="submitContent(content,$index)" novalidate>
+                                        <div class="content-only" data-ng-click="editContent($index)"
+                                             data-ng-show="!content.isShow" ng-bind-html="content.html_text"></div>
+                                        <div data-ng-show="content.isShow">
+                                            <div text-angular ng-model="content.html_text"></div>
+                                            <p></p>
+                                            <button type="submit"
+                                                    class="save btn-brown">
+                                                <i class="fa fa-save"></i>&nbsp;&nbsp;Save Content
+                                            </button>
+                                            <button data-ng-click="closeEditContent($index)" type="button"
+                                                    class="btn-brown">
+                                                &nbsp;&nbsp;Close
+                                            </button>
+                                        </div>
+                                    </form>
+                                    <img ng-show="content != 'undefined' && content.html_text=='none'" width="60px"
+                                         ng-src="{{content.url}}"/>
+                                    <br>
+                                    <a href="javascript:void(0)"
+                                       data-ng-click="deleteContent(content,$index)">remove</a>
+                                </li>
+                            </ul>
+
+                            <hr>
+                            <button type="button" ng-show="!readyToUpload"
+                                    ng-click="addNewImage()" class="btn-brown">Add
+                                new image
+                            </button>
+                            <upload-file
+                                    ng-show="readyToUpload"
+                                    upload-url="urlUpload"
+                                    content-image="contentImage"
+                                    content-image-link="contentImageLink"
+                                    upload-url="urlUpload"
+                                    ng-uploadresponse="uploadResponse"
+                                    ng-label="uploadButtonLabel"
+                                    ng-progress-color="'#CFAE79'">
+                            </upload-file>
+                            <p></p>
+                            <button data-ng-show="readyToAddContent" ng-click="addContent()" type="button"
+                                    class="save btn-brown">
+                                Add new content
+                            </button>
+                        </div>
                     </div>
-                    <hr>
-                    <p></p>
-                    <p></p>
-                    <p></p>
-                    <p></p>
 
-                        <button ng-show="content.html_text!='none'" type="button" ng-show="!readyToUpload" ng-click="addNewImage(contents.length)" class="btn-brown">Add
-                            new image
-                        </button>
-                        <upload-file
-                                ng-show="readyToUpload"
-                                upload-url="urlUpload"
-                                content-image="contentImage"
-                                content-image-link="contentImageLink"
-                                upload-url="urlUpload"
-                                ng-uploadresponse="uploadResponse"
-                                ng-label="uploadButtonLabel"
-                                ng-progress-color="'#CFAE79'">
-                        </upload-file>
+
                 </div>
-             <p></p>
-            <button ng-click="addContent()" type="button"
-                    class="save btn-brown">
-                Add new content
-            </button>
 
-
-
-             <ul dnd-list="list">
-                 <!-- The dnd-draggable directive makes an element draggable and will
-                      transfer the object that was assigned to it. If an element was
-                      dragged away, you have to remove it from the original list
-                      yourself using the dnd-moved attribute -->
-                 <li ng-repeat="item in list"
-                     dnd-draggable="item"
-                     dnd-moved="list.splice($index, 1)"
-                     dnd-effect-allowed="move"
-                     dnd-selected="models.selected = item"
-                     ng-class="{'selected': models.selected === item}"
-                 >
-                     {{item.label}}
-                 </li>
-             </ul>
+            </div>
 
 
         </div>
@@ -161,34 +198,48 @@
             </div>
 
             <div class="tbl-r sc-itm"
-                ng-repeat="section in sections.items"
-                ng-class="{active: section.id == selectedSec}">
+                 ng-repeat="section in sections.items"
+                 ng-class="{active: section.id == selectedSec}">
                 <div class="t-tr">
                     <div class="t-td t-3">Section {{section.ordering}}</div>
-                    <div class="t-td t-ct" ng-bind-html="section.translations['en_us'].title ? section.translations['en_us'].title : section.title"></div>
-                    <span ng-show="section.children.total > 0" title="Show all children" class="tbl-show-children" ng-click="showChildren(section)">
+                    <div class="t-td t-ct"
+                         ng-bind-html="section.translations['en_us'].title ? section.translations['en_us'].title : section.title"></div>
+                    <span ng-show="section.children.total > 0" title="Show all children" class="tbl-show-children"
+                          ng-click="showChildren(section)">
                         <i class="fa fa-sign-in"></i>
                     </span>
-                    <span title="Edit this section" class="tbl-edit" ng-click="editSection(section)">
+                    <span data-ng-show="allowShowActionSections" title="Edit this section" class="tbl-edit"
+                          ng-click="editSection(section)">
                         <i class="fa fa-edit"></i>
                     </span>
-                    <span title="Remove this section" class="tbl-remove" ng-click="deleteSection(section)">
+                    <span data-ng-show="allowShowActionSections" title="Remove this section" class="tbl-remove"
+                          ng-click="deleteSection(section)">
                         <i class="fa fa-trash-o"></i>
                     </span>
+                    <span data-ng-show="!allowShowActionSections">
+                        <i class="fa fa-spinner" aria-hidden="true"></i>
+                    </span>
+
                 </div>
                 <div ng-show="section.children.total > 0 && section.children.show">
                     <div class="tbl-r sc-itm"
-                     ng-repeat="child_sec in section.children.items"
-                    ng-class="{active: child_sec.id == selectedSec}">
+                         ng-repeat="child_sec in section.children.items"
+                         ng-class="{active: child_sec.id == selectedSec}">
                         <div class="t-tr">
                             <div class="t-td t-3">Sub</div>
                             <div class="t-td t-2">{{section.ordering}}.{{child_sec.ordering}}</div>
-                            <div class="t-td t-ct" ng-bind-html="child_sec.translations['en_us'].title ? child_sec.translations['en_us'].title : child_sec.title"></div>
-                            <span title="Edit this section" class="tbl-edit" ng-click="editSection(child_sec)">
+                            <div class="t-td t-ct"
+                                 ng-bind-html="child_sec.translations['en_us'].title ? child_sec.translations['en_us'].title : child_sec.title"></div>
+                            <span data-ng-show="allowShowActionSections" title="Edit this section" class="tbl-edit"
+                                  ng-click="editSection(child_sec)">
                                 <i class="fa fa-edit"></i>
                             </span>
-                            <span title="Remove this section" class="tbl-remove" ng-click="deleteSection(child_sec)">
+                            <span data-ng-show="allowShowActionSections" title="Remove this section" class="tbl-remove"
+                                  ng-click="deleteSection(child_sec)">
                                 <i class="fa fa-trash-o"></i>
+                            </span>
+                             <span data-ng-show="!allowShowActionSections">
+                                <i class="fa fa-spinner"></i>
                             </span>
                         </div>
                     </div>
@@ -257,3 +308,74 @@
     </div>
 </div>
 <!-- END : ITEM -->
+
+<style>
+    /**
+ * For the correct positioning of the placeholder element, the dnd-list and
+ * it's children must have position: relative
+ */
+    .simpleDemo ul[dnd-list],
+    .simpleDemo ul[dnd-list] > li {
+        position: relative;
+    }
+
+    /**
+     * The dnd-list should always have a min-height,
+     * otherwise you can't drop to it once it's empty
+     */
+    .simpleDemo ul[dnd-list] {
+        min-height: 42px;
+        padding-left: 0px;
+    }
+
+    /**
+     * The dndDraggingSource class will be applied to
+     * the source element of a drag operation. It makes
+     * sense to hide it to give the user the feeling
+     * that he's actually moving it.
+     */
+    .simpleDemo ul[dnd-list] .dndDraggingSource {
+        display: none;
+    }
+
+    /**
+     * An element with .dndPlaceholder class will be
+     * added to the dnd-list while the user is dragging
+     * over it.
+     */
+    .simpleDemo ul[dnd-list] .dndPlaceholder {
+        display: block;
+        background-color: #ddd;
+        min-height: 42px;
+    }
+
+    /**
+     * The dnd-lists's child elements currently MUST have
+     * position: relative. Otherwise we can not determine
+     * whether the mouse pointer is in the upper or lower
+     * half of the element we are dragging over. In other
+     * browsers we can use event.offsetY for this.
+     */
+    .simpleDemo ul[dnd-list] li {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-top-right-radius: 4px;
+        border-top-left-radius: 4px;
+        display: block;
+        padding: 10px 15px;
+        margin-bottom: -1px;
+    }
+
+    /**
+     * Show selected elements in green
+     */
+    .simpleDemo ul[dnd-list] li.selected {
+        background-color: #dff0d8;
+        color: #3c763d;
+    }
+
+    .content-only:hover {
+        background-color: #8abeb7;
+        cursor: pointer;
+    }
+</style>

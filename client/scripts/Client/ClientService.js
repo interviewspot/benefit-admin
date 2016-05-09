@@ -428,6 +428,7 @@
 
                 fetchHandbook.get($scope.contentImageLink).then(function (image) {
                   $scope.contentImage.url = image.data.image_url;
+                  $scope.contentImage.image_id = $scope.result.logo_id;
                   $rootScope.contents.push($scope.contentImage);
                   $rootScope.readyToUpload = false;
                   $scope.file = {};

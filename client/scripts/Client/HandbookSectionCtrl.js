@@ -73,6 +73,7 @@
             _URL_sections = {
                 list: config.path.baseURL + config.path.sections.replace(':org_id', $scope.clientId).replace(':hand_id', $scope.handbookId)
             };
+            $scope.allowShowActionSections = false;
             $scope.loadSections = function (limit, goPage) {
                 return fetchHandbook.get(_URL_sections.list + '?search=section.parent{null}1', +'&limit=' + limit, +'&page=' + goPage, +'&sort=section.ordering:asc').then(function (res) {
                     $scope.sections = {};
@@ -80,7 +81,7 @@
                         $scope.sections.pages = res.data.pages;
                         $scope.sections.total = res.data.total;
                         $scope.sections.items = [];
-                        return angular.forEach(res.data._embedded.items, function (item) {
+                        angular.forEach(res.data._embedded.items, function (item) {
                             item = translateSection(item);
                             item.children = {};
                             item.children.items = [];
@@ -92,8 +93,11 @@
                                         console.log(child.data._embedded.items);
                                         item.children.total = child.data.total;
                                         return angular.forEach(child.data._embedded.items, function (child_item) {
-                                            return item.children.items.push(translateSection(child_item));
+                                            item.children.items.push(translateSection(child_item));
+                                            $scope.allowShowActionSections = true;
                                         });
+                                    }else{
+                                        $scope.allowShowActionSections = true;
                                     }
                                 }, function (error) {
                                     return console.log(error);
@@ -101,6 +105,7 @@
                             }
                             return $scope.sections.items.push(item);
                         });
+                        return;
                     } else {
                         $scope.sections.pages = 0;
                         $scope.sections.total = 0;
@@ -142,6 +147,7 @@
             $scope.urlUpload = "";
             $scope.uploadResponse = "";
             $rootScope.readyToUpload = false;
+            $scope.readyToAddContent = false;
             $scope.showChildren = function (section) {
                 return section.children.show = !section.children.show;
             };
@@ -154,18 +160,31 @@
                 section.description = section.translations['en_us'] != undefined ? section.translations['en_us'].description : section.description;
                 $scope.formSection = section;
                 $scope.selectedSec = section.id;
+                $scope.readyToAddContent = true;
 
                 //get content
                 return fetchHandbook.get($scope.formSection._links.contents.href + "?sort=content.ordering:asc").then(function (contents) {
                     angular.forEach(contents.data._embedded.items, function (content, key) {
                         content.url = "";
+                        content.image_id = "";
+                        content.isShow = false;
+                        $rootScope.contents.push(content);
+                    });
+
+                    angular.forEach($rootScope.contents, function (content, key) {
                         if (content._links != undefined) {
                             fetchHandbook.get(content._links.translations.href).then(function (translations) {
                                 content.html_text = translations.data.en_us.htmlText;
                                 if (content._links.image_url != undefined) {
                                     fetchHandbook.get(content._links.image_url.href + "?locale=en_us").then(function (image) {
                                         content.url = image.data.image_url;
-                                        $rootScope.contents.push(content);
+                                        if (content.html_text == 'none') {
+                                            fetchHandbook.get(content._links.image.href + "?locale=en_us").then(function (image) {
+                                                content.image_id = image.data.id;
+                                            }, function (error) {
+                                                return console.log(error);
+                                            });
+                                        }
                                     }, function (error) {
                                         return console.log(error);
                                     });
@@ -177,7 +196,8 @@
 
                         }
                     });
-                    console.log($scope.contents);
+
+
                 }, function (error) {
                     return console.log(error);
                 });
@@ -200,7 +220,7 @@
             };
             $scope.contentImage = {};
             $scope.contentImageLink = '';
-            $scope.addNewImage = function (ordering) {
+            $scope.addNewImage = function () {
                 var content;
                 content = {
                     "content": {
@@ -210,7 +230,7 @@
                         "enabled": "1",
                         "section": $scope.formSection.id,
                         "locale": "en_us",
-                        "ordering": ordering,
+                        "ordering": $rootScope.contents.length,
                     }
                 };
                 if ($scope.formSection._links.contents) {
@@ -221,6 +241,7 @@
                                     $scope.urlUpload = content.data._links.image.href + "?locale=en_us";
                                     $scope.contentImage = content.data;
                                     $scope.contentImageLink = content.data._links.image_url.href + "?locale=en_us";
+                                    console.log(content);
                                     return $rootScope.readyToUpload = true;
                                 }
                             }, function (error) {
@@ -351,8 +372,9 @@
                 "enabled": "1",
                 "section": $scope.formSection.id,
                 "locale": "en_us",
+                "isShow": true
             };
-            $scope.submitContent = function (content) {
+            $scope.submitContent = function (content, index) {
                 content = {
                     "content": content
                 };
@@ -363,12 +385,14 @@
                         content.content.image_id = "";
                         content.content.section = $scope.formSection.id;
                         content.content.locale = "en_us";
-                        content.content.ordering = $scope.contents.length;
                         delete content.content._links;
                         delete content.content.id;
                         delete content.content.url;
+                        delete content.content.isShow;
                         return fetchHandbook.put(urlEdit, content).then(function (res) {
                             if (res.status === 204) {
+                                $rootScope.contents[index].isShow = false;
+                                console.log(content);
                                 return console.log('ok men');
                             }
                         }, function (error) {
@@ -376,10 +400,15 @@
                         });
                     } else {
                         //post
-                        content.content.ordering = $scope.contents.length;
+                        delete content.content.isShow;
+
                         return fetchHandbook.post($scope.formSection._links.contents.href, content).then(function (res) {
                             if (typeof res === 'object' && res.status === 201) {
                                 return fetchHandbook.get(config.path.baseURL + res.headers().location).then(function (content) {
+                                    $rootScope.contents[index]._links = content.data._links;
+                                    $rootScope.contents[index].id = content.data.id;
+                                    $rootScope.contents[index].isShow = false;
+                                    console.log(content);
                                     return console.log(content);
                                 }, function (error) {
                                     return console.log(error);
@@ -391,9 +420,27 @@
                     }
                 }
             };
-            return $scope.addContent = function () {
+            $scope.deleteContent = function (content, index) {
+                //delete
+                if (content._links != undefined) {
+                    var url = content._links.self.href + "?locale=en_us";
+                    return fetchHandbook.delete(url).then(function (res) {
+                        if (res.status === 204) {
+                            $rootScope.contents.splice(index, 1);
+                            return console.log(res);
+
+                        }
+                    }, function (error) {
+                        return console.log(error);
+                    });
+                } else {
+                    $rootScope.contents.splice(index, 1);
+                }
+            }
+            $scope.addContent = function () {
                 var newContent;
                 newContent = $scope.content;
+                newContent.ordering = $rootScope.contents.length;
                 var order = $scope.contents.length;
                 $rootScope.contents.push(newContent);
                 return $scope.content = {
@@ -402,42 +449,50 @@
                     "html_text": '',
                     "enabled": "1",
                     "section": $scope.formSection.id,
-                    "locale": "en_us"
+                    "locale": "en_us",
+                    "isShow": true
                 };
             };
+            $scope.editContent = function (index) {
+                $rootScope.contents[index].isShow = true;
+            }; 
+            $scope.closeEditContent = function (index) {
+                $rootScope.contents[index].isShow = false;
+            };
 
-
-            // draft drop
-            // $scope.models = {
-            //     selected: null,
-            //     lists: {"A": []}
-            // };
-
-            // Generate initial model
-            for (var i = 1; i <= 3; ++i) {
-                $scope.models.lists.A.push({label: "Item A" + i});
-            }
-
-            // Model to JSON for demo purpose
-            $scope.$watch('models', function(model) {
-                $scope.modelAsJson = angular.toJson(model, true);
+            $scope.$watch('contents', function (contents) {
+                angular.forEach(contents, function (content, key) {
+                    content.ordering = key;
+                });
+                console.log($rootScope.contents);
+                return;
             }, true);
-            ////////////////
-            console.log('running');
 
-            function Directives(module) {
-                var directives = [];
-                var invokes = angular.module(module)._invokeQueue;
-                for (var i in invokes) {
-                    if (invokes[i][1] === "directive") directives.push(invokes[i][2]);
-                }
-                return directives;
+            $scope.updateOrderingContent = function () {
+                angular.forEach($rootScope.contents, function (content, key) {
+                    //put
+                    if (content.id != undefined) {
+                        var urlEdit = content._links.self.href;
+                        content.locale = "en_us";
+                        content.section = $scope.formSection.id;
+                        delete content._links;
+                        delete content.id;
+                        delete content.url;
+                        delete content.isShow;
+                        content = {
+                            "content": content
+                        };
+                        return fetchHandbook.put(urlEdit, content).then(function (res) {
+                            if (res.status === 204) {
+                                console.log(content);
+                                return console.log('ok men');
+                            }
+                        }, function (error) {
+                            return console.log(error);
+                        });
+                    }
+                });
             }
-            //
-            // for (var j in module.requires) {
-            //     Directives(module.requires[j], directives);
-            // }
-            console.log(Directives('app'));
 
 
         }
