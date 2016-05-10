@@ -150,10 +150,8 @@
                                     </form>
                                     <img ng-show="content != 'undefined' && content.html_text=='none'" width="60px"
                                          ng-src="{{content.url}}"/>
-                                    <a ng-show="content != 'undefined' && content.html_text=='none_pdf'"
-                                    href="{{content.pdf_binary}}">
-                                        {{content.pdf_name}}
-                                    </a>
+                                    <span ng-show="content != 'undefined' && content.html_text=='none_pdf'">{{content.pdf_name}}</span>
+                                    <pdf-download ng-show="content != 'undefined' && content.html_text=='none_pdf'" url="{{content.pdf_binary}}?locale=en_us" filename="{{content.pdf_name}}"></pdf-download>
                                     <br>
                                     <a href="javascript:void(0)"
                                        data-ng-click="deleteContent(content,$index)">remove</a>
@@ -190,7 +188,6 @@
                                     ng-label="uploadButtonLabelPdf"
                                     ng-progress-color="'#CFAE79'">
                             </upload-file>
-                            <p></p>
                             <button data-ng-show="readyToAddContent" ng-click="addContent()" type="button"
                                     class="btn-brown">
                                 Add new content
