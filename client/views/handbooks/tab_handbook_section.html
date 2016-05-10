@@ -130,7 +130,7 @@
                                     dnd-moved="contents.splice($index, 1)"
                                     dnd-effect-allowed="move"
                                 >
-                                    <form ng-show="content != 'undefined' && content.html_text!='none'"
+                                    <form ng-show="content != 'undefined' && content.html_text!='none' && content.html_text!='none_pdf'"
                                           name="frm_section_content" class="modal_frm"
                                           ng-submit="submitContent(content,$index)" novalidate>
                                         <div class="content-only" data-ng-click="editContent($index)"
@@ -150,6 +150,10 @@
                                     </form>
                                     <img ng-show="content != 'undefined' && content.html_text=='none'" width="60px"
                                          ng-src="{{content.url}}"/>
+                                    <a ng-show="content != 'undefined' && content.html_text=='none_pdf'"
+                                    href="{{content.pdf_binary}}">
+                                        {{content.pdf_name}}
+                                    </a>
                                     <br>
                                     <a href="javascript:void(0)"
                                        data-ng-click="deleteContent(content,$index)">remove</a>
@@ -161,6 +165,7 @@
                                     ng-click="addNewImage()" class="btn-brown">Add
                                 new image
                             </button>
+
                             <upload-file
                                     ng-show="readyToUpload"
                                     upload-url="urlUpload"
@@ -171,9 +176,23 @@
                                     ng-label="uploadButtonLabel"
                                     ng-progress-color="'#CFAE79'">
                             </upload-file>
+                            <button type="button" ng-show="!readyToUploadPdf"
+                                    ng-click="addNewPdf()" class="btn-brown">Add
+                                new pdf
+                            </button>
+                            <upload-file
+                                    ng-show="readyToUploadPdf"
+                                    upload-url="urlUpload"
+                                    content-pdf="contentPdf"
+                                    content-pdf-link="contentPdfLink"
+                                    upload-url="urlUpload"
+                                    ng-uploadresponse="uploadResponse"
+                                    ng-label="uploadButtonLabelPdf"
+                                    ng-progress-color="'#CFAE79'">
+                            </upload-file>
                             <p></p>
                             <button data-ng-show="readyToAddContent" ng-click="addContent()" type="button"
-                                    class="save btn-brown">
+                                    class="btn-brown">
                                 Add new content
                             </button>
                         </div>

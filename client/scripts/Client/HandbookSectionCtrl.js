@@ -144,9 +144,11 @@
             $scope.isCreateSubSection = true;
             $scope.selectedSec = null;
             $scope.uploadButtonLabel = "Upload Section Images";
+            $scope.uploadButtonLabelPdf = "Upload Section Pdfs";
             $scope.urlUpload = "";
             $scope.uploadResponse = "";
             $rootScope.readyToUpload = false;
+            $rootScope.readyToUploadPdf = false;
             $scope.readyToAddContent = false;
             $scope.showChildren = function (section) {
                 return section.children.show = !section.children.show;
@@ -167,6 +169,9 @@
                     angular.forEach(contents.data._embedded.items, function (content, key) {
                         content.url = "";
                         content.image_id = "";
+                        content.pdf_binary = "";
+                        content.pdf_id = "";
+                        content.pdf_name = "";
                         content.isShow = false;
                         $rootScope.contents.push(content);
                     });
@@ -181,6 +186,15 @@
                                         if (content.html_text == 'none') {
                                             fetchHandbook.get(content._links.image.href + "?locale=en_us").then(function (image) {
                                                 content.image_id = image.data.id;
+                                            }, function (error) {
+                                                return console.log(error);
+                                            });
+                                        }
+                                        if (content.html_text == 'none_pdf') {
+                                            fetchHandbook.get(content._links.pdf.href + "?locale=en_us").then(function (pdf) {
+                                                content.pdf_id = pdf.data.id;
+                                                content.pdf_binary = content._links.pdf_binary.href;
+                                                content.pdf_name = pdf.data.name;
                                             }, function (error) {
                                                 return console.log(error);
                                             });
@@ -216,7 +230,9 @@
                     $scope.parentSelect = null;
                 }
                 $scope.isUpdate = true;
-                return $rootScope.readyToUpload = false;
+                $rootScope.readyToUpload = false;
+                $rootScope.readyToUploadPdf = false;
+                return;
             };
             $scope.contentImage = {};
             $scope.contentImageLink = '';
@@ -243,6 +259,43 @@
                                     $scope.contentImageLink = content.data._links.image_url.href + "?locale=en_us";
                                     console.log(content);
                                     return $rootScope.readyToUpload = true;
+                                }
+                            }, function (error) {
+                                return console.log(error);
+                            });
+                        }
+                    }, function (error) {
+                        return console.log(error);
+                    });
+                }
+            };
+            $scope.contentPdf = {};
+            $scope.contentPdfLink = '';
+            $scope.addNewPdf = function () {
+                var content;
+                content = {
+                    "content": {
+                        "title": "Image of " + $scope.formSection.title,
+                        "pdf_id": "",
+                        "html_text": "none_pdf",
+                        "enabled": "1",
+                        "section": $scope.formSection.id,
+                        "locale": "en_us",
+                        "ordering": $rootScope.contents.length,
+                    }
+                };
+                if ($scope.formSection._links.contents) {
+                    return fetchHandbook.post($scope.formSection._links.contents.href, content).then(function (res) {
+                        if (typeof res === 'object' && res.status === 201) {
+                            return fetchHandbook.get(config.path.baseURL + res.headers().location).then(function (content) {
+                                if (content.data._links.pdf) {
+                                    $scope.urlUpload = content.data._links.pdf.href + "?locale=en_us";
+                                    $scope.contentPdf = content.data;
+                                    $scope.contentPdfLink = content.data._links.pdf.href + "?locale=en_us";;
+                                    $scope.contentImage = null;
+                                    $scope.contentImageLink = null;
+                                    console.log(content);
+                                    return $rootScope.readyToUploadPdf = true;
                                 }
                             }, function (error) {
                                 return console.log(error);
@@ -389,6 +442,8 @@
                         delete content.content.id;
                         delete content.content.url;
                         delete content.content.isShow;
+                        delete content.content.pdf_binary;
+                        delete content.content.pdf_name;
                         return fetchHandbook.put(urlEdit, content).then(function (res) {
                             if (res.status === 204) {
                                 $rootScope.contents[index].isShow = false;
@@ -475,16 +530,20 @@
                         var urlEdit = content._links.self.href;
                         content.locale = "en_us";
                         content.section = $scope.formSection.id;
+                        var tmpName = content.pdf_name;
                         delete content._links;
                         delete content.id;
                         delete content.url;
                         delete content.isShow;
+                        delete content.pdf_binary;
+                        delete content.pdf_name;
                         content = {
                             "content": content
                         };
                         return fetchHandbook.put(urlEdit, content).then(function (res) {
                             if (res.status === 204) {
                                 console.log(content);
+                                $rootScope.contents[key].pdf_name = tmpName;
                                 return console.log('ok men');
                             }
                         }, function (error) {

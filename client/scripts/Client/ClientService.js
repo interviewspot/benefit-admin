@@ -426,15 +426,28 @@
                 $scope.result = res.data;
                 $scope.result.logo_id = res.headers().location.split('/')[2];
 
-                fetchHandbook.get($scope.contentImageLink).then(function (image) {
-                  $scope.contentImage.url = image.data.image_url;
-                  $scope.contentImage.image_id = $scope.result.logo_id;
-                  $rootScope.contents.push($scope.contentImage);
-                  $rootScope.readyToUpload = false;
-                  $scope.file = {};
-                }, function (error) {
-                  return console.log(error);
-                });
+                if($scope.contentPdf){
+                  fetchHandbook.get($scope.contentPdfLink).then(function (pdf) {
+                    $scope.contentPdf.pdf_binary = $scope.contentPdf._links.pdf_binary.href
+                    $scope.contentPdf.pdf_id = $scope.result.logo_id
+                    $scope.contentPdf.pdf_name = pdf.data.name;
+                    $rootScope.contents.push($scope.contentPdf);
+                    $rootScope.readyToUploadPdf = false;
+                    $scope.file = {};
+                  }, function (error) {
+                    return console.log(error);
+                  });
+                }else {
+                  fetchHandbook.get($scope.contentImageLink).then(function (image) {
+                    $scope.contentImage.url = image.data.image_url;
+                    $scope.contentImage.image_id = $scope.result.logo_id;
+                    $rootScope.contents.push($scope.contentImage);
+                    $rootScope.readyToUpload = false;
+                    $scope.file = {};
+                  }, function (error) {
+                    return console.log(error);
+                  });
+                }
 
 
                 console.log('check scrope');
@@ -478,6 +491,8 @@
           'uploadUrl': '=uploadUrl',
           'contentImage': '=contentImage',
           'contentImageLink': '=contentImageLink',
+          'contentPdf': '=contentPdf',
+          'contentPdfLink': '=contentPdfLink',
           'color': '=ngProgressColor',
           'label': '=ngLabel',
           'result': '=ngUploadresponse'
@@ -487,6 +502,9 @@
         'link': link
       };
     }
-  ]);
+  ])
+  
+  
+  ;
 
 }).call(this);
