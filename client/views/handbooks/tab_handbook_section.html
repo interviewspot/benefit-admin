@@ -150,8 +150,9 @@
                                     </form>
                                     <img ng-show="content != 'undefined' && content.html_text=='none'" width="60px"
                                          ng-src="{{content.url}}"/>
-                                    <span ng-show="content != 'undefined' && content.html_text=='none_pdf'">{{content.pdf_name}}</span>
-                                    <pdf-download ng-show="content != 'undefined' && content.html_text=='none_pdf'" url="{{content.pdf_binary}}?locale=en_us" filename="{{content.pdf_name}}"></pdf-download>
+                                    <a href="{{content.pdf_binary}}?locale=en_us&x-session={{user.user.session_key}}">{{content.pdf_name}}</a>
+                                    <!--<pdf-download ng-show="content != 'undefined' && content.html_text=='none_pdf'" url="{{content.pdf_binary}}?locale=en_us" filename="{{content.pdf_name}}"></pdf-download>-->
+                                    <!--<pdf-download ng-show="content != 'undefined' && content.html_text=='none_pdf'" url="http://localhost/tb455-tk1-ts.pdf" filename="{{content.pdf_name}}"></pdf-download>-->
                                     <br>
                                     <a href="javascript:void(0)"
                                        data-ng-click="deleteContent(content,$index)">remove</a>

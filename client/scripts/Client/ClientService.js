@@ -409,6 +409,11 @@
           $scope.fileName = '';
           $scope.progressPercentage = 0;
           $scope.uniqueID = new Date().getTime();
+          if($scope.contentPdf) {
+            $scope.validateType = 'application/pdf';
+          }else{
+            $scope.validateType = 'image/*';
+          }
           return $scope.$watch('file', function(nv) {
             if (nv) {
               return Upload.upload({
@@ -437,7 +442,7 @@
                   }, function (error) {
                     return console.log(error);
                   });
-                }else {
+                }else if($scope.contentImageLink) {
                   fetchHandbook.get($scope.contentImageLink).then(function (image) {
                     $scope.contentImage.url = image.data.image_url;
                     $scope.contentImage.image_id = $scope.result.logo_id;
