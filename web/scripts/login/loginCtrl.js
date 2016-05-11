@@ -13,7 +13,7 @@
           }
           if (system.data._links.logged_in_user) {
             return aREST.get($scope.username, $scope.password, config.path.baseURL + system.data._links.logged_in_user.href).then(function(res) {
-              if (typeof res !== 'object' || res.status !== 200) {
+              if (typeof res !== 'object' || res.status !== 200  || res.data.roles[0] == "") {
                 return;
               }
               localStorageService.cookie.set('user', {
@@ -24,7 +24,7 @@
               $scope.roles = res.data.roles;
               return aREST.get($scope.username, $scope.password, config.path.baseURL + system.data._links.logged_in_position.href).then(function(position) {
                 return aREST.get($scope.username, $scope.password, position.data._links.employer.href).then(function(employer) {
-                  if ($scope.roles.indexOf('ROLE_ADMIN') >= 0 || $scope.roles.indexOf('ROLE_HR_ADMIN') >= 0) {
+                  if ($scope.roles.indexOf('ROLE_ADMIN') >= 0 ) {
                     $location.path('/clients');
                     $rootScope.isAdmin = true;
                     return $route.reload();

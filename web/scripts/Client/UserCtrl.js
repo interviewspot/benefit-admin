@@ -454,26 +454,30 @@
                 newContact.position.employee_classes = {};
                 newContact.position.employee_functions = {};
                 numTag = 1;
-                angular.forEach($scope.user_tags.employee_class, function(tag) {
-                  var keyTag;
-                  keyTag = "tag" + numTag;
-                  newContact.position.employee_classes[keyTag] = {};
-                  newContact.position.employee_classes[keyTag].name = tag.name;
-                  newContact.position.employee_classes[keyTag].enabled = true;
-                  newContact.position.employee_classes[keyTag].employee_class = 1;
-                  newContact.position.employee_classes[keyTag].employee_function = 0;
-                  return numTag++;
-                });
-                angular.forEach($scope.user_tags.employee_function, function(tag) {
-                  var keyTag;
-                  keyTag = "tag" + numTag;
-                  newContact.position.employee_functions[keyTag] = {};
-                  newContact.position.employee_functions[keyTag].name = tag.name;
-                  newContact.position.employee_functions[keyTag].enabled = true;
-                  newContact.position.employee_functions[keyTag].employee_class = 0;
-                  newContact.position.employee_functions[keyTag].employee_function = 1;
-                  return numTag++;
-                });
+                if($scope.user_tags != undefined) {
+                  angular.forEach($scope.user_tags.employee_class, function (tag) {
+                    var keyTag;
+                    keyTag = "tag" + numTag;
+                    newContact.position.employee_classes[keyTag] = {};
+                    newContact.position.employee_classes[keyTag].name = tag.name;
+                    newContact.position.employee_classes[keyTag].enabled = true;
+                    newContact.position.employee_classes[keyTag].employee_class = 1;
+                    newContact.position.employee_classes[keyTag].employee_function = 0;
+                    return numTag++;
+                  });
+                }
+                if($scope.user_tags != undefined) {
+                  angular.forEach($scope.user_tags.employee_function, function (tag) {
+                    var keyTag;
+                    keyTag = "tag" + numTag;
+                    newContact.position.employee_functions[keyTag] = {};
+                    newContact.position.employee_functions[keyTag].name = tag.name;
+                    newContact.position.employee_functions[keyTag].enabled = true;
+                    newContact.position.employee_functions[keyTag].employee_class = 0;
+                    newContact.position.employee_functions[keyTag].employee_function = 1;
+                    return numTag++;
+                  });
+                }
                 return ContactService.save({
                   org_id: $scope.clientId
                 }, newContact, function(res) {
@@ -518,26 +522,30 @@
                   newContact.position.employee_classes = {};
                   newContact.position.employee_functions = {};
                   numTag = 1;
-                  angular.forEach($scope.user_tags.employee_class, function(tag) {
-                    var keyTag;
-                    keyTag = "tag" + numTag;
-                    newContact.position.employee_classes[keyTag] = {};
-                    newContact.position.employee_classes[keyTag].name = tag.name;
-                    newContact.position.employee_classes[keyTag].enabled = true;
-                    newContact.position.employee_classes[keyTag].employee_class = 1;
-                    newContact.position.employee_classes[keyTag].employee_function = 0;
-                    return numTag++;
-                  });
-                  angular.forEach($scope.user_tags.employee_function, function(tag) {
-                    var keyTag;
-                    keyTag = "tag" + numTag;
-                    newContact.position.employee_functions[keyTag] = {};
-                    newContact.position.employee_functions[keyTag].name = tag.name;
-                    newContact.position.employee_functions[keyTag].enabled = true;
-                    newContact.position.employee_functions[keyTag].employee_class = 0;
-                    newContact.position.employee_functions[keyTag].employee_function = 1;
-                    return numTag++;
-                  });
+                  if($scope.user_tags != undefined) {
+                    angular.forEach($scope.user_tags.employee_class, function (tag) {
+                      var keyTag;
+                      keyTag = "tag" + numTag;
+                      newContact.position.employee_classes[keyTag] = {};
+                      newContact.position.employee_classes[keyTag].name = tag.name;
+                      newContact.position.employee_classes[keyTag].enabled = true;
+                      newContact.position.employee_classes[keyTag].employee_class = 1;
+                      newContact.position.employee_classes[keyTag].employee_function = 0;
+                      return numTag++;
+                    });
+                  }
+                  if($scope.user_tags != undefined) {
+                    angular.forEach($scope.user_tags.employee_function, function (tag) {
+                      var keyTag;
+                      keyTag = "tag" + numTag;
+                      newContact.position.employee_functions[keyTag] = {};
+                      newContact.position.employee_functions[keyTag].name = tag.name;
+                      newContact.position.employee_functions[keyTag].enabled = true;
+                      newContact.position.employee_functions[keyTag].employee_class = 0;
+                      newContact.position.employee_functions[keyTag].employee_function = 1;
+                      return numTag++;
+                    });
+                  }
                   return ContactService.save({
                     org_id: $scope.clientId
                   }, newContact, function(res) {

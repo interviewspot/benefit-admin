@@ -102,6 +102,8 @@
                                 }, function (error) {
                                     return console.log(error);
                                 });
+                            }else{
+                                $scope.allowShowActionSections = true;
                             }
                             return $scope.sections.items.push(item);
                         });
