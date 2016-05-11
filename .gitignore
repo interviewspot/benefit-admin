@@ -16,7 +16,7 @@ composer.lock
 
 .sass-cache
 .tmp
-dist
+#dist
 node_modules
 client/bower_components
 /npm-debug.log
