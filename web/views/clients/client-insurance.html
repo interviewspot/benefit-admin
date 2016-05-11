@@ -1,0 +1,17 @@
+<div class="clients_edit" data-ng-controller="clientCtrl">
+    <h1 class="ttl-page">
+        {{clientDetail.name}}
+        <span class="sp-sts green">{{clientDetail.status}}</span>
+    </h1>
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-body lv1">
+            <div class="table-responsive">
+                <ul class="tbl-w800 nav nav-tabs" ng-include="'views/clients/menu-tab.html'"></ul>
+            </div>
+            <!-- END : MENU -->
+            <div ng-include="'views/clients/tab_insurance.html'"></div>
+            <!-- END : TAB -->
+        </div>
+    </section>
+</div>
+<!-- END : CLIENTS EDIT-->

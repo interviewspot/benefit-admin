@@ -1,0 +1,245 @@
+<br />
+<form name="co_info_frm">
+<div class="col-md-8 col-sm-8 col-xs-12 cpn-left">
+
+        <p class="clearfix t-r">
+            <button type="submit" class="btn"
+                ng-class="clients_edit ? 'btn-brown' : 'btn-edit'"
+                ng-click="editClient(clients_edit)">
+                <i class="fa fa-pencil front"></i>
+                {{clients_edit ? 'Submit to save' : 'Edit info'}}
+            </button>
+        </p><!-- BUTTON -->
+        <table class="table tbl table-striped">
+            <tbody>
+                <tr>
+                    <td class="td-30">Company Reg Biz Name <span class="red">*</span>:</td>
+                    <td>
+                        <input type="text"
+                            ng-model="clientDetail.name"
+                            class="txt-ipt"
+                            ng-disabled="!isDisable"
+                            ng-class="{txt_disabled : !isDisable}">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td-30">Code:</td>
+                    <td>
+                        <input type="text"
+                            ng-model="clientDetail.code"
+                            class="txt-ipt"
+                            ng-disabled="!isDisable"
+                            ng-class="{txt_disabled : !isDisable}">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td-30">Biz Reg No.</td>
+                    <td>
+                        <input type="text"
+                            ng-model="clientDetail.reg_no"
+                            class="txt-ipt"
+                            ng-disabled="!isDisable"
+                            ng-class="{txt_disabled : !isDisable}">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td-30">Address:</td>
+                    <td>
+                        <input type="text"
+                            ng-model="clientDetail.office_address"
+                            class="txt-ipt"
+                            ng-disabled="!isDisable"
+                            ng-class="{txt_disabled : !isDisable}">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td-30">Unit Number:</td>
+                    <td>
+                        <input type="text"
+                            value="Not Available Yet!"
+                            class="txt-ipt"
+                            ng-disabled="!isDisable"
+                            ng-class="{txt_disabled : !isDisable}">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td-30">Building Name:</td>
+                    <td>
+                        <input type="text"
+                            value="Not Available Yet!"
+                            class="txt-ipt"
+                            ng-disabled="!isDisable"
+                            ng-class="{txt_disabled : !isDisable}">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td-30">Postal Code:</td>
+                    <td>
+                        <input type="text"
+                            value="Not Available Yet!"
+                            class="txt-ipt"
+                            ng-disabled="!isDisable"
+                            ng-class="{txt_disabled : !isDisable}">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td-30">Business Type</td>
+                    <td>
+                        <input type="text"
+                            value="Not Available Yet!"
+                            class="txt-ipt"
+                            ng-disabled="!isDisable"
+                            ng-class="{txt_disabled : !isDisable}">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td-30">Office Number</td>
+                    <td>
+                        <input type="text"
+                            ng-model="clientDetail.head_office_no"
+                            class="txt-ipt"
+                            ng-disabled="!isDisable"
+                            ng-class="{txt_disabled : !isDisable}">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td-30">Admin User Email</td>
+                    <td>
+                        <input type="text"
+                            ng-model="clientDetail.reservation_email"
+                            class="txt-ipt"
+                            ng-disabled="!isDisable"
+                            ng-class="{txt_disabled : !isDisable}">
+                        <span
+                            ng-class="{hide : isDisable}"
+                            class="rs-pass">Reset password</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td-30">Admin Contact No.</td>
+                    <td>
+                        <input type="text"
+                            ng-model="clientDetail.user_contact_no"
+                            class="txt-ipt"
+                            ng-disabled="!isDisable"
+                            ng-class="{txt_disabled : !isDisable}">
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td-30">Redemption password</td>
+                    <td>
+                        <input type="text"
+                            ng-model="clientDetail.redemption_password"
+                            class="txt-ipt"
+                            ng-disabled="!isDisable"
+                            ng-class="{txt_disabled : !isDisable}"
+                            ngMaxlength="4" ngMinlength="4"
+                            ng-required="true" size="4" >
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td-30">Client Since</td>
+                    <td>
+                        <input type="text"
+                            value="Not Available Yet!"
+                            class="txt-ipt"
+                            disabled="disabled"
+                            >
+                    </td>
+                </tr>
+                <tr>
+                    <td class="td-30">Package Type</td>
+                    <td>
+                        <input type="text"
+                            value="Not Available Yet!"
+                            class="txt-ipt"
+                            ng-disabled="!isDisable"
+                            ng-class="{txt_disabled : !isDisable}">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- END: TABLE -->
+        <h2 class="ttl-tab">
+            <span>About Company</span>
+        </h2>
+        <div text-angular ng-model="clientDetail.about_company"></div>
+
+
+</div>
+<!-- END : COL LEFT -->
+<div class="col-md-4 col-sm-4 col-xs-12 cpn-right">
+    <table class="table tbl table-striped">
+        <tbody>
+            <tr>
+                <th class="text-center">
+                    Company Logo
+                </th>
+            </tr>
+            <tr ng-if="!clientDetail.logo_url">
+                <td class="t-c">
+                    NO LOGO
+                </td>
+            </tr>
+            <tr ng-if="clientDetail.logo_url" ng-cloak>
+                <td class="text-center td-logo" ng-model="clientDetail.logo">
+                    <img ng-src="{{clientDetail.logo_url}}" alt="{{clientDetail.name}}"/>
+                    <i class="fa fa-times" ng-click="delLogo()"></i>
+                </td>
+            </tr>
+            <tr ng-show="isDisable">
+                <td class="text-center">
+                    <upload-file
+                        upload-url="urlUpload"
+                        ng-uploadresponse="uploadresponse"
+                        ng-label="uploadButtonLabel"
+                        ng-progress-color="'#CFAE79'">
+                    </upload-file>
+                </td>
+            </tr>
+            <!--tr>
+                            <td class="text-center">
+                                <div class="fileUpload">
+                                    <span>Upload New Image</span>
+                                    <div style="height: 0px; width: 0px; overflow: hidden;">
+                                        <input type="file" name="userfile" class="fileToUpload">
+                                    </div>
+                                </div>
+                            </td>
+                        </tr-->
+        </tbody>
+    </table>
+    <!-- END: UPLOAD -->
+    <table class="table tbl tbl-upload">
+        <tbody>
+            <tr>
+                <th class="text-center">
+                    (MaBanner Images x 5 images)
+                </th>
+            </tr>
+            <tr ng-if="clientDetail.banners.length <= 0">
+                <td class="t-c">
+                    NO BANNER
+                </td>
+            </tr>
+            <tr ng-if="clientDetail.banners.length > 0" ng-repeat="banner in clientDetail.banners" ng-cloak>
+                <td class="text-center td-logo">
+                    <img ng-src="{{banner.banner_url}}" alt="{{clientDetail.name}}"/>
+                    <i class="fa fa-times" ng-click="delBanner(banner)"></i>
+                </td>
+            </tr>
+            <tr ng-show="isDisable && (clientDetail.banners.length < 5 || !clientDetail.banners)">
+                <td class="text-center">
+                    <upload-file
+                        upload-url="urlUploadBanner"
+                        ng-uploadresponse="uploadbanner"
+                        ng-label="uploadButtonLabel"
+                        ng-progress-color="'#CFAE79'">
+                    </upload-file>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<!-- END : COL RIGHT -->
+</form>

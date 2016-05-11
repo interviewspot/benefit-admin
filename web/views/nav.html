@@ -1,0 +1,17 @@
+<div class="nav-wrapper">
+    <ul id="nav"
+        class="nav"
+        data-ng-controller="NavCtrl"
+        data-slim-scroll
+        data-collapse-nav
+        data-highlight-active>
+        <!--<li><a href="#/merchant"><span data-i18n="Manage Merchant"></span></a></li>-->
+        <li ng-show="isAdmin" class="active"><a href="#/clients"><span data-i18n="Manage Clients"></span></a> </li>
+        <li ng-show="!isAdmin" class="active"><a href="#/clients/:clientId/info"><span data-i18n="Your company"></span></a> </li>
+        <!--li><a href="#/employees"><span data-i18n="My Employees"></span></a> </li-->
+        <!--<li><a href="#/ui/pricing-tables"><span data-i18n="Manage App Users"></span></a> </li>-->
+        <!--<li><a href="#/tables/static"><span data-i18n="Manage CS"></span></a> </li>-->
+        <!--<li><a href="#/tables/responsive"><span data-i18n="Marketing"></span></a> </li>-->
+        <!--<li><a href="#/pages/profile"><span data-i18n="My Account"></span></a> </li>-->
+    </ul>
+</div>

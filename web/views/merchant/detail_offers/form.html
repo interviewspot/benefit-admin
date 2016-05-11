@@ -1,0 +1,264 @@
+<div class="cmd-bar t-r">
+    <a class="btn btn-brown">
+        ADD NEW OFFER
+    </a>
+</div>
+<div class="list-txt">
+    <span>Total</span> 12 Offers
+</div>
+<div class="list-info">
+    <div class="itm" data-ng-repeat="(i, item) in offer_items">
+        <div class="info-item offer-item clearfix" ng-click="op_form(i)">
+            <h4>
+                {{item.name}}
+                <label class="r">
+                    Total Offer Limit
+                    <span>100/ No Limits (Default)</span>
+                </label>
+            </h4>
+            <p class="of-rw">
+                <span class="of-status">
+                    Active
+                </span>
+                <label class="of-type">
+                    <span>Offer type</span> 1-for-1 v
+                </label>
+                <label class="l">
+                    Est. Value
+                    <span class="price">$25</span>
+                </label>
+                <label class="l">
+                    Effective Date
+                    <span>12 June 2015</span>
+                </label>
+                <label class="l">
+                    Expires
+                    <span>31 Dec 2015</span>
+                </label>
+            </p>
+            <span class="del-item" ng-click="delOffer(item.id)">
+                    <i class="fa fa-trash-o"></i>
+            </span>
+        </div>
+        <div class="detail-info-frm" ng-show="offer_items[i].open_frm">
+            <div class="merchant-ctent">
+                <form class="frm_mercht_offer" name="frm_mercht_offer_{{i}}" novalidate>
+                    <div class="row">
+                        <div class="col-md-9 col-sm-9 col-xs-12 offer-left">
+                            <div class="row">
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <table class="table table-striped table-bordered tbl">
+                                        <tbody>
+                                            <tr>
+                                                <td class="td-30">Offer Title:</td>
+                                                <td>
+                                                    <input type="text"
+                                                    class="txt-ipt"
+                                                    value="Main Course"
+                                                    name="off_title"
+                                                    required=""
+                                                    ng-model="offer_items[i].name"
+                                                    ng-class="{'txt_err' : offer_items[i].ipt.name}">
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="td-30">Offer Type:</td>
+                                                <td>
+                                                    <input type="text"
+                                                        class="txt-ipt"
+                                                        value="1-for-1 v"
+                                                        name="off_type"
+                                                        required=""
+                                                        ng-class='{txt_err : (frm_mercht_offer.off_type.$invalid && frm_mercht_offer.off_type.$dirty)}'>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="td-30">Est. Value:</td>
+                                                <td>
+                                                    <input type="text"
+                                                        class="txt-ipt"
+                                                        value="S$25"
+                                                        name="off_est_val"
+                                                        required=""
+                                                        ng-class='{txt_err : (frm_mercht_offer.off_est_val.$invalid && frm_mercht_offer.off_est_val.$dirty)}'>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="td-30">Offer Cat,:</td>
+                                                <td>
+                                                    <input type="text"
+                                                        class="txt-ipt"
+                                                        value="F&amp;B v"
+                                                        name="off_cat"
+                                                        required=""
+                                                        ng-class='{txt_err : (frm_mercht_offer.off_cat.$invalid && frm_mercht_offer.off_cat.$dirty)}'>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="td-30">GoDiscount Amt:</td>
+                                                <td>
+                                                    <input type="text"
+                                                        class="txt-ipt"
+                                                        value="-N.A-"
+                                                        name="off_amt"
+                                                        required=""
+                                                        ng-class='{txt_err : (frm_mercht_offer.off_amt.$invalid && frm_mercht_offer.off_amt.$dirty)}'>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- END: TBL -->
+                                <div class="col-md-6 col-sm-6 col-xs-12">
+                                    <table class="table table-striped table-bordered tbl">
+                                        <tbody>
+                                            <tr>
+                                                <td class="td-30">Effective Date:</td>
+                                                <td>
+                                                    <input type="text"
+                                                    class="form-control"
+                                                    datepicker-popup="{{format}}"
+                                                    ng-model="offer_items[i].effdate.value"
+                                                    is-open="offer_items[i].effdate.opened"
+                                                    min-date="minDate"
+                                                    ng-required="true"
+                                                    close-text="Close"
+                                                    show-button-bar="false"
+                                                    ng-click="open($event, i)" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="td-30">Expires:</td>
+                                                <td>
+                                                    <input type="text"
+                                                    class="form-control"
+                                                    datepicker-popup="{{format}}"
+                                                    ng-model="offer_items[i].expdate.value"
+                                                    is-open="offer_items[i].expdate.opened"
+                                                    min-date="minDate"
+                                                    ng-required="true"
+                                                    close-text="Close"
+                                                    show-button-bar="false"
+                                                    ng-click="expire($event, i)" />
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="td-30">Status:</td>
+                                                <td class="td-chk">
+                                                    <input type="checkbox" name="offer-sts" id="offer-sts-1">
+                                                    <label for="offer-sts-1">Active</label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="td-30">Redemptions Till Date:</td>
+                                                <td>
+                                                    <input type="text"
+                                                        class="txt-ipt"
+                                                        value="450"
+                                                        required=""
+                                                        name="off_redemp_date"
+                                                        ng-class='{txt_err : (frm_mercht_offer.off_redemp_date.$invalid && frm_mercht_offer.off_redemp_date.$dirty)}'>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- END: TBL -->
+                                <div class="col-xs-12">
+                                    <table class="table table-striped table-bordered tbl">
+                                        <tbody>
+                                            <tr>
+                                                <td class="td-20">Total Offer Limit:
+                                                </td>
+                                                <td>
+                                                    <input type="text"
+                                                        class="txt-ipt"
+                                                        required=""
+                                                        name="off_total_limit"
+                                                        placeholder="100/ No Limits"
+                                                        ng-class='{txt_err : (frm_mercht_offer.off_total_limit.$invalid && frm_mercht_offer.off_total_limit.$dirty)}'>
+                                                </td>
+                                                <td>Per:</td>
+                                                <td>
+                                                    <select class="slect">
+                                                        <option value="Offer">Offer</option>
+                                                        <option value="Month">Month</option>
+                                                        <option value="Year">Year</option>
+                                                        <option value="Default">Default</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="td-20">Redemption Limit:
+                                                </td>
+                                                <td>
+                                                    <input type="text"
+                                                        class="txt-ipt"
+                                                        required=""
+                                                        name="off_redemp_limit"
+                                                        placeholder="50/-NA-"
+                                                        ng-class='{txt_err : (frm_mercht_offer.off_redemp_limit.$invalid && frm_mercht_offer.off_redemp_limit.$dirty)}'>
+                                                </td>
+                                                <td>Per:</td>
+                                                <td>
+                                                    <select class="slect">
+                                                        <option value="Company">Company</option>
+                                                        <option value="User">User</option>
+                                                    </select>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- END: TBL -->
+                            </div>
+                            <!-- END : LEFT -->
+                        </div>
+                        <div class="col-md-3 col-sm-3 col-xs-12 offer-right">
+                            <table class="table table-striped table-bordered tbl">
+                                <tbody>
+                                    <tr>
+                                        <th>Participating Outlets
+                                        </th>
+                                    </tr>
+                                    <tr>
+                                        <td>26 Seah Street</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Bedok Mall, Bedok Central</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="text-center">
+                                            <span class="bt-edit">Outlets</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- END : RIGHT -->
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h2 class="ttl-tab"><span>Redemption Info</span></h2>
+                            <!-- END : EDITOR -->
+                            <div text-angular ng-model="merchantoffer.dedemption"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <h2 class="ttl-tab"><span>T&amp;Cs</span></h2>
+                            <div text-angular ng-model="merchantoffer.tcs"></div>
+                            <!-- END : EDITOR -->
+                        </div>
+                        <div class="col-md-12 offer-button">
+                            <button type="submit" class="save btn-brown" ng-click="validForm(i)">
+                                <i class="fa fa-save"></i>&nbsp;&nbsp;SAVE OFFER
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- END: detail-info-frm -->
+    </div>
+    <!-- END: ITEM -->
+</div>
+<!-- END: LIST -->

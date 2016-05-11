@@ -1,0 +1,37 @@
+<div class="page page-table">
+    <div class="col-lg-12" data-ng-controller="TabsMerchantCtrl">
+        <h1 class="ttl-page">BullWorks Pte Ltd</h1>    
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <div class="merchant-tabs">
+                    <tabset class="lv1">
+                        <tab heading="Company Info" ng-click="selectTab(0)">
+                            <div ng-include="'views/merchants/tab_company.html'"></div>
+                        </tab>
+                        <!-- END : TAB -->
+                        <tab heading="Outlets" ng-click="selectTab(1)">
+                            <div ng-include="'views/merchants/tab_outlet.html'"></div>
+                        </tab>
+                        <!-- END : TAB -->
+                        <tab heading="Offers" ng-click="selectTab(2)">
+                            <div ng-include="'views/merchants/tab_offer.html'"></div>
+                        </tab>
+                        <!-- END : TAB -->
+                        <tab heading="Reports" ng-click="selectTab(3)">
+                            <div ng-include="'views/merchants/tab_report.html'"></div>
+                        </tab>
+                        <!-- END : TAB -->
+                        <tab heading="Compaigns" ng-click="selectTab(4)">
+                            <div ng-include="'views/merchants/tab_compaign.html'"></div>
+                        </tab>
+                        <!-- END : TAB -->
+                    </tabset>
+                </div>
+            </div>
+
+            <!-- /.panel-body -->
+        </div>
+        <!-- /.panel -->
+    </div>
+</div>
+</div>

@@ -1,0 +1,102 @@
+<div class="page-tab page-client-user" data-ng-controller="BusinessesCtrl">
+    <div class="user-list">
+        <p class="marg-bot">Total No.  Businesses: <strong>{{businesses.total ? businesses.total : 0}}</strong></p>
+
+        <div class="t-r">
+            <a class="btn btn-brown mbt-20"
+               data-toggle="modal"
+               data-target="#createBusiness">Add new business</a>
+        </div>
+        <div class="table-responsive" ng-show="businesses.total">
+            <table class="table tbl tbl-w1000 tbl-w800 tbl-bg table-hover table-striped">
+                <tbody>
+                    <tr>
+                        <th class="text-center">Merchant Code</th>
+                        <th class="text-center">Name</th>
+                        <th class="text-center td-15">Actions</th>
+                    </tr>
+                    <tr ng-repeat="business in businesses._embedded.items">
+                        <td class="text-center"><a href="#/merchant/{{clientId}}/business/{{business.id}}">{{business.merchant_code}}</a></td>
+                        <td  class="text-center">{{business.name}}</td>
+                        <td class="td-control text-center td-15">
+                            <a title="Edit Business" href="#/merchant/{{clientId}}/business/{{business.id}}"><i class="fa fa fa-pencil"></i></a>
+                            |
+                            <a title="Delete Business" ng-click="removeBusiness(business)"><i class="fa fa-trash-o"></i></a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <footer class="table-footer" ng-show="businesses.pages >= 2">
+            <div class="row">
+                <div class="col-md-6 page-num-info">
+            <span>
+                Show
+                <select data-ng-model="numPerPage"
+                        data-ng-options="num for num in numPerPageOpt"
+                        data-ng-change="onNPPChange()">
+                </select>
+                users / page
+            </span>
+                </div>
+                <div class="col-md-6 text-right pagination-container">
+                    <pagination class="pagination-sm"
+                                ng-model="currentPage"
+                                total-items="businesses.total"
+                                max-size="4"
+                                ng-change="gotoPage(currentPage)"
+                                items-per-page="numPerPage"
+                                rotate="false"
+                                boundary-links="true"></pagination>
+                </div>
+            </div>
+        </footer>
+    <!-- END : PAGINATION -->
+        <div id="createBusiness" class="modal fade" role="dialog">
+                <div class="modal-dialog">
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <h4 class="modal-title">Create New Business</h4>
+                        </div>
+                        <div class="modal-body">
+                            <form
+                                class="frm_create_business modal_frm"
+                                name="frm_create_business"
+                                novalidate
+                                ng-submit="submitNewBusiness()">
+                                <p>
+                                    <label>Name</label>
+                                    <input type="text"
+                                           class="ipt"
+                                           name="bus_name"
+                                           ng-model="bus.name"
+                                           required
+                                           ng-class='{txt_err : (frm_create_business.bus_name.$invalid && frm_create_business.bus_name.$dirty)}'
+                                            />
+                                </p>
+                                <p>
+                                    <label>Merchant Code</label>
+                                    <input type="text"
+                                           class="ipt"
+                                           name="bus_merchant_code"
+                                           ng-model="bus.merchant_code"
+                                           ng-minlength="4"
+                                           ng-pattern="/^[a-zA-Z\d\-\_]+$/"
+                                           required
+                                           ng-class='{txt_err : (frm_create_business.bus_merchant_code.$invalid && frm_create_business.bus_merchant_code.$dirty)}'
+                                           />
+                                </p>
+                                <br>
+                                <button type="submit" class="save btn-brown">
+                                    <i class="fa fa-plus"></i>&nbsp;&nbsp;&nbsp;&nbsp;CREATE NEW BUSINESS
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END : MODAL CREATE CLIENTS-->
+    </div>
+</div>

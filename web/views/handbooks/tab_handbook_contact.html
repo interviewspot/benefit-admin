@@ -1,0 +1,109 @@
+<div class="row" data-ng-controller="ContactCtrl">
+    <div class="col-xs-12 blk-create">
+        <div class="row">
+            <div class="col-md-9 col-sm-9 col-xs-12 ctc-left">
+                <h2 class="ttl-tab"><span>Create New Contact</span></h2>
+                <form class="frm-create-ctact modal_frm" ng-submit="createContact()" name="frm_contact" novalidate>
+                    <div class="row">
+                        <div class="col-md-5 col-sm-5 col-xs-12 frm-itm">
+                            <div class="srch-em-wrap">
+
+                                <label>Search by email:</label>
+                                <input type="text"
+                                    class="ipt txt-email"
+                                    name="txt_email"
+                                    placeholder="Search by user's email"
+                                    keyboard-poster
+                                    post-function="searchMail"
+                                    list="_users"
+                                    required=""
+                                    ng-model='contact.email'
+                                    ng-class='{txt_err : (frm_contact.txt_email.$invalid && frm_contact.txt_email.$dirty)}'
+                                />
+                                <datalist id="_users">
+                                    <select style="display: none;"
+                                        id="_select"
+                                        name="_select"
+                                        ng-model='selectedUser'
+                                        ng-options='k as v for (k,v) in srch_users'></select>
+                                </datalist>
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-sm-5 col-xs-12 frm-itm">
+                            <label>Title contact:</label>
+                            <input
+                                type="text"
+                                class="ipt txt-title"
+                                name="txt_title"
+                                required=""
+                                ng-model='contact.title'
+                                ng-class='{txt_err : (frm_contact.txt_title.$invalid && frm_contact.txt_title.$dirty)}'/>
+                        </div>
+                        <div class="col-md-2 col-sm-2 col-xs-12 text-center frm-itm">
+                            <label>&nbsp;</label>
+                            <button type="submit" class="btn btn-submit btn-primary">CREATE</button>
+                        </div>
+                    </div>
+                </form><!-- END: FORM -->
+            </div>
+
+            <!-- END: LEFT -->
+            <div class="col-md-3 col-sm-3 col-xs-12 ctc-right">
+                <p>
+                    <strong>{{totalSelected}}</strong> chosen item(s)
+                </p>
+                <p>
+                    <a class="btn btn-primary btn-delete" ng-click="deleteSelectedContacts()">DELETE</a>
+                </p>
+            </div>
+            <!-- END: RIGHT -->
+        </div>
+    </div>
+    <!-- END: CREATE CONTACT -->
+
+    <!-- START: LIST CONTACT -->
+    <div class="col-md-6 col-sm-6 col-xs-12" ng-repeat="(i, item) in contacts | groupBy : 'alphabet'" >
+        <div class="ctc-itm" >
+            <h2>{{i}}</h2>
+            <div class="ctc-content" ng-repeat="contact in item">
+                <div class="ctc-control">
+                    <i class="fa fa-edit" data-toggle="modal" data-target="#editContact" ng-click="editContact(contact)"></i>
+                    <i class="fa fa-trash-o" ng-click="deleteContact(contact)"></i>
+                    <input type="checkbox" id="ctc-chk1" name="ctc-chk" ng-model="contact.checked" ng-change="contactSelect()"/>
+                </div>
+                <!-- END: CONTROL -->
+                <h3>{{contact.user.first_name}}  {{contact.user.last_name}}</h3>
+                <p class="ctc-add l-tags">Singapore,
+                    <span class="tag"
+                        ng-repeat="tag in contact.tags._embedded.items | filter:{employee_class:true} | filter:{enabled:true}">
+                        {{tag.name}}
+                    </span>
+                    <span class="tag"
+                        ng-repeat="tag in contact.tags._embedded.items | filter:{employee_function:true} | filter:{enabled:true}">
+                        {{tag.name}}
+                    </span>
+                </p>
+                <p ng-if="contact.user.mobile_no">
+                    <b>M:</b> {{contact.user.mobile_no}}
+                </p>
+                <p ng-if="contact.user.office_no">
+                    <b>0:</b> {{contact.user.office_no}}
+                </p>
+                <p ng-if="contact.user.email">
+                    <b>E:</b> {{contact.user.email}}
+                </p>
+            </div>
+        </div>
+        <!-- END: ITEM -->
+    </div>
+    <!-- END: COL -->
+
+
+<!-- MODAL: EDIT CONTACT -->
+<!-- <div id="editContact" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+    </div>
+</div> -->
+<!-- END : MODAL EDIT CONTACT-->
+</div><!-- END: ROW -->

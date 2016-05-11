@@ -1,0 +1,128 @@
+<!--data-ng-controller="listMerChantController" Call controller in scripts/Merchant-->
+<div class="col-lg-12">
+    <upload-file
+        upload-url="'https://api.sg-benefits.com/api/providers/sonata.media.provider.image/media'"
+        ng-progress-color="'#ffffff'"
+        ng-result="response"
+        ng-label="'Upload New Image'">
+    </upload-file>
+    <div class="page page-table" data-ng-controller="merchantsCtrl">
+        <div class="merchant-list">
+            <h1 class="ttl-page">Manager Merchant</h1>
+            <span   class="cap-note" 
+                    ng-click="">
+                    Add New Merchant
+            </span>
+            <section class="panel panel-default table-dynamic">
+                <div class="panel-body">
+                    <table class="table table-bordered table-striped table-responsive tbl-bg table-hover">
+                        <thead>
+                        <tr>
+                            <th class="text-center">
+                                <div class="th">
+                                    Company
+                                </div>
+                            </th>
+                            <th class="text-center">
+                                <div class="th">
+                                    Store
+                                </div>
+                            </th>
+                            <th class="text-center">
+                                <div class="th">
+                                    Type
+                                </div>
+                            </th>
+                            <th class="text-center">
+                                <div class="th">
+                                    Cat
+                                </div>
+                            </th>
+                            <th class="text-center">
+                                <div class="th">
+                                    Outlets
+                                </div>
+                            </th>
+                            <th class="text-center">
+                                <div class="th">
+                                    CS
+                                </div>
+                            </th>
+                            <th class="text-center">
+                                <div class="th">
+                                    Status
+                                </div>
+                            </th>
+                            <th class="text-center">
+                                <div class="th">
+                                    Actions
+                                </div>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr data-ng-repeat="store in currentPageStores">
+                            <td class="text-center">
+                                <a href="#/merchants/view" title="{{store.company}}">
+                                    {{store.company}}
+                                </a>
+                            </td>
+                            <td class="text-center">{{store.store}}</td>
+                            <td class="text-center">{{store.type}}</td>
+                            <td class="text-center">{{store.cat}}</td>
+                            <td class="text-center">{{store.outlets}}</td>
+                            <td class="text-center">{{store.cs}}</td>
+                            <td class="text-center">{{store.status}}</td>
+                            <td class="td-control text-center">
+                                <a href="#/pages/lock-screen" title="De-Active">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                                <a href="#/merchants/view" title="View">
+                                    <i class="fa fa-eye"></i>
+                                </a>
+                                <a href="#/tasks/tasks" title="Edit">
+                                    <i class="fa fa-edit"></i>
+                                </a>
+                                <a href="#/pages/signin" title="Assign CS">
+                                    <i class="fa fa-sign-in"></i>
+                                </a>
+                                <a href="#/pages/signin" title="Delete Account">
+                                    <i class="fa fa-trash-o" deleteitem></i>
+                                </a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <footer class="table-footer">
+                        <div class="row">
+                            <div class="col-md-6 page-num-info">
+                        <span>
+                            Show
+                            <select data-ng-model="numPerPage"
+                                    data-ng-options="num for num in numPerPageOpt"
+                                    data-ng-change="onNumPerPageChange()">
+                            </select>
+                            entries per page
+                        </span>
+                            </div>
+                            <div class="col-md-6 text-right pagination-container">
+                                <pagination class="pagination-sm"
+                                            ng-model="currentPage"
+                                            total-items="filteredStores.length"
+                                            max-size="4"
+                                            ng-change="select(currentPage)"
+                                            items-per-page="numPerPage"
+                                            rotate="false"
+                                            boundary-links="true"></pagination>
+                            </div>
+                        </div>
+                    </footer>
+                    <!-- END : PAGINATION -->
+                </div>
+
+            </section>
+        </div>
+        <!-- END: MERCHANT LIST -->
+    </div>
+</div>

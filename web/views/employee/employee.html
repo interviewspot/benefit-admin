@@ -1,0 +1,118 @@
+<div class="col-lg-12">
+    <div class="page page-table" data-ng-controller="employeeCtrl">
+        <h1 class="ttl-page">My Employees</h1>
+        <div class="employ-wrap">
+            <div class="employ-filter">
+                <div class="emp-filter">
+                    <div class="row">
+                        <form class="frm-employ-filter">
+                            <div class="col-md-3 col-sm-3 col-xs-6">
+                                <input type="text" placeholder="Sort by Date" class="txt-ipt filter-date" />
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-6">
+                                <input type="text" placeholder="Sort by Employee Cat" class="txt-ipt filter-cat" />
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-6">
+                                <input type="text" placeholder="Sort by Function" class="txt-ipt filter-function" />
+                            </div>
+                            <div class="col-md-3 col-sm-3 col-xs-6">
+                                <button type="submit" class="btn-brown btn">
+                                    <i class="fa fa-filter"></i> Filter
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <a href="#" class="emply-add">
+                    <i class="fa fa-user-plus"></i>
+                </a>
+            </div>
+            <!-- END: FILTER -->
+            <div class="employ-content">
+                <div class="table-responsive">
+                    <table class="table tb-w800 tbl tbl-bg table-hover table-striped">
+                        <tbody>
+                            <tr>
+                                <th class="text-center">Name</th>
+                                <th class="text-center">Employee Cat</th>
+                                <th class="text-center">Function</th>
+                                <th class="text-center">Email</th>
+                                <th class="text-center">Contact</th>
+                                <th class="text-center">App Status</th>
+                                <th class="text-center">Details</th>
+                            </tr>
+                            <tr class="ng-scope">
+                                <td class="text-center">
+                                    <a href="#" class="ng-binding">
+                                        Chris Ho
+                                    </a>
+                                </td>
+                                <td class="text-center">Professional</td>
+                                <td class="text-center">Operation</td>
+                                <td class="text-center">
+                                    Chris.ho@gmail.com
+                                </td>
+                                <td class="text-center">
+                                    98765151
+                                </td>
+                                <td class="text-center employ-act">
+                                    Activated
+                                </td>
+                                <td class="text-center td-control">
+                                    <a title="Edit"><i class="fa fa-pencil"></i></a> |
+                                    <a title="Delete"><i class="fa fa-trash-o"></i></a>
+                                </td>
+                            </tr>
+                            <tr class="ng-scope">
+                                <td class="text-center">
+                                    <a href="#" class="ng-binding">
+                                        Ting Ting
+                                    </a>
+                                </td>
+                                <td class="text-center">Clerical</td>
+                                <td class="text-center">Admin</td>
+                                <td class="text-center">
+                                    Ting.ting@gmail.com
+                                </td>
+                                <td class="text-center">
+                                    56812451
+                                </td>
+                                <td class="text-center employ-act">
+                                    Activated
+                                </td>
+                                <td class="text-center td-control">
+                                    <a title="Edit"><i class="fa fa-pencil"></i></a> |
+                                    <a title="Delete"><i class="fa fa-trash-o"></i></a>
+                                </td>
+                            </tr>
+                            <tr class="ng-scope">
+                                <td class="text-center">
+                                    <a href="#" class="ng-binding">
+                                        Joan Yan
+                                    </a>
+                                </td>
+                                <td class="text-center">Service</td>
+                                <td class="text-center">Waitress</td>
+                                <td class="text-center">
+                                    Joan.yan@gmail.com
+                                </td>
+                                <td class="text-center">
+                                    4551581255
+                                </td>
+                                <td class="text-center employ-deact">
+                                    De-activated
+                                </td>
+                                <td class="text-center td-control">
+                                    <a title="Edit"><i class="fa fa-pencil"></i></a> |
+                                    <a title="Delete"><i class="fa fa-trash-o"></i></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <!-- END: CONTENT -->
+        </div>
+        <!-- END: WRAP -->
+    </div>
+</div>

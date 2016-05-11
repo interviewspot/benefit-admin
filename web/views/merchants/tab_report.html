@@ -1,0 +1,72 @@
+<p class="clearfix text-right">
+                                <a href="#" class="ex-excel" title="Export to Excel">
+                                    <i class="ico-excel"></i>
+                                </a>
+                            </p>
+                            <table class="table table-striped table-bordered tbl tbl-bg table-hover">
+                                <tr>
+                                    <th class="text-center">
+                                        Date/Time
+                                    </th>
+                                    <th class="text-center">
+                                        Outlet
+                                    </th>
+                                    <th class="text-center">
+                                        Item
+                                    </th>
+                                    <th class="text-center">
+                                        Redeemer
+                                    </th>
+                                    <th class="text-center">
+                                        Company
+                                    </th>
+                                    <th class="text-center">
+                                        Reference No.
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">
+                                        29 June 2015  3:45pm
+                                    </td>
+                                    <td class="text-center" class="text-center">26 Seah Street</td>
+                                    <td class="text-center">Main Menu</td>
+                                    <td class="text-center">Kenneth Yap</td>
+                                    <td class="text-center">Magenta Consulting</td>
+                                    <td class="text-center">A-12230-445</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-center">
+                                        29 June 2015  6:45pm
+                                    </td>
+                                    <td class="text-center">6th Avenue</td>
+                                    <td class="text-center">Happy Hour</td>
+                                    <td class="text-center">Roger Wan</td>
+                                    <td class="text-center">EPS Solutions</td>
+                                    <td class="text-center">A8895-4451</td>
+                                </tr>
+                            </table>
+                            <footer class="table-footer">
+                                <div class="row">
+                                    <div class="col-md-6 page-num-info">
+                                <span>
+                                    Show
+                                    <select data-ng-model="numPerPage"
+                                            data-ng-options="num for num in numPerPageOpt"
+                                            data-ng-change="onNumPerPageChange()">
+                                    </select>
+                                    entries per page
+                                </span>
+                                    </div>
+                                    <div class="col-md-6 text-right pagination-container">
+                                        <pagination class="pagination-sm"
+                                                    ng-model="currentPage"
+                                                    total-items="filteredStores.length"
+                                                    max-size="4"
+                                                    ng-change="select(currentPage)"
+                                                    items-per-page="numPerPage"
+                                                    rotate="false"
+                                                    boundary-links="true"></pagination>
+                                    </div>
+                                </div>
+                            </footer>
+                            <!-- END : PAGINATION -->
