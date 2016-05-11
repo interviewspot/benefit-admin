@@ -244,7 +244,7 @@
                             cwd: "<%= yeoman.app %>",
                             dest: "<%= yeoman.dist %>",
                             src: [
-                                "bower_components/**/*",
+                                "bower_components/**/**/*",
                                 "lib/*",
                                 "scripts/**/*",
                                 "favicon.ico",
