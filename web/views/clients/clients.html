@@ -10,30 +10,14 @@
               <table class="table tbl tbl-bg table-hover table-striped tbl-w1000">
                   <tbody>
                       <tr>
-                          <th class="text-center">Company</th>
-                          <th class="text-center">Status</th>
-                          <th class="text-center">Industry</th>
-                          <th class="text-center">Users</th>
-                          <th class="text-center">Est Savings</th>
-                          <th class="text-center">CS</th>
+                          <th class="text-left">Company</th>
                           <th class="text-center">Actions</th>
                       </tr>
                       <tr ng-repeat="(i, client) in clients_list" >
-                          <td class="text-center">
+                          <td class="text-left">
                               <a href="#/clients/{{client.id}}/info">
                                   {{client.name}}
                               </a>
-                          </td>
-                          <td class="text-center">Not Available Yet!</td>
-                          <td class="text-center">Not Available Yet!</td>
-                          <td class="text-center">
-                              Not Available Yet!
-                          </td>
-                          <td class="text-center">
-                              Not Available Yet!
-                          </td>
-                          <td class="text-center">
-                              Not Available Yet!
                           </td>
                           <td class="text-center td-control">
                               <a title="Enabled/Not"

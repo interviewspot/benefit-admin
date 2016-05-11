@@ -98,13 +98,13 @@
                                 <span ng-show="frm_updateuser.office_no.$invalid  && frm_updateuser.office_no.$dirty">Office number only contain number, whitespace and +.</span>
                             </p>
                     </tr>
-                    <tr>
-                        <th class="td-30">NRIC No.</th>
-                        <td><input type="text"
-                                value="Not Available Yet!"
-                                class="txt-ipt"
-                                ng-class="{txt_disabled : !isDisable}"></td>
-                    </tr>
+                    <!--<tr>-->
+                        <!--<th class="td-30">NRIC No.</th>-->
+                        <!--<td><input type="text"-->
+                                <!--value="Not Available Yet!"-->
+                                <!--class="txt-ipt"-->
+                                <!--ng-class="{txt_disabled : !isDisable}"></td>-->
+                    <!--</tr>-->
                 </tbody>
             </table>
         </div>
@@ -118,13 +118,13 @@
                                 ng-model="user.date_added"
                                 class="txt-ipt txt_disabled" disabled></td>
                     </tr>
-                    <tr>
-                        <th class="td-30">De-activated Date</th>
-                        <td><input type="text"
-                                value="Not Available Yet!"
-                                class="txt-ipt"
-                                ng-class="{txt_disabled : !isDisable}"></td>
-                    </tr>
+                    <!--<tr>-->
+                        <!--<th class="td-30">De-activated Date</th>-->
+                        <!--<td><input type="text"-->
+                                <!--value="Not Available Yet!"-->
+                                <!--class="txt-ipt"-->
+                                <!--ng-class="{txt_disabled : !isDisable}"></td>-->
+                    <!--</tr>-->
                     <tr>
                         <th class="td-30">Birthday</th>
                         <td><input type="text"
@@ -140,15 +140,15 @@
                                     />
                         </td>
                     </tr>
-                    <tr>
-                        <th class="td-30">App Status</th>
-                        <td>
-                            <input type="text"
-                                value="Not Available Yet!"
-                                class="txt-ipt"
-                                ng-class="{txt_disabled : !isDisable}">
-                        </td>
-                    </tr>
+                    <!--<tr>-->
+                        <!--<th class="td-30">App Status</th>-->
+                        <!--<td>-->
+                            <!--<input type="text"-->
+                                <!--value="Not Available Yet!"-->
+                                <!--class="txt-ipt"-->
+                                <!--ng-class="{txt_disabled : !isDisable}">-->
+                        <!--</td>-->
+                    <!--</tr>-->
                     <tr>
                         <th class="td-30">Verification Code</th>
                         <td><input type="text"
@@ -162,47 +162,47 @@
                                 ng-class="{txt_err : frm_updateuser.code.$invalid}"
                                 ></td>
                     </tr>
-                    <tr>
-                        <th class="td-30">Pin Code</th>
-                        <td><input type="text"
-                                name="four_digit_pin"
-                                class="txt-ipt"
-                                required
-                                placeholder="Pin code 4 chars"
-                                ng-minlength="4"
-                                ng-maxlength="4"
-                                ng-model="user.four_digit_pin"
-                                ng-pattern="/^[a-z\d\-\_]+$/"
-                                ng-class="{txt_err : frm_updateuser.four_digit_pin.$invalid}"
-                                ></td>
-                    </tr>
-                    <tr>
-                        <th class="td-30">Redemptions</th>
-                        <td><input type="text"
-                                value="Not Available Yet!"
-                                class="txt-ipt"
-                                ng-class="{txt_disabled : !isDisable}"></td>
-                    </tr>
-                    <tr>
-                        <th class="td-30">Est. Savings</th>
-                        <td><input type="text"
-                                value="Not Available Yet!"
-                                class="txt-ipt"
-                                ng-class="{txt_disabled : !isDisable}"></td>
-                    </tr>
-                    <tr>
-                        <th class="td-30">Medical Card ID</th>
-                        <td><input type="text"
-                                value="Not Available Yet!"
-                                class="txt-ipt"
-                                ng-class="{txt_disabled : !isDisable}"></td>
-                    </tr>
+                    <!--<tr>-->
+                        <!--<th class="td-30">Pin Code</th>-->
+                        <!--<td><input type="text"-->
+                                <!--name="four_digit_pin"-->
+                                <!--class="txt-ipt"-->
+                                <!--required-->
+                                <!--placeholder="Pin code 4 chars"-->
+                                <!--ng-minlength="4"-->
+                                <!--ng-maxlength="4"-->
+                                <!--ng-model="user.four_digit_pin"-->
+                                <!--ng-pattern="/^[a-z\d\-\_]+$/"-->
+                                <!--ng-class="{txt_err : frm_updateuser.four_digit_pin.$invalid}"-->
+                                <!--&gt;</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<th class="td-30">Redemptions</th>-->
+                        <!--<td><input type="text"-->
+                                <!--value="Not Available Yet!"-->
+                                <!--class="txt-ipt"-->
+                                <!--ng-class="{txt_disabled : !isDisable}"></td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<th class="td-30">Est. Savings</th>-->
+                        <!--<td><input type="text"-->
+                                <!--value="Not Available Yet!"-->
+                                <!--class="txt-ipt"-->
+                                <!--ng-class="{txt_disabled : !isDisable}"></td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<th class="td-30">Medical Card ID</th>-->
+                        <!--<td><input type="text"-->
+                                <!--value="Not Available Yet!"-->
+                                <!--class="txt-ipt"-->
+                                <!--ng-class="{txt_disabled : !isDisable}"></td>-->
+                    <!--</tr>-->
                     <tr>
                         <th class="td-30">Enabled / Not:</th>
                         <td>
                             <input type="checkbox"
                                 name="user_enabled"
-                                ng-model="user.enabled"/>
+                                ng-model="updateTags.position.enabled"/>
                         </td>
                     </tr>
                     <tr>
@@ -211,6 +211,16 @@
                             <input type="checkbox"
                                 name="handbook_contact"
                                 ng-model="user.position_data.handbook_contact"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Role</th>
+                        <td>
+                            <select ng-model="user.roles">
+                                <option value="">Regular User</option>
+                                <option value="ROLE_HR_ADMIN">--Hr Admin</option>
+                                <option value="ROLE_ADMIN">----System Admin</option>
+                            </select>
                         </td>
                     </tr>
                 </tbody>

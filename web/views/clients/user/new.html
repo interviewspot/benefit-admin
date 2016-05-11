@@ -139,9 +139,41 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="td-20">NRIC No.</th>
+                        <th class="td-30">Verification Code</th>
+                        <td><input type="text"
+                                   name="code"
+                                   class="txt-ipt"
+                                   placeholder="Verification code 6 chars"
+                                   ng-minlength="6"
+                                   ng-trim="true"
+                                   ng-model="user.code"
+                                   ng-pattern="/^[a-z\d\-\_]+$/"
+                                   ng-class="{txt_err : frm_updateuser.code.$invalid}"
+                        ></td>
+                    </tr>
+                    <th class="td-30">Enabled / Not:</th>
+                    <td>
+                        <input type="checkbox"
+                               name="user_enabled"
+                               ng-model="user.enabled"/>
+                    </td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Show in Handbook Contacts:</th>
                         <td>
-                        <input type="text" name="txt-nric" class="ipt-user" value="Not Available Yet!">
+                            <input type="checkbox"
+                                   name="handbook_contact"
+                                   ng-model="user.handbook_contact"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Role</th>
+                        <td>
+                            <select ng-model="user.roles">
+                                <option value="">Regular User</option>
+                                <option value="ROLE_HR_ADMIN">--Hr Admin</option>
+                                <option value="ROLE_ADMIN">----System Admin</option>
+                            </select>
                         </td>
                     </tr>
                 </tbody>
