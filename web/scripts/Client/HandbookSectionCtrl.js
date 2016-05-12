@@ -331,7 +331,7 @@
             };
             $scope.deleteSection = function (section) {
                 var r, title;
-                if (section.translations['en_us'].title) {
+                if (section.translations['en_us'] != undefined) {
                     title = section.translations['en_us'].title;
                 } else {
                     title = section.title;
@@ -343,6 +343,8 @@
                         hand_id: $scope.handbookId,
                         section_id: section.id
                     }, function (res) {
+                        $scope.isUpdate = false;
+                        $scope.formSection = {};
                         return $scope.loadSections($scope.numPerPage, $scope.currentPage);
                     });
                 }
