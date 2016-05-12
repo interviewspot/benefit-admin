@@ -50,6 +50,8 @@
       });
       console.log($location.path());
       user = localStorageService.cookie.get('user');
+      var employerId = localStorageService.cookie.get('employerId');
+      $rootScope.employerId = employerId;
       if (!user || typeof user !== 'object') {
         $scope.isLogin = true;
         return $rootScope.isLoggedIn = false;

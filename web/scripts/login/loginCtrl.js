@@ -5,6 +5,7 @@
       $scope.username = "";
       $scope.password = "";
       $rootScope.isLoggedIn = false;
+      $rootScope.employerId = null;
       localStorageService.cookie.remove('user');
       return $scope.doLogin = function() {
         return aREST.get($scope.username, $scope.password, config.path.baseURL + "/system").then(function(system) {
@@ -31,6 +32,8 @@
                   } else {
                     $location.path('/clients/' + employer.data.id + '/info');
                     $rootScope.isAdmin = false;
+                    $rootScope.employerId = employer.data.id;
+                    localStorageService.cookie.set('employerId',employer.data.id, 1);
                     return $route.reload();
                   }
                 });

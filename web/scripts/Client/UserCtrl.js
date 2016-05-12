@@ -2,7 +2,7 @@
   'use strict';
   angular.module('app.users', [])
       .controller('UsersCtrl', [
-    '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', '$modal', 'UserService', 'Users', 'fetchContact', '$timeout', function($scope, $filter, fetchTabData, $location, $routeParams, config, $q, $modal, UserService, Users, fetchContact, $timeout) {
+    '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', '$modal', 'UserService', 'Users', 'fetchContact', '$timeout','$rootScope', function($scope, $filter, fetchTabData, $location, $routeParams, config, $q, $modal, UserService, Users, fetchContact, $timeout,$rootScope) {
       var _URL_users, _getUsers, _updateUser;
       $scope.clientId = $routeParams.clientId;
       _URL_users = {

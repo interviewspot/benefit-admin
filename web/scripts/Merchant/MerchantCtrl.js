@@ -1,9 +1,13 @@
 (function() {
   'use strict';
   angular.module('app.merchants', []).controller('merchantCtrl', [
-    '$scope', '$filter', '$location', '$routeParams', 'config', 'Companies', 'authHandler', function($scope, $filter, $location, $routeParams, config, Companies, authHandler) {
+    '$scope', '$filter', '$location', '$routeParams', 'config', 'Companies', 'authHandler','$rootScope','$route', function($scope, $filter, $location, $routeParams, config, Companies, authHandler,$rootScope,$route) {
       var _getCompanies;
       authHandler.checkLoggedIn();
+      if($rootScope.employerId != null){
+        $location.path('/clients/' + $rootScope.employerId + '/info');
+        return $route.reload();
+      }
       _getCompanies = function(limit, goPage) {
         return Companies.get(config.path.baseURL + config.path.clients + '?limit=' + limit + '&page=' + goPage).then(function(res) {
           if (res.status !== 200 || typeof res !== 'object') {
