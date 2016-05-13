@@ -166,8 +166,18 @@
                 $scope.selectedSec = section.id;
                 $scope.readyToAddContent = true;
 
+                if (section._links.parent) {
+                    $scope.isCreateSubSection = true;
+                    var temp;
+                    temp = eval(section._links.parent.href.split('sections/')[1]);
+                    $scope.parentSelect = temp;
+                    $scope.changedValue(temp);
+                } else {
+                    $scope.isCreateSubSection = false;
+                    $scope.parentSelect = null;
+                }
                 //get content
-                return fetchHandbook.get($scope.formSection._links.contents.href + "?sort=content.ordering:asc").then(function (contents) {
+                fetchHandbook.get($scope.formSection._links.contents.href + "?sort=content.ordering:asc").then(function (contents) {
                     angular.forEach(contents.data._embedded.items, function (content, key) {
                         content.url = "";
                         content.image_id = "";
@@ -219,18 +229,7 @@
                 });
 
 
-                if (section._links.parent) {
-                    $scope.isCreateSubSection = true;
-                    $timeout(function () {
-                        var temp;
-                        temp = eval(section._links.parent.href.split('sections/')[1]);
-                        $scope.parentSelect = temp;
-                        return $scope.changedValue(temp);
-                    });
-                } else {
-                    $scope.isCreateSubSection = false;
-                    $scope.parentSelect = null;
-                }
+
                 $scope.isUpdate = true;
                 $rootScope.readyToUpload = false;
                 $rootScope.readyToUploadPdf = false;
