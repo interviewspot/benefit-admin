@@ -55,7 +55,7 @@
         if (!r) {
           return;
         }
-        handbook.locale = 'en-us';
+        handbook.locale = 'en_us';
         if (handbook.translations[handbook.locale]) {
           title = handbook.translations[handbook.locale].title;
         } else {

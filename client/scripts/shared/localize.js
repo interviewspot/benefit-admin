@@ -89,7 +89,7 @@
       $scope.setLang = function(lang) {
         switch (lang) {
           case 'English':
-            localize.setLanguage('EN-US');
+            localize.setLanguage('en_us');
             break;
           case 'Español':
             localize.setLanguage('ES-ES');

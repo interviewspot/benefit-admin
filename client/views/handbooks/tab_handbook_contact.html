@@ -1,54 +1,44 @@
 <div class="row" data-ng-controller="ContactCtrl">
     <div class="col-xs-12 blk-create">
         <div class="row">
-            <div class="col-md-9 col-sm-9 col-xs-12 ctc-left">
-                <h2 class="ttl-tab"><span>Create New Contact</span></h2>
-                <form class="frm-create-ctact modal_frm" ng-submit="createContact()" name="frm_contact" novalidate>
-                    <div class="row">
-                        <div class="col-md-5 col-sm-5 col-xs-12 frm-itm">
-                            <div class="srch-em-wrap">
+            <!--<div class="col-md-9 col-sm-9 col-xs-12 ctc-left">-->
+                <!--<h2 class="ttl-tab"><span>Create New Contact</span></h2>-->
+                <!--<form class="frm-create-ctact modal_frm" ng-submit="createContact()" name="frm_contact" novalidate>-->
+                    <!--<div class="row">-->
+                        <!--<div class="col-md-5 col-sm-5 col-xs-12 frm-itm">-->
+                            <!--<div class="srch-em-wrap">-->
 
-                                <label>Search by email:</label>
-                                <input type="text"
-                                    class="ipt txt-email"
-                                    name="txt_email"
-                                    placeholder="Search by user's email"
-                                    keyboard-poster
-                                    post-function="searchMail"
-                                    list="_users"
-                                    required=""
-                                    ng-model='contact.email'
-                                    ng-class='{txt_err : (frm_contact.txt_email.$invalid && frm_contact.txt_email.$dirty)}'
-                                />
-                                <datalist id="_users">
-                                    <select style="display: none;"
-                                        id="_select"
-                                        name="_select"
-                                        ng-model='selectedUser'
-                                        ng-options='k as v for (k,v) in srch_users'></select>
-                                </datalist>
-                            </div>
-                        </div>
-                        <div class="col-md-5 col-sm-5 col-xs-12 frm-itm">
-                            <label>Title contact:</label>
-                            <input
-                                type="text"
-                                class="ipt txt-title"
-                                name="txt_title"
-                                required=""
-                                ng-model='contact.title'
-                                ng-class='{txt_err : (frm_contact.txt_title.$invalid && frm_contact.txt_title.$dirty)}'/>
-                        </div>
-                        <div class="col-md-2 col-sm-2 col-xs-12 text-center frm-itm">
-                            <label>&nbsp;</label>
-                            <button type="submit" class="btn btn-submit btn-primary">CREATE</button>
-                        </div>
-                    </div>
-                </form><!-- END: FORM -->
-            </div>
+                                <!--<label>Search by email:</label>-->
+                                <!--<input type="text"-->
+                                    <!--class="ipt txt-email"-->
+                                    <!--name="txt_email"-->
+                                    <!--placeholder="Search by user's email"-->
+                                    <!--keyboard-poster-->
+                                    <!--post-function="searchMail"-->
+                                    <!--list="_users"-->
+                                    <!--required=""-->
+                                    <!--ng-model='contact.email'-->
+                                    <!--ng-class='{txt_err : (frm_contact.txt_email.$invalid && frm_contact.txt_email.$dirty)}'-->
+                                <!--/>-->
+                                <!--<datalist id="_users">-->
+                                    <!--<select style="display: none;"-->
+                                        <!--id="_select"-->
+                                        <!--name="_select"-->
+                                        <!--ng-model='selectedUser'-->
+                                        <!--ng-options='k as v for (k,v) in srch_users'></select>-->
+                                <!--</datalist>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                        <!--<div class="col-md-2 col-sm-2 col-xs-12 text-center frm-itm">-->
+                            <!--<label>&nbsp;</label>-->
+                            <!--<button type="submit" class="btn btn-submit btn-primary">ADD</button>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</form>&lt;!&ndash; END: FORM &ndash;&gt;-->
+            <!--</div>-->
 
             <!-- END: LEFT -->
-            <div class="col-md-3 col-sm-3 col-xs-12 ctc-right">
+            <div class="col-md-6 col-sm-6 col-xs-12">
                 <p>
                     <strong>{{totalSelected}}</strong> chosen item(s)
                 </p>
@@ -90,7 +80,7 @@
                     <b>0:</b> {{contact.user.office_no}}
                 </p>
                 <p ng-if="contact.user.email">
-                    <b>E:</b> {{contact.user.email}}
+                    <b>E:</b> {{contact.position.email_address}}
                 </p>
             </div>
         </div>

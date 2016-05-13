@@ -28,14 +28,14 @@
         hand_id: $scope.handbookId
       }, function(data, getResponseHeaders) {
         $scope.handbook = data;
-        $scope.handbook.locale = 'en-us';
+        $scope.handbook.locale = 'en_us';
         return fetchHandbook.get(data._links.translations.href).then(function(res) {
           if (res.status !== 200 || typeof res !== 'object') {
             return;
           }
           $scope.handbook['translations'] = res.data;
-          if ($scope.handbook.translations['en-us']) {
-            $scope.handbook.title = $scope.handbook.translations['en-us'].title;
+          if ($scope.handbook.translations['en_us']) {
+            $scope.handbook.title = $scope.handbook.translations['en_us'].title;
           }
         }, function(error) {
           console.log(error);
@@ -67,7 +67,7 @@
             "year": $scope.handbook.year,
             "description": desc,
             "organisation": $scope.clientId,
-            "locale": $scope.handbook.locale,
+            "locale": "en_us",
             "enabled": $scope.handbook.enabled
           }
         };
