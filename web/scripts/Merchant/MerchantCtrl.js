@@ -4,7 +4,7 @@
     '$scope', '$filter', '$location', '$routeParams', 'config', 'Companies', 'authHandler','$rootScope','$route', function($scope, $filter, $location, $routeParams, config, Companies, authHandler,$rootScope,$route) {
       var _getCompanies;
       authHandler.checkLoggedIn();
-      if($rootScope.employerId != null){
+      if($rootScope.employerId != null && $rootScope.isAdmin == false){
         $location.path('/clients/' + $rootScope.employerId + '/info');
         return $route.reload();
       }

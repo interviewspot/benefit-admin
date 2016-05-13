@@ -18,7 +18,7 @@
             <tr ng-repeat="hb_list in handbooks">
                 <td class="text-center">
                     <a href="#/clients/{{clientDetail.id}}/handbooks/{{hb_list.id}}">
-                        {{hb_list.translations['en-us'].title ? hb_list.translations['en-us'].title : hb_list.title}}
+                        {{hb_list.translations['en_us'].title ? hb_list.translations['en_us'].title : hb_list.title}}
                     </a>
                 </td>
                 <td class="text-center">{{hb_list.version}}</td>

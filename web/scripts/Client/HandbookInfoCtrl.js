@@ -8,7 +8,7 @@
       $scope.isNewHandBook = false;
       $scope.isCreateHandbook = false;
       $scope.handbook = {};
-      $scope.handbook.locale = 'en-us';
+      $scope.handbook.locale = 'en_us';
       clientService.get({
         org_id: $scope.clientId
       }, function(data, getResponseHeaders) {
@@ -20,14 +20,14 @@
           hand_id: $scope.handbookId
         }, function(data, getResponseHeaders) {
           $scope.handbook = data;
-          $scope.handbook.locale = 'en-us';
+          $scope.handbook.locale = 'en_us';
           return fetchHandbook.get(data._links.translations.href).then(function(res) {
             if (res.status !== 200 || typeof res !== 'object') {
               return;
             }
             $scope.handbook['translations'] = res.data;
-            if ($scope.handbook.translations['en-us']) {
-              $scope.handbook.title = $scope.handbook.translations['en-us'].title;
+            if ($scope.handbook.translations['en_us']) {
+              $scope.handbook.title = $scope.handbook.translations['en_us'].title;
             }
           }, function(error) {
             console.log(error);
@@ -49,24 +49,14 @@
         if ($scope.frm_crt_handbook.$error.required) {
           return false;
         }
-        if ($scope.handbook.translations[$scope.handbook.locale]) {
-          title = $scope.handbook.translations[$scope.handbook.locale].title;
-        } else {
-          title = $scope.handbook.title;
-        }
-        if ($scope.handbook.translations[$scope.handbook.locale]) {
-          desc = $scope.handbook.translations[$scope.handbook.locale].description;
-        } else {
-          desc = $scope.handbook.description;
-        }
         updateData = {
           "handbook": {
             "version": $scope.handbook.version,
-            "title": title,
+            "title": $scope.handbook.title,
             "year": $scope.handbook.year,
-            "description": desc,
+            "description": $scope.handbook.description,
             "organisation": $scope.clientId,
-            "locale": $scope.handbook.locale,
+            "locale": "en_us",
             "enabled": $scope.handbook.enabled
           }
         };
@@ -98,7 +88,7 @@
             "year": $scope.handbook.year,
             "description": $scope.handbook.description,
             "organisation": $scope.clientId,
-            "locale": $scope.handbook.locale,
+            "locale": "en_us",
             "enabled": $scope.handbook.enabled
           }
         };
