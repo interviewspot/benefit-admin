@@ -28,7 +28,7 @@
     }
 }
 .btn-brown {
-    background-color: #CFAE79;
+    background-color: #8E2D7C;
     color: #fff;
     border: none;
     @include  border-radius(4px);
@@ -40,7 +40,7 @@
     	color: #fff;
     }
     &:focus {
-        background-color: #CFAE79;
+        background-color: #8E2D7C;
         color: #fff;
     }
 }
@@ -213,7 +213,7 @@ h2.ttl-tab {
 		font-size: 12px;
 		tr.tr-hover {
 			&:hover {
-			    background-color: #CFAE79;
+			    background-color: #8E2D7C;
 			    cursor: pointer;
 			    color: #fff;
 			    .tbl-remove, .tbl-edit {
@@ -230,7 +230,7 @@ h2.ttl-tab {
         margin-right: 7px;
         cursor: pointer;
         &:hover {
-            color: #CFAE79
+            color: #8E2D7C
         }
         &:first-child {
         	border-right: 1px solid #ddd;
@@ -294,7 +294,7 @@ h2.ttl-tab {
 	position: relative;
 }
 .cap-note {
-	background-color: #CFAE79;
+	background-color: #8E2D7C;
 	color: #fff;
 	@include border-radius(4px);
 	padding: 2px 15px;
@@ -433,7 +433,7 @@ h2.ttl-tab {
 			background-color: #999;
 		}
 		&.cfirm {
-			background-color: #CFAE79;
+			background-color: #8E2D7C;
 			&:hover {
 				background-color: #9A7F53;
 			}
@@ -463,7 +463,7 @@ h2.ttl-tab {
 	}
 }
 .btn-add {
-	background-color: #CFAE79;
+	background-color: #8E2D7C;
 	text-transform: uppercase;
 	color: #fff;
 	@include transition(all 0.2s linear);
@@ -475,7 +475,7 @@ h2.ttl-tab {
 .add-upload {
 	p {
 		> a {
-			color: #CFAE79;
+			color: #8E2D7C;
 		}
 	}
 	.blk-upload {
@@ -727,7 +727,7 @@ h2.ttl-tab {
 		> li {
 			> a {
 				@include border-radius(0px);
-				font-weight: bold;
+				//font-weight: bold;
 				font-size: 16px;
                 color: #333;
 			}
@@ -820,7 +820,7 @@ h2.ttl-tab {
 .msg-update {
     display: inline-block;
     padding-left: 20px;
-    color: #CFAE79;
+    color: #8E2D7C;
 }
 
 
@@ -941,7 +941,7 @@ h2.ttl-tab {
         width: 700px;
     }
     .emply-add {
-        color: #CFAE79;
+        color: #8E2D7C;
         font-size: 24px;
         position: absolute;
         right: 0;
@@ -1082,7 +1082,7 @@ hr.line {
 }
 .get_address {
     cursor: pointer;
-    background-color: #CFAE79;
+    background-color: #8E2D7C;
     padding: 5px 10px;
     color: #fff;
     display: inline-block;

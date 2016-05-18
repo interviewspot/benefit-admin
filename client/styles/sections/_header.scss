@@ -31,10 +31,10 @@
         .logo {
             position: absolute;
             width: 100%;
-            height: $header_height;
+            height: 70px;
             background-color: darken($dark, 5%);
             color: $bright;
-            line-height: $header_height;
+            line-height: 70px;
             text-align: center;
             @media (min-width: $screen-sm) {
                 display: inline-block;
@@ -42,7 +42,6 @@
                 background-color: transparent;
             }
             img  {
-                border-radius: 50%;
                 border: 3px solid #fff;
             }
             > a {
@@ -275,7 +274,7 @@
 
         //
         .header-horizon{
-            background-color: #CFAE79;
+            background-color: #8E2D7C;
             height: 10px;
             width: 100%;
             margin-top: 35px;

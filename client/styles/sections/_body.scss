@@ -2,11 +2,11 @@ body {
     background: url('../images/bg-pattern/bg-pattern4.png') repeat #fff;
 }
 a {
-    color: #CFAE79;
+    color: #555555;
     @include transition(all 0.2s linear);
     &:hover {
         text-decoration: none;
-        color: #9A7F53;
+        color: #8E2D7C;
     }
 }
 // fullscreen, hide header and sidebar
