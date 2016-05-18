@@ -7,3 +7,4 @@ dist/
 node_modules
 client/bower_components
 /npm-debug.log
+/web/lib/constant.js
