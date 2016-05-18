@@ -17,7 +17,7 @@
         return setRoutes(route);
       });
       $routeProvider.when('/', {
-        redirectTo: '/merchant'
+        redirectTo: '/clients'
       }).when('/404', {
         templateUrl: 'views/pages/404.html'
       });

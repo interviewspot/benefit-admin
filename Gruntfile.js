@@ -145,8 +145,8 @@
                 },
                 server: {
                     options: {
-                        noLineComments: false,
-                        sourcemap: false,
+                        noLineComments: true,
+                        sourcemap: true,
                         debugInfo: true
                     }
                 },
