@@ -54,6 +54,21 @@
                         </td>
                     </tr>
                     <tr>
+                        <th class="td-20">Password <span class="red">*</span></th>
+                        <td>
+                            <input type="password" name="password" class="ipt-user"
+                                   ng-class="{txt_err : frm_adduser.password.$error.required}"
+                                   ng-model="user.password"
+                                   ng-minlength="4"
+                                   ng-pattern="/^[a-zA-Z\d\-\_~@#$^*()_+=[\]{}|\\,.?:!%&]+$/"
+                                   ng-trim="false"
+                                   required  >
+                            <p style="color:red">
+                                <span ng-show="frm_adduser.password.$invalid  && frm_adduser.password.$dirty">Password need at least 4 chars without whitespace.</span>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
                         <th class="td-30">Contact no.</th>
                         <td><input type="text"
                                 name="mobile_no"
@@ -228,35 +243,35 @@
         </div>
 
         <!-- END: COL -->
-        <div class="col-xs-12 user-history">
-            <h2 class="ttl-tab">
-                <span>Redemption History</span>
-            </h2>
-            <div class="table-responsive">
-                <table class="table tbl tbl-bg table-striped tbl-w1000">
-                    <tbody>
-                        <tr>
-                            <th class="text-center">Date/Time</th>
-                            <th>Merchant</th>
-                            <th>Item</th>
-                            <th>Location</th>
-                            <th>Category</th>
-                            <th>Est. Value</th>
-                            <th>Ref </th>
-                        </tr>
-                        <tr ng-repeat="redemption in clients_user_redemptions_list">
-                            <td>{{redemption.date}}</td>
-                            <td>{{redemption.merchant}}</td>
-                            <td>{{redemption.item}}</td>
-                            <td>{{redemption.location}}</td>
-                            <td>{{redemption.category}}</td>
-                            <td>{{redemption.est_save}}</td>
-                            <td>{{redemption.ref}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+        <!--<div class="col-xs-12 user-history">-->
+            <!--<h2 class="ttl-tab">-->
+                <!--<span>Redemption History</span>-->
+            <!--</h2>-->
+            <!--<div class="table-responsive">-->
+                <!--<table class="table tbl tbl-bg table-striped tbl-w1000">-->
+                    <!--<tbody>-->
+                        <!--<tr>-->
+                            <!--<th class="text-center">Date/Time</th>-->
+                            <!--<th>Merchant</th>-->
+                            <!--<th>Item</th>-->
+                            <!--<th>Location</th>-->
+                            <!--<th>Category</th>-->
+                            <!--<th>Est. Value</th>-->
+                            <!--<th>Ref </th>-->
+                        <!--</tr>-->
+                        <!--<tr ng-repeat="redemption in clients_user_redemptions_list">-->
+                            <!--<td>{{redemption.date}}</td>-->
+                            <!--<td>{{redemption.merchant}}</td>-->
+                            <!--<td>{{redemption.item}}</td>-->
+                            <!--<td>{{redemption.location}}</td>-->
+                            <!--<td>{{redemption.category}}</td>-->
+                            <!--<td>{{redemption.est_save}}</td>-->
+                            <!--<td>{{redemption.ref}}</td>-->
+                        <!--</tr>-->
+                    <!--</tbody>-->
+                <!--</table>-->
+            <!--</div>-->
+        <!--</div>-->
         <!-- END: HISTORY -->
     </div>
     </form>

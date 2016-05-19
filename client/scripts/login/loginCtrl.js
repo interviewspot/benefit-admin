@@ -24,7 +24,11 @@
               $rootScope.isLoggedIn = true;
               $scope.roles = res.data.roles;
               return aREST.get($scope.username, $scope.password, config.path.baseURL + system.data._links.logged_in_position.href).then(function(position) {
+                $rootScope.positionId = position.data.id;
+                localStorageService.cookie.set('positionId',position.data.id, 1);
                 return aREST.get($scope.username, $scope.password, position.data._links.employer.href).then(function(employer) {
+                    $rootScope.employerId = employer.data.id;
+                    localStorageService.cookie.set('employerId',employer.data.id, 1);
                   if ($scope.roles.indexOf('ROLE_ADMIN') >= 0 ) {
                     $location.path('/clients');
                     $rootScope.isAdmin = true;
@@ -32,8 +36,6 @@
                   } else {
                     $location.path('/clients/' + employer.data.id + '/info');
                     $rootScope.isAdmin = false;
-                    $rootScope.employerId = employer.data.id;
-                    localStorageService.cookie.set('employerId',employer.data.id, 1);
                     return $route.reload();
                   }
                 });

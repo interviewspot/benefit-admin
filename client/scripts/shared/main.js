@@ -50,8 +50,11 @@
       });
       console.log($location.path());
       user = localStorageService.cookie.get('user');
+      $rootScope.user = user;
       var employerId = localStorageService.cookie.get('employerId');
+      var positionId = localStorageService.cookie.get('positionId');
       $rootScope.employerId = employerId;
+      $rootScope.positionId = positionId;
       if (!user || typeof user !== 'object') {
         $scope.isLogin = true;
         return $rootScope.isLoggedIn = false;
@@ -96,9 +99,19 @@
       $scope.taskRemainingCount = filterFilter(tasks, {
         completed: false
       }).length;
+
+      $scope.menu = 1;
+      $scope.isActive = function (check) {
+        return $scope.menu == check;
+      };
+      $scope.setActive = function(check){
+        $scope.menu = check;
+      }
       return $scope.$on('taskRemaining:changed', function(event, count) {
         return $scope.taskRemainingCount = count;
       });
+
+
     }
   ]).controller('DashboardCtrl', ['$scope', function($scope) {}]);
 
