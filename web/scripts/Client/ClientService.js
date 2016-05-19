@@ -21,7 +21,7 @@
             d.resolve(res);
           }, function(error) {
             if(error.status == 498){
-                $location.path('/404');
+                $location.path('/498');
               return $route.reload();
             }
             d.reject(error);
