@@ -72,6 +72,9 @@
       $routeProvider.when('/employees', {
         templateUrl: 'views/employee/employee.html'
       });
+      $routeProvider.when('/clients/:clientId/account/:userId', {
+        templateUrl: 'views/clients/user/account.html'
+      });
       $routeProvider.when('/login', {
         templateUrl: 'views/login/login.html'
       }).when('/logout', {

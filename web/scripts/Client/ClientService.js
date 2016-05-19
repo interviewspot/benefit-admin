@@ -22,6 +22,7 @@
           }, function(error) {
             d.reject(error);
           });
+
           return d.promise;
         },
         post: function(url, data) {
@@ -36,6 +37,7 @@
           }, function(error) {
             d.reject(error);
           });
+          
           return d.promise;
         },
         put: function(url, data) {
