@@ -9,7 +9,7 @@
     * Service in the transformApp.
    */
   angular.module('app.client.services', []).factory('Clients', [
-    '$http', '$q', '$resource', function($http, $q, $resource) {
+    '$http', '$q', '$resource','$route','$rootScope','$location', function($http, $q, $resource, $route, $rootScope, $location) {
       return {
         get: function(url) {
           var d;
@@ -20,6 +20,10 @@
           }).then(function(res) {
             d.resolve(res);
           }, function(error) {
+            if(error.status == 498){
+                $location.path('/404');
+              return $route.reload();
+            }
             d.reject(error);
           });
 
