@@ -24,6 +24,7 @@
             $element.removeClass('body-wide body-lock');
             switch (path) {
               case '/404':
+              case '/498':
               case '/pages/404':
               case '/pages/500':
               case '/pages/signin':
