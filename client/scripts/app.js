@@ -74,6 +74,9 @@
       });
       $routeProvider.when('/clients/:clientId/account/:userId', {
         templateUrl: 'views/clients/user/account.html'
+      });  
+      $routeProvider.when('/498', {
+        templateUrl: 'views/pages/498.html'
       });
       $routeProvider.when('/login', {
         templateUrl: 'views/login/login.html'
