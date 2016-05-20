@@ -9,7 +9,7 @@
     * Service in the transformApp.
    */
   angular.module('app.client.services', []).factory('Clients', [
-    '$http', '$q', '$resource','$route','$rootScope','$location', function($http, $q, $resource, $route, $rootScope, $location) {
+    '$http', '$q', '$resource','$route','$rootScope','$location','localStorageService', function($http, $q, $resource, $route, $rootScope, $location,localStorageService) {
       return {
         get: function(url) {
           var d;
@@ -22,6 +22,9 @@
           }, function(error) {
             if(error.status == 498){
                 $location.path('/498');
+                localStorageService.cookie.remove('user');
+                delete $http.defaults.headers.common['x-session'];
+                $rootScope.isLoggedIn = false;
               return $route.reload();
             }
             d.reject(error);
