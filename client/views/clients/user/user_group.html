@@ -1,0 +1,46 @@
+<div class="clients_edit" data-ng-controller="UserGroupCtrl">
+    <h1 class="ttl-page">
+        User Group
+    </h1>
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-body lv1">
+
+            <!-- END : MENU -->
+            <!-- END : USER LIST -->
+            <div class="user-edit">
+                <h2 class="ttl-tab">
+                    <a href="#/clients/{{clientId}}/user/">My Account</a>
+                    <span class="sub-sep"><i class="fa fa fa-caret-right"></i></span>
+                    <span>3333</span>
+                </h2>
+                <form name="frm_updateuser" class="frm-updateuser" novalidate>
+                    <div class="t-r marg-bot ">
+                        <span class="msg-update"> </span>
+                        <button type="submit" class="btn btn-brown" ng-click="submit()">
+                            <i class="fa fa-pencil"></i>
+                            Update
+                        </button>
+                    </div>
+                    <hot-table
+                            hot-id="my-handsontable"
+                            datarows="data"
+                            min-spare-rows="minSpareRow"
+                            columns="columns"
+                            row-headers="false"
+                            col-headers="colHeaders"
+                    >
+
+                    </hot-table>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-user">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <!-- END : USER EDIT -->
+
+            <!-- END : TAB -->
+        </div>
+    </section>
+</div>
+<!-- END : CLIENTS EDIT-->
