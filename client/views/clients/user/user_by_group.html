@@ -1,0 +1,60 @@
+<!--data-ng-controller="listclientController" Call controller in scripts/client-->
+<div class="col-lg-12">
+    <div class="page page-table" data-ng-controller="UserByGroupCtrl">
+        <div class="clients_list" ng-show="!isEditClients">
+            <h1 class="ttl-page">List User Of {{group.name}}</h1>
+            <form role="form">
+                <div class="form-group">
+                    <label>Search user for add</label>
+                    <!--<input type="email" class="form-control" id="email">-->
+                    <autocomplete ng-model="modelUser" data="userSearch"></autocomplete>
+                </div>
+                <button type="submit" class="btn btn-default" data-ng-click="adduser()">Add User Into Group</button>
+            </form>
+            <br>
+            <br>
+            </div>
+            <div class="table-responsive">
+              <table class="table tbl tbl-bg table-hover table-striped tbl-w1000">
+                  <tbody>
+                      <tr>
+                          <th class="text-left">Name</th>
+                          <th class="text-left">Email</th>
+                          <th class="text-center">Actions</th>
+                      </tr>
+                      <tr ng-repeat="(i, user) in users" >
+                          <td class="text-left">
+                              <a href="">
+                                  {{user.first_name + ' ' + user.last_name}}
+                              </a>
+                          </td>
+                          <td class="text-left">
+                              <a href="">
+                                  {{user.email}}
+                              </a>
+                          </td>
+                          <td class="text-center td-control">
+                              <a title="Remove out of group" ng-click="deleteClient(client)"><i class="fa fa-trash-o"></i></a>
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+            </div>
+            <footer class="table-footer" ng-show="clients.pages >= 2">
+            <div class="row">
+                <!--<div class="col-md-6 text-right pagination-container">-->
+                    <!--<pagination class="pagination-sm"-->
+                                <!--ng-model="currentPage"-->
+                                <!--total-items="clients.total"-->
+                                <!--max-size="4"-->
+                                <!--ng-change="gotoPage(currentPage)"-->
+                                <!--items-per-page="numPerPage"-->
+                                <!--rotate="false"-->
+                                <!--boundary-links="true"></pagination>-->
+                <!--</div>-->
+            </div>
+        </footer>
+        </div>
+
+    </div>
+</div>
