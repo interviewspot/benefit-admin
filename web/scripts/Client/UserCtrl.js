@@ -2,8 +2,9 @@
     'use strict';
     angular.module('app.users', [])
         .controller('UsersCtrl', [
-            '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', '$modal', 'UserService', 'Users', 'fetchContact', '$timeout', '$rootScope', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, $modal, UserService, Users, fetchContact, $timeout, $rootScope) {
+            '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', '$modal', 'UserService', 'Users', 'fetchContact', '$timeout', '$rootScope', 'authHandler', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, $modal, UserService, Users, fetchContact, $timeout, $rootScope, authHandler) {
                 var _URL_users, _getUsers, _updateUser;
+                authHandler.checkLoggedIn();
                 $scope.clientId = $routeParams.clientId;
                 _URL_users = {
                     list: config.path.baseURL + config.path.contacts.replace(":org_id", $routeParams.clientId)
@@ -153,8 +154,9 @@
                 _getUsers($scope.numPerPage, $scope.currentPage);
             }
         ]).controller('UserCtrl', [
-        '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', '$modal', 'UserService', 'Users', '$timeout', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, $modal, UserService, Users, $timeout) {
+        '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', '$modal', 'UserService', 'Users', '$timeout', 'authHandler', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, $modal, UserService, Users, $timeout, authHandler) {
             var _URL, _getTags, _getUser, _searchUserbyEntry;
+            authHandler.checkLoggedIn();
             $scope.clientId = $routeParams.clientId;
             $scope.userId = $routeParams.userId ? $routeParams.userId.trim() : false;
             $scope.updateTags = {};
@@ -411,8 +413,9 @@
             }
         }
     ]).controller('NewUserCtrl', [
-        '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'ContactService', 'php', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, ContactService, php) {
+        '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'ContactService', 'php', 'authHandler', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, ContactService, php, authHandler) {
             var _URL, _getTags, _insertUser, _searchUserbyEntry;
+            authHandler.checkLoggedIn();
             $scope.clientId = $routeParams.clientId;
             $scope.isExcel = false;
             $scope.user.handbook_contact = true;
@@ -700,8 +703,9 @@
             };
         }
     ]).controller('AccountCtrl', [
-        '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'ContactService', 'php', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, ContactService, php) {
+        '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'ContactService', 'php', 'authHandler', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, ContactService, php, authHandler) {
             var _URL, _getTags, _getUser, _searchUserbyEntry;
+            authHandler.checkLoggedIn();
             $scope.clientId = $routeParams.clientId;
             $scope.userId = $routeParams.userId ? $routeParams.userId.trim() : false;
             $scope.updateTags = {};
@@ -930,6 +934,693 @@
             } else {
 
             }
+        }
+    ]).controller('HandbookUserGroupCtrl', [
+        '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'hotRegisterer', 'authHandler', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, hotRegisterer, authHandler) {
+            authHandler.checkLoggedIn();
+            $scope.data = [];
+            $scope.minSpareRow = 0;
+
+            $scope.colHeaders = [];
+            $scope.colHeaders.push('Code');
+            $scope.colHeaders.push('User Group Name');
+
+            $scope.columns = [];
+            $scope.columns.push({readOnly: true, renderer: "html"});
+            $scope.columns.push({});
+
+
+            var _URL, getData;
+            var cloudbookAceActions = [];
+            var listCloudbookUrl = [];
+            _URL = {
+                Actions: config.path.baseURL + '/app/cloudbook/acl/cloudbook/acl/actions',
+                Groups: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/usergroups',
+            };
+
+            getData = function () {
+                Users.get(_URL.Actions).then(function (results) {
+                    if (results.status !== 200 || typeof results !== 'object') {
+                        return;
+                    }
+                    cloudbookAceActions = results.data;
+
+                    Users.get(_URL.Groups).then(function (groupResults) {
+                        if (groupResults.status !== 200 || typeof groupResults !== 'object') {
+                            return;
+                        }
+
+                        var buildData = function (index) {
+                            if (index < 0) {
+                                $scope.minSpareRow = 1;
+                                return;
+                            }
+
+                            var group = groupResults.data._embedded.items[index];
+
+                            Users.get(group._links.handbook_user_group_aces.href).then(function (results) {
+                                if (results.status !== 200 || typeof results !== 'object') {
+                                    return;
+                                }
+
+                                var cloudbookAceGroup = [];
+                                cloudbookAceGroup.push('<a href="#/clients/' + $routeParams.clientId + '/user-group/' + group.id + '/users" title="Click to view user of this group">G' + group.id + '</a>');
+                                cloudbookAceGroup.push(group.name);
+                                if (results.data._embedded.items.length) {
+                                    var listActionAllow = results.data._embedded.items[0].attributes;
+                                    listCloudbookUrl[group.id] = group._links.handbook_user_group_aces.href + '/' + results.data._embedded.items[0].id;
+
+                                    angular.forEach(cloudbookAceActions, function (action) {
+                                        var permission = false;
+                                        if (listActionAllow.indexOf(action) != -1) {
+                                            permission = true;
+                                        }
+                                        cloudbookAceGroup.push(permission);
+                                        if (index === 0) {
+                                            $scope.colHeaders.push(action)
+                                            $scope.columns.push({type: 'checkbox'});
+                                        }
+                                    });
+                                    $scope.data.push(cloudbookAceGroup);
+                                } else {
+                                    angular.forEach(cloudbookAceActions, function (action) {
+                                        var permission = false;
+                                        cloudbookAceGroup.push(permission);
+                                        if (index === 0) {
+                                            $scope.colHeaders.push(action)
+                                            $scope.columns.push({type: 'checkbox'});
+                                        }
+                                    });
+                                    $scope.data.push(cloudbookAceGroup);
+                                }
+
+                                buildData(--index);
+
+                            }, function (error) {
+                                return console.log(error);
+                            });
+                        }
+                        buildData(groupResults.data._embedded.items.length - 1);
+
+                    }, function (error) {
+                        return console.log(error);
+                    });
+                }, function (error) {
+                    return console.log(error);
+                });
+            };
+            getData();
+
+            var getAttributes = function (item) {
+                item.splice(0, 2);
+                var attr = [];
+                angular.forEach(cloudbookAceActions, function (action, index) {
+                    if (item[index] === true) {
+                        attr.push(action);
+                    }
+                });
+                return attr.join(',');
+            }
+            $scope.infoUpdated = '';
+            $scope.submit = function () {
+                var dataSubmit = hotRegisterer.getInstance('my-handsontable').getData();
+                angular.forEach(dataSubmit, function (item) {
+                    if (item[0] === null) {
+                        if (item[1] != null) {
+                            //create group
+                            var dataUserGroup = {
+                                'user_group': {
+                                    "name": item[1],
+                                    "type": 1,
+                                    "organisation": $routeParams.clientId
+                                }
+                            }
+                            Users.post(_URL.Groups, dataUserGroup).then(function (results) {
+
+                                if (typeof results === 'object' && results.status === 201) {
+                                    var local = results.headers().location;
+                                    var url = config.path.baseURL + local;
+                                    //create handboookUserGroupAce
+                                    Users.get(url).then(function (results) {
+                                        if (results.status !== 200 || typeof results !== 'object') {
+                                            return;
+                                        }
+                                        var dataUserGroupAce = {
+                                            'handbook_user_group_ace': {
+                                                "userGroup": results.data.id,
+                                                "attributes": getAttributes(item),
+                                            }
+                                        }
+                                        Users.post(results.data._links.handbook_user_group_aces.href, dataUserGroupAce).then(function (results) {
+                                            if (typeof results === 'object' && results.status === 201) {
+                                                $scope.infoUpdated = 'Updated Successfully.';
+                                            } else {
+                                                $scope.infoUpdated = 'Updated Fail.';
+                                            }
+
+                                        }, function (error) {
+                                            return console.log(error);
+                                        });
+                                    });
+
+                                } else {
+                                    $scope.infoUpdated = 'Updated Fail.';
+                                }
+
+                            }, function (error) {
+                                return console.log(error);
+                            });
+
+
+                        }
+                    } else {
+                        //Update Group
+                        var dataUserGroup = {
+                            'user_group': {
+                                "name": item[1],
+                                "type": 1,
+                                "organisation": $routeParams.clientId
+                            }
+                        }
+                        var userGroupId = item[0].substr(1);
+
+                        Users.put(_URL.Groups + '/' + userGroupId, dataUserGroup).then(function (results) {
+                            if (results.status === 204) {
+                                //update handboookUserGroupAce
+                                var dataUserGroupAce = {
+                                    'handbook_user_group_ace': {
+                                        "userGroup": userGroupId,
+                                        "attributes": getAttributes(item),
+                                    }
+                                }
+                                Users.put(listCloudbookUrl[userGroupId], dataUserGroupAce).then(function (results) {
+                                    if (results.status === 204) {
+                                        $scope.infoUpdated = 'Updated Successfully.';
+                                    } else {
+                                        $scope.infoUpdated = 'Updated Fail.';
+                                    }
+
+                                }, function (error) {
+                                    return console.log(error);
+                                });
+
+                            } else {
+                                $scope.infoUpdated = 'Updated Fail.';
+                            }
+
+                        }, function (error) {
+                            return console.log(error);
+                        });
+
+                    }
+                });
+            }
+        }
+    ]).controller('UserUserGroupCtrl', [
+        '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'hotRegisterer', 'authHandler', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, hotRegisterer, authHandler) {
+            authHandler.checkLoggedIn();
+            $scope.data = [];
+            $scope.minSpareRow = 0;
+
+            $scope.colHeaders = [];
+            $scope.colHeaders.push('Code');
+            $scope.colHeaders.push('User Group Name');
+
+            $scope.columns = [];
+            $scope.columns.push({readOnly: true, renderer: "html"});
+            $scope.columns.push({});
+
+
+            var _URL, getData;
+            var cloudbookAceActions = [];
+            var listCloudbookUrl = [];
+            _URL = {
+                Actions: config.path.baseURL + '/app/cloudbook/acl/user/acl/actions',
+                Groups: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/usergroups',
+            };
+
+            getData = function () {
+                Users.get(_URL.Actions).then(function (results) {
+                    if (results.status !== 200 || typeof results !== 'object') {
+                        return;
+                    }
+                    cloudbookAceActions = results.data;
+
+                    Users.get(_URL.Groups).then(function (groupResults) {
+                        if (groupResults.status !== 200 || typeof groupResults !== 'object') {
+                            return;
+                        }
+
+                        var buildData = function (index) {
+                            if (index < 0) {
+                                $scope.minSpareRow = 1;
+                                return;
+                            }
+
+                            var group = groupResults.data._embedded.items[index];
+
+                            Users.get(group._links.user_user_group_aces.href).then(function (results) {
+                                if (results.status !== 200 || typeof results !== 'object') {
+                                    return;
+                                }
+                                var cloudbookAceGroup = [];
+                                cloudbookAceGroup.push('<a href="#/clients/' + $routeParams.clientId + '/user-group/' + group.id + '/users" title="Click to view user of this group">G' + group.id + '</a>');
+                                cloudbookAceGroup.push(group.name);
+                                if (results.data._embedded.items.length) {
+                                    var listActionAllow = results.data._embedded.items[0].attributes;
+                                    listCloudbookUrl[group.id] = group._links.user_user_group_aces.href + '/' + results.data._embedded.items[0].id;
+
+                                    angular.forEach(cloudbookAceActions, function (action) {
+                                        var permission = false;
+                                        if (listActionAllow.indexOf(action) != -1) {
+                                            permission = true;
+                                        }
+                                        cloudbookAceGroup.push(permission);
+                                        if (index === 0) {
+                                            $scope.colHeaders.push(action)
+                                            $scope.columns.push({type: 'checkbox'});
+                                        }
+                                    });
+                                    $scope.data.push(cloudbookAceGroup);
+                                } else {
+                                    angular.forEach(cloudbookAceActions, function (action) {
+                                        var permission = false;
+                                        cloudbookAceGroup.push(permission);
+                                        if (index === 0) {
+                                            $scope.colHeaders.push(action)
+                                            $scope.columns.push({type: 'checkbox'});
+                                        }
+                                    });
+                                    $scope.data.push(cloudbookAceGroup);
+                                }
+
+                                buildData(--index);
+
+                            }, function (error) {
+                                return console.log(error);
+                            });
+                        }
+                        buildData(groupResults.data._embedded.items.length - 1);
+
+                    }, function (error) {
+                        return console.log(error);
+                    });
+                }, function (error) {
+                    return console.log(error);
+                });
+            };
+            getData();
+
+            var getAttributes = function (item) {
+                item.splice(0, 2);
+                var attr = [];
+                angular.forEach(cloudbookAceActions, function (action, index) {
+                    if (item[index] === true) {
+                        attr.push(action);
+                    }
+                });
+                return attr.join(',');
+            }
+            $scope.infoUpdated = '';
+            $scope.submit = function () {
+                var dataSubmit = hotRegisterer.getInstance('my-handsontable').getData();
+                angular.forEach(dataSubmit, function (item) {
+                    if (item[0] === null) {
+                        if (item[1] != null) {
+                            //create group
+                            var dataUserGroup = {
+                                'user_group': {
+                                    "name": item[1],
+                                    "type": 1,
+                                    "organisation": $routeParams.clientId
+                                }
+                            }
+                            Users.post(_URL.Groups, dataUserGroup).then(function (results) {
+
+                                if (typeof results === 'object' && results.status === 201) {
+                                    var local = results.headers().location;
+                                    var url = config.path.baseURL + local;
+                                    //create handboookUserGroupAce
+                                    Users.get(url).then(function (results) {
+                                        if (results.status !== 200 || typeof results !== 'object') {
+                                            return;
+                                        }
+                                        var dataUserGroupAce = {
+                                            'user_user_group_ace': {
+                                                "userGroup": results.data.id,
+                                                "attributes": getAttributes(item),
+                                            }
+                                        }
+                                        Users.post(results.data._links.user_user_group_aces.href, dataUserGroupAce).then(function (results) {
+                                            if (typeof results === 'object' && results.status === 201) {
+                                                $scope.infoUpdated = 'Updated Successfully.';
+                                            } else {
+                                                $scope.infoUpdated = 'Updated Fail.';
+                                            }
+
+                                        }, function (error) {
+                                            return console.log(error);
+                                        });
+                                    });
+
+                                } else {
+                                    $scope.infoUpdated = 'Updated Fail.';
+                                }
+
+                            }, function (error) {
+                                return console.log(error);
+                            });
+
+
+                        }
+                    } else {
+                        //Update Group
+                        var dataUserGroup = {
+                            'user_group': {
+                                "name": item[1],
+                                "type": 1,
+                                "organisation": $routeParams.clientId
+                            }
+                        }
+                        var userGroupId = item[0].substr(1);
+
+                        Users.put(_URL.Groups + '/' + userGroupId, dataUserGroup).then(function (results) {
+                            if (results.status === 204) {
+                                //update handboookUserGroupAce
+                                var dataUserGroupAce = {
+                                    'user_user_group_ace': {
+                                        "userGroup": userGroupId,
+                                        "attributes": getAttributes(item),
+                                    }
+                                }
+                                Users.put(listCloudbookUrl[userGroupId], dataUserGroupAce).then(function (results) {
+                                    if (results.status === 204) {
+                                        $scope.infoUpdated = 'Updated Successfully.';
+                                    } else {
+                                        $scope.infoUpdated = 'Updated Fail.';
+                                    }
+
+                                }, function (error) {
+                                    return console.log(error);
+                                });
+
+                            } else {
+                                $scope.infoUpdated = 'Updated Fail.';
+                            }
+
+                        }, function (error) {
+                            return console.log(error);
+                        });
+
+                    }
+                });
+            }
+        }
+    ]).controller('UserGroupUserGroupCtrl', [
+        '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'hotRegisterer', 'authHandler', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, hotRegisterer, authHandler) {
+            authHandler.checkLoggedIn();
+            $scope.data = [];
+            $scope.minSpareRow = 0;
+
+            $scope.colHeaders = [];
+            $scope.colHeaders.push('Code');
+            $scope.colHeaders.push('User Group Name');
+
+            $scope.columns = [];
+            $scope.columns.push({readOnly: true, renderer: "html"});
+            $scope.columns.push({});
+
+
+            var _URL, getData;
+            var cloudbookAceActions = [];
+            var listCloudbookUrl = [];
+            _URL = {
+                Actions: config.path.baseURL + '/app/cloudbook/acl/user/group/acl/actions',
+                Groups: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/usergroups',
+            };
+
+            getData = function () {
+                Users.get(_URL.Actions).then(function (results) {
+                    if (results.status !== 200 || typeof results !== 'object') {
+                        return;
+                    }
+                    cloudbookAceActions = results.data;
+
+                    Users.get(_URL.Groups).then(function (groupResults) {
+                        if (groupResults.status !== 200 || typeof groupResults !== 'object') {
+                            return;
+                        }
+
+                        var buildData = function (index) {
+                            if (index < 0) {
+                                $scope.minSpareRow = 1;
+                                return;
+                            }
+
+                            var group = groupResults.data._embedded.items[index];
+
+                            Users.get(group._links.user_group_user_group_aces.href).then(function (results) {
+                                if (results.status !== 200 || typeof results !== 'object') {
+                                    return;
+                                }
+
+                                var cloudbookAceGroup = [];
+                                cloudbookAceGroup.push('<a href="#/clients/' + $routeParams.clientId + '/user-group/' + group.id + '/users" title="Click to view user of this group">G' + group.id + '</a>');
+                                cloudbookAceGroup.push(group.name);
+                                if (results.data._embedded.items.length) {
+                                    var listActionAllow = results.data._embedded.items[0].attributes;
+                                    listCloudbookUrl[group.id] = group._links.user_group_user_group_aces.href + '/' + results.data._embedded.items[0].id;
+
+                                    angular.forEach(cloudbookAceActions, function (action) {
+                                        var permission = false;
+                                        if (listActionAllow.indexOf(action) != -1) {
+                                            permission = true;
+                                        }
+                                        cloudbookAceGroup.push(permission);
+                                        if (index === 0) {
+                                            $scope.colHeaders.push(action)
+                                            $scope.columns.push({type: 'checkbox'});
+                                        }
+                                    });
+                                    $scope.data.push(cloudbookAceGroup);
+                                } else {
+                                    angular.forEach(cloudbookAceActions, function (action) {
+                                        var permission = false;
+                                        cloudbookAceGroup.push(permission);
+                                        if (index === 0) {
+                                            $scope.colHeaders.push(action)
+                                            $scope.columns.push({type: 'checkbox'});
+                                        }
+                                    });
+                                    $scope.data.push(cloudbookAceGroup);
+                                }
+
+                                buildData(--index);
+
+                            }, function (error) {
+                                return console.log(error);
+                            });
+                        }
+                        buildData(groupResults.data._embedded.items.length - 1);
+
+                    }, function (error) {
+                        return console.log(error);
+                    });
+                }, function (error) {
+                    return console.log(error);
+                });
+            };
+            getData();
+
+            var getAttributes = function (item) {
+                item.splice(0, 2);
+                var attr = [];
+                angular.forEach(cloudbookAceActions, function (action, index) {
+                    if (item[index] === true) {
+                        attr.push(action);
+                    }
+                });
+                return attr.join(',');
+            }
+            $scope.infoUpdated = '';
+            $scope.submit = function () {
+                var dataSubmit = hotRegisterer.getInstance('my-handsontable').getData();
+                angular.forEach(dataSubmit, function (item) {
+                    if (item[0] === null) {
+                        if (item[1] != null) {
+                            //create group
+                            var dataUserGroup = {
+                                'user_group': {
+                                    "name": item[1],
+                                    "type": 1,
+                                    "organisation": $routeParams.clientId
+                                }
+                            }
+                            Users.post(_URL.Groups, dataUserGroup).then(function (results) {
+
+                                if (typeof results === 'object' && results.status === 201) {
+                                    var local = results.headers().location;
+                                    var url = config.path.baseURL + local;
+                                    //create handboookUserGroupAce
+                                    Users.get(url).then(function (results) {
+                                        if (results.status !== 200 || typeof results !== 'object') {
+                                            return;
+                                        }
+                                        var dataUserGroupAce = {
+                                            'user_group_user_group_ace': {
+                                                "userGroup": results.data.id,
+                                                "attributes": getAttributes(item),
+                                            }
+                                        }
+                                        Users.post(results.data._links.user_group_user_group_aces.href, dataUserGroupAce).then(function (results) {
+                                            if (typeof results === 'object' && results.status === 201) {
+                                                $scope.infoUpdated = 'Updated Successfully.';
+                                            } else {
+                                                $scope.infoUpdated = 'Updated Fail.';
+                                            }
+
+                                        }, function (error) {
+                                            return console.log(error);
+                                        });
+                                    });
+
+                                } else {
+                                    $scope.infoUpdated = 'Updated Fail.';
+                                }
+
+                            }, function (error) {
+                                return console.log(error);
+                            });
+
+
+                        }
+                    } else {
+                        //Update Group
+                        var dataUserGroup = {
+                            'user_group': {
+                                "name": item[1],
+                                "type": 1,
+                                "organisation": $routeParams.clientId
+                            }
+                        }
+                        var userGroupId = item[0].substr(1);
+
+                        Users.put(_URL.Groups + '/' + userGroupId, dataUserGroup).then(function (results) {
+                            if (results.status === 204) {
+                                //update handboookUserGroupAce
+                                var dataUserGroupAce = {
+                                    'user_group_user_group_ace': {
+                                        "userGroup": userGroupId,
+                                        "attributes": getAttributes(item),
+                                    }
+                                }
+                                Users.put(listCloudbookUrl[userGroupId], dataUserGroupAce).then(function (results) {
+                                    if (results.status === 204) {
+                                        $scope.infoUpdated = 'Updated Successfully.';
+                                    } else {
+                                        $scope.infoUpdated = 'Updated Fail.';
+                                    }
+
+                                }, function (error) {
+                                    return console.log(error);
+                                });
+
+                            } else {
+                                $scope.infoUpdated = 'Updated Fail.';
+                            }
+
+                        }, function (error) {
+                            return console.log(error);
+                        });
+
+                    }
+                });
+            }
+        }
+    ]).controller('UserByGroupCtrl', [
+        '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'hotRegisterer', 'authHandler', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, hotRegisterer, authHandler) {
+            authHandler.checkLoggedIn();
+            var _URL = {
+                users: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/usergroups/' + $routeParams.groupId,
+                usersAutocomplete: config.path.baseURL + '/organisations/' + $routeParams.clientId,
+            };
+            $scope.group = {};
+            $scope.users = [];
+
+            $scope.userSearch = [];
+            $scope.userSearchObject = [];
+            $scope.modelUser = '';
+            $scope.allowAdd = false;
+
+            $scope.adduser = function () {
+                if ($scope.userSearchObject[$scope.modelUser] != undefined) {
+                    Users.get($scope.userSearchObject[$scope.modelUser]).then(function (results) {
+                        if (results.status !== 200 || typeof results !== 'object') {
+                            return;
+                        }
+                        var user = results.data;
+                        var id = user.id;
+                        Users.post(_URL.users + '/users/' + id, {}).then(function (results) {
+                            if (results.status === 204) {
+                                $scope.infoUpdated = 'Updated Successfully.';
+                                $scope.modelUser = '';
+                                delete $scope.userSearchObject[$scope.modelUser];
+                                $scope.users.push(user);
+                            } else {
+                                $scope.infoUpdated = 'Updated Fail.';
+                                $scope.modelUser = '';
+                                delete $scope.userSearchObject[$scope.modelUser];
+                            }
+                        });
+
+                    });
+
+
+                }
+            }
+            $scope.removeUser = function (id) {
+                Users.delete(_URL.users + '/users/' + id).then(function (results) {
+                    if (results.status === 204) {
+                        $scope.infoUpdated = 'Updated Successfully.';
+                        loadList();
+                    } else {
+                        $scope.infoUpdated = 'Updated Fail.';
+                    }
+                });
+            }
+            $scope.$watch('modelUser', function (modelUser) {
+                if (modelUser != '') {
+                    Users.get(_URL.usersAutocomplete + '/positions?search=employee.email=%' + modelUser + '%').then(function (results) {
+                        if (results.status !== 200 || typeof results !== 'object') {
+                            return;
+                        }
+                        $scope.userSearch = [];
+                        angular.forEach(results.data._embedded.items, function (user) {
+                            $scope.userSearch.push(user.email_address);
+                            $scope.userSearchObject[user.email_address] = user._links.employee.href;
+                        });
+                    });
+                }
+
+            }, true);
+            var loadList = function () {
+                Users.get(_URL.users).then(function (results) {
+                    if (results.status !== 200 || typeof results !== 'object') {
+                        return;
+                    }
+                    $scope.group = results.data;
+
+                    Users.get(results.data._links.users.href).then(function (results) {
+                        if (results.status !== 200 || typeof results !== 'object') {
+                            return;
+                        }
+                        $scope.users = results.data._embedded.items;
+
+                    });
+
+                });
+            }
+            loadList();
         }
     ]);
 
