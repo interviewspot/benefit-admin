@@ -24,9 +24,10 @@
 .autocomplete li{
   text-align: left;
   list-style:none;
-  width: 100%;
+  /*width: 100%;*/
   padding:0.4em;
   background-color: #fff;
+  margin-left: -40px;
 }
 
 .autocomplete li.active{

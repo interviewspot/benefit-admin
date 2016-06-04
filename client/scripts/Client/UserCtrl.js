@@ -2,8 +2,9 @@
     'use strict';
     angular.module('app.users', [])
         .controller('UsersCtrl', [
-            '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', '$modal', 'UserService', 'Users', 'fetchContact', '$timeout', '$rootScope', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, $modal, UserService, Users, fetchContact, $timeout, $rootScope) {
+            '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', '$modal', 'UserService', 'Users', 'fetchContact', '$timeout', '$rootScope', 'authHandler', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, $modal, UserService, Users, fetchContact, $timeout, $rootScope, authHandler) {
                 var _URL_users, _getUsers, _updateUser;
+                authHandler.checkLoggedIn();
                 $scope.clientId = $routeParams.clientId;
                 _URL_users = {
                     list: config.path.baseURL + config.path.contacts.replace(":org_id", $routeParams.clientId)
@@ -153,8 +154,9 @@
                 _getUsers($scope.numPerPage, $scope.currentPage);
             }
         ]).controller('UserCtrl', [
-        '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', '$modal', 'UserService', 'Users', '$timeout', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, $modal, UserService, Users, $timeout) {
+        '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', '$modal', 'UserService', 'Users', '$timeout', 'authHandler', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, $modal, UserService, Users, $timeout, authHandler) {
             var _URL, _getTags, _getUser, _searchUserbyEntry;
+            authHandler.checkLoggedIn();
             $scope.clientId = $routeParams.clientId;
             $scope.userId = $routeParams.userId ? $routeParams.userId.trim() : false;
             $scope.updateTags = {};
@@ -411,8 +413,9 @@
             }
         }
     ]).controller('NewUserCtrl', [
-        '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'ContactService', 'php', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, ContactService, php) {
+        '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'ContactService', 'php', 'authHandler', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, ContactService, php, authHandler) {
             var _URL, _getTags, _insertUser, _searchUserbyEntry;
+            authHandler.checkLoggedIn();
             $scope.clientId = $routeParams.clientId;
             $scope.isExcel = false;
             $scope.user.handbook_contact = true;
@@ -700,8 +703,9 @@
             };
         }
     ]).controller('AccountCtrl', [
-        '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'ContactService', 'php', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, ContactService, php) {
+        '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'ContactService', 'php', 'authHandler', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, ContactService, php, authHandler) {
             var _URL, _getTags, _getUser, _searchUserbyEntry;
+            authHandler.checkLoggedIn();
             $scope.clientId = $routeParams.clientId;
             $scope.userId = $routeParams.userId ? $routeParams.userId.trim() : false;
             $scope.updateTags = {};
@@ -932,8 +936,8 @@
             }
         }
     ]).controller('HandbookUserGroupCtrl', [
-        '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'hotRegisterer', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, hotRegisterer) {
-
+        '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'hotRegisterer', 'authHandler', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, hotRegisterer, authHandler) {
+            authHandler.checkLoggedIn();
             $scope.data = [];
             $scope.minSpareRow = 0;
 
@@ -942,7 +946,7 @@
             $scope.colHeaders.push('User Group Name');
 
             $scope.columns = [];
-            $scope.columns.push({readOnly: true});
+            $scope.columns.push({readOnly: true, renderer: "html"});
             $scope.columns.push({});
 
 
@@ -980,7 +984,7 @@
                                 }
 
                                 var cloudbookAceGroup = [];
-                                cloudbookAceGroup.push('G' + group.id);
+                                cloudbookAceGroup.push('<a href="#/clients/' + $routeParams.clientId + '/user-group/' + group.id + '/users" title="Click to view user of this group">G' + group.id + '</a>');
                                 cloudbookAceGroup.push(group.name);
                                 if (results.data._embedded.items.length) {
                                     var listActionAllow = results.data._embedded.items[0].attributes;
@@ -998,7 +1002,7 @@
                                         }
                                     });
                                     $scope.data.push(cloudbookAceGroup);
-                                }else{
+                                } else {
                                     angular.forEach(cloudbookAceActions, function (action) {
                                         var permission = false;
                                         cloudbookAceGroup.push(permission);
@@ -1133,8 +1137,8 @@
             }
         }
     ]).controller('UserUserGroupCtrl', [
-        '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'hotRegisterer', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, hotRegisterer) {
-
+        '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'hotRegisterer', 'authHandler', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, hotRegisterer, authHandler) {
+            authHandler.checkLoggedIn();
             $scope.data = [];
             $scope.minSpareRow = 0;
 
@@ -1143,7 +1147,7 @@
             $scope.colHeaders.push('User Group Name');
 
             $scope.columns = [];
-            $scope.columns.push({readOnly: true});
+            $scope.columns.push({readOnly: true, renderer: "html"});
             $scope.columns.push({});
 
 
@@ -1180,7 +1184,7 @@
                                     return;
                                 }
                                 var cloudbookAceGroup = [];
-                                cloudbookAceGroup.push('G' + group.id);
+                                cloudbookAceGroup.push('<a href="#/clients/' + $routeParams.clientId + '/user-group/' + group.id + '/users" title="Click to view user of this group">G' + group.id + '</a>');
                                 cloudbookAceGroup.push(group.name);
                                 if (results.data._embedded.items.length) {
                                     var listActionAllow = results.data._embedded.items[0].attributes;
@@ -1333,8 +1337,8 @@
             }
         }
     ]).controller('UserGroupUserGroupCtrl', [
-        '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'hotRegisterer', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, hotRegisterer) {
-
+        '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'hotRegisterer', 'authHandler', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, hotRegisterer, authHandler) {
+            authHandler.checkLoggedIn();
             $scope.data = [];
             $scope.minSpareRow = 0;
 
@@ -1343,7 +1347,7 @@
             $scope.colHeaders.push('User Group Name');
 
             $scope.columns = [];
-            $scope.columns.push({readOnly: true});
+            $scope.columns.push({readOnly: true, renderer: "html"});
             $scope.columns.push({});
 
 
@@ -1380,9 +1384,9 @@
                                     return;
                                 }
 
-                                    var cloudbookAceGroup = [];
-                                    cloudbookAceGroup.push('G' + group.id);
-                                    cloudbookAceGroup.push(group.name);
+                                var cloudbookAceGroup = [];
+                                cloudbookAceGroup.push('<a href="#/clients/' + $routeParams.clientId + '/user-group/' + group.id + '/users" title="Click to view user of this group">G' + group.id + '</a>');
+                                cloudbookAceGroup.push(group.name);
                                 if (results.data._embedded.items.length) {
                                     var listActionAllow = results.data._embedded.items[0].attributes;
                                     listCloudbookUrl[group.id] = group._links.user_group_user_group_aces.href + '/' + results.data._embedded.items[0].id;
@@ -1399,7 +1403,7 @@
                                         }
                                     });
                                     $scope.data.push(cloudbookAceGroup);
-                                }else{
+                                } else {
                                     angular.forEach(cloudbookAceActions, function (action) {
                                         var permission = false;
                                         cloudbookAceGroup.push(permission);
@@ -1534,7 +1538,8 @@
             }
         }
     ]).controller('UserByGroupCtrl', [
-        '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'hotRegisterer', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, hotRegisterer) {
+        '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'hotRegisterer', 'authHandler', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, hotRegisterer, authHandler) {
+            authHandler.checkLoggedIn();
             var _URL = {
                 users: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/usergroups/' + $routeParams.groupId,
                 usersAutocomplete: config.path.baseURL + '/organisations/' + $routeParams.clientId,
@@ -1545,21 +1550,26 @@
             $scope.userSearch = [];
             $scope.userSearchObject = [];
             $scope.modelUser = '';
+            $scope.allowAdd = false;
 
-            $scope.adduser = function(){
-                if($scope.userSearchObject[$scope.modelUser] != undefined ){
+            $scope.adduser = function () {
+                if ($scope.userSearchObject[$scope.modelUser] != undefined) {
                     Users.get($scope.userSearchObject[$scope.modelUser]).then(function (results) {
                         if (results.status !== 200 || typeof results !== 'object') {
                             return;
                         }
                         var user = results.data;
-                        var id =user.id;
-                        Users.post(_URL.users + '/users/'+id,{}).then(function (results) {
+                        var id = user.id;
+                        Users.post(_URL.users + '/users/' + id, {}).then(function (results) {
                             if (results.status === 204) {
                                 $scope.infoUpdated = 'Updated Successfully.';
+                                $scope.modelUser = '';
+                                delete $scope.userSearchObject[$scope.modelUser];
                                 $scope.users.push(user);
                             } else {
                                 $scope.infoUpdated = 'Updated Fail.';
+                                $scope.modelUser = '';
+                                delete $scope.userSearchObject[$scope.modelUser];
                             }
                         });
 
@@ -1568,9 +1578,19 @@
 
                 }
             }
+            $scope.removeUser = function (id) {
+                Users.delete(_URL.users + '/users/' + id).then(function (results) {
+                    if (results.status === 204) {
+                        $scope.infoUpdated = 'Updated Successfully.';
+                        loadList();
+                    } else {
+                        $scope.infoUpdated = 'Updated Fail.';
+                    }
+                });
+            }
             $scope.$watch('modelUser', function (modelUser) {
-                if(modelUser != '') {
-                    Users.get(_URL.usersAutocomplete + '/positions?search=employee.email=%'+modelUser+'%').then(function (results) {
+                if (modelUser != '') {
+                    Users.get(_URL.usersAutocomplete + '/positions?search=employee.email=%' + modelUser + '%').then(function (results) {
                         if (results.status !== 200 || typeof results !== 'object') {
                             return;
                         }
@@ -1583,22 +1603,24 @@
                 }
 
             }, true);
-
-            Users.get(_URL.users).then(function (results) {
-                if (results.status !== 200 || typeof results !== 'object') {
-                    return;
-                }
-                $scope.group = results.data;
-                
-                Users.get(results.data._links.users.href).then(function (results) {
+            var loadList = function () {
+                Users.get(_URL.users).then(function (results) {
                     if (results.status !== 200 || typeof results !== 'object') {
                         return;
                     }
-                    $scope.users = results.data._embedded.items;
+                    $scope.group = results.data;
+
+                    Users.get(results.data._links.users.href).then(function (results) {
+                        if (results.status !== 200 || typeof results !== 'object') {
+                            return;
+                        }
+                        $scope.users = results.data._embedded.items;
+
+                    });
 
                 });
-
-            });
+            }
+            loadList();
         }
     ]);
 
