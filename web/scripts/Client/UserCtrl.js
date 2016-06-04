@@ -946,8 +946,8 @@
             $scope.colHeaders.push('User Group Name');
 
             $scope.columns = [];
-            $scope.columns.push({readOnly: true, renderer: "html"});
-            $scope.columns.push({});
+            $scope.columns.push({readOnly: true});
+            $scope.columns.push({renderer: "html"});
 
 
             var _URL, getData;
@@ -984,8 +984,8 @@
                                 }
 
                                 var cloudbookAceGroup = [];
-                                cloudbookAceGroup.push('<a href="#/clients/' + $routeParams.clientId + '/user-group/' + group.id + '/users" title="Click to view user of this group">G' + group.id + '</a>');
-                                cloudbookAceGroup.push(group.name);
+                                cloudbookAceGroup.push('G'+group.id);
+                                cloudbookAceGroup.push('<a href="#/clients/' + $routeParams.clientId + '/user-group/' + group.id + '/users" title="Click to view user of this group">' + group.name + '</a>');
                                 if (results.data._embedded.items.length) {
                                     var listActionAllow = results.data._embedded.items[0].attributes;
                                     listCloudbookUrl[group.id] = group._links.handbook_user_group_aces.href + '/' + results.data._embedded.items[0].id;
@@ -1147,8 +1147,8 @@
             $scope.colHeaders.push('User Group Name');
 
             $scope.columns = [];
-            $scope.columns.push({readOnly: true, renderer: "html"});
-            $scope.columns.push({});
+            $scope.columns.push({readOnly: true});
+            $scope.columns.push({renderer: "html"});
 
 
             var _URL, getData;
@@ -1184,8 +1184,8 @@
                                     return;
                                 }
                                 var cloudbookAceGroup = [];
-                                cloudbookAceGroup.push('<a href="#/clients/' + $routeParams.clientId + '/user-group/' + group.id + '/users" title="Click to view user of this group">G' + group.id + '</a>');
-                                cloudbookAceGroup.push(group.name);
+                                cloudbookAceGroup.push('G'+group.id);
+                                cloudbookAceGroup.push('<a href="#/clients/' + $routeParams.clientId + '/user-group/' + group.id + '/users" title="Click to view user of this group">' + group.name + '</a>');
                                 if (results.data._embedded.items.length) {
                                     var listActionAllow = results.data._embedded.items[0].attributes;
                                     listCloudbookUrl[group.id] = group._links.user_user_group_aces.href + '/' + results.data._embedded.items[0].id;
@@ -1347,8 +1347,8 @@
             $scope.colHeaders.push('User Group Name');
 
             $scope.columns = [];
-            $scope.columns.push({readOnly: true, renderer: "html"});
-            $scope.columns.push({});
+            $scope.columns.push({readOnly: true});
+            $scope.columns.push({renderer: "html"});
 
 
             var _URL, getData;
@@ -1385,8 +1385,8 @@
                                 }
 
                                 var cloudbookAceGroup = [];
-                                cloudbookAceGroup.push('<a href="#/clients/' + $routeParams.clientId + '/user-group/' + group.id + '/users" title="Click to view user of this group">G' + group.id + '</a>');
-                                cloudbookAceGroup.push(group.name);
+                                cloudbookAceGroup.push('G'+group.id);
+                                cloudbookAceGroup.push('<a href="#/clients/' + $routeParams.clientId + '/user-group/' + group.id + '/users" title="Click to view user of this group">' + group.name + '</a>');
                                 if (results.data._embedded.items.length) {
                                     var listActionAllow = results.data._embedded.items[0].attributes;
                                     listCloudbookUrl[group.id] = group._links.user_group_user_group_aces.href + '/' + results.data._embedded.items[0].id;
