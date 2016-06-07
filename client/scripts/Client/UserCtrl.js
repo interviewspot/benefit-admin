@@ -1640,6 +1640,8 @@
             var _URL = {
                 handbooks: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/usergroups/' + $routeParams.groupId,
                 handbooksAutocomplete: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/handbooks',
+                postHandbookToGroup: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/handbooks',
+                deleteHandbookToGroup: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/handbooks',
             };
             $scope.group = {};
             $scope.handbooks = [];
@@ -1650,12 +1652,12 @@
             $scope.allowAdd = false;
 
             $scope.addHandbook = function () {
-                        Users.post(_URL.users + '/users/' + id, {}).then(function (results) {
+                        Users.post(_URL.postHandbookToGroup, {}).then(function (results) {
                             if (results.status === 204) {
                                 $scope.infoUpdated = 'Updated Successfully.';
+                                $scope.handbooks.push($scope.handbookSearchObject[$scope.modelHandbook]);
                                 $scope.modelHandbook = '';
                                 delete $scope.handbookSearchObject[$scope.modelHandbook];
-                                $scope.handbooks.push(user);
                             } else {
                                 $scope.infoUpdated = 'Updated Fail.';
                                 $scope.modelHandbook = '';
@@ -1664,7 +1666,7 @@
                         });
             }
             $scope.removeHandbook = function (id) {
-                Users.delete(_URL.users + '/users/' + id).then(function (results) {
+                Users.delete(_URL.deleteHandbookToGroup).then(function (results) {
                     if (results.status === 204) {
                         $scope.infoUpdated = 'Updated Successfully.';
                         loadList();
