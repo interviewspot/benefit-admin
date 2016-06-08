@@ -85,6 +85,9 @@
       $routeProvider.when('/clients/:clientId/user-group/:groupId/users', {
         templateUrl: 'views/clients/user/user_by_group.html'
       });
+      $routeProvider.when('/clients/:clientId/user-group/:groupId/handbooks', {
+        templateUrl: 'views/clients/user/handbook_by_group.html'
+      });
 
       $routeProvider.when('/clients/:clientId/account/:userId', {
         templateUrl: 'views/clients/user/account.html'

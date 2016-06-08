@@ -1,0 +1,54 @@
+<!--data-ng-controller="listclientController" Call controller in scripts/client-->
+<div class="col-lg-12">
+    <div class="page page-table" data-ng-controller="HandbookByGroupCtrl">
+        <div class="clients_list" ng-show="!isEditClients">
+            <h1 class="ttl-page">Security Handbook List Of {{group.name}}</h1>
+            <form role="form">
+                <div class="form-group">
+                    <label>Search handbook by title</label>
+                    <!--<input type="email" class="form-control" id="email">-->
+                    <autocomplete ng-model="modelHandbook" data="handbookSearch"></autocomplete>
+                </div>
+                <button type="submit" class="btn btn-default" data-ng-click="addHandbook()">Add Handbook</button>
+            </form>
+            <br>
+            <br>
+            </div>
+            <div class="table-responsive">
+              <table class="table tbl tbl-bg table-hover table-striped tbl-w1000">
+                  <tbody>
+                      <tr>
+                          <th class="text-left">Title</th>
+                          <th class="text-center">Actions</th>
+                      </tr>
+                      <tr ng-repeat="(i, handbook) in handbooks" >
+                          <td class="text-left">
+                              <a href="">
+                                  {{handbook.title}}
+                              </a>
+                          </td>
+                          <td class="text-center td-control">
+                              <a title="Remove out of group" ng-click="removeHandbook(handbook.id)"><i class="fa fa-trash-o"></i></a>
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+            </div>
+            <footer class="table-footer" ng-show="clients.pages >= 2">
+            <div class="row">
+                <!--<div class="col-md-6 text-right pagination-container">-->
+                    <!--<pagination class="pagination-sm"-->
+                                <!--ng-model="currentPage"-->
+                                <!--total-items="clients.total"-->
+                                <!--max-size="4"-->
+                                <!--ng-change="gotoPage(currentPage)"-->
+                                <!--items-per-page="numPerPage"-->
+                                <!--rotate="false"-->
+                                <!--boundary-links="true"></pagination>-->
+                <!--</div>-->
+            </div>
+        </footer>
+        </div>
+
+    </div>
+</div>
