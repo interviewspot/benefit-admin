@@ -1071,6 +1071,10 @@
                                         if (results.status !== 200 || typeof results !== 'object') {
                                             return;
                                         }
+
+
+                                        //ACE---------------------------------------------------------
+                                        //handbookace
                                         var dataUserGroupAce = {
                                             'handbook_user_group_ace': {
                                                 "userGroup": results.data.id,
@@ -1087,6 +1091,42 @@
                                         }, function (error) {
                                             return console.log(error);
                                         });
+                                        //userace
+                                        var dataUserGroupAce = {
+                                            'user_user_group_ace': {
+                                                "userGroup": results.data.id,
+                                                "attributes": "",
+                                            }
+                                        }
+                                        Users.post(results.data._links.user_user_group_aces.href, dataUserGroupAce).then(function (results) {
+                                            if (typeof results === 'object' && results.status === 201) {
+                                                $scope.infoUpdated = 'Updated Successfully.';
+                                            } else {
+                                                $scope.infoUpdated = 'Updated Fail.';
+                                            }
+
+                                        }, function (error) {
+                                            return console.log(error);
+                                        });
+                                        //usergroupace
+                                        var dataUserGroupAce = {
+                                            'user_group_user_group_ace': {
+                                                "userGroup": results.data.id,
+                                                "attributes": "",
+                                            }
+                                        }
+                                        Users.post(results.data._links.user_group_user_group_aces.href, dataUserGroupAce).then(function (results) {
+                                            if (typeof results === 'object' && results.status === 201) {
+                                                $scope.infoUpdated = 'Updated Successfully.';
+                                            } else {
+                                                $scope.infoUpdated = 'Updated Fail.';
+                                            }
+
+                                        }, function (error) {
+                                            return console.log(error);
+                                        });
+                                        //END ACE-----------------------------------------------------------
+
                                     });
 
                                 } else {
@@ -1274,6 +1314,28 @@
                                         if (results.status !== 200 || typeof results !== 'object') {
                                             return;
                                         }
+
+
+
+                                        //ACE---------------------------------------------------------
+                                        //handbookace
+                                        var dataUserGroupAce = {
+                                            'handbook_user_group_ace': {
+                                                "userGroup": results.data.id,
+                                                "attributes": "",
+                                            }
+                                        }
+                                        Users.post(results.data._links.handbook_user_group_aces.href, dataUserGroupAce).then(function (results) {
+                                            if (typeof results === 'object' && results.status === 201) {
+                                                $scope.infoUpdated = 'Updated Successfully.';
+                                            } else {
+                                                $scope.infoUpdated = 'Updated Fail.';
+                                            }
+
+                                        }, function (error) {
+                                            return console.log(error);
+                                        });
+                                        //userace
                                         var dataUserGroupAce = {
                                             'user_user_group_ace': {
                                                 "userGroup": results.data.id,
@@ -1290,6 +1352,27 @@
                                         }, function (error) {
                                             return console.log(error);
                                         });
+                                        //usergroupace
+                                        var dataUserGroupAce = {
+                                            'user_group_user_group_ace': {
+                                                "userGroup": results.data.id,
+                                                "attributes": "",
+                                            }
+                                        }
+                                        Users.post(results.data._links.user_group_user_group_aces.href, dataUserGroupAce).then(function (results) {
+                                            if (typeof results === 'object' && results.status === 201) {
+                                                $scope.infoUpdated = 'Updated Successfully.';
+                                            } else {
+                                                $scope.infoUpdated = 'Updated Fail.';
+                                            }
+
+                                        }, function (error) {
+                                            return console.log(error);
+                                        });
+                                        //END ACE-----------------------------------------------------------
+
+
+
                                     });
 
                                 } else {
@@ -1478,6 +1561,44 @@
                                         if (results.status !== 200 || typeof results !== 'object') {
                                             return;
                                         }
+
+
+                                        //ACE---------------------------------------------------------
+                                        //handbookace
+                                        var dataUserGroupAce = {
+                                            'handbook_user_group_ace': {
+                                                "userGroup": results.data.id,
+                                                "attributes": "",
+                                            }
+                                        }
+                                        Users.post(results.data._links.handbook_user_group_aces.href, dataUserGroupAce).then(function (results) {
+                                            if (typeof results === 'object' && results.status === 201) {
+                                                $scope.infoUpdated = 'Updated Successfully.';
+                                            } else {
+                                                $scope.infoUpdated = 'Updated Fail.';
+                                            }
+
+                                        }, function (error) {
+                                            return console.log(error);
+                                        });
+                                        //userace
+                                        var dataUserGroupAce = {
+                                            'user_user_group_ace': {
+                                                "userGroup": results.data.id,
+                                                "attributes": "",
+                                            }
+                                        }
+                                        Users.post(results.data._links.user_user_group_aces.href, dataUserGroupAce).then(function (results) {
+                                            if (typeof results === 'object' && results.status === 201) {
+                                                $scope.infoUpdated = 'Updated Successfully.';
+                                            } else {
+                                                $scope.infoUpdated = 'Updated Fail.';
+                                            }
+
+                                        }, function (error) {
+                                            return console.log(error);
+                                        });
+                                        //usergroupace
                                         var dataUserGroupAce = {
                                             'user_group_user_group_ace': {
                                                 "userGroup": results.data.id,
@@ -1494,6 +1615,8 @@
                                         }, function (error) {
                                             return console.log(error);
                                         });
+                                        //END ACE-----------------------------------------------------------
+
                                     });
 
                                 } else {
