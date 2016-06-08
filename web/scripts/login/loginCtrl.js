@@ -14,7 +14,7 @@
           }
           if (system.data._links.logged_in_user) {
             return aREST.get($scope.username, $scope.password, config.path.baseURL + system.data._links.logged_in_user.href).then(function(res) {
-              if (typeof res !== 'object' || res.status !== 200  || res.data.roles[0] == "") {
+              if (typeof res !== 'object' || res.status !== 200  || res.data.roles.join().indexOf('ROLE_') == -1) {
                 return;
               }
               localStorageService.cookie.set('user', {

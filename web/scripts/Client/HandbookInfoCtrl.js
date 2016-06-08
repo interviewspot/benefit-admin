@@ -57,7 +57,8 @@
             "description": $scope.handbook.description,
             "organisation": $scope.clientId,
             "locale": "en_us",
-            "enabled": $scope.handbook.enabled
+            "enabled": $scope.handbook.enabled,
+            "public": $scope.handbook.public
           }
         };
         console.log(updateData);
