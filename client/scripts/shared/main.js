@@ -48,7 +48,11 @@
       $rootScope.$on("$routeChangeSuccess", function(event, currentRoute, previousRoute) {
         return $document.scrollTo(0, 0);
       });
-      console.log($location.path());
+
+
+
+
+
       user = localStorageService.cookie.get('user');
       $rootScope.user = user;
       var employerId = localStorageService.cookie.get('employerId');
@@ -57,7 +61,7 @@
       $rootScope.positionId = positionId;
       if (!user || typeof user !== 'object') {
         $scope.isLogin = true;
-        return $rootScope.isLoggedIn = false;
+        $rootScope.isLoggedIn = false;
       } else {
         $rootScope.isAdmin = false;
         if (user.user.roles[0] === 'ROLE_ADMIN') {
@@ -65,8 +69,81 @@
         }
         $scope.user = user;
         $scope.isLogin = false;
-        return $rootScope.isLoggedIn = true;
+        $rootScope.isLoggedIn = true;
       }
+      $rootScope.isNormalUser = false;
+
+
+
+
+      //get permission group user
+      var permissionUserGroup = localStorageService.cookie.get('permissionUserGroup');
+      if(permissionUserGroup != null) {
+        $rootScope.permissionUserGroup = {'VIEW': false, 'CREATE': false, 'EDIT': false, 'DELETE': false};
+        if (permissionUserGroup.join().indexOf('OPERATE') > -1) {
+          $rootScope.permissionUserGroup = {'VIEW': true, 'CREATE': true, 'EDIT': true, 'DELETE': true};
+        } else {
+          if (permissionUserGroup.join().indexOf('VIEW') > -1) {
+            $rootScope.permissionUserGroup.VIEW = true;
+          }
+          if (permissionUserGroup.join().indexOf('CREATE') > -1 ) {
+            $rootScope.permissionUserGroup.CREATE = true;
+          }
+          if (permissionUserGroup.join().indexOf('EDIT') > -1) {
+            $rootScope.permissionUserGroup.EDIT = true;
+          }
+          if (permissionUserGroup.join().indexOf('DELETE') > -1) {
+            $rootScope.permissionUserGroup.DELETE = true;
+          }
+        }
+      }
+
+      var permissionUser = localStorageService.cookie.get('permissionUser');
+      if(permissionUser != null) {
+        $rootScope.permissionUser = {'VIEW': false, 'CREATE': false, 'EDIT': false, 'DELETE': false};
+        if (permissionUser.join().indexOf('OPERATE') > -1) {
+          $rootScope.permissionUser = {'VIEW': true, 'CREATE': true, 'EDIT': true, 'DELETE': true};
+        } else {
+          if (permissionUser.join().indexOf('VIEW') > -1) {
+            $rootScope.permissionUser.VIEW = true;
+          }
+          if (permissionUser.join().indexOf('CREATE') > -1 ) {
+            $rootScope.permissionUser.CREATE = true;
+          }
+          if (permissionUser.join().indexOf('EDIT') > -1) {
+            $rootScope.permissionUser.EDIT = true;
+          }
+          if (permissionUser.join().indexOf('DELETE') > -1) {
+            $rootScope.permissionUser.DELETE = true;
+          }
+        }
+      }
+
+      var permissionHandbook = localStorageService.cookie.get('permissionHandbook');
+      if(permissionHandbook != null) {
+        $rootScope.permissionHandbook = {'VIEW': false, 'CREATE': false, 'EDIT': false, 'DELETE': false};
+        if (permissionHandbook.join().indexOf('OPERATE') > -1) {
+          $rootScope.permissionHandbook = {'VIEW': true, 'CREATE': true, 'EDIT': true, 'DELETE': true};
+        } else {
+          if (permissionHandbook.join().indexOf('VIEW') > -1) {
+            $rootScope.permissionHandbook.VIEW = true;
+          }
+          if (permissionHandbook.join().indexOf('CREATE') > -1 ) {
+            $rootScope.permissionHandbook.CREATE = true;
+          }
+          if (permissionHandbook.join().indexOf('EDIT') > -1) {
+            $rootScope.permissionHandbook.EDIT = true;
+          }
+          if (permissionHandbook.join().indexOf('DELETE') > -1) {
+            $rootScope.permissionHandbook.DELETE = true;
+          }
+        }
+      }
+      //end
+
+
+
+
     }
   ]).controller('HeaderCtrl', [
     '$scope', function($scope) {

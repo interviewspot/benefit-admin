@@ -16,6 +16,9 @@
                 };
                 _getUsers = function (limit, goPage) {
                     return fetchContact.get(_URL_users.list + '?limit=' + limit + '&page=' + goPage).then(function (res) {
+                        
+                        
+                        
                         var i, item, _fn, _ref;
                         console.log(_URL_users.list);
                         if (res.data._embedded.items.length) {
@@ -190,7 +193,15 @@
                             return;
                         }
                         $scope.user = res.data;
-                        $scope.user.roles = res.data.roles[0];
+                        if(res.data.roles != '') {
+                            if (res.data.roles.join().indexOf('ROLE_ADMIN') > -1) {
+                                $scope.user.roles = 'ROLE_ADMIN';
+                            } else if (res.data.roles.join().indexOf('ROLE_HR_ADMIN') > -1) {
+                                $scope.user.roles = 'ROLE_HR_ADMIN';
+                            }else {
+                                $scope.user.roles = '';
+                            }
+                        }
                         $scope.user.position_data = pos.data;
                         $scope.user.employee_class = [];
                         $scope.user.employee_function = [];
@@ -1132,6 +1143,7 @@
                                 } else {
                                     $scope.infoUpdated = 'Updated Fail.';
                                 }
+
 
                             }, function (error) {
                                 return console.log(error);

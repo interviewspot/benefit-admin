@@ -5,7 +5,7 @@
     </h1>
     <section class="panel panel-default table-dynamic">
         <div class="panel-body lv1">
-            <div class="table-responsive">
+            <div class="table-responsive marg-bot">
                 <ul class="tbl-w800 nav nav-tabs" >
                     <li>
                         <a href="#/clients/{{employerId}}/user-group/handbook-acl" title="Company Info">Handbook Acl</a>
@@ -26,8 +26,8 @@
                             <div>
                                 <form name="frm_updateuser" class="frm-updateuser" novalidate>
                                     <div class="t-r marg-bot ">
-                                        <span class="msg-update"> </span>
-                                        <button type="submit" class="btn btn-brown" ng-click="submit()">
+                                        <span class="msg-update"> {{infoUpdated}}</span>
+                                        <button type="submit" data-ng-show="permissionUserGroup.EDIT" class="btn btn-brown" ng-click="submit()">
                                             <i class="fa fa-pencil"></i>
                                             Update
                                         </button>

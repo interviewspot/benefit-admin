@@ -3,7 +3,7 @@
     <div class="page page-table" data-ng-controller="HandbookByGroupCtrl">
         <div class="clients_list" ng-show="!isEditClients">
             <h1 class="ttl-page">Security Handbook List Of {{group.name}}</h1>
-            <form role="form">
+            <form role="form" data-ng-show="permissionUserGroup.EDIT">
                 <div class="form-group">
                     <label>Search handbook by title</label>
                     <!--<input type="email" class="form-control" id="email">-->
@@ -28,7 +28,7 @@
                               </a>
                           </td>
                           <td class="text-center td-control">
-                              <a title="Remove out of group" ng-click="removeHandbook(handbook.id)"><i class="fa fa-trash-o"></i></a>
+                              <a title="Remove out of group" data-ng-show="permissionUserGroup.EDIT" ng-click="removeHandbook(handbook.id)"><i class="fa fa-trash-o"></i></a>
                           </td>
                       </tr>
                   </tbody>
