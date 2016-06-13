@@ -20,6 +20,8 @@
           hand_id: $scope.handbookId
         }, function(data, getResponseHeaders) {
           $scope.handbook = data;
+          $scope.handbook.EDITHANBOOK = data._links.self.actions.join().indexOf('OPERATE') ||  data._links.self.actions.join().indexOf('EDIT') ? true : false ;
+          $scope.handbook.DELETEHANBOOK = data._links.self.actions.join().indexOf('OPERATE') ||  data._links.self.actions.join().indexOf('DELETE') ? true : false ;
           $scope.handbook.locale = 'en_us';
           return fetchHandbook.get(data._links.translations.href).then(function(res) {
             if (res.status !== 200 || typeof res !== 'object') {

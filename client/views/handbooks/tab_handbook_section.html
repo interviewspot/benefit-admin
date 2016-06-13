@@ -79,7 +79,7 @@
                      ng-model="formSection.description"></div>
                 <!-- <textarea ui-tinymce data-ng-model="formSection.description"></textarea> -->
                 <!-- END : EDITOR -->
-                <p class="tp-20" data-ng-show="permissionHandbook.EDIT">
+                <p class="tp-20" data-ng-show="handbook.EDITHANBOOK">
                     <button type="submit"
                             class="save btn-brown">
                         <i class="fa fa-save"></i>&nbsp;&nbsp;SAVE SECTION
@@ -290,7 +290,7 @@
             </footer>
         </div><!-- END: TBL-div -->
 
-        <div class="section-control" data-ng-show="permissionHandbook.EDIT">
+        <div class="section-control" data-ng-show="hanbook.EDITHANBOOK">
             <a ng-click="createSubSction(true)">
                 Add Sub-Section
             </a>

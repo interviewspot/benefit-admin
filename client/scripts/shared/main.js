@@ -70,7 +70,7 @@
             }
 
             $rootScope.isNormalUser = false;
-            if (user.user.roles.join().indexOf('ROLE_ADMIN') && user.user.roles.join().indexOf('ROLE_HR_ADMIN')) {
+            if (user != null && user.user.roles.join().indexOf('ROLE_ADMIN') && user.user.roles.join().indexOf('ROLE_HR_ADMIN')) {
                 $rootScope.isNormalUser = true;
             }
 
