@@ -1,10 +1,10 @@
 <li ng-class="{active : isActive('/clients/' + clientDetail.id + '/info')}">
     <a href="{{ClientPage.tabUrls.info ? ClientPage.tabUrls.info : 'javascript:;'}}" title="Company Info">Company Info</a>
 </li>
-<li ng-class="{active : isActive('/clients/' + clientDetail.id + '/user')}">
+<li data-ng-show="permissionUser.VIEW" ng-class="{active : isActive('/clients/' + clientDetail.id + '/user')}">
     <a href="{{ClientPage.tabUrls.user ? ClientPage.tabUrls.user : 'javascript:;'}}" title="Users">Users</a>
 </li>
-<li ng-class="{active : isActive('/clients/' + clientDetail.id + '/handbooks')}">
+<li data-ng-show="permissionHandbook.VIEW" ng-class="{active : isActive('/clients/' + clientDetail.id + '/handbooks')}">
     <a href="{{ClientPage.tabUrls.handbooks ? ClientPage.tabUrls.handbooks : 'javascript:;'}}" title="Handbook">Cloud Books</a>
 </li>
 <!--<li ng-class="{active : isActive('/clients/' + clientDetail.id + '/notifications')}">-->

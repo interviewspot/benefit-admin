@@ -14,7 +14,7 @@
           }
           if (system.data._links.logged_in_user) {
             return aREST.get($scope.username, $scope.password, config.path.baseURL + system.data._links.logged_in_user.href).then(function(res) {
-              if (typeof res !== 'object' || res.status !== 200  || res.data.roles.join().indexOf('ROLE_') == -1) {
+              if (typeof res !== 'object' || res.status !== 200) {
                 return;
               }
               localStorageService.cookie.set('user', {
@@ -24,7 +24,7 @@
               $rootScope.isLoggedIn = true;
               $scope.roles = res.data.roles;
 
-              if ($scope.roles.indexOf('ROLE_ADMIN') >= 0 ) {
+              if ($scope.roles.join().indexOf('ROLE_ADMIN') >= 0 ) {
                 $location.path('/clients');
                 $rootScope.isAdmin = true;
                 return $route.reload();
@@ -35,6 +35,9 @@
                   return aREST.get($scope.username, $scope.password, position.data._links.employer.href).then(function (employer) {
                     $rootScope.employerId = employer.data.id;
                     localStorageService.cookie.set('employerId', employer.data.id, 1);
+                    localStorageService.cookie.set('permissionUserGroup', employer.data._links.user_groups.actions, 1);
+                    localStorageService.cookie.set('permissionUser', employer.data._links.positions.actions, 1);
+                    localStorageService.cookie.set('permissionHandbook', employer.data._links.handbooks.actions, 1);
 
                     $location.path('/clients/' + employer.data.id + '/info');
                     $rootScope.isAdmin = false;

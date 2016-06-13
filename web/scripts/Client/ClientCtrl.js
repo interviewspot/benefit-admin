@@ -104,6 +104,18 @@
                     org_id: $routeParams.clientId
                 }, function (data, getResponseHeaders) {
                     if (data._links.handbooks) {
+                        $scope.ClientPage.tabUrls = {
+                            "info": '#/clients/' + data.id + '/info',
+                            "user": '#/clients/' + data.id + '/user',
+                            "handbooks": '#/clients/' + data.id + '/handbooks',
+                            "policies": '#/clients/' + data.id + '/policies',
+                            "insurance": '#/clients/' + data.id + '/insurance',
+                            "healthcare": '#/clients/' + data.id + '/healthcare',
+                            "imerchant": '#/clients/' + data.id + '/imerchant',
+                            "notifications": '#/clients/' + data.id + '/notifications'
+                        };
+
+
                         fetchHandbook.get(data._links.handbooks.href).then(function (res) {
                             if (typeof res.data._embedded !== 'object' || !res.data._embedded.items) {
                                 $scope.isCreateHandbook = true;
@@ -125,7 +137,7 @@
                         $scope.isCreateHandbook = true;
                     }
                     $scope.clientDetail = data;
-                    if (typeof data._links.logo === 'object' && data._links.logo.href) {
+                    if (typeof data._links.logo === 'object' && data._links.logo != undefined) {
                         Images.get(data._links.logo.href).then(function (res) {
                             var logo_id_arr;
                             if (res.status !== 200 || typeof res !== 'object') {
@@ -150,7 +162,7 @@
                     } else {
                         $scope.urlUpload = $scope.clientDetail._links['logo.post'].href;
                     }
-                    if (typeof data._links.banners === 'object' && data._links.banners.href) {
+                    if (typeof data._links.banners === 'object' && data._links.banners != undefined) {
                         Images.get(data._links.banners.href).then(function (res) {
                             if (res.status !== 200 || typeof res !== 'object') {
                                 return;
@@ -179,16 +191,7 @@
                     } else {
                         $scope.urlUploadBanner = $scope.clientDetail._links['banners'].href;
                     }
-                    return $scope.ClientPage.tabUrls = {
-                        "info": '#/clients/' + data.id + '/info',
-                        "user": '#/clients/' + data.id + '/user',
-                        "handbooks": '#/clients/' + data.id + '/handbooks',
-                        "policies": '#/clients/' + data.id + '/policies',
-                        "insurance": '#/clients/' + data.id + '/insurance',
-                        "healthcare": '#/clients/' + data.id + '/healthcare',
-                        "imerchant": '#/clients/' + data.id + '/imerchant',
-                        "notifications": '#/clients/' + data.id + '/notifications'
-                    };
+
                 });
             }
             $scope.isEditUser = false;

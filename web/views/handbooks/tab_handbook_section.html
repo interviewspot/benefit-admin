@@ -79,7 +79,7 @@
                      ng-model="formSection.description"></div>
                 <!-- <textarea ui-tinymce data-ng-model="formSection.description"></textarea> -->
                 <!-- END : EDITOR -->
-                <p class="tp-20">
+                <p class="tp-20" data-ng-show="permissionHandbook.EDIT">
                     <button type="submit"
                             class="save btn-brown">
                         <i class="fa fa-save"></i>&nbsp;&nbsp;SAVE SECTION
@@ -115,7 +115,7 @@
                         </div>
                         <div class="panel-body">
                             <div data-ng-show="contents.length > 0">
-                                <button ng-click="updateOrderingContent()" class="btn-brown">
+                                <button data-ng-show="permissionHandbook.EDIT" ng-click="updateOrderingContent()" class="btn-brown">
                                     Update Ordering
                                 </button>
                                 <hr>
@@ -125,7 +125,7 @@
                                 No Contents
                             </div>
                             <ul dnd-list="contents">
-                                <li ng-repeat="content in contents"
+                                    <li ng-repeat="content in contents"
                                     dnd-draggable="content"
                                     dnd-moved="contents.splice($index, 1)"
                                     dnd-effect-allowed="move"
@@ -138,11 +138,11 @@
                                         <div data-ng-show="content.isShow">
                                             <div text-angular ng-model="content.html_text"></div>
                                             <p></p>
-                                            <button type="submit"
+                                            <button data-ng-show="permissionHandbook.EDIT" type="submit"
                                                     class="save btn-brown">
                                                 <i class="fa fa-save"></i>&nbsp;&nbsp;Save Content
                                             </button>
-                                            <button data-ng-click="closeEditContent($index)" type="button"
+                                            <button data-ng-show="permissionHandbook.EDIT" data-ng-click="closeEditContent($index)" type="button"
                                                     class="btn-brown">
                                                 &nbsp;&nbsp;Close
                                             </button>
@@ -156,12 +156,12 @@
                                     <!--<pdf-download ng-show="content != 'undefined' && content.html_text=='none_pdf'" url="http://localhost/tb455-tk1-ts.pdf" filename="{{content.pdf_name}}"></pdf-download>-->
                                     <br>
                                     <a href="javascript:void(0)"
-                                       data-ng-click="deleteContent(content,$index)">remove</a>
+                                       data-ng-click="deleteContent(content,$index)" data-ng-show="permissionHandbook.EDIT">remove</a>
                                 </li>
                             </ul>
 
                             <hr>
-                            <button type="button" ng-show="!readyToUpload"
+                            <button type="button" ng-show="!readyToUpload && permissionHandbook.EDIT"
                                     ng-click="addNewImage()" class="btn-brown">Add
                                 new image
                             </button>
@@ -176,7 +176,7 @@
                                     ng-label="uploadButtonLabel"
                                     ng-progress-color="'#CFAE79'">
                             </upload-file>
-                            <button type="button" ng-show="!readyToUploadPdf"
+                            <button type="button" ng-show="!readyToUploadPdf && permissionHandbook.EDIT"
                                     ng-click="addNewPdf()" class="btn-brown">Add
                                 new pdf
                             </button>
@@ -190,7 +190,7 @@
                                     ng-label="uploadButtonLabelPdf"
                                     ng-progress-color="'#CFAE79'">
                             </upload-file>
-                            <button data-ng-show="readyToAddContent" ng-click="addContent()" type="button"
+                            <button data-ng-show="readyToAddContent && permissionHandbook.EDIT" ng-click="addContent()" type="button"
                                     class="btn-brown">
                                 Add new content
                             </button>
@@ -230,7 +230,7 @@
                           ng-click="editSection(section)">
                         <i class="fa fa-edit"></i>
                     </span>
-                    <span data-ng-show="allowShowActionSections" title="Remove this section" class="tbl-remove"
+                    <span data-ng-show="permissionHandbook.EDIT" data-ng-show="allowShowActionSections" title="Remove this section" class="tbl-remove"
                           ng-click="deleteSection(section)">
                         <i class="fa fa-trash-o"></i>
                     </span>
@@ -252,7 +252,7 @@
                                   ng-click="editSection(child_sec)">
                                 <i class="fa fa-edit"></i>
                             </span>
-                            <span data-ng-show="allowShowActionSections" title="Remove this section" class="tbl-remove"
+                            <span data-ng-show="permissionHandbook.EDIT" data-ng-show="allowShowActionSections" title="Remove this section" class="tbl-remove"
                                   ng-click="deleteSection(child_sec)">
                                 <i class="fa fa-trash-o"></i>
                             </span>
@@ -290,7 +290,7 @@
             </footer>
         </div><!-- END: TBL-div -->
 
-        <div class="section-control">
+        <div class="section-control" data-ng-show="permissionHandbook.EDIT">
             <a ng-click="createSubSction(true)">
                 Add Sub-Section
             </a>

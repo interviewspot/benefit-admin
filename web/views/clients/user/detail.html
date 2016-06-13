@@ -6,14 +6,14 @@
         <span>{{user.username}}</span>
     </h2>
     <form name="frm_updateuser" class="frm-updateuser" novalidate>
-    <div class="t-r marg-bot ">
+    <div class="t-r marg-bot " data-ng-show="permissionUser.EDIT">
         <span class="msg-update">{{infoUpdated}} </span>
         <button type="submit" class="btn btn-brown" ng-click="updateUser()">
             <i class="fa fa-pencil"></i>
             Submit to save
         </button>
         &nbsp;&nbsp;&nbsp;&nbsp;
-        <button class="btn btn-edit" ng-click="deleteUser()">Delete</button>
+        <button class="btn btn-edit" ng-click="deleteUser()" data-ng-show="permissionUser.DELETE">Delete</button>
     </div>
     <div class="row">
         <div class="col-md-6 col-sm-6 col-xs-12 col-user">

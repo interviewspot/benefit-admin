@@ -2,7 +2,7 @@
 <form name="co_info_frm">
 <div class="col-md-8 col-sm-8 col-xs-12 cpn-left">
 
-        <p class="clearfix t-r">
+        <p class="clearfix t-r" data-ng-show="!isNormalUser">
             <button type="submit" class="btn"
                 ng-class="clients_edit ? 'btn-brown' : 'btn-edit'"
                 ng-click="editClient(clients_edit)">

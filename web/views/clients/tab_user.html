@@ -10,7 +10,7 @@
             </p>
         </div>
         <br/>
-        <div class="t-r clearfix">
+        <div class="t-r clearfix" data-ng-show="permissionUser.CREATE">
             <span class="f-l msg-update" ng-show="infoUpdated" >{{infoUpdated}}</span>
             <a href="#/clients/{{clientId}}/new-user" class="btn btn-brown btn-add-user">Add new user</a>
         </div>      
@@ -40,7 +40,7 @@
                         </td>
                         <td  class="text-center td-18" ng-if="!getTime(user.date_added)">-</td>
                         <td class="td-control text-center td-15">
-                            <a title="Enabled/Not"
+                            <a data-ng-show="permissionUser.EDIT" title="Enabled/Not"
                                 ng-click="enabUser(user, i)">
                                 <i class="fa fa-check" ng-show="user.enabled"></i>
                                 <i class="fa fa-times" ng-show="!user.enabled"></i>
