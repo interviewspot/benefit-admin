@@ -77,7 +77,7 @@
 
             //get permission group user
             var permissionUserGroup = localStorageService.cookie.get('permissionUserGroup');
-            if (permissionUserGroup.length) {
+            if (permissionUserGroup != undefined && permissionUserGroup.length) {
                 $rootScope.permissionUserGroup = {'VIEW': false, 'CREATE': false, 'EDIT': false, 'DELETE': false};
                 if (permissionUserGroup.join().indexOf('OPERATE') > -1) {
                     $rootScope.permissionUserGroup = {'VIEW': true, 'CREATE': true, 'EDIT': true, 'DELETE': true};
@@ -101,7 +101,7 @@
 
 
             var permissionUser = localStorageService.cookie.get('permissionUser');
-            if (permissionUser.length) {
+            if (permissionUser != undefined && permissionUser.length) {
                 $rootScope.permissionUser = {'VIEW': false, 'CREATE': false, 'EDIT': false, 'DELETE': false};
                 if (permissionUser.join().indexOf('OPERATE') > -1) {
                     $rootScope.permissionUser = {'VIEW': true, 'CREATE': true, 'EDIT': true, 'DELETE': true};
@@ -124,7 +124,7 @@
             }
 
             var permissionHandbook = localStorageService.cookie.get('permissionHandbook');
-            if (permissionHandbook.length) {
+            if (permissionHandbook != undefined && permissionHandbook.length) {
                 $rootScope.permissionHandbook = {'VIEW': false, 'CREATE': false, 'EDIT': false, 'DELETE': false};
                 if (permissionHandbook.join().indexOf('OPERATE') > -1) {
                     $rootScope.permissionHandbook = {'VIEW': true, 'CREATE': true, 'EDIT': true, 'DELETE': true};
