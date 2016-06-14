@@ -61,7 +61,7 @@
                 $rootScope.isLoggedIn = false;
             } else {
                 $rootScope.isAdmin = false;
-                if (user.user.roles.join().indexOf('ROLE_ADMIN')) {
+                if (user.user.roles.join().indexOf('ROLE_ADMIN') > -1 ) {
                     $rootScope.isAdmin = true;
                 }
                 $scope.user = user;
@@ -70,7 +70,7 @@
             }
 
             $rootScope.isNormalUser = false;
-            if (user != null && user.user.roles.join().indexOf('ROLE_ADMIN') && user.user.roles.join().indexOf('ROLE_HR_ADMIN')) {
+            if (user != null && user.user.roles.join().indexOf('ROLE_ADMIN') > -1 && user.user.roles.join().indexOf('ROLE_HR_ADMIN') > -1 ) {
                 $rootScope.isNormalUser = true;
             }
 

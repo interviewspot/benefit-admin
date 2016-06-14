@@ -122,14 +122,16 @@
                                 return;
                             }
                             $scope.handbooks = res.data._embedded.items;
+
+                            window.hand = $scope.handbooks;
                             return angular.forEach($scope.handbooks, function (item, i) {
                                 return Clients.get(item._links.translations.href).then(function (res) {
                                     if (res.status !== 200 || typeof res !== 'object') {
                                         return;
                                     }
                                     $scope.handbooks[i]['translations'] = res.data;
-                                    $scope.handbooks[i]['EDIT'] = item._links.self.actions.join().indexOf('OPERATE') ||  item._links.self.actions.join().indexOf('EDIT') ? true : false ;
-                                    $scope.handbooks[i]['DELETE'] = item._links.self.actions.join().indexOf('OPERATE') ||  item._links.self.actions.join().indexOf('DELETE') ? true : false ;
+                                    $scope.handbooks[i]['EDIT'] = item._links.self.actions.join().indexOf('OPERATE') > -1 ||  item._links.self.actions.join().indexOf('EDIT') > -1 ? true : false ;
+                                    $scope.handbooks[i]['DELETE'] = item._links.self.actions.join().indexOf('OPERATE') > -1 ||  item._links.self.actions.join().indexOf('DELETE') > -1 ? true : false ;
                                 }, function (error) {
                                     console.log(error);
                                 });
