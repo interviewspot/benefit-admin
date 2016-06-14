@@ -38,7 +38,7 @@
             <!--</div>-->
 
             <!-- END: LEFT -->
-            <div class="col-md-6 col-sm-6 col-xs-12" data-ng-show="permissionHandbook.DELETE">
+            <div class="col-md-6 col-sm-6 col-xs-12" data-ng-show="hanbook.DELETEHANBOOK">
                 <p>
                     <strong>{{totalSelected}}</strong> chosen item(s)
                 </p>
@@ -57,9 +57,9 @@
             <h2>{{i}}</h2>
             <div class="ctc-content" ng-repeat="contact in item">
                 <div class="ctc-control">
-                    <i data-ng-show="permissionHandbook.EDIT" class="fa fa-edit" data-toggle="modal" data-target="#editContact" ng-click="editContact(contact)"></i>
-                    <i data-ng-show="permissionHandbook.DELETE" class="fa fa-trash-o" ng-click="deleteContact(contact)"></i>
-                    <input data-ng-show="permissionHandbook.DELETE" type="checkbox" id="ctc-chk1" name="ctc-chk" ng-model="contact.checked" ng-change="contactSelect()"/>
+                    <i data-ng-show="hanbook.EDITHANBOOK" class="fa fa-edit" data-toggle="modal" data-target="#editContact" ng-click="editContact(contact)"></i>
+                    <i data-ng-show="hanbook.DELETEHANBOOK" class="fa fa-trash-o" ng-click="deleteContact(contact)"></i>
+                    <input data-ng-show="hanbook.DELETEHANBOOK" type="checkbox" id="ctc-chk1" name="ctc-chk" ng-model="contact.checked" ng-change="contactSelect()"/>
                 </div>
                 <!-- END: CONTROL -->
                 <h3>{{contact.user.first_name}}  {{contact.user.last_name}}</h3>

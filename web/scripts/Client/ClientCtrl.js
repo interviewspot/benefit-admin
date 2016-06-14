@@ -128,6 +128,8 @@
                                         return;
                                     }
                                     $scope.handbooks[i]['translations'] = res.data;
+                                    $scope.handbooks[i]['EDIT'] = item._links.self.actions.join().indexOf('OPERATE') ||  item._links.self.actions.join().indexOf('EDIT') ? true : false ;
+                                    $scope.handbooks[i]['DELETE'] = item._links.self.actions.join().indexOf('OPERATE') ||  item._links.self.actions.join().indexOf('DELETE') ? true : false ;
                                 }, function (error) {
                                     console.log(error);
                                 });

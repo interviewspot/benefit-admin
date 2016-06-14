@@ -572,7 +572,7 @@ Handsontable.hooks.add('afterContextMenuShow', function() {
                 scope.htSettings[key] = newValue;
                 settingFactory.updateHandsontableSettings(scope.hotInstance, scope.htSettings);
               }
-            }, ['datarows', 'columns', 'rowHeights', 'colWidths', 'rowHeaders', 'colHeaders','nestedHeaders'].indexOf(key) >= 0);
+            }, ['datarows', 'columns', 'rowHeights', 'colWidths', 'rowHeaders', 'colHeaders'].indexOf(key) >= 0);
           });
 
           /**
