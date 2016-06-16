@@ -30,7 +30,7 @@
                         id="{{hb_list.id}}"
                         ng-change="changePublished(hb_list, clientDetail.id)"
                         ng-model="hb_list.enabled"
-                        data-ng-show="hb_list.EDIT"
+                        data-ng-disabled="!hb_list.EDIT"
                     />
                 </td>
                 <td class="text-center td-manage">

@@ -77,7 +77,7 @@
 
             //get permission group user
             var permissionUserGroup = localStorageService.cookie.get('permissionUserGroup');
-            if (permissionUserGroup != undefined && permissionUserGroup.length) {
+            if (permissionUserGroup != undefined ) {
                 $rootScope.permissionUserGroup = {'VIEW': false, 'CREATE': false, 'EDIT': false, 'DELETE': false};
                 if (permissionUserGroup.join().indexOf('OPERATE') > -1) {
                     $rootScope.permissionUserGroup = {'VIEW': true, 'CREATE': true, 'EDIT': true, 'DELETE': true};
@@ -95,20 +95,15 @@
                         $rootScope.permissionUserGroup.DELETE = true;
                     }
                 }
-            } else {
-                $rootScope.permissionUserGroup = {'VIEW': true, 'CREATE': true, 'EDIT': true, 'DELETE': true};
             }
 
 
             var permissionUser = localStorageService.cookie.get('permissionUser');
-            if (permissionUser != undefined && permissionUser.length) {
+            if (permissionUser != undefined ) {
                 $rootScope.permissionUser = {'VIEW': false, 'CREATE': false, 'EDIT': false, 'DELETE': false};
                 if (permissionUser.join().indexOf('OPERATE') > -1) {
                     $rootScope.permissionUser = {'VIEW': true, 'CREATE': true, 'EDIT': true, 'DELETE': true};
                 } else {
-                    if (permissionUser.join().indexOf('VIEW') > -1) {
-                        $rootScope.permissionUser.VIEW = true;
-                    }
                     if (permissionUser.join().indexOf('CREATE') > -1) {
                         $rootScope.permissionUser.CREATE = true;
                     }
@@ -119,19 +114,14 @@
                         $rootScope.permissionUser.DELETE = true;
                     }
                 }
-            } else {
-                $rootScope.permissionUser = {'VIEW': true, 'CREATE': true, 'EDIT': true, 'DELETE': true};
             }
 
             var permissionHandbook = localStorageService.cookie.get('permissionHandbook');
-            if (permissionHandbook != undefined && permissionHandbook.length) {
+            if (permissionHandbook != undefined ) {
                 $rootScope.permissionHandbook = {'VIEW': false, 'CREATE': false, 'EDIT': false, 'DELETE': false};
                 if (permissionHandbook.join().indexOf('OPERATE') > -1) {
                     $rootScope.permissionHandbook = {'VIEW': true, 'CREATE': true, 'EDIT': true, 'DELETE': true};
                 } else {
-                    if (permissionHandbook.join().indexOf('VIEW') > -1) {
-                        $rootScope.permissionHandbook.VIEW = true;
-                    }
                     if (permissionHandbook.join().indexOf('CREATE') > -1) {
                         $rootScope.permissionHandbook.CREATE = true;
                     }
@@ -145,9 +135,7 @@
                         $rootScope.permissionHandbook.VISIBILITY = true;
                     }
                 }
-            } else {
-                $rootScope.permissionHandbook = {'VIEW': true, 'CREATE': true, 'EDIT': true, 'DELETE': true};
-            }
+            } 
 
             //end
 
