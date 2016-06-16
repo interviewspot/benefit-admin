@@ -646,6 +646,10 @@
                 $scope.isExcel = false;
 
                 var code = $scope.user.code == undefined || $scope.user.code == "" ? php.randomString(6, 'a#') : $scope.user.code;
+                if(!$scope.user.roles)
+                {
+                    $scope.user.roles = 'ROLE_USER';
+                }
                 var roles = [];
                 roles.push($scope.user.roles);
                 user = {
