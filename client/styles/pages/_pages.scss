@@ -1232,3 +1232,19 @@ hr.line {
 .uppercase {
     text-transform: uppercase;
 }
+.t-3 span {
+	margin-left: 5px;
+}
+//Customize css for  handbook section from the original
+
+#sec_title {
+	width: 100px;
+}
+.sec_content_right {
+	border: 1px solid #ddd;
+	margin-left: -16px;
+	min-height: 42px;
+}
+.sec_right_text {
+	margin-top: 16px;
+}

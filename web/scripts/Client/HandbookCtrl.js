@@ -15,7 +15,7 @@
         return $scope.ClientPage.tabUrls = {
           "info": '#/clients/' + data.id + '/info',
           "user": '#/clients/' + data.id + '/user',
-          "handbooks": '#/clients/' + data.id + '/handbooks',
+          // "handbooks": '#/clients/' + data.id + '/handbooks',
           "policies": '#/clients/' + data.id + '/policies',
           "insurance": '#/clients/' + data.id + '/insurance',
           "healthcare": '#/clients/' + data.id + '/healthcare',

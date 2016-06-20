@@ -34,6 +34,10 @@
                     />
                 </td>
                 <td class="text-center td-manage">
+                    <a ng-click="count"
+                       href="#/clients/{{clientDetail.id}}/handbooks/{{hb_list.id}}/view">
+                        <i class="fa fa-eye" title="View Handbook"></i>
+                    </a>
                     <a href="#/clients/{{clientDetail.id}}/handbooks/{{hb_list.id}}">
                     <i class="fa fa-edit" 
                         title="Edit Handbook" data-ng-show="hb_list.EDIT"></i>
