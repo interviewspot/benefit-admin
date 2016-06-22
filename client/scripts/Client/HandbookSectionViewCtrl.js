@@ -1,7 +1,16 @@
 (function () {
     'use strict';
-    angular.module('app.handbook_section_view', []).controller('HandbookSectionViewCtrl', [
+    angular.module('app.handbook_section_view', ['ngAnimate', 'ui.bootstrap']).controller('HandbookSectionViewCtrl', [
         '$scope', '$routeParams', 'handbookService', 'clientService', 'sectionService', '$location', '$timeout', 'fetchHandbook', 'config', '$rootScope', function ($scope, $routeParams, handbookService, clientService, sectionService, $location, $timeout, fetchHandbook, config, $rootScope) {
+
+            $scope.oneAtATime = true;
+            $scope.status = {
+                isCustomHeaderOpen: false,
+                isFirstOpen: true,
+                isFirstDisabled: false
+            };
+
+
             var  translateSection, _URL_sections, _loadAllParent;
             translateSection = function (item) {
                 var newItem;
@@ -116,6 +125,7 @@
             $scope.isUpdate = false;
             $scope.isCreateSubSection = true;
             $scope.selectedSec = null;
+            $scope.currentParent = null;
             $scope.uploadButtonLabel = "Upload Section Images";
             $scope.uploadButtonLabelPdf = "Upload Section Pdfs";
             $scope.urlUpload = "";
@@ -126,10 +136,93 @@
             $scope.showChildren = function (section) {
                 return section.children.show = !section.children.show;
             };
+            //
+            // $scope.loadDescription = function (section) {
+            //     $scope.descriptionHanbookSection = section.translations['en_us'] != undefined ? section.translations['en_us'].description : section.description;
+            // }
+            
+            $scope.editSection = function (section, parent) {
+                $rootScope.contents = [];
+                $scope.isUpdate = true;
+                section.title = section.translations['en_us'] != undefined ? section.translations['en_us'].title : section.title;
+                section.description = section.translations['en_us'] != undefined ? section.translations['en_us'].description : section.description;
+                $scope.formSection = section;
+                $scope.selectedSec = section.id;
+                if(parent == true)
+                {
+                    $scope.currentParent = section.id;
+                }
+                $scope.readyToAddContent = true;
 
-            $scope.loadDescription = function (section) {
-                $scope.descriptionHanbookSection = section.translations['en_us'] != undefined ? section.translations['en_us'].description : section.description;
-            }
+                if (section._links.parent) {
+                    $scope.isCreateSubSection = true;
+                    var temp;
+                    temp = eval(section._links.parent.href.split('sections/')[1]);
+                    $scope.parentSelect = temp;
+                    $scope.changedValue(temp);
+                } else {
+                    $scope.isCreateSubSection = false;
+                    $scope.parentSelect = null;
+                }
+                //get content
+                fetchHandbook.get($scope.formSection._links.contents.href + "?sort=content.ordering:asc").then(function (contents) {
+                    angular.forEach(contents.data._embedded.items, function (content, key) {
+                        content.url = "";
+                        content.image_id = "";
+                        content.pdf_binary = "";
+                        content.pdf_id = "";
+                        content.pdf_name = "";
+                        content.isShow = false;
+                        $rootScope.contents.push(content);
+                    });
+
+                    angular.forEach($rootScope.contents, function (content, key) {
+                        if (content._links != undefined) {
+                            fetchHandbook.get(content._links.translations.href).then(function (translations) {
+                                content.html_text = translations.data.en_us.htmlText;
+                                if (content._links.image_url != undefined) {
+                                    fetchHandbook.get(content._links.image_url.href + "?locale=en_us").then(function (image) {
+                                        content.url = image.data.image_url;
+                                        if (content.html_text == 'none') {
+                                            fetchHandbook.get(content._links.image.href + "?locale=en_us").then(function (image) {
+                                                content.image_id = image.data.id;
+                                            }, function (error) {
+                                                return console.log(error);
+                                            });
+                                        }
+                                        if (content.html_text == 'none_pdf') {
+                                            fetchHandbook.get(content._links.pdf.href + "?locale=en_us").then(function (pdf) {
+                                                content.pdf_id = pdf.data.id;
+                                                content.pdf_binary = content._links.pdf_binary.href;
+                                                content.pdf_name = pdf.data.name;
+                                            }, function (error) {
+                                                return console.log(error);
+                                            });
+                                        }
+                                    }, function (error) {
+                                        return console.log(error);
+                                    });
+                                }
+                            }, function (error) {
+                                return console.log(error);
+                            });
+
+
+                        }
+                    });
+
+
+                }, function (error) {
+                    return console.log(error);
+                });
+
+
+
+                $scope.isUpdate = true;
+                $rootScope.readyToUpload = false;
+                $rootScope.readyToUploadPdf = false;
+                return;
+            };
 
         }
     ]);

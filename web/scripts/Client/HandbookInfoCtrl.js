@@ -22,6 +22,7 @@
           $scope.handbook = data;
           $scope.handbook.EDITHANBOOK = (data._links.self.actions.join().indexOf('OPERATE') > -1 )||  (data._links.self.actions.join().indexOf('EDIT') > -1 ) ? true : false ;
           $scope.handbook.DELETEHANBOOK = data._links.self.actions.join().indexOf('OPERATE') > -1 ||  data._links.self.actions.join().indexOf('DELETE') > -1 ? true : false ;
+          $scope.handbook.VISIBILITY = data._links.self.actions.join().indexOf('OPERATE') > -1 ||  data._links.self.actions.join().indexOf('VISIBILITY') > -1 ? true : false ;
           $scope.handbook.locale = 'en_us';
           return fetchHandbook.get(data._links.translations.href).then(function(res) {
             if (res.status !== 200 || typeof res !== 'object') {

@@ -63,7 +63,8 @@
                 <td>
                     <input type="checkbox"
                         name="hb_public"
-                        ng-model="handbook.enabled"/>
+                        ng-model="handbook.enabled"
+                        data-ng-disabled="!handbook.VISIBILITY"/>
                 </td>
             </tr>
             <tr>
