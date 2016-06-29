@@ -54,7 +54,7 @@
         templateUrl: 'views/clients/user/detail_warp.html'
       }).when('/clients/:clientId/new-user', {
         templateUrl: 'views/clients/user/detail_new_warp.html'
-      }).when('/clients/:clientId/handbooks', {
+      }).when('/clients/:clientId/categories', {
         templateUrl: 'views/clients/client-handbook.html'
       }).when('/clients/:clientId/handbooks/:handbookId', {
         templateUrl: 'views/handbooks/handbook.html'
