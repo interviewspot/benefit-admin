@@ -10,6 +10,7 @@
         <li ng-show="!isAdmin" data-ng-click="setActive(1)" ng-class="{ active:isActive(1) }"><a href="#/clients/{{employerId}}/info"><span data-i18n="My Company"></span></a> </li>
         <li ng-show="!isAdmin" data-ng-click="setActive(2)" ng-class="{ active:isActive(2) }"><a href="#/clients/{{employerId}}/account/{{positionId}}"><span data-i18n="My Account"></span></a> </li>
         <li ng-show="!isAdmin && permissionUserGroup.VIEW"  data-ng-click="setActive(3)" ng-class="{ active:isActive(3) }"><a href="#/clients/{{employerId}}/user-group/handbook-acl"><span data-i18n="User Group"></span></a> </li>
+        <li ng-show="!isAdmin" data-ng-click="setActive(4)" ng-class="{ active:isActive(4) }"><a href="#/clients/{{employerId}}/contact"><span data-i18n="Contact"></span></a> </li>
         <!--li><a href="#/employees"><span data-i18n="My Employees"></span></a> </li-->
         <!--<li><a href="#/ui/pricing-tables"><span data-i18n="Manage App Users"></span></a> </li>-->
         <!--<li><a href="#/tables/static"><span data-i18n="Manage CS"></span></a> </li>-->

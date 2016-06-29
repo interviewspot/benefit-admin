@@ -1,0 +1,47 @@
+<div ng-show="!isHandbookShow" class="handbook_list">
+    <h2 class="ttl-tab">
+        <span>Employee Handbook</span>
+    </h2>
+    <div class="t-r marg-bot" data-ng-show="permissionHandbook.CREATE">
+        <span class="btn btn-brown" ng-click="createNewVersion()">Create New Cloud Book</span>
+    </div>
+
+    <div>
+        <div ng-repeat="cat in categories" ng-if="cat.enabled == true" ng-class="{active_hanbook: cat == 1}" class="handbook_category" ng-click="handbookShow(cat)">
+            {{ cat.name }}
+            <a></a>
+        </div>
+
+    </div>
+    <footer class="table-footer" ng-if="categories.length">
+        <div class="row">
+            <div class="col-md-6 page-num-info">
+                <span>
+                    Show
+                    <select data-ng-model="numPerPage"
+                            data-ng-options="num for num in numPerPageOpt"
+                            data-ng-change="onNumPerPageChange()">
+                    </select>
+                    entries per page
+                </span>
+            </div>
+            <div class="col-md-6 text-right pagination-container">
+                <pagination class="pagination-sm" ng-model="currentPage" total-items="filteredStores.length" max-size="4" ng-change="select(currentPage)" items-per-page="numPerPage" rotate="false" boundary-links="true"></pagination>
+            </div>
+        </div>
+    </footer>
+    <!-- END : PAGINATION -->
+</div>
+<!-- END: HANDBOOK LIST -->
+<div class="create_handbook" ng-if="isCreateHandbook">
+    <h2 class="ttl-tab">
+        <span>Create Employee Handbook</span>
+    </h2>
+    <tabset class="client-tabs lv2">
+        <tab heading="Handbook Info">
+            <div ng-include="'views/handbooks/create_form.html'"></div>
+        </tab>
+        <!-- END: TAB -->
+    </tabset>
+</div>
+<!-- END: BLOCK CREATE -->

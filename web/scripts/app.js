@@ -54,7 +54,7 @@
         templateUrl: 'views/clients/user/detail_warp.html'
       }).when('/clients/:clientId/new-user', {
         templateUrl: 'views/clients/user/detail_new_warp.html'
-      }).when('/clients/:clientId/handbooks', {
+      }).when('/clients/:clientId/categories', {
         templateUrl: 'views/clients/client-handbook.html'
       }).when('/clients/:clientId/handbooks/:handbookId', {
         templateUrl: 'views/handbooks/handbook.html'
@@ -70,6 +70,8 @@
         templateUrl: 'views/clients/client-imerchant.html'
       }).when('/clients/:clientId/handbooks/:handbookId/view',{
         templateUrl: 'views/handbooks/handbook_view.html'
+      }).when('/clients/:clientId/contact',{
+        templateUrl: 'views/handbooks/tab_handbook_contact.html'
       });
       $routeProvider.when('/employees', {
         templateUrl: 'views/employee/employee.html'
@@ -77,6 +79,9 @@
 
       $routeProvider.when('/clients/:clientId/user-group/handbook-acl', {
         templateUrl: 'views/clients/user/handbook_user_group_ace.html'
+      });
+      $routeProvider.when('/clients/:clientId/user-group/category-acl', {
+        templateUrl: 'views/clients/user/category_user_group_ace.html'
       });
       $routeProvider.when('/clients/:clientId/user-group/user-acl', {
         templateUrl: 'views/clients/user/user_user_group_ace.html'

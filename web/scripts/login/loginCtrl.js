@@ -27,11 +27,17 @@
               if ($scope.roles.join().indexOf('ROLE_ADMIN') >= 0 ) {
                 $location.path('/clients');
                 $rootScope.isAdmin = true;
+                $rootScope.isNormalUser = false;
                 $rootScope.permissionUserGroup = {'VIEW': true, 'CREATE': true, 'EDIT': true, 'DELETE': true};
                 $rootScope.permissionUser = {'VIEW': true, 'CREATE': true, 'EDIT': true, 'DELETE': true};
                 $rootScope.permissionHandbook = {'VIEW': true, 'CREATE': true, 'EDIT': true, 'DELETE': true};
                 return $route.reload();
               }else {
+                $rootScope.isNormalUser = true;
+                if($scope.roles.join().indexOf('ROLE_HR_ADMIN') > -1)
+                {
+                  $rootScope.isNormalUser = false;
+                }
                 return aREST.get($scope.username, $scope.password, config.path.baseURL + system.data._links.logged_in_position.href).then(function (position) {
                   $rootScope.positionId = position.data.id;
                   localStorageService.cookie.set('positionId', position.data.id, 1);

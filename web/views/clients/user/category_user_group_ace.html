@@ -1,0 +1,58 @@
+<div class="clients_edit" data-ng-controller="CategoryUserGroupCtrl">
+	<h1 class="ttl-page">
+		fwe
+		<span class="sp-sts green">eeee</span>
+	</h1>
+	<section class="panel panel-default table-dynamic">
+		<div class="panel-body lv1">
+			<div class="table-responsive marg-bot">
+				<ul class="tbl-w800 nav nav-tabs" >
+					<li>
+						<a href="#/clients/{{employerId}}/user-group/handbook-acl" title="Company Info">Handbook Acl</a>
+					</li>
+					<li>
+						<a href="#/clients/{{employerId}}/user-group/user-acl" title="Users">User Acl</a>
+					</li>
+					<li class="">
+						<a href="#/clients/{{employerId}}/user-group/user-group-acl" title="Handbook">User Group Acl</a>
+					</li>
+					<li ng-class="active">
+						<a href="#/clients/{{employerId}}/user-group/category-acl" title="Category">Folder Acl</a>
+					</li>
+				</ul>
+			</div>
+			<!-- END : MENU -->
+
+
+			<!-- END : MENU -->
+			<!-- END : USER LIST -->
+			<div>
+				<form name="frm_updateuser" class="frm-updateuser" novalidate>
+					<div class="t-r marg-bot ">
+						<span class="msg-update"> {{infoUpdated}}</span>
+						<button type="submit" data-ng-show="permissionUserGroup.EDIT" class="btn btn-brown" ng-click="submit()">
+							<i class="fa fa-pencil"></i>
+							Update
+						</button>
+					</div>
+					<hot-table
+							hot-id="my-handsontable"
+							datarows="data"
+							min-spare-rows="minSpareRow"
+							columns="columns"
+							row-headers="false"
+							col-headers="colHeaders"
+					>
+
+					</hot-table>
+					<div class="row">
+						<div class="col-md-6 col-sm-6 col-xs-12 col-user">
+						</div>
+					</div>
+				</form>
+			</div>
+
+		</div>
+	</section>
+</div>
+<!-- END : CLIENTS EDIT-->
