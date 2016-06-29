@@ -7,7 +7,7 @@
     </div>
 
     <div>
-        <div ng-repeat="cat in categories" ng-if="cat.enabled == true" ng-class="{active_hanbook: cat == 1}" class="handbook_category" ng-click="handbookShow(1)">
+        <div ng-repeat="cat in categories" ng-if="cat.enabled == true" ng-class="{active_hanbook: cat == 1}" class="handbook_category" ng-click="handbookShow(cat)">
             {{ cat.name }}
             <a></a>
         </div>
