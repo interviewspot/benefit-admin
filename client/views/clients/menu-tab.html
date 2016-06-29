@@ -4,6 +4,9 @@
 <li data-ng-show="permissionUser.VIEW" ng-class="{active : isActive('/clients/' + clientDetail.id + '/user')}">
     <a href="{{ClientPage.tabUrls.user ? ClientPage.tabUrls.user : 'javascript:;'}}" title="Users">Users</a>
 </li>
+<li ng-class="{active : isActive('/clients/' + clientDetail.id + '/categories/list')}">
+    <a href="{{ClientPage.tabUrls.categoriesList ? ClientPage.tabUrls.categoriesList : 'javascript:;'}}" title="Categories">Categories</a>
+</li>
 <li ng-click="categoryShow" ng-class="{active : isActive('/clients/' + clientDetail.id + '/categories')}">
     <a href="{{ClientPage.tabUrls.categories ? ClientPage.tabUrls.categories : 'javascript:;'}}" title="Handbook">Cloud Books</a>
 </li>

@@ -135,48 +135,25 @@
                 clientService.get({
                     org_id: $routeParams.clientId
                 }, function (data, getResponseHeaders) {
-                    if (data._links.handbooks) {
+                    if (data._links.categories) {
                         $scope.ClientPage.tabUrls = {
                             "info": '#/clients/' + data.id + '/info',
                             "user": '#/clients/' + data.id + '/user',
                             "categories": '#/clients/' + data.id + '/categories',
+                            "categoriesList": '#/clients/' + data.id + '/categories/list',
                             "policies": '#/clients/' + data.id + '/policies',
                             "insurance": '#/clients/' + data.id + '/insurance',
                             "healthcare": '#/clients/' + data.id + '/healthcare',
                             "imerchant": '#/clients/' + data.id + '/imerchant',
                             "notifications": '#/clients/' + data.id + '/notifications'
                         };
-                        // fetchHandbook.get(data._links.handbooks.href).then(function (res) {
-                        //     if (typeof res.data._embedded !== 'object' || !res.data._embedded.items) {
-                        //         $scope.isCreateHandbook = true;
-                        //         return;
-                        //     }
-                        //     $scope.handbooks = res.data._embedded.items;
-                        //
-                        //     window.hand = $scope.handbooks;
-                        //     return angular.forEach($scope.handbooks, function (item, i) {
-                        //         return Clients.get(item._links.translations.href).then(function (res) {
-                        //             if (res.status !== 200 || typeof res !== 'object') {
-                        //                 return;
-                        //             }
-                        //             $scope.handbooks[i]['translations'] = res.data;
-                        //             $scope.handbooks[i]['EDIT'] = item._links.self.actions.join().indexOf('OPERATE') > -1 ||  item._links.self.actions.join().indexOf('EDIT') > -1 ? true : false ;
-                        //             $scope.handbooks[i]['DELETE'] = item._links.self.actions.join().indexOf('OPERATE') > -1 ||  item._links.self.actions.join().indexOf('DELETE') > -1 ? true : false ;
-                        //         }, function (error) {
-                        //             console.log(error);
-                        //         });
-                        //     });
-                        // });
-                    } else {
-                        $scope.isCreateHandbook = true;
+                        fetchCategory.get(data._links.categories.href).then(function (res) {
+                            if (typeof res.data._embedded !== 'object' || !res.data._embedded.items) {
+                                return;
+                            }
+                            $scope.categories = res.data._embedded.items;
+                        })
                     }
-
-                    fetchCategory.get(data._links.categories.href).then(function (res) {
-                        if (typeof res.data._embedded !== 'object' || !res.data._embedded.items) {
-                            return;
-                        }
-                        $scope.categories = res.data._embedded.items;
-                    })
 
                     $scope.clientDetail = data;
                     if (typeof data._links.logo === 'object' && data._links.logo != undefined) {
@@ -467,6 +444,103 @@
                     return alert(error.status + ' : Try later and new company code');
                 });
             };
+        }
+    ]).controller('CategoryCtrl', [
+        '$scope', '$routeParams', 'fetchCategory', 'handbookService', 'clientService', 'sectionService', '$location', '$timeout', 'authHandler',
+        function($scope, $routeParams, fetchCategory, handbookService, clientService, sectionService, $location, $timeout, authHandler) {
+            authHandler.checkLoggedIn();
+            $scope.clientId = $routeParams.clientId;
+            $scope.categoryId = $routeParams.categoryId;
+            $scope.isCreateCategory = false;
+            
+            if($scope.isCreateHandbook === false) {
+                if ($routeParams.clientId) {
+                    clientService.get({
+                        org_id: $routeParams.clientId
+                    }, function (data, getResponseHeaders) {
+                        if (data._links.categories) {
+                            $scope.ClientPage.tabUrls = {
+                                "info": '#/clients/' + data.id + '/info',
+                                "user": '#/clients/' + data.id + '/user',
+                                "categories": '#/clients/' + data.id + '/categories',
+                                "categoriesList": '#/clients/' + data.id + '/categories/list',
+                                "policies": '#/clients/' + data.id + '/policies',
+                                "insurance": '#/clients/' + data.id + '/insurance',
+                                "healthcare": '#/clients/' + data.id + '/healthcare',
+                                "imerchant": '#/clients/' + data.id + '/imerchant',
+                                "notifications": '#/clients/' + data.id + '/notifications'
+                            };
+                            fetchCategory.get(data._links.categories.href).then(function (res) {
+                                if (typeof res.data._embedded !== 'object' || !res.data._embedded.items) {
+                                    return;
+                                }
+                                $scope.categories = res.data._embedded.items;
+                            })
+                        }
+
+                        $scope.clientDetail = data;
+                        if (typeof data._links.logo === 'object' && data._links.logo != undefined) {
+                            Images.get(data._links.logo.href).then(function (res) {
+                                var logo_id_arr;
+                                if (res.status !== 200 || typeof res !== 'object') {
+                                    return;
+                                }
+                                logo_id_arr = php.explode('/media/', data._links.logo.href);
+                                $scope.urlUpload = $scope.clientDetail._links['logo.post'].href;
+                                $scope.clientDetail['logo'] = res.data;
+                                if (typeof res.data._links.url === 'object' && res.data._links.url.href) {
+                                    Images.get(data._links.logo.href + '/url').then(function (url) {
+                                        if (url.status !== 200 || typeof url !== 'object') {
+                                            return;
+                                        }
+                                        return $scope.clientDetail['logo_url'] = url.data.url;
+                                    }, function (error) {
+                                        return console.log(error);
+                                    });
+                                }
+                            }, function (error) {
+                                return console.log(error);
+                            });
+                        } else {
+                            $scope.urlUpload = $scope.clientDetail._links['logo.post'].href;
+                        }
+                        if (typeof data._links.banners === 'object' && data._links.banners != undefined) {
+                            Images.get(data._links.banners.href).then(function (res) {
+                                if (res.status !== 200 || typeof res !== 'object') {
+                                    return;
+                                }
+                                $scope.urlUploadBanner = $scope.clientDetail._links['banners'].href;
+                                $scope.clientDetail['banners'] = [];
+                                if (res.data._embedded.items.length > 0) {
+                                    angular.forEach(res.data._embedded.items, function (itm) {
+                                        var b;
+                                        b = itm;
+                                        if (typeof b._links.url === 'object' && b._links.url.href) {
+                                            return Images.get(config.path.baseURL + b._links.url.href).then(function (bn) {
+                                                if (bn.status === 200 || typeof bn === 'object') {
+                                                    b['banner_url'] = bn.data.url;
+                                                    return $scope.clientDetail['banners'].push(b);
+                                                }
+                                            }, function (error) {
+                                                return console.log(error);
+                                            });
+                                        }
+                                    });
+                                }
+                            }, function (error) {
+                                return console.log(error);
+                            });
+                        } else {
+                            $scope.urlUploadBanner = $scope.clientDetail._links['banners'].href;
+                        }
+
+                    });
+                }
+                
+            }
+            $scope.submitCategory = function () {
+
+            }
         }
     ]);
 

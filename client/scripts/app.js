@@ -72,6 +72,10 @@
         templateUrl: 'views/handbooks/handbook_view.html'
       }).when('/clients/:clientId/contact',{
         templateUrl: 'views/handbooks/tab_handbook_contact.html'
+      }).when('/clients/:clientId/categories/list' ,{
+        templateUrl: 'views/clients/tab_category.html'
+      }).when('/clients/:clientId/category/:categoryId', {
+        templateUrl: 'views/clients/category.html'
       });
       $routeProvider.when('/employees', {
         templateUrl: 'views/employee/employee.html'

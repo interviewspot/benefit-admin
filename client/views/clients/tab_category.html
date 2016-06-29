@@ -1,0 +1,63 @@
+<div class="handbook_list">
+	<h2 class="ttl-tab">
+		<span>Category</span>
+	</h2>
+	<div class="t-r marg-bot">
+		<span class="btn btn-brown" ng-click="createNewVersion()">Create Category</span>
+	</div>
+	<table class="table tbl table-hover table-striped" >
+		<tbody>
+		<tr>
+			<th class="text-center">Name</th>
+			<th class="text-center">Enabled</th>
+			<th class="text-center">Action</th>
+		</tr>
+		<tr ng-repeat="category in categories">
+			<td class="text-center">
+				<a href="#/clients/{{clientDetail.id}}/category/{{category.id}}">
+					{{ category.name }}
+				</a>
+			</td>
+			<td class="text-center">{{ category.enabled }}</td>
+			<td class="text-center td-manage">
+				<a href="#/clients/{{clientDetail.id}}/category/{{category.id}}">
+					<i class="fa fa-edit"
+					   title="Edit Category"></i>
+				</a>
+				<i class="fa fa-trash-o" title="Remove Category" ng-click=""></i>
+			</td>
+		</tr>
+		</tbody>
+	</table>
+	<footer class="table-footer" ng-if="categories.length">
+		<div class="row">
+			<div class="col-md-6 page-num-info">
+                <span>
+                    Show
+                    <select data-ng-model="numPerPage"
+                            data-ng-options="num for num in numPerPageOpt"
+                            data-ng-change="onNumPerPageChange()">
+                    </select>
+                    entries per page
+                </span>
+			</div>
+			<div class="col-md-6 text-right pagination-container">
+				<pagination class="pagination-sm" ng-model="currentPage" total-items="filteredStores.length" max-size="4" ng-change="select(currentPage)" items-per-page="numPerPage" rotate="false" boundary-links="true"></pagination>
+			</div>
+		</div>
+	</footer>
+	<!-- END : PAGINATION -->
+</div>
+<!-- END: HANDBOOK LIST -->
+<!--<div class="create_handbook" ng-if="isCreateHandbook">-->
+	<!--<h2 class="ttl-tab">-->
+		<!--<span>Create Employee Handbook</span>-->
+	<!--</h2>-->
+	<!--<tabset class="client-tabs lv2">-->
+		<!--<tab heading="Handbook Info">-->
+			<!--<div ng-include="'views/handbooks/create_form.html'"></div>-->
+		<!--</tab>-->
+		<!--&lt;!&ndash; END: TAB &ndash;&gt;-->
+	<!--</tabset>-->
+<!--</div>-->
+<!-- END: BLOCK CREATE -->

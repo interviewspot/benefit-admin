@@ -1,0 +1,67 @@
+<div class="clients_edit">
+	<h1 class="ttl-page">
+		{{clientDetail.name}}
+		<span class="sp-sts green" ng-if="clientDetail.status">{{clientDetail.status}}</span>
+	</h1>
+	<section class="panel panel-default table-dynamic">
+		<div class="panel-body lv1">
+			<ul class="nav nav-tabs" ng-include="'views/clients/menu-tab.html'">
+			</ul>
+			<!-- END : MENU -->
+			<div>
+				<form name="frm_update_category" novalidate ng-submit="submitCategory()" data-ng-controller="CategoryCtrl">
+					<table class="table tbl table-striped">
+						<tbody>
+							<tr>
+								<td class="td-20">Category Name</td>
+								<td>
+
+									<input type="text"
+									       ng-model="category.name"
+									       class="txt-ipt"
+									       required
+									       name="cat_name"
+									       ng-class='{txt_err : (frm_crt_handbook.hb_title.$invalid && frm_crt_handbook.hb_title.$dirty)}'
+									/>
+									<p style="color:red">
+										<span ng-show="frm_crt_handbook.hb_title.$invalid  && frm_crt_handbook.hb_title.$dirty">Title is required.</span>
+									</p>
+								</td>
+							</tr>
+							<tr>
+								<td class="td-20">Enable</td>
+								<td>
+									<input
+											type="checkbox"
+											required
+											ng-model="category.enable"
+											name="cat_title"
+											class="txt-ipt"
+											ng-class='{txt_err : (frm_crt_handbook.hb_version.$invalid && frm_crt_handbook.hb_version.$dirty)}'
+									/>
+									<p style="color:red">
+										<span ng-show="frm_crt_handbook.hb_version.$invalid  && frm_crt_handbook.hb_version.$dirty">Version is required.</span>
+									</p>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<p>
+						<button
+								data-ng-show="handbook.EDITHANBOOK"
+								type="submit"
+								class="save btn-brown">
+							<i class="fa fa-save"></i>&nbsp;SAVE INFO
+						</button>
+        <span class="msg-update">
+            {{infoUpdated}}
+        </span>
+					</p>
+					<!-- END : TBL -->
+				</form>
+			</div>
+			<!-- END : TAB -->
+		</div>
+	</section>
+</div>
+<!-- END : CLIENTS EDIT-->
