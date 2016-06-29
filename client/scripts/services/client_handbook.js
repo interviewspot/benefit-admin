@@ -23,7 +23,32 @@
             }
         });
         return service;
-    }).factory('fetchHandbook', [
+    }).factory('fetchCategory' , [
+        '$http', '$q', '$resource', '$route', '$rootScope', '$location', 'localStorageService', function ($http, $q, $resource, $route, $rootScope, $location, localStorageService) {
+            return {
+                get: function (url) {
+                    var defer;
+                    defer = $q.defer();
+                    $http({
+                        method: 'GET',
+                        url : url
+                    }).then(function (res) {
+                        return defer.resolve(res);
+                    }, function (error) {
+                        if (error.status == 498) {
+                            $location.path('/498');
+                            localStorageService.cookie.remove('user');
+                            delete $http.defaults.headers.common['x-session'];
+                            $rootScope.isLoggedIn = false;
+                            return $route.reload();
+                        }
+                        return defer.reject(error);
+                    });
+                    return defer.promise;
+                }
+            }
+        }
+    ]).factory('fetchHandbook', [
         '$http', '$q', '$resource', '$route', '$rootScope', '$location', 'localStorageService', function ($http, $q, $resource, $route, $rootScope, $location, localStorageService) {
             return {
                 get: function (url) {

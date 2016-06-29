@@ -797,11 +797,11 @@ h2.ttl-tab {
         }
     }
     &.active {
-        background-color: $brown;
-        color: #fff;
+        background-color: #eee;
+        //color: #fff;
         &:hover {
-            background-color: $brown;
-            color: #fff;
+            background-color: #eee;
+            //color: #fff;
         }
     }
     .t-tr {
@@ -1242,12 +1242,20 @@ hr.line {
 }
 .sec_content_right {
 	border: 1px solid #ddd;
-	margin-left: -16px;
 	min-height: 42px;
 	position: fixed;
-	margin-left: 392px;
-	width: 57.6667%;
+	margin-left: 27.6%;
 }
 .sec_right_text {
 	margin-top: 16px;
+}
+.handbook_contact_wrapper {
+	margin : 80px 10px;
+}
+.handbook_category {
+	border: 1px solid #ddd;
+	padding: 10px;
+}
+.active_hanbook {
+	background-color: #ddd ;
 }

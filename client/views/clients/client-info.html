@@ -9,7 +9,8 @@
                 <ul class="tbl-w800 nav nav-tabs" ng-include="'views/clients/menu-tab.html'"></ul>
             </div>
             <!-- END : MENU -->
-            <div ng-include="'views/clients/tab_company.html'"></div>
+            <div data-ng-show="!isNormalUser" ng-include="'views/clients/tab_company.html'"></div>
+            <div data-ng-show="isNormalUser" ng-include="'views/clients/tab_handbook.html'"></div>
             <!-- END : TAB -->
         </div>
     </section>

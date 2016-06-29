@@ -34,6 +34,9 @@
     .btn-add-user {
     	margin-bottom: 10px;
     }
+	.sec_content_right {
+		margin-left: 26.4%;
+	}
 }
 @media (max-width: 1024px) {
     .tbl-1024 {
@@ -44,6 +47,9 @@
     tags-input .tags .tag-item {
     	font-size: 12px !important;
     }
+	.sec_content_right {
+		margin-left: 25.3%;
+	}
 }
 
 @media (max-width: 992px) {
@@ -53,11 +59,17 @@
 	.tb-w800 {
 		width: 800px;
 	}
+	.sec_content_right {
+		margin-left: 25.3%;
+	}
 }
 @media (max-width: 900px) {
 	.col-outlet {
 		width: 100%;
 		margin-bottom: 10px;
+	}
+	.sec_content_right {
+		margin-left: 24.9%;
 	}
 }
 @media (max-width: 860px) {

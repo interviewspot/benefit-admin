@@ -1,7 +1,7 @@
 (function () {
     'use strict';
     angular.module('app.clients', []).controller('clientCtrl', [
-        '$scope', '$filter', 'fetchTabData', 'fakeData', '$location', 'clientService', 'fetchHandbook', '$routeParams', '$route', 'config', 'Images', 'php', 'ClientAPI', 'Companies', 'Clients', 'handbookService', '$timeout', 'authHandler', '$rootScope', '$location', function ($scope, $filter, fetchTabData, fakeData, $location, clientService, fetchHandbook, $routeParams, $route, config, Images, php, ClientAPI, Companies, Clients, handbookService, $timeout, authHandler, $rootScope) {
+        '$scope', '$filter', 'fetchTabData', 'fakeData', '$location', 'clientService', 'fetchHandbook','fetchCategory', '$routeParams', '$route', 'config', 'Images', 'php', 'ClientAPI', 'Companies', 'Clients', 'handbookService', '$timeout', 'authHandler', '$rootScope', '$location', function ($scope, $filter, fetchTabData, fakeData, $location, clientService, fetchHandbook, fetchCategory, $routeParams, $route, config, Images, php, ClientAPI, Companies, Clients, handbookService, $timeout, authHandler, $rootScope) {
             var _URL_clients, _getClients;
             authHandler.checkLoggedIn();
             if ($location.path() == '/clients') {
@@ -24,6 +24,12 @@
                     console.log(error);
                 });
             };
+            
+            $scope.handbookShow = function (category) {
+                $scope.cat = category;
+            }
+            
+            
             $scope.numPerPageOpt = [5, 10, 20, 30];
             $scope.numPerPage = $scope.numPerPageOpt[1];
             $scope.currentPage = 1;
@@ -114,8 +120,6 @@
                             "imerchant": '#/clients/' + data.id + '/imerchant',
                             "notifications": '#/clients/' + data.id + '/notifications'
                         };
-
-
                         fetchHandbook.get(data._links.handbooks.href).then(function (res) {
                             if (typeof res.data._embedded !== 'object' || !res.data._embedded.items) {
                                 $scope.isCreateHandbook = true;
@@ -140,6 +144,14 @@
                     } else {
                         $scope.isCreateHandbook = true;
                     }
+
+                    fetchCategory.get(data._links.categories.href).then(function (res) {
+                        if (typeof res.data._embedded !== 'object' || !res.data._embedded.items) {
+                            return;
+                        }
+                        $scope.categories = res.data._embedded.items;
+                    })
+
                     $scope.clientDetail = data;
                     if (typeof data._links.logo === 'object' && data._links.logo != undefined) {
                         Images.get(data._links.logo.href).then(function (res) {

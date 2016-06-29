@@ -5,48 +5,55 @@
     <div class="t-r marg-bot" data-ng-show="permissionHandbook.CREATE">
         <span class="btn btn-brown" ng-click="createNewVersion()">Create New Cloud Book</span>
     </div>
-    <table class="table tbl table-hover table-striped" >
-        <tbody>
-            <tr>
-                <th class="text-center">Title</th>
-                <th class="text-center">Version</th>
-                <!--<th class="text-center">Last Modified</th>-->
-                <th class="text-center">Language</th>
-                <th class="text-center">Published</th>
-                <th class="text-center">Manage</th>
-            </tr>
-            <tr ng-repeat="hb_list in handbooks">
-                <td class="text-center">
-                    <a href="#/clients/{{clientDetail.id}}/handbooks/{{hb_list.id}}">
-                        {{hb_list.translations['en_us'].title ? hb_list.translations['en_us'].title : hb_list.title}}
-                    </a>
-                </td>
-                <td class="text-center">{{hb_list.version}}</td>
-                <!--<td class="text-center">Not Available Yet!</td>-->
-                <td class="text-center">English</td>
-                <td class="text-center">
-                    <input type="checkbox"
-                        name="handbook_chk" 
-                        id="{{hb_list.id}}"
-                        ng-change="changePublished(hb_list, clientDetail.id)"
-                        ng-model="hb_list.enabled"
-                        data-ng-disabled="!hb_list.EDIT"
-                    />
-                </td>
-                <td class="text-center td-manage">
-                    <a ng-click="count"
-                       href="#/clients/{{clientDetail.id}}/handbooks/{{hb_list.id}}/view">
-                        <i class="fa fa-eye" title="View Handbook"></i>
-                    </a>
-                    <a href="#/clients/{{clientDetail.id}}/handbooks/{{hb_list.id}}">
-                    <i class="fa fa-edit" 
-                        title="Edit Handbook" data-ng-show="hb_list.EDIT"></i>
-                    </a>
-                    <i data-ng-show="hb_list.DELETE" class="fa fa-trash-o" title="Remove Handbook" ng-click="deleteHandbook(hb_list)"></i>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+
+    <div>
+        <div ng-repeat="cat in categories" ng-if="cat.enabled == true" ng-class="{active_hanbook: cat == 1}" class="handbook_category" ng-click="handbookShow(1)">
+            {{ cat.name }}
+        </div>
+
+    </div>
+    <!--<table class="table tbl table-hover table-striped" >-->
+        <!--<tbody>-->
+            <!--<tr>-->
+                <!--<th class="text-center">Title</th>-->
+                <!--<th class="text-center">Version</th>-->
+                <!--&lt;!&ndash;<th class="text-center">Last Modified</th>&ndash;&gt;-->
+                <!--<th class="text-center">Language</th>-->
+                <!--<th class="text-center">Published</th>-->
+                <!--<th class="text-center">Manage</th>-->
+            <!--</tr>-->
+            <!--<tr ng-repeat="hb_list in handbooks">-->
+                <!--<td class="text-center">-->
+                    <!--<a href="#/clients/{{clientDetail.id}}/handbooks/{{hb_list.id}}/view">-->
+                        <!--{{hb_list.translations['en_us'].title ? hb_list.translations['en_us'].title : hb_list.title}}-->
+                    <!--</a>-->
+                <!--</td>-->
+                <!--<td class="text-center">{{hb_list.version}}</td>-->
+                <!--&lt;!&ndash;<td class="text-center">Not Available Yet!</td>&ndash;&gt;-->
+                <!--<td class="text-center">English</td>-->
+                <!--<td class="text-center">-->
+                    <!--<input type="checkbox"-->
+                        <!--name="handbook_chk"-->
+                        <!--id="{{hb_list.id}}"-->
+                        <!--ng-change="changePublished(hb_list, clientDetail.id)"-->
+                        <!--ng-model="hb_list.enabled"-->
+                        <!--data-ng-disabled="!hb_list.EDIT"-->
+                    <!--/>-->
+                <!--</td>-->
+                <!--<td class="text-center td-manage">-->
+                    <!--<a ng-click="count"-->
+                       <!--href="#/clients/{{clientDetail.id}}/handbooks/{{hb_list.id}}/view">-->
+                        <!--<i class="fa fa-eye" title="View Handbook"></i>-->
+                    <!--</a>-->
+                    <!--<a href="#/clients/{{clientDetail.id}}/handbooks/{{hb_list.id}}">-->
+                    <!--<i class="fa fa-edit"-->
+                        <!--title="Edit Handbook" data-ng-show="hb_list.EDIT"></i>-->
+                    <!--</a>-->
+                    <!--<i data-ng-show="hb_list.DELETE" class="fa fa-trash-o" title="Remove Handbook" ng-click="deleteHandbook(hb_list)"></i>-->
+                <!--</td>-->
+            <!--</tr>-->
+        <!--</tbody>-->
+    <!--</table>-->
     <footer class="table-footer" ng-if="handbooks.length">
         <div class="row">
             <div class="col-md-6 page-num-info">
