@@ -160,7 +160,14 @@
 		}
 	}
 }
+
+@media (max-width: 736px) {
+	.sec_content_right {
+		margin-left: 30.9%;
+	}
+}
 @media (max-width: 400px) {
+
 	.header-container {
 		> .top-header {
 			.login_name {
@@ -187,6 +194,9 @@
 	}
 	.page-num-info {
 		margin-bottom: 10px;
+	}
+	.sec_content_right {
+		margin-left: 31.9%;
 	}
 }
 @media(max-width: 340px) {

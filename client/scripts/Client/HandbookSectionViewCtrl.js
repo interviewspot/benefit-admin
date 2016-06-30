@@ -134,7 +134,11 @@
             $rootScope.readyToUploadPdf = false;
             $scope.readyToAddContent = false;
             $scope.showChildren = function (section) {
-                return section.children.show = !section.children.show;
+                if(section.children)
+                {
+                    return section.children.show = !section.children.show;
+
+                }
             };
             //
             // $scope.loadDescription = function (section) {

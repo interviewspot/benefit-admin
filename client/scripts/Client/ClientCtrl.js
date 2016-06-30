@@ -65,7 +65,6 @@
                 //     return false;
                 // }
 
-                console.log(category);
                 var data = {
                     "category": {
                         "name": category.name,
@@ -174,7 +173,7 @@
                         $scope.ClientPage.tabUrls = {
                             "info": '#/clients/' + data.id + '/info',
                             "user": '#/clients/' + data.id + '/user',
-                            "categories": '#/clients/' + data.id + '/categories',
+                            "categories": '#/clients/' + data.id + '/categories/handbooks',
                             "categoriesList": '#/clients/' + data.id + '/categories/list',
                             "policies": '#/clients/' + data.id + '/policies',
                             "insurance": '#/clients/' + data.id + '/insurance',
@@ -492,7 +491,7 @@
                 tabUrls : {
                 "info": '#/clients/' +  $scope.clientId + '/info',
                 "user": '#/clients/' +  $scope.clientId + '/user',
-                "categories": '#/clients/' +  $scope.clientId + '/categories',
+                "categories": '#/clients/' +  $scope.clientId + '/categories/handbooks',
                 "categoriesList": '#/clients/' +  $scope.clientId + '/categories/list',
                 "policies": '#/clients/' +  $scope.clientId + '/policies',
                 "insurance": '#/clients/' +  $scope.clientId + '/insurance',
@@ -540,6 +539,95 @@
                 });
 
             }
+        }
+    ]).controller('CategoryHandbookCtrl', [
+        '$scope' , '$routeParams', '$location', '$timeout', 'authHandler', 'config','Users',
+        function ($scope ,$routeParams , $location , $timeout , authHandler, config,Users) {
+            authHandler.checkLoggedIn();
+            $scope.clientId = $routeParams.clientId;
+            $scope.categoryId = $routeParams.categoryId;
+
+            var _URL = {
+                handbooks: config.path.baseURL + '/organisations/' + $routeParams.clientId,
+                handbooksAutocomplete: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/handbooks',
+                postHandbookToCategory: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/categories',
+            };
+            $scope.handbooks = [];
+
+            $scope.handbookSearch = [];
+            $scope.handbookSearchObject = [];
+            $scope.modelHandbook = '';
+            $scope.allowAdd = false;
+
+            $scope.addHandbook = function () {
+                if($scope.handbookSearchObject[$scope.modelHandbook] != undefined) {
+
+                    var handbook = $scope.handbookSearchObject[$scope.modelHandbook];
+                    Users.post(_URL.postHandbookToGroup + '/' + $scope.handbookAce.id + '/handbooks/' +handbook.id, {}).then(function (results) {
+                        if (results.status === 204) {
+                            $scope.infoUpdated = 'Updated Successfully.';
+                            $scope.handbooks.push(handbook);
+                            $scope.modelHandbook = '';
+                            delete $scope.handbookSearchObject[$scope.modelHandbook];
+                        } else {
+                            $scope.infoUpdated = 'Updated Fail.';
+                            $scope.modelHandbook = '';
+                            delete $scope.handbookSearchObject[$scope.modelHandbook];
+                        }
+                    });
+                }
+            }
+            $scope.removeHandbook = function (id) {
+                Users.delete(_URL.postHandbookToGroup + '/' + $scope.handbookAce.id + '/handbooks/' +id).then(function (results) {
+                    if (results.status === 204) {
+                        $scope.infoUpdated = 'Updated Successfully.';
+                        loadList();
+                    } else {
+                        $scope.infoUpdated = 'Updated Fail.';
+                    }
+                });
+            }
+            $scope.$watch('modelHandbook', function (modelHandbook) {
+                if (modelHandbook != '') {
+                    Users.get(_URL.handbooksAutocomplete + '?search=handbook.title=%' + modelHandbook + '%').then(function (results) {
+                        if (results.status !== 200 || typeof results !== 'object') {
+                            return;
+                        }
+                        $scope.handbookSearch = [];
+                        angular.forEach(results.data._embedded.items, function (handbook) {
+                            $scope.handbookSearch.push(handbook.title);
+                            $scope.handbookSearchObject[handbook.title] = handbook;
+                        });
+                    });
+                }
+
+            }, true);
+            var loadList = function () {
+                Users.get(_URL.handbooks).then(function (results) {
+                    if (results.status !== 200 || typeof results !== 'object') {
+                        return;
+                    }
+                    $scope.group = results.data;
+
+                    Users.get(results.data._links.handbook_user_group_aces.href).then(function (results) {
+                        if (results.status !== 200 || typeof results !== 'object') {
+                            return;
+                        }
+                        $scope.handbookAce = results.data._embedded.items[0];
+
+                        Users.get($scope.handbookAce._links.handbooks.href).then(function (results) {
+                            if (results.status !== 200 || typeof results !== 'object') {
+                                return;
+                            }
+                            $scope.handbooks = results.data._embedded.items;
+
+                        });
+
+                    });
+
+                });
+            }
+            loadList();
         }
     ]);
 

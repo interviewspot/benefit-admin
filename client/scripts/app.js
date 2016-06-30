@@ -54,7 +54,7 @@
         templateUrl: 'views/clients/user/detail_warp.html'
       }).when('/clients/:clientId/new-user', {
         templateUrl: 'views/clients/user/detail_new_warp.html'
-      }).when('/clients/:clientId/categories', {
+      }).when('/clients/:clientId/categories/handbooks', {
         templateUrl: 'views/clients/client-handbook.html'
       }).when('/clients/:clientId/handbooks/:handbookId', {
         templateUrl: 'views/handbooks/handbook.html'
@@ -76,6 +76,8 @@
         templateUrl: 'views/clients/tab_category.html'
       }).when('/clients/:clientId/category/:categoryId', {
         templateUrl: 'views/clients/category.html'
+      }).when('/clients/:clientId/category/:categoryId/addHandbooks', {
+        templateUrl: 'views/clients/category_add_handbooks.html'
       });
       $routeProvider.when('/employees', {
         templateUrl: 'views/employee/employee.html'

@@ -8,6 +8,8 @@
 			<ul class="nav nav-tabs" ng-include="'views/clients/menu-tab.html'">
 			</ul>
 			<!-- END : MENU -->
+
+			<a class="btn btn-default marg-bot" href="#/clients/{{clientDetail.id}}/category/{{category.id}}/addHandbooks">Add Handbook</a>
 			<div>
 				<form name="frm_update_category" novalidate ng-submit="submitCategory()">
 					<table class="table tbl table-striped">
