@@ -7,7 +7,7 @@
 <li data-ng-show="!isNormalUser && !isAdmin" ng-class="{active : isActive('/clients/' + clientDetail.id + '/categories/list')}">
     <a href="{{ClientPage.tabUrls.categoriesList ? ClientPage.tabUrls.categoriesList : 'javascript:;'}}" title="Categories">Categories</a>
 </li>
-<li ng-click="categoryShow" ng-class="{active : isActive('/clients/' + clientDetail.id + '/categories')}">
+<li ng-click="categoryShow" ng-class="{active : isActive('/clients/' + clientDetail.id + '/categories/handbooks')}">
     <a href="{{ClientPage.tabUrls.categories ? ClientPage.tabUrls.categories : 'javascript:;'}}" title="Handbook">Cloud Books</a>
 </li>
 <!--<li ng-class="{active : isActive('/clients/' + clientDetail.id + '/notifications')}">-->

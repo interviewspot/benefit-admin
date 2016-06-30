@@ -14,7 +14,7 @@
 					<span>Category</span>
 				</h2>
 				<div class="t-r marg-bot">
-					<span class="btn btn-brown" ng-click="createNewCategory()">Create Category</span>
+					<div class="btn btn-brown" ng-click="createNewCategory()">Create Category</div>
 				</div>
 				<table class="table tbl table-hover table-striped" >
 					<tbody>
@@ -29,7 +29,15 @@
 								{{ category.name }}
 							</a>
 						</td>
-						<td class="text-center">{{ category.enabled }}</td>
+						<td class="text-center">
+							<input
+									ng-disabled="true"
+									type="checkbox"
+									required
+									ng-model="category.enabled"
+									name="cat_enabled"
+							/>
+						</td>
 						<td class="text-center td-manage">
 							<a href="#/clients/{{clientDetail.id}}/category/{{category.id}}">
 								<i class="fa fa-edit"
