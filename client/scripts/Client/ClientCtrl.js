@@ -1,7 +1,7 @@
 (function () {
     'use strict';
     angular.module('app.clients', []).controller('clientCtrl', [
-        '$scope', '$filter', 'fetchTabData', 'fakeData', '$location', 'clientService', 'fetchHandbook','fetchCategory', '$routeParams', '$route', 'config', 'Images', 'php', 'ClientAPI', 'Companies', 'Clients', 'handbookService', '$timeout', 'authHandler', '$rootScope', '$location', function ($scope, $filter, fetchTabData, fakeData, $location, clientService, fetchHandbook, fetchCategory, $routeParams, $route, config, Images, php, ClientAPI, Companies, Clients, handbookService, $timeout, authHandler, $rootScope) {
+        '$scope', '$filter', 'fetchTabData', 'fakeData', '$location', 'clientService','categoryService', 'fetchHandbook','fetchCategory', '$routeParams', '$route', 'config', 'Images', 'php', 'ClientAPI', 'Companies', 'Clients', 'handbookService', '$timeout', 'authHandler', '$rootScope', '$location', function ($scope, $filter, fetchTabData, fakeData, $location, clientService,categoryService, fetchHandbook, fetchCategory, $routeParams, $route, config, Images, php, ClientAPI, Companies, Clients, handbookService, $timeout, authHandler, $rootScope) {
             var _URL_clients, _getClients;
             authHandler.checkLoggedIn();
             if ($location.path() == '/clients') {
@@ -56,6 +56,36 @@
             $scope.createNewVersion = function () {
                 return $scope.isCreateHandbook = !$scope.isCreateHandbook;
             };
+            
+            $scope.addNewCategory = function (category) {
+                // angular.forEach($scope.frm_crt_category.$invalid.required, function(field) {
+                //     return field.$dirty = true;
+                // });
+                // if ($scope.frm_crt_category.$error.required) {
+                //     return false;
+                // }
+
+                console.log(category);
+                var data = {
+                    "category": {
+                        "name": category.name,
+                        "slug": category.name,
+                        "enabled": category.enabled,
+                        "organisation": $rootScope.employerId
+                    }
+                };
+
+                return categoryService.save({
+                    org_id: $rootScope.employerId
+                }, data, function(res) {
+                    $scope.infoUpdated = 'Create Category Success';
+                    return $timeout(function() {
+                        return location.reload();
+                    }, 1000);
+                }, function(error) {
+                    return $scope.infoUpdated = error.status + ': Error, refresh & try again !';
+                });
+            }
             $scope.changePublished = function (handbook, clientId) {
                 var desc, r, title, updateData;
                 r = confirm("Do you want to change this Handbook ?");
@@ -98,6 +128,11 @@
                 });
             };
 
+
+            $scope.isCreateCategory = false;
+            $scope.createNewCategory = function () {
+                return $scope.isCreateCategory = !$scope.isCreateCategory;
+            }
 
             $scope.isHandbookShow = false;
             $scope.handbookShow = function (category) {
@@ -446,99 +481,63 @@
             };
         }
     ]).controller('CategoryCtrl', [
-        '$scope', '$routeParams', 'fetchCategory', 'handbookService', 'clientService', 'sectionService', '$location', '$timeout', 'authHandler',
-        function($scope, $routeParams, fetchCategory, handbookService, clientService, sectionService, $location, $timeout, authHandler) {
+        '$scope', '$routeParams', 'fetchCategory','categoryService' , 'clientService', 'sectionService', '$location', '$timeout', 'authHandler',
+        function($scope, $routeParams, fetchCategory, categoryService, clientService, sectionService, $location, $timeout, authHandler) {
             authHandler.checkLoggedIn();
             $scope.clientId = $routeParams.clientId;
             $scope.categoryId = $routeParams.categoryId;
             $scope.isCreateCategory = false;
-            
-            if($scope.isCreateHandbook === false) {
-                if ($routeParams.clientId) {
-                    clientService.get({
-                        org_id: $routeParams.clientId
-                    }, function (data, getResponseHeaders) {
-                        if (data._links.categories) {
-                            $scope.ClientPage.tabUrls = {
-                                "info": '#/clients/' + data.id + '/info',
-                                "user": '#/clients/' + data.id + '/user',
-                                "categories": '#/clients/' + data.id + '/categories',
-                                "categoriesList": '#/clients/' + data.id + '/categories/list',
-                                "policies": '#/clients/' + data.id + '/policies',
-                                "insurance": '#/clients/' + data.id + '/insurance',
-                                "healthcare": '#/clients/' + data.id + '/healthcare',
-                                "imerchant": '#/clients/' + data.id + '/imerchant',
-                                "notifications": '#/clients/' + data.id + '/notifications'
-                            };
-                            fetchCategory.get(data._links.categories.href).then(function (res) {
-                                if (typeof res.data._embedded !== 'object' || !res.data._embedded.items) {
-                                    return;
-                                }
-                                $scope.categories = res.data._embedded.items;
-                            })
-                        }
-
-                        $scope.clientDetail = data;
-                        if (typeof data._links.logo === 'object' && data._links.logo != undefined) {
-                            Images.get(data._links.logo.href).then(function (res) {
-                                var logo_id_arr;
-                                if (res.status !== 200 || typeof res !== 'object') {
-                                    return;
-                                }
-                                logo_id_arr = php.explode('/media/', data._links.logo.href);
-                                $scope.urlUpload = $scope.clientDetail._links['logo.post'].href;
-                                $scope.clientDetail['logo'] = res.data;
-                                if (typeof res.data._links.url === 'object' && res.data._links.url.href) {
-                                    Images.get(data._links.logo.href + '/url').then(function (url) {
-                                        if (url.status !== 200 || typeof url !== 'object') {
-                                            return;
-                                        }
-                                        return $scope.clientDetail['logo_url'] = url.data.url;
-                                    }, function (error) {
-                                        return console.log(error);
-                                    });
-                                }
-                            }, function (error) {
-                                return console.log(error);
-                            });
-                        } else {
-                            $scope.urlUpload = $scope.clientDetail._links['logo.post'].href;
-                        }
-                        if (typeof data._links.banners === 'object' && data._links.banners != undefined) {
-                            Images.get(data._links.banners.href).then(function (res) {
-                                if (res.status !== 200 || typeof res !== 'object') {
-                                    return;
-                                }
-                                $scope.urlUploadBanner = $scope.clientDetail._links['banners'].href;
-                                $scope.clientDetail['banners'] = [];
-                                if (res.data._embedded.items.length > 0) {
-                                    angular.forEach(res.data._embedded.items, function (itm) {
-                                        var b;
-                                        b = itm;
-                                        if (typeof b._links.url === 'object' && b._links.url.href) {
-                                            return Images.get(config.path.baseURL + b._links.url.href).then(function (bn) {
-                                                if (bn.status === 200 || typeof bn === 'object') {
-                                                    b['banner_url'] = bn.data.url;
-                                                    return $scope.clientDetail['banners'].push(b);
-                                                }
-                                            }, function (error) {
-                                                return console.log(error);
-                                            });
-                                        }
-                                    });
-                                }
-                            }, function (error) {
-                                return console.log(error);
-                            });
-                        } else {
-                            $scope.urlUploadBanner = $scope.clientDetail._links['banners'].href;
-                        }
-
-                    });
+            $scope.infoUpdated = null;
+            $scope.ClientPage = {
+                tabUrls : {
+                "info": '#/clients/' +  $scope.clientId + '/info',
+                "user": '#/clients/' +  $scope.clientId + '/user',
+                "categories": '#/clients/' +  $scope.clientId + '/categories',
+                "categoriesList": '#/clients/' +  $scope.clientId + '/categories/list',
+                "policies": '#/clients/' +  $scope.clientId + '/policies',
+                "insurance": '#/clients/' +  $scope.clientId + '/insurance',
+                "healthcare": '#/clients/' +  $scope.clientId + '/healthcare',
+                "imerchant": '#/clients/' +  $scope.clientId + '/imerchant',
+                "notifications": '#/clients/' +  $scope.clientId + '/notifications'
                 }
-                
+            };
+
+            clientService.get({
+                org_id: $scope.clientId,
+            }, function(data, getResponseHeaders) {
+                return $scope.clientDetail = data;
+            });
+
+            if ($scope.isCreateCategory === false) {
+                categoryService.get({
+                    org_id: $scope.clientId,
+                    category_id: $scope.categoryId
+                }, function(data, getResponseHeaders) {
+                    $scope.category = data;
+
+                });
             }
             $scope.submitCategory = function () {
+                var updateData = {
+                    "category": {
+                        "name": $scope.category.name,
+                        "slug": $scope.category.name,
+                        "enabled": $scope.category.enabled,
+                        "organisation": $scope.clientId
+                    }
+                };
+
+                return categoryService.update({
+                    org_id: $scope.clientId,
+                    category_id: $scope.categoryId
+                }, updateData, function(res) {
+                    $scope.infoUpdated = 'Update Success';
+                    return $timeout(function() {
+                        return $scope.infoUpdated = null;
+                    }, 1000);
+                }, function(error) {
+                    return $scope.infoUpdated = error.status + ': Error, refresh & try again !';
+                });
 
             }
         }

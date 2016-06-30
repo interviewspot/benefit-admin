@@ -4,7 +4,7 @@
 <li data-ng-show="permissionUser.VIEW" ng-class="{active : isActive('/clients/' + clientDetail.id + '/user')}">
     <a href="{{ClientPage.tabUrls.user ? ClientPage.tabUrls.user : 'javascript:;'}}" title="Users">Users</a>
 </li>
-<li ng-class="{active : isActive('/clients/' + clientDetail.id + '/categories/list')}">
+<li data-ng-show="!isNormalUser && !isAdmin" ng-class="{active : isActive('/clients/' + clientDetail.id + '/categories/list')}">
     <a href="{{ClientPage.tabUrls.categoriesList ? ClientPage.tabUrls.categoriesList : 'javascript:;'}}" title="Categories">Categories</a>
 </li>
 <li ng-click="categoryShow" ng-class="{active : isActive('/clients/' + clientDetail.id + '/categories')}">
