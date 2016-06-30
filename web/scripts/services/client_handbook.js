@@ -25,7 +25,7 @@
         return service;
     }).factory('categoryService', function ($resource , config) {
         var service;
-        service = $resource(config.path.baseURL + config.path.category, {}, {
+        service = $resource(config.path.baseURL + '/organisations/:org_id/categories/:category_id', {}, {
             query: {
                 method: "GET"
             },
