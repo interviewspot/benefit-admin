@@ -23,6 +23,21 @@
             }
         });
         return service;
+    }).factory('categoryService', function ($resource , config) {
+        var service;
+        service = $resource(config.path.baseURL + config.path.category, {}, {
+            query: {
+                method: "GET"
+            },
+            update: {
+                method: "PUT"
+            },
+            save: {
+                method: "POST",
+                action: config.path.baseURL + '/organisations/:org_id/categories'
+            }
+        });
+        return service;
     }).factory('fetchCategory' , [
         '$http', '$q', '$resource', '$route', '$rootScope', '$location', 'localStorageService', function ($http, $q, $resource, $route, $rootScope, $location, localStorageService) {
             return {

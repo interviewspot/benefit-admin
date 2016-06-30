@@ -962,10 +962,12 @@
             $scope.colHeaders.push('Code');
             $scope.colHeaders.push('Folder Name');
             $scope.colHeaders.push('List Users')
+            $scope.colHeaders.push('List Categories')
 
             $scope.columns = [];
             $scope.columns.push({readOnly: true});
             $scope.columns.push({});
+            $scope.columns.push({renderer: "html"});
             $scope.columns.push({renderer: "html"});
 
 
@@ -1006,6 +1008,7 @@
                                 cloudbookAceGroup.push('G'+group.id);
                                 cloudbookAceGroup.push(group.name);
                                 cloudbookAceGroup.push('<a href="#/clients/' + $routeParams.clientId + '/user-group/' + group.id + '/users" title="Click to view users of this group">Click To View</a>');
+                                cloudbookAceGroup.push('<a href="#/clients/' + $routeParams.clientId + '/user-group/' + group.id + '/categories" title="Click to view categories of this group">Click To View</a>');
                                 if (results.data._embedded.items.length) {
                                     var listActionAllow = results.data._embedded.items[0].attributes;
                                     listCloudbookUrl[group.id] = group._links.category_user_group_aces.href + '/' + results.data._embedded.items[0].id;
@@ -1052,7 +1055,7 @@
             getData();
 
             var getAttributes = function (item) {
-                item.splice(0, 3);
+                item.splice(0, 4);
                 var attr = [];
                 angular.forEach(cloudbookAceActions, function (action, index) {
                     if (item[index] === true) {
@@ -2088,13 +2091,13 @@
             }
             loadList();
         }
-    ]).controller('HandbookByGroupCtrl', [
+    ]).controller('CategoryByGroupCtrl', [
         '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'hotRegisterer', 'authHandler', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, hotRegisterer, authHandler) {
             authHandler.checkLoggedIn();
             var _URL = {
                 handbooks: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/usergroups/' + $routeParams.groupId,
-                handbooksAutocomplete: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/handbooks',
-                postHandbookToGroup: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/usergroups/' + $routeParams.groupId +'/cloudbookacls',
+                handbooksAutocomplete: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/categories',
+                postHandbookToGroup: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/usergroups/' + $routeParams.groupId +'/categoryacls',
             };
             $scope.group = {};
             $scope.handbooks = [];
@@ -2108,7 +2111,7 @@
                 if($scope.handbookSearchObject[$scope.modelHandbook] != undefined) {
 
                     var handbook = $scope.handbookSearchObject[$scope.modelHandbook];
-                    Users.post(_URL.postHandbookToGroup + '/' + $scope.handbookAce.id + '/handbooks/' +handbook.id, {}).then(function (results) {
+                    Users.post(_URL.postHandbookToGroup + '/' + $scope.handbookAce.id + '/categories/' +handbook.id, {}).then(function (results) {
                         if (results.status === 204) {
                             $scope.infoUpdated = 'Updated Successfully.';
                             $scope.handbooks.push(handbook);
@@ -2123,7 +2126,7 @@
                 }
             }
             $scope.removeHandbook = function (id) {
-                Users.delete(_URL.postHandbookToGroup + '/' + $scope.handbookAce.id + '/handbooks/' +id).then(function (results) {
+                Users.delete(_URL.postHandbookToGroup + '/' + $scope.handbookAce.id + '/categories/' +id).then(function (results) {
                     if (results.status === 204) {
                         $scope.infoUpdated = 'Updated Successfully.';
                         loadList();
@@ -2134,14 +2137,14 @@
             }
             $scope.$watch('modelHandbook', function (modelHandbook) {
                 if (modelHandbook != '') {
-                    Users.get(_URL.handbooksAutocomplete + '?search=handbook.title=%' + modelHandbook + '%').then(function (results) {
+                    Users.get(_URL.handbooksAutocomplete + '?search=category.name=%' + modelHandbook + '%').then(function (results) {
                         if (results.status !== 200 || typeof results !== 'object') {
                             return;
                         }
                         $scope.handbookSearch = [];
                         angular.forEach(results.data._embedded.items, function (handbook) {
-                            $scope.handbookSearch.push(handbook.title);
-                            $scope.handbookSearchObject[handbook.title] = handbook;
+                            $scope.handbookSearch.push(handbook.name);
+                            $scope.handbookSearchObject[handbook.name] = handbook;
                         });
                     });
                 }
@@ -2154,13 +2157,13 @@
                     }
                     $scope.group = results.data;
 
-                    Users.get(results.data._links.handbook_user_group_aces.href).then(function (results) {
+                    Users.get(results.data._links.category_user_group_aces.href).then(function (results) {
                         if (results.status !== 200 || typeof results !== 'object') {
                             return;
                         }
                         $scope.handbookAce = results.data._embedded.items[0];
 
-                        Users.get($scope.handbookAce._links.handbooks.href).then(function (results) {
+                        Users.get($scope.handbookAce._links.categories.href).then(function (results) {
                             if (results.status !== 200 || typeof results !== 'object') {
                                 return;
                             }
@@ -2174,6 +2177,92 @@
             }
             loadList();
         }
-    ]);
+    ]).controller('HandbookByGroupCtrl', [
+            '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'hotRegisterer', 'authHandler', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, hotRegisterer, authHandler) {
+                authHandler.checkLoggedIn();
+                var _URL = {
+                    handbooks: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/usergroups/' + $routeParams.groupId,
+                    handbooksAutocomplete: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/handbooks',
+                    postHandbookToGroup: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/usergroups/' + $routeParams.groupId +'/cloudbookacls',
+                };
+                $scope.group = {};
+                $scope.handbooks = [];
+
+                $scope.handbookSearch = [];
+                $scope.handbookSearchObject = [];
+                $scope.modelHandbook = '';
+                $scope.allowAdd = false;
+
+                $scope.addHandbook = function () {
+                    if($scope.handbookSearchObject[$scope.modelHandbook] != undefined) {
+
+                        var handbook = $scope.handbookSearchObject[$scope.modelHandbook];
+                        Users.post(_URL.postHandbookToGroup + '/' + $scope.handbookAce.id + '/handbooks/' +handbook.id, {}).then(function (results) {
+                            if (results.status === 204) {
+                                $scope.infoUpdated = 'Updated Successfully.';
+                                $scope.handbooks.push(handbook);
+                                $scope.modelHandbook = '';
+                                delete $scope.handbookSearchObject[$scope.modelHandbook];
+                            } else {
+                                $scope.infoUpdated = 'Updated Fail.';
+                                $scope.modelHandbook = '';
+                                delete $scope.handbookSearchObject[$scope.modelHandbook];
+                            }
+                        });
+                    }
+                }
+                $scope.removeHandbook = function (id) {
+                    Users.delete(_URL.postHandbookToGroup + '/' + $scope.handbookAce.id + '/handbooks/' +id).then(function (results) {
+                        if (results.status === 204) {
+                            $scope.infoUpdated = 'Updated Successfully.';
+                            loadList();
+                        } else {
+                            $scope.infoUpdated = 'Updated Fail.';
+                        }
+                    });
+                }
+                $scope.$watch('modelHandbook', function (modelHandbook) {
+                    if (modelHandbook != '') {
+                        Users.get(_URL.handbooksAutocomplete + '?search=handbook.title=%' + modelHandbook + '%').then(function (results) {
+                            if (results.status !== 200 || typeof results !== 'object') {
+                                return;
+                            }
+                            $scope.handbookSearch = [];
+                            angular.forEach(results.data._embedded.items, function (handbook) {
+                                $scope.handbookSearch.push(handbook.title);
+                                $scope.handbookSearchObject[handbook.title] = handbook;
+                            });
+                        });
+                    }
+
+                }, true);
+                var loadList = function () {
+                    Users.get(_URL.handbooks).then(function (results) {
+                        if (results.status !== 200 || typeof results !== 'object') {
+                            return;
+                        }
+                        $scope.group = results.data;
+
+                        Users.get(results.data._links.handbook_user_group_aces.href).then(function (results) {
+                            if (results.status !== 200 || typeof results !== 'object') {
+                                return;
+                            }
+                            $scope.handbookAce = results.data._embedded.items[0];
+
+                            Users.get($scope.handbookAce._links.handbooks.href).then(function (results) {
+                                if (results.status !== 200 || typeof results !== 'object') {
+                                    return;
+                                }
+                                $scope.handbooks = results.data._embedded.items;
+
+                            });
+
+                        });
+
+                    });
+                }
+                loadList();
+            }
+        ]);
 
 }).call(this);

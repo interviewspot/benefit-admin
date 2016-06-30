@@ -1,4 +1,4 @@
-<div class="clients_edit">
+<div class="clients_edit" data-ng-controller="CategoryCtrl">
 	<h1 class="ttl-page">
 		{{clientDetail.name}}
 		<span class="sp-sts green" ng-if="clientDetail.status">{{clientDetail.status}}</span>
@@ -9,7 +9,7 @@
 			</ul>
 			<!-- END : MENU -->
 			<div>
-				<form name="frm_update_category" novalidate ng-submit="submitCategory()" data-ng-controller="CategoryCtrl">
+				<form name="frm_update_category" novalidate ng-submit="submitCategory()">
 					<table class="table tbl table-striped">
 						<tbody>
 							<tr>
@@ -34,7 +34,7 @@
 									<input
 											type="checkbox"
 											required
-											ng-model="category.enable"
+											ng-model="category.enabled"
 											name="cat_title"
 											class="txt-ipt"
 											ng-class='{txt_err : (frm_crt_handbook.hb_version.$invalid && frm_crt_handbook.hb_version.$dirty)}'
@@ -48,14 +48,13 @@
 					</table>
 					<p>
 						<button
-								data-ng-show="handbook.EDITHANBOOK"
 								type="submit"
 								class="save btn-brown">
 							<i class="fa fa-save"></i>&nbsp;SAVE INFO
 						</button>
-        <span class="msg-update">
-            {{infoUpdated}}
-        </span>
+				        <span class="msg-update">
+				            {{infoUpdated}}
+				        </span>
 					</p>
 					<!-- END : TBL -->
 				</form>
