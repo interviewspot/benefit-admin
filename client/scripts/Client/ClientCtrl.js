@@ -133,6 +133,11 @@
                 return $scope.isCreateCategory = !$scope.isCreateCategory;
             }
 
+            $scope.showAllHandbook = false;
+            $scope.magicShowCategoryHandbook = function () {
+                return $scope.showAllHandbook = !$scope.showAllHandbook;
+
+            }
             $scope.isHandbookShow = false;
             $scope.handbookShow = function (category) {
                 $scope.isHandbookShow = true;
@@ -168,6 +173,27 @@
                 clientService.get({
                     org_id: $routeParams.clientId
                 }, function (data, getResponseHeaders) {
+                    if(data._links.handbooks) {
+                        fetchHandbook.get(data._links.handbooks.href).then(function (res) {
+                            if (typeof res.data._embedded !== 'object' || !res.data._embedded.items) {
+                                $scope.isCreateHandbook = true;
+                                return;
+                            }
+                            $scope.handbookAll = res.data._embedded.items;
+                            return angular.forEach($scope.handbookAll, function (item, i) {
+                                return Clients.get(item._links.translations.href).then(function (res) {
+                                    if (res.status !== 200 || typeof res !== 'object') {
+                                        return;
+                                    }
+                                    $scope.handbookAll[i]['translations'] = res.data;
+                                    $scope.handbookAll[i]['EDIT'] = item._links.self.actions.join().indexOf('OPERATE') ||  item._links.self.actions.join().indexOf('EDIT') ? true : false ;
+                                    $scope.handbookAll[i]['DELETE'] = item._links.self.actions.join().indexOf('OPERATE') ||  item._links.self.actions.join().indexOf('DELETE') ? true : false ;
+                                }, function (error) {
+                                    console.log(error);
+                                });
+                            });
+                        });
+                    }
                     if (data._links.categories) {
                         $scope.ClientPage.tabUrls = {
                             "info": '#/clients/' + data.id + '/info',
