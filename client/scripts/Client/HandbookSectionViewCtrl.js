@@ -1,8 +1,8 @@
 (function () {
     'use strict';
     angular.module('app.handbook_section_view', ['ngAnimate', 'ui.bootstrap']).controller('HandbookSectionViewCtrl', [
-        '$scope', '$routeParams', 'handbookService', 'clientService', 'sectionService', '$location', '$timeout', 'fetchHandbook', 'config', '$rootScope', function ($scope, $routeParams, handbookService, clientService, sectionService, $location, $timeout, fetchHandbook, config, $rootScope) {
-
+        '$scope', '$routeParams','authHandler', 'handbookService', 'clientService', 'sectionService', '$location', '$timeout', 'fetchHandbook', 'config', '$rootScope', function ($scope, $routeParams,authHandler, handbookService, clientService, sectionService, $location, $timeout, fetchHandbook, config, $rootScope) {
+            authHandler.checkLoggedIn();
             $scope.oneAtATime = true;
             $scope.status = {
                 isCustomHeaderOpen: false,

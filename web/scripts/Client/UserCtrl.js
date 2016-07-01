@@ -2111,7 +2111,7 @@
                 if($scope.handbookSearchObject[$scope.modelHandbook] != undefined) {
 
                     var handbook = $scope.handbookSearchObject[$scope.modelHandbook];
-                    Users.post(_URL.postHandbookToGroup + '/' + $scope.handbookAce.id + '/categories/' +handbook.id, {}).then(function (results) {
+                        Users.post(_URL.postHandbookToGroup + '/' + $scope.handbookAce.id + '/categories/' +handbook.id, {}).then(function (results) {
                         if (results.status === 204) {
                             $scope.infoUpdated = 'Updated Successfully.';
                             $scope.handbooks.push(handbook);

@@ -140,7 +140,6 @@
                     if (res.status !== 200 || typeof res !== 'object') {
                         return;
                     }
-
                     $scope.handbooks = res.data._embedded.items;
                     return angular.forEach($scope.handbooks, function (item, i) {
                         return Clients.get(item._links.translations.href).then(function (res) {
@@ -550,7 +549,7 @@
             var _URL = {
                 handbooks: config.path.baseURL + '/organisations/' + $routeParams.clientId,
                 handbooksAutocomplete: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/handbooks',
-                postHandbookToCategory: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/categories',
+                postHandbookToCategory: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/categories/' + $routeParams.categoryId,
             };
             $scope.handbooks = [];
 
@@ -563,7 +562,7 @@
                 if($scope.handbookSearchObject[$scope.modelHandbook] != undefined) {
 
                     var handbook = $scope.handbookSearchObject[$scope.modelHandbook];
-                    Users.post(_URL.postHandbookToGroup + '/' + $scope.handbookAce.id + '/handbooks/' +handbook.id, {}).then(function (results) {
+                    Users.post(_URL.postHandbookToCategory + '/handbooks/' +handbook.id, {}).then(function (results) {
                         if (results.status === 204) {
                             $scope.infoUpdated = 'Updated Successfully.';
                             $scope.handbooks.push(handbook);
@@ -581,7 +580,7 @@
                 Users.delete(_URL.postHandbookToGroup + '/' + $scope.handbookAce.id + '/handbooks/' +id).then(function (results) {
                     if (results.status === 204) {
                         $scope.infoUpdated = 'Updated Successfully.';
-                        loadList();
+                        ca();
                     } else {
                         $scope.infoUpdated = 'Updated Fail.';
                     }
