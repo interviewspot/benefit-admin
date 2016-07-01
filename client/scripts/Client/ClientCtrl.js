@@ -545,9 +545,10 @@
             authHandler.checkLoggedIn();
             $scope.clientId = $routeParams.clientId;
             $scope.categoryId = $routeParams.categoryId;
+            $scope.infoUpdated = null;
 
             var _URL = {
-                handbooks: config.path.baseURL + '/organisations/' + $routeParams.clientId,
+                handbooks: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/categories/' + $routeParams.categoryId + '/handbooks',
                 handbooksAutocomplete: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/handbooks',
                 postHandbookToCategory: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/categories/' + $routeParams.categoryId,
             };
@@ -568,21 +569,30 @@
                             $scope.handbooks.push(handbook);
                             $scope.modelHandbook = '';
                             delete $scope.handbookSearchObject[$scope.modelHandbook];
+                            return $timeout(function() {
+                                return $scope.infoUpdated = null;
+                            }, 2000);
                         } else {
                             $scope.infoUpdated = 'Updated Fail.';
                             $scope.modelHandbook = '';
                             delete $scope.handbookSearchObject[$scope.modelHandbook];
+                            return $timeout(function() {
+                                return $scope.infoUpdated = null;
+                            }, 2000);
                         }
                     });
                 }
             }
             $scope.removeHandbook = function (id) {
-                Users.delete(_URL.postHandbookToGroup + '/' + $scope.handbookAce.id + '/handbooks/' +id).then(function (results) {
+                Users.delete(_URL.postHandbookToCategory + '/handbooks/' +id).then(function (results) {
                     if (results.status === 204) {
                         $scope.infoUpdated = 'Updated Successfully.';
-                        ca();
+                        loadList();
                     } else {
                         $scope.infoUpdated = 'Updated Fail.';
+                        return $timeout(function() {
+                            return $scope.infoUpdated = null;
+                        }, 2000);
                     }
                 });
             }
@@ -606,24 +616,10 @@
                     if (results.status !== 200 || typeof results !== 'object') {
                         return;
                     }
-                    $scope.group = results.data;
-
-                    Users.get(results.data._links.handbook_user_group_aces.href).then(function (results) {
-                        if (results.status !== 200 || typeof results !== 'object') {
-                            return;
-                        }
-                        $scope.handbookAce = results.data._embedded.items[0];
-
-                        Users.get($scope.handbookAce._links.handbooks.href).then(function (results) {
-                            if (results.status !== 200 || typeof results !== 'object') {
-                                return;
-                            }
-                            $scope.handbooks = results.data._embedded.items;
-
-                        });
-
-                    });
-
+                    $scope.handbooks = results.data._embedded.items;
+                    return $timeout(function() {
+                        return $scope.infoUpdated = null;
+                    }, 2000);
                 });
             }
             loadList();
