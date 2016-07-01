@@ -109,7 +109,12 @@
                       }
                     }
 
-                    $location.path('/clients/' + employer.data.id + '/info');
+                    if($rootScope.isNormalUser == true)
+                    {
+                      $location.path('/clients/' + employer.data.id + '/categories/handbooks');
+                    } else {
+                      $location.path('/clients/' + employer.data.id + '/info');
+                    }
                     $rootScope.isAdmin = false;
                     return $route.reload();
                   });
