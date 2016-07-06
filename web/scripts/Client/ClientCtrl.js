@@ -58,12 +58,6 @@
             };
             
             $scope.addNewCategory = function (category) {
-                // angular.forEach($scope.frm_crt_category.$invalid.required, function(field) {
-                //     return field.$dirty = true;
-                // });
-                // if ($scope.frm_crt_category.$error.required) {
-                //     return false;
-                // }
 
                 var data = {
                     "category": {

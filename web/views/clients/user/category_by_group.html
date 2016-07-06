@@ -3,13 +3,13 @@
     <div class="page page-table" data-ng-controller="CategoryByGroupCtrl">
         <div class="clients_list" ng-show="!isEditClients">
             <h1 class="ttl-page">Security Category List Of {{group.name}}</h1>
-            <form role="form" data-ng-show="permissionUserGroup.EDIT">
-                <div class="form-group">
-                    <label>Search category by title</label>
-                    <autocomplete ng-model="modelHandbook" data="handbookSearch"></autocomplete>
-                </div>
-                <button type="submit" class="btn btn-default" data-ng-click="addHandbook()">Add Category</button>
-            </form>
+            <!--<form role="form" data-ng-show="permissionUserGroup.EDIT">-->
+                <!--<div class="form-group">-->
+                    <!--<label>Search category by title</label>-->
+                    <!--<autocomplete ng-model="modelHandbook" data="handbookSearch"></autocomplete>-->
+                <!--</div>-->
+                <!--<button type="submit" class="btn btn-default" data-ng-click="addHandbook()">Add Category</button>-->
+            <!--</form>-->
             <br>
             <br>
             </div>
@@ -18,16 +18,21 @@
                   <tbody>
                       <tr>
                           <th class="text-left">Title</th>
-                          <th class="text-center">Actions</th>
+                          <th class="text-center">Member</th>
                       </tr>
-                      <tr ng-repeat="(i, handbook) in handbooks" >
+                      <tr ng-repeat="(i, category) in listCategory" >
                           <td class="text-left">
                               <a href="">
-                                  {{handbook.name}}
+                                  {{category.name}}
                               </a>
                           </td>
-                          <td class="text-center td-control">
-                              <a title="Remove out of group" data-ng-show="permissionUserGroup.EDIT" ng-click="removeHandbook(handbook.id)"><i class="fa fa-trash-o"></i></a>
+                          <td class="text-center">
+                              <input type="checkbox"
+                                     name="handbook_chk"
+                                     ng-change="catChange(category)"
+                                     ng-model="category.inGroup"
+                              />
+                              <!--data-ng-disabled=""-->
                           </td>
                       </tr>
                   </tbody>

@@ -104,6 +104,9 @@
       $routeProvider.when('/clients/:clientId/user-group/:groupId/categories', {
         templateUrl: 'views/clients/user/category_by_group.html'
       });
+      $routeProvider.when('/clients/:clientId/user-group/:groupId/user/:userId/handbooks', {
+        templateUrl: 'views/clients/user/handbook_by_user.html'
+      });
 
       $routeProvider.when('/clients/:clientId/account/:userId', {
         templateUrl: 'views/clients/user/account.html'

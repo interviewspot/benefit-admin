@@ -3,14 +3,14 @@
     <div class="page page-table" data-ng-controller="UserByGroupCtrl">
         <div class="clients_list" ng-show="!isEditClients">
             <h1 class="ttl-page">User List Of {{group.name}}</h1>
-            <form role="form" data-ng-show="permissionUserGroup.EDIT">
-                <div class="form-group">
-                    <label>Search user by email</label>
-                    <!--<input type="email" class="form-control" id="email">-->
-                    <autocomplete ng-model="modelUser" data="userSearch"></autocomplete>
-                </div>
-                <button type="submit" class="btn btn-default" data-ng-click="adduser()">Add User Into Group</button>
-            </form>
+            <!--<form role="form" data-ng-show="permissionUserGroup.EDIT">-->
+                <!--<div class="form-group">-->
+                    <!--<label>Search user by email</label>-->
+                    <!--&lt;!&ndash;<input type="email" class="form-control" id="email">&ndash;&gt;-->
+                    <!--<autocomplete ng-model="modelUser" data="userSearch"></autocomplete>-->
+                <!--</div>-->
+                <!--<button type="submit" class="btn btn-default" data-ng-click="adduser()">Add User Into Group</button>-->
+            <!--</form>-->
             <br>
             <br>
             </div>
@@ -20,9 +20,10 @@
                       <tr>
                           <th class="text-left">Name</th>
                           <th class="text-left">Email</th>
-                          <th class="text-center">Actions</th>
+                          <th class="text-center">Member</th>
+                          <th class="text-center">Action</th>
                       </tr>
-                      <tr ng-repeat="(i, user) in users" >
+                      <tr ng-repeat="(i, user) in listUser" >
                           <td class="text-left">
                               <a href="">
                                   {{user.first_name + ' ' + user.last_name}}
@@ -33,8 +34,16 @@
                                   {{user.email}}
                               </a>
                           </td>
+                          <td class="text-center">
+                              <input type="checkbox"
+                                     name="handbook_chk"
+                                     ng-change="userChange(user)"
+                                     ng-model="user.inGroup"
+                              />
+                                     <!--data-ng-disabled=""-->
+                          </td>
                           <td class="text-center td-control">
-                              <a title="Remove out of group" data-ng-show="permissionUserGroup.EDIT" ng-click="removeUser(user.id)"><i class="fa fa-trash-o"></i></a>
+                              <a title="Show handbooks belong this user" href="#/clients/{{ clientId }}/user-group/{{ groupId }}/user/{{ user.id }}/handbooks"><i class="fa fa-arrow-circle-right"></i></a>
                           </td>
                       </tr>
                   </tbody>
