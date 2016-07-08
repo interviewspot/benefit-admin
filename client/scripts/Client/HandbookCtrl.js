@@ -6,7 +6,8 @@
       $scope.clientId = $routeParams.clientId;
       $scope.handbookId = $routeParams.handbookId;
       $scope.ClientPage = {
-        tabUrls: {}
+        tabUrls: {
+        }
       };
       clientService.get({
         org_id: $scope.clientId
@@ -20,7 +21,9 @@
           "insurance": '#/clients/' + data.id + '/insurance',
           "healthcare": '#/clients/' + data.id + '/healthcare',
           "imerchant": '#/clients/' + data.id + '/imerchant',
-          "notifications": '#/clients/' + data.id + '/notifications'
+          "notifications": '#/clients/' + data.id + '/notifications',
+          "categories": '#/clients/' +  $scope.clientId + '/categories/handbooks',
+          "categoriesList": '#/clients/' +  $scope.clientId + '/categories/list'
         };
       });
       handbookService.get({

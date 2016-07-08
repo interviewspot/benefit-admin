@@ -2243,7 +2243,7 @@
 
             $scope.handbookChange = function (handbook) {
                 var id = handbook.id;
-                if(handbook.inGroup == false)
+                if(handbook.blocked == false)
                 {
                     Users.delete(_URL.postHandbookToGroup + '/' + id + '/handbook').then(function (results) {
                         if (results.status === 204) {
@@ -2253,7 +2253,7 @@
                             $scope.infoUpdated = 'Updated Fail.';
                         }
                     });
-                } else if (handbook.inGroup == true) {
+                } else if (handbook.blocked == true) {
                     Users.post(_URL.postHandbookToGroup + '/' + id + '/handbooks', {}).then(function (results) {
                         if (results.status === 204) {
                             $scope.infoUpdated = 'Updated Successfully.';
@@ -2270,30 +2270,20 @@
                         return;
                     }
                     $scope.group = results.data;
-                    Users.get(results.data._links.blocked_handbooks.href).then(function (values) {
+                    Users.get(_URL.handbooks).then(function (values) {
                         if (values.status !== 200 || typeof values !== 'object') {
                             return;
                         }
                         $scope.handbooks = values.data._embedded.items;
 
-                        Users.get(_URL.handbooks).then(function ( hbresults ) {
-                            if(hbresults.status !== 200 || typeof hbresults !== 'object')
-                            {
-                                return;
+                        angular.forEach($scope.handbooks, function (handbook) {
+                            if( handbook._links.self.actions.join().indexOf('VIEW') == -1 ||
+                                handbook._links.self.actions.join().indexOf('OPERATE') == -1
+                            ) {
+                                handbook.blocked = true;
                             }
 
-                            var handbookAll = hbresults.data._embedded.items;
-
-                            angular.forEach(handbookAll, function (handbook) {
-                                $scope.handbooks.map(function (item) {
-                                    if(item.id == handbook.id) {
-                                        handbook.inGroup = true;
-                                    }
-                                });
-                            });
-
-                            $scope.listHandbook = handbookAll;
-                        })
+                        });
                     });
 
                 });
