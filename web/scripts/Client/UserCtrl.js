@@ -1244,6 +1244,21 @@
                 Groups: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/usergroups',
             };
 
+            $scope.settings = {
+                contextMenu: [
+                    'remove_row'
+                ]
+            };
+
+            $scope.onAfterRemoveRow = function(a ,b ,c,index, amount) {
+                console.log('onAfterRemoveRow call => index:' + a + ', amount: ' + b);
+                window.a = a;
+                window.b = b;
+                window.c = c;
+                window.inde = index;
+                window.amou = amount;
+
+            }
             getData = function () {
                 Users.get(_URL.Actions).then(function (results) {
                     if (results.status !== 200 || typeof results !== 'object') {
@@ -2170,7 +2185,7 @@
                 };
                 $scope.group = {};
                 $scope.handbooks = [];
-
+                $scope.clientId = $routeParams.clientId;
                 $scope.handbookChange = function (handbook) {
                     var id = handbook.id;
                     if(handbook.inGroup == false)
@@ -2240,6 +2255,8 @@
                 handbooks: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/users/' + $routeParams.userId + '/cloud/books',
                 postHandbookToGroup: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/users/' + $routeParams.userId +'/blockeds',
             };
+
+            $scope.clientId = $routeParams.clientId;
 
             $scope.handbookChange = function (handbook) {
                 var id = handbook.id;
