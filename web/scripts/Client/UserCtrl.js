@@ -1250,20 +1250,12 @@
                 var deleteGroup = confirm('Are you sure you want to delete this group?');
 
                 if(deleteGroup) {
-                    Users.delete(_URL.Groups + '/' + id);
-                    getData();
+                    Users.delete(_URL.Groups + '/' + id).then( function ( results) {
+                        var index = $scope.gridOptions.data.indexOf(row);
+                        $scope.gridOptions.data.splice(index ,1);
+                    })
                 }
             }
-            $scope.$on('ngGridEventStartCellEdit', function () {
-                console.log('edit');
-                elm.focus();
-                elm.select();
-            });
-            $scope.$on('ngGridEventEndCellEdit', function(evt){
-                console.log(evt.targetScope.row.entity);  // the underlying data bound to the row
-                // Detect changes and send entity to server
-            });
-
             $scope.addData = function() {
                 var dataUserGroup = {
                     'user_group': {
@@ -1299,7 +1291,7 @@
                             var dataUserGroupAce = {
                                 'handbook_user_group_ace': {
                                     "userGroup": results.data.id,
-                                    "attributes": getAttributes(item),
+                                    "attributes": "",
                                 }
                             }
                             Users.post(results.data._links.handbook_user_group_aces.href, dataUserGroupAce).then(function (results) {
@@ -1520,14 +1512,19 @@
 
 
             var getAttributes = function (item) {
-                item.splice(0, 4);
+                // item.splice(0, 4);
+
                 var attr = [];
-                angular.forEach(cloudbookAceActions, function (action, index) {
-                    if (item[index] === true) {
-                        attr.push(action);
-                    }
-                });
-                return attr.join(',');
+                if(item.visibility == true) {
+                    attr.push('VISIBILITY');
+                }
+                // angular.forEach(cloudbookAceActions, function (action, index) {
+                //     if (item[index] === true) {
+                //         attr.push(action);
+                //     }
+                // });
+
+                return attr.join();
             }
             $scope.infoUpdated = '';
             $scope.submit = function () {
