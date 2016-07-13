@@ -23,36 +23,27 @@
             <!-- END : MENU -->
 
 
-                            <!-- END : MENU -->
-                            <!-- END : USER LIST -->
-                            <div>
-                                <form name="frm_updateuser" class="frm-updateuser" novalidate>
-                                    <div class="t-r marg-bot ">
-                                        <span class="msg-update">{{infoUpdated}} </span>
-                                        <button type="submit" data-ng-show="permissionUserGroup.EDIT" class="btn btn-brown" ng-click="submit()">
-                                            <i class="fa fa-pencil"></i>
-                                            Update
-                                        </button>
+            <!-- END : MENU -->
+            <!-- END : USER LIST -->
+            <div>
+                <form name="frm_updateuser" class="frm-updateuser" novalidate>
+                    <div class="t-r marg-bot ">
+                        <span class="msg-update">{{infoUpdated}} </span>
+                        <button type="submit" data-ng-show="permissionUserGroup.EDIT" class="btn btn-brown" ng-click="submit()">
+                            <i class="fa fa-pencil"></i>
+                            Save Change
+                        </button>
 
-                                    </div>
-                                    <hot-table
-                                            hot-id="my-handsontable"
-                                            datarows="data"
-                                            min-spare-rows="minSpareRow"
-                                            columns="columns"
-                                            row-headers="false"
-                                            col-headers="colHeaders"
-                                            settings="settings"
-                                            on-after-remove-row="onAfterRemoveRow"
-                                    >
+                    </div>
+                    <div id="grid1" ui-grid="gridOptions" ui-grid-edit class="grid"></div>
 
-                                    </hot-table>
-                                    <div class="row">
-                                        <div class="col-md-6 col-sm-6 col-xs-12 col-user">
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
+                    <button style="margin-top : 10px "  type="button" id="addData" class="btn btn-default" ng-click="addData()">Add</button>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-user">
+                        </div>
+                    </div>
+                </form>
+            </div>
 
         </div>
     </section>

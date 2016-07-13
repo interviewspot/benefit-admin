@@ -69,7 +69,7 @@
                     });
                     return d.promise;
                 },
-                "delete": function (url) {
+                delete: function (url) {
                     var d;
                     d = $q.defer();
                     $http({
