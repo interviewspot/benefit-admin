@@ -5,9 +5,14 @@
     </h1>
     <section class="panel panel-default table-dynamic">
         <div class="panel-body lv1">
-            <div class="table-responsive">
-                <ul class="tb-w800 nav nav-tabs" ng-include="'../views/clients/menu-tab.html'"></ul>
-            </div>
+            <!--<div class="table-responsive">-->
+                <!--<ul class="tb-w800 nav nav-tabs" ng-include="'../views/clients/menu-tab.html'"></ul>-->
+            <!--</div>-->
+            <ol class="mg_breadcrumb breadcrumb">
+                <li><a href="{{ClientPage.tabUrls.info ? ClientPage.tabUrls.info : 'javascript:;'}}" >Company Info</a></li>
+                <li class="active"><a href="{{ClientPage.tabUrls.user ? ClientPage.tabUrls.user : 'javascript:;'}}">Users</a></li>
+                <li class="active">User</li>
+            </ol>
             <!-- END : MENU -->
             <div ng-include="'../views/clients/user/detail.html'"></div>
             <!-- END : TAB -->

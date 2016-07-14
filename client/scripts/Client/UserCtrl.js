@@ -1,6 +1,6 @@
 (function () {
     'use strict';
-    angular.module('app.users', ['ngTouch', 'ui.grid', 'ui.grid.edit'])
+    angular.module('app.users', ['ngTouch', 'ui.grid', 'ui.grid.edit','ui.bootstrap'])
         .controller('UsersCtrl', [
             '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', '$modal', 'UserService', 'Users', 'fetchContact', '$timeout', '$rootScope', 'authHandler', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, $modal, UserService, Users, fetchContact, $timeout, $rootScope, authHandler) {
                 var _URL_users, _getUsers, _updateUser;
@@ -1218,7 +1218,7 @@
             }
         }
     ]).controller('HandbookUserGroupCtrl', [
-        '$scope','$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'hotRegisterer', 'authHandler', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, hotRegisterer, authHandler) {
+        '$scope','$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'hotRegisterer', 'authHandler', '$uibModal', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, hotRegisterer, authHandler ,$uibModal) {
             authHandler.checkLoggedIn();
             $scope.data = [];
             $scope.minSpareRow = 0;
@@ -1256,6 +1256,131 @@
                     })
                 }
             }
+            $scope.open = function (size) {
+                var modalInstance = $uibModal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'myModalContent.html',
+                    controller: 'ModalInstanceCtrl',
+                    size: size
+                });
+
+                modalInstance.result.then(function (name) {
+                    var dataUserGroup = {
+                        'user_group': {
+                            "name": name,
+                            "type": 1,
+                            "organisation": $routeParams.clientId
+                        }
+                    }
+                    Users.post(_URL.Groups, dataUserGroup).then(function (results) {
+
+                        if (typeof results === 'object' && results.status === 201) {
+                            var local = results.headers().location;
+                            var url = config.path.baseURL + local;
+
+
+
+                            //create handboookUserGroupAce
+                            Users.get(url).then(function (results) {
+                                if (results.status !== 200 || typeof results !== 'object') {
+                                    return;
+                                }
+
+                                $scope.gridOptions.data.push({
+                                    "code": "G" + results.data.id,
+                                    "userGroupName": name,
+                                    "listUsers": '#/clients/' + $routeParams.clientId + '/user-group/' + results.data.id + '/users',
+                                    "listHandbooks": '#/clients/' + $routeParams.clientId + '/user-group/' + results.data.id + '/handbooks',
+                                    "visibility": false
+                                });
+
+                                //ACE---------------------------------------------------------
+                                //handbookace
+                                var dataUserGroupAce = {
+                                    'handbook_user_group_ace': {
+                                        "userGroup": results.data.id,
+                                        "attributes": "",
+                                    }
+                                }
+                                Users.post(results.data._links.handbook_user_group_aces.href, dataUserGroupAce).then(function (results) {
+                                    if (typeof results === 'object' && results.status === 201) {
+                                        $scope.infoUpdated = 'Updated Successfully.';
+                                    } else {
+                                        $scope.infoUpdated = 'Updated Fail.';
+                                    }
+
+                                }, function (error) {
+                                    return console.log(error);
+                                });
+                                //userace
+                                var dataUserGroupAce = {
+                                    'user_user_group_ace': {
+                                        "userGroup": results.data.id,
+                                        "attributes": "",
+                                    }
+                                }
+                                Users.post(results.data._links.user_user_group_aces.href, dataUserGroupAce).then(function (results) {
+                                    if (typeof results === 'object' && results.status === 201) {
+                                        $scope.infoUpdated = 'Updated Successfully.';
+                                    } else {
+                                        $scope.infoUpdated = 'Updated Fail.';
+                                    }
+
+                                }, function (error) {
+                                    return console.log(error);
+                                });
+                                //usergroupace
+                                var dataUserGroupAce = {
+                                    'user_group_user_group_ace': {
+                                        "userGroup": results.data.id,
+                                        "attributes": "",
+                                    }
+                                }
+                                Users.post(results.data._links.user_group_user_group_aces.href, dataUserGroupAce).then(function (results) {
+                                    if (typeof results === 'object' && results.status === 201) {
+                                        $scope.infoUpdated = 'Updated Successfully.';
+                                    } else {
+                                        $scope.infoUpdated = 'Updated Fail.';
+                                    }
+
+                                }, function (error) {
+                                    return console.log(error);
+                                });
+                                //categoryace
+                                var dataUserGroupAce = {
+                                    'category_user_group_ace': {
+                                        "userGroup": results.data.id,
+                                        "attributes": "",
+                                    }
+                                }
+                                Users.post(results.data._links.category_user_group_aces.href, dataUserGroupAce).then(function (results) {
+                                    if (typeof results === 'object' && results.status === 201) {
+                                        $scope.infoUpdated = 'Updated Successfully.';
+                                    } else {
+                                        $scope.infoUpdated = 'Updated Fail.';
+                                    }
+
+                                }, function (error) {
+                                    return console.log(error);
+                                });
+                                //END ACE-----------------------------------------------------------
+
+                            });
+
+                        } else {
+                            $scope.infoUpdated = 'Updated Fail.';
+                        }
+
+
+                    }, function (error) {
+                        return console.log(error);
+                    });
+                }, function () {
+                    $log.info('Modal dismissed at: ' + new Date());
+                });
+            };
+
+
             $scope.addData = function() {
                 var dataUserGroup = {
                     'user_group': {
@@ -2383,6 +2508,16 @@
 
         }
 
-    ]);
+    ]).controller('ModalInstanceCtrl', function ($scope, $uibModalInstance) {
+
+        $scope.name = '';
+        $scope.ok = function () {
+            $uibModalInstance.close($scope.name);
+        };
+
+        $scope.cancel = function () {
+            $uibModalInstance.dismiss('cancel');
+        };
+    });
 
 }).call(this);
