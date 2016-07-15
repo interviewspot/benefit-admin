@@ -2630,7 +2630,18 @@
                             ) {
                                 handbook.blocked = true;
                             }
-
+                            $scope.handbook.locale = 'en_us';
+                            return Users.get(handbook._links.translations.href).then(function(res) {
+                                if (res.status !== 200 || typeof res !== 'object') {
+                                    return;
+                                }
+                                $scope.handbook['translations'] = res.data;
+                                if ($scope.handbook.translations['en_us']) {
+                                    $scope.handbook.title = $scope.handbook.translations['en_us'].title;
+                                }
+                            }, function(error) {
+                                console.log(error);
+                            });
                         });
                     });
 

@@ -20,7 +20,7 @@
 				<tr ng-repeat="(i, handbook) in handbooks" >
 					<td class="text-left">
 						<a href="">
-							{{handbook.title}}
+							{{ handbook.translations['en_us'].title ? handbook.translations['en_us'].title : handbook.title}}
 						</a>
 					</td>
 					<td class="text-center">
