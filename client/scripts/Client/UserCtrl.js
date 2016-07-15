@@ -1494,9 +1494,6 @@
                 });
             };
 
-            $scope.toggle = function () {
-
-            }
             var linkCellTemplate = '<div class="ngCellText" ng-class="col.colIndex()">' +
                 '  <a href="{{COL_FIELD}}">Click to view</a>' +
                 '</div>';
@@ -1696,7 +1693,7 @@
             }
         }
     ]).controller('UserUserGroupCtrl', [
-        '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'hotRegisterer', 'authHandler', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, hotRegisterer, authHandler) {
+        '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'hotRegisterer', 'authHandler', '$uibModal', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, hotRegisterer, authHandler ,$uibModal) {
             authHandler.checkLoggedIn();
             $scope.data = [];
             $scope.minSpareRow = 0;
@@ -1718,6 +1715,181 @@
             _URL = {
                 Actions: config.path.baseURL + '/app/cloudbook/acl/user/acl/actions',
                 Groups: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/usergroups',
+            };
+
+            $scope.deleteThisRow = function(row) {
+                var id = parseInt(row.code.substring(1));
+                var deleteGroup = confirm('Are you sure you want to delete this group?');
+
+                if(deleteGroup) {
+                    Users.delete(_URL.Groups + '/' + id).then( function ( results) {
+                        var index = $scope.gridOptions.data.indexOf(row);
+                        $scope.gridOptions.data.splice(index ,1);
+                    })
+                }
+            }
+            $scope.open = function (size) {
+                var modalInstance = $uibModal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'myModalContent.html',
+                    controller: 'ModalInstanceCtrl',
+                    size: size
+                });
+
+                modalInstance.result.then(function (name) {
+                    var dataUserGroup = {
+                        'user_group': {
+                            "name": name,
+                            "type": 1,
+                            "organisation": $routeParams.clientId
+                        }
+                    }
+                    Users.post(_URL.Groups, dataUserGroup).then(function (results) {
+
+                        if (typeof results === 'object' && results.status === 201) {
+                            var local = results.headers().location;
+                            var url = config.path.baseURL + local;
+
+
+
+                            //create handboookUserGroupAce
+                            Users.get(url).then(function (results) {
+                                if (results.status !== 200 || typeof results !== 'object') {
+                                    return;
+                                }
+
+                                $scope.gridOptions.data.push({
+                                    "code": "G" + results.data.id,
+                                    "userGroupName": name,
+                                    "listUsers": '#/clients/' + $routeParams.clientId + '/user-group/' + results.data.id + '/users',
+                                    "listHandbooks": '#/clients/' + $routeParams.clientId + '/user-group/' + results.data.id + '/handbooks',
+                                    "visibility": false
+                                });
+
+                                //ACE---------------------------------------------------------
+                                //handbookace
+                                var dataUserGroupAce = {
+                                    'handbook_user_group_ace': {
+                                        "userGroup": results.data.id,
+                                        "attributes": "",
+                                    }
+                                }
+                                Users.post(results.data._links.handbook_user_group_aces.href, dataUserGroupAce).then(function (results) {
+                                    if (typeof results === 'object' && results.status === 201) {
+                                        $scope.infoUpdated = 'Updated Successfully.';
+                                    } else {
+                                        $scope.infoUpdated = 'Updated Fail.';
+                                    }
+
+                                }, function (error) {
+                                    return console.log(error);
+                                });
+                                //userace
+                                var dataUserGroupAce = {
+                                    'user_user_group_ace': {
+                                        "userGroup": results.data.id,
+                                        "attributes": "",
+                                    }
+                                }
+                                Users.post(results.data._links.user_user_group_aces.href, dataUserGroupAce).then(function (results) {
+                                    if (typeof results === 'object' && results.status === 201) {
+                                        $scope.infoUpdated = 'Updated Successfully.';
+                                    } else {
+                                        $scope.infoUpdated = 'Updated Fail.';
+                                    }
+
+                                }, function (error) {
+                                    return console.log(error);
+                                });
+                                //usergroupace
+                                var dataUserGroupAce = {
+                                    'user_group_user_group_ace': {
+                                        "userGroup": results.data.id,
+                                        "attributes": "",
+                                    }
+                                }
+                                Users.post(results.data._links.user_group_user_group_aces.href, dataUserGroupAce).then(function (results) {
+                                    if (typeof results === 'object' && results.status === 201) {
+                                        $scope.infoUpdated = 'Updated Successfully.';
+                                    } else {
+                                        $scope.infoUpdated = 'Updated Fail.';
+                                    }
+
+                                }, function (error) {
+                                    return console.log(error);
+                                });
+                                //categoryace
+                                var dataUserGroupAce = {
+                                    'category_user_group_ace': {
+                                        "userGroup": results.data.id,
+                                        "attributes": "",
+                                    }
+                                }
+                                Users.post(results.data._links.category_user_group_aces.href, dataUserGroupAce).then(function (results) {
+                                    if (typeof results === 'object' && results.status === 201) {
+                                        $scope.infoUpdated = 'Updated Successfully.';
+                                    } else {
+                                        $scope.infoUpdated = 'Updated Fail.';
+                                    }
+
+                                }, function (error) {
+                                    return console.log(error);
+                                });
+                                //END ACE-----------------------------------------------------------
+
+                            });
+
+                        } else {
+                            $scope.infoUpdated = 'Updated Fail.';
+                        }
+
+
+                    }, function (error) {
+                        return console.log(error);
+                    });
+                }, function () {
+                    $log.info('Modal dismissed at: ' + new Date());
+                });
+            };
+
+
+            //Update new grid
+            var linkCellTemplate = '<div class="ngCellText" ng-class="col.colIndex()">' +
+                '  <a href="{{COL_FIELD}}">Click to view</a>' +
+                '</div>';
+
+            var actionCellTemplate = '<div class="grid-action-cell">'
+                + '<a style="margin-left : 15px" ng-click="editRow(row.entity)" href=""><span><i class="fa fa-edit"></i></span></a>'
+                +'<a style="margin-left : 15px" ng-click="grid.appScope.deleteThisRow(row.entity)" href=""><span><i class="fa fa-trash-o"></i></span></a>'
+                +'</div>'
+            var data = [];
+            $scope.gridOptions = {
+                enableSorting: true,
+                columnDefs: [
+                    {
+                        name: 'code',
+                        displayName : 'Code',
+                        enableCellEdit: false,
+                    },
+                    {
+                        name: 'userGroupName',
+                        displayName : 'User Group Name'
+                    },
+                    {
+                        name: 'listUsers',
+                        displayName: 'List Users',
+                        enableCellEdit: false,
+                        cellTemplate: linkCellTemplate
+                    },
+                    {
+                        displayName: 'Actions',
+                        name: 'action',
+                        enableCellEdit: false,
+                        cellTemplate: actionCellTemplate
+                    }
+
+                ],
+                data : data
             };
 
             getData = function () {
@@ -1744,37 +1916,12 @@
                                 if (results.status !== 200 || typeof results !== 'object') {
                                     return;
                                 }
-                                var cloudbookAceGroup = [];
-                                cloudbookAceGroup.push('G'+group.id);
-                                cloudbookAceGroup.push(group.name);
-                                cloudbookAceGroup.push('<a href="#/clients/' + $routeParams.clientId + '/user-group/' + group.id + '/users" title="Click to view user of this group">Click To View</a>');
-                                if (results.data._embedded.items.length) {
-                                    var listActionAllow = results.data._embedded.items[0].attributes;
-                                    listCloudbookUrl[group.id] = group._links.user_user_group_aces.href + '/' + results.data._embedded.items[0].id;
+                                var cloudbookAceGroup = {};
+                                cloudbookAceGroup.code = 'G' + group.id ;
+                                cloudbookAceGroup.userGroupName = group.name ;
+                                cloudbookAceGroup.listUsers = '#/clients/' + $routeParams.clientId + '/user-group/' + group.id + '/users';
+                                data.push(cloudbookAceGroup);
 
-                                    angular.forEach(cloudbookAceActions, function (action) {
-                                        var permission = false;
-                                        if (listActionAllow.indexOf(action) != -1) {
-                                            permission = true;
-                                        }
-                                        cloudbookAceGroup.push(permission);
-                                        if (index === 0) {
-                                            $scope.colHeaders.push(action)
-                                            $scope.columns.push({type: 'checkbox'});
-                                        }
-                                    });
-                                    $scope.data.push(cloudbookAceGroup);
-                                } else {
-                                    angular.forEach(cloudbookAceActions, function (action) {
-                                        var permission = false;
-                                        cloudbookAceGroup.push(permission);
-                                        if (index === 0) {
-                                            $scope.colHeaders.push(action)
-                                            $scope.columns.push({type: 'checkbox'});
-                                        }
-                                    });
-                                    $scope.data.push(cloudbookAceGroup);
-                                }
 
                                 buildData(--index);
 
@@ -1804,107 +1951,48 @@
                 return attr.join(',');
             }
             $scope.infoUpdated = '';
+
+            var getAttributes = function (item) {
+                // item.splice(0, 4);
+
+                var attr = [];
+                if(item.visibility == true) {
+                    attr.push('VISIBILITY');
+                }
+                // angular.forEach(cloudbookAceActions, function (action, index) {
+                //     if (item[index] === true) {
+                //         attr.push(action);
+                //     }
+                // });
+
+                return attr.join();
+            }
+
             $scope.submit = function () {
-                var dataSubmit = hotRegisterer.getInstance('my-handsontable').getData();
+                var dataSubmit = $scope.gridOptions.data;
                 angular.forEach(dataSubmit, function (item) {
-                    if (item[0] === null) {
-                        if (item[1] != null) {
-                            //create group
-                            var dataUserGroup = {
-                                'user_group': {
-                                    "name": item[1],
-                                    "type": 1,
-                                    "organisation": $routeParams.clientId
+                    //Update Group
+                    var dataUserGroup = {
+                        'user_group': {
+                            "name": item.userGroupName,
+                            "type": 1,
+                            "organisation": $routeParams.clientId
+                        }
+                    }
+                    var userGroupId = parseInt(item.code.substring(1));
+
+                    Users.put(_URL.Groups + '/' + userGroupId, dataUserGroup).then(function (results) {
+                        if (results.status === 204) {
+                            //update handboookUserGroupAce
+                            var dataUserGroupAce = {
+                                'handbook_user_group_ace': {
+                                    "userGroup": userGroupId,
+                                    "attributes": getAttributes(item),
                                 }
                             }
-                            Users.post(_URL.Groups, dataUserGroup).then(function (results) {
-
-                                if (typeof results === 'object' && results.status === 201) {
-                                    var local = results.headers().location;
-                                    var url = config.path.baseURL + local;
-                                    //create handboookUserGroupAce
-                                    Users.get(url).then(function (results) {
-                                        if (results.status !== 200 || typeof results !== 'object') {
-                                            return;
-                                        }
-
-
-
-                                        //ACE---------------------------------------------------------
-                                        //handbookace
-                                        var dataUserGroupAce = {
-                                            'handbook_user_group_ace': {
-                                                "userGroup": results.data.id,
-                                                "attributes": "",
-                                            }
-                                        }
-                                        Users.post(results.data._links.handbook_user_group_aces.href, dataUserGroupAce).then(function (results) {
-                                            if (typeof results === 'object' && results.status === 201) {
-                                                $scope.infoUpdated = 'Updated Successfully.';
-                                            } else {
-                                                $scope.infoUpdated = 'Updated Fail.';
-                                            }
-
-                                        }, function (error) {
-                                            return console.log(error);
-                                        });
-                                        //userace
-                                        var dataUserGroupAce = {
-                                            'user_user_group_ace': {
-                                                "userGroup": results.data.id,
-                                                "attributes": getAttributes(item),
-                                            }
-                                        }
-                                        Users.post(results.data._links.user_user_group_aces.href, dataUserGroupAce).then(function (results) {
-                                            if (typeof results === 'object' && results.status === 201) {
-                                                $scope.infoUpdated = 'Updated Successfully.';
-                                            } else {
-                                                $scope.infoUpdated = 'Updated Fail.';
-                                            }
-
-                                        }, function (error) {
-                                            return console.log(error);
-                                        });
-                                        //usergroupace
-                                        var dataUserGroupAce = {
-                                            'user_group_user_group_ace': {
-                                                "userGroup": results.data.id,
-                                                "attributes": "",
-                                            }
-                                        }
-                                        Users.post(results.data._links.user_group_user_group_aces.href, dataUserGroupAce).then(function (results) {
-                                            if (typeof results === 'object' && results.status === 201) {
-                                                $scope.infoUpdated = 'Updated Successfully.';
-                                            } else {
-                                                $scope.infoUpdated = 'Updated Fail.';
-                                            }
-
-                                        }, function (error) {
-                                            return console.log(error);
-                                        });
-                                        //categoryace
-                                        var dataUserGroupAce = {
-                                            'category_user_group_ace': {
-                                                "userGroup": results.data.id,
-                                                "attributes": "",
-                                            }
-                                        }
-                                        Users.post(results.data._links.category_user_group_aces.href, dataUserGroupAce).then(function (results) {
-                                            if (typeof results === 'object' && results.status === 201) {
-                                                $scope.infoUpdated = 'Updated Successfully.';
-                                            } else {
-                                                $scope.infoUpdated = 'Updated Fail.';
-                                            }
-
-                                        }, function (error) {
-                                            return console.log(error);
-                                        });
-                                        //END ACE-----------------------------------------------------------
-
-
-
-                                    });
-
+                            Users.put(listCloudbookUrl[userGroupId], dataUserGroupAce).then(function (results) {
+                                if (results.status === 204) {
+                                    $scope.infoUpdated = 'Updated Successfully.';
                                 } else {
                                     $scope.infoUpdated = 'Updated Fail.';
                                 }
@@ -1913,53 +2001,18 @@
                                 return console.log(error);
                             });
 
-
+                        } else {
+                            $scope.infoUpdated = 'Updated Fail.';
                         }
-                    } else {
-                        //Update Group
-                        var dataUserGroup = {
-                            'user_group': {
-                                "name": item[1],
-                                "type": 1,
-                                "organisation": $routeParams.clientId
-                            }
-                        }
-                        var userGroupId = item[0].substr(1);
 
-                        Users.put(_URL.Groups + '/' + userGroupId, dataUserGroup).then(function (results) {
-                            if (results.status === 204) {
-                                //update handboookUserGroupAce
-                                var dataUserGroupAce = {
-                                    'user_user_group_ace': {
-                                        "userGroup": userGroupId,
-                                        "attributes": getAttributes(item),
-                                    }
-                                }
-                                Users.put(listCloudbookUrl[userGroupId], dataUserGroupAce).then(function (results) {
-                                    if (results.status === 204) {
-                                        $scope.infoUpdated = 'Updated Successfully.';
-                                    } else {
-                                        $scope.infoUpdated = 'Updated Fail.';
-                                    }
-
-                                }, function (error) {
-                                    return console.log(error);
-                                });
-
-                            } else {
-                                $scope.infoUpdated = 'Updated Fail.';
-                            }
-
-                        }, function (error) {
-                            return console.log(error);
-                        });
-
-                    }
+                    }, function (error) {
+                        return console.log(error);
+                    });
                 });
             }
         }
     ]).controller('UserGroupUserGroupCtrl', [
-        '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'hotRegisterer', 'authHandler', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, hotRegisterer, authHandler) {
+        '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'hotRegisterer', 'authHandler' , '$uibModal' , function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, hotRegisterer, authHandler, $uibModal) {
             authHandler.checkLoggedIn();
             $scope.data = [];
             $scope.minSpareRow = 0;
@@ -1983,6 +2036,181 @@
                 Groups: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/usergroups',
             };
 
+            $scope.deleteThisRow = function(row) {
+                var id = parseInt(row.code.substring(1));
+                var deleteGroup = confirm('Are you sure you want to delete this group?');
+
+                if(deleteGroup) {
+                    Users.delete(_URL.Groups + '/' + id).then( function ( results) {
+                        var index = $scope.gridOptions.data.indexOf(row);
+                        $scope.gridOptions.data.splice(index ,1);
+                    })
+                }
+            }
+            $scope.open = function (size) {
+                var modalInstance = $uibModal.open({
+                    animation: $scope.animationsEnabled,
+                    templateUrl: 'myModalContent.html',
+                    controller: 'ModalInstanceCtrl',
+                    size: size
+                });
+
+                modalInstance.result.then(function (name) {
+                    var dataUserGroup = {
+                        'user_group': {
+                            "name": name,
+                            "type": 1,
+                            "organisation": $routeParams.clientId
+                        }
+                    }
+                    Users.post(_URL.Groups, dataUserGroup).then(function (results) {
+
+                        if (typeof results === 'object' && results.status === 201) {
+                            var local = results.headers().location;
+                            var url = config.path.baseURL + local;
+
+
+
+                            //create handboookUserGroupAce
+                            Users.get(url).then(function (results) {
+                                if (results.status !== 200 || typeof results !== 'object') {
+                                    return;
+                                }
+
+                                $scope.gridOptions.data.push({
+                                    "code": "G" + results.data.id,
+                                    "userGroupName": name,
+                                    "listUsers": '#/clients/' + $routeParams.clientId + '/user-group/' + results.data.id + '/users',
+                                    "listHandbooks": '#/clients/' + $routeParams.clientId + '/user-group/' + results.data.id + '/handbooks',
+                                    "visibility": false
+                                });
+
+                                //ACE---------------------------------------------------------
+                                //handbookace
+                                var dataUserGroupAce = {
+                                    'handbook_user_group_ace': {
+                                        "userGroup": results.data.id,
+                                        "attributes": "",
+                                    }
+                                }
+                                Users.post(results.data._links.handbook_user_group_aces.href, dataUserGroupAce).then(function (results) {
+                                    if (typeof results === 'object' && results.status === 201) {
+                                        $scope.infoUpdated = 'Updated Successfully.';
+                                    } else {
+                                        $scope.infoUpdated = 'Updated Fail.';
+                                    }
+
+                                }, function (error) {
+                                    return console.log(error);
+                                });
+                                //userace
+                                var dataUserGroupAce = {
+                                    'user_user_group_ace': {
+                                        "userGroup": results.data.id,
+                                        "attributes": "",
+                                    }
+                                }
+                                Users.post(results.data._links.user_user_group_aces.href, dataUserGroupAce).then(function (results) {
+                                    if (typeof results === 'object' && results.status === 201) {
+                                        $scope.infoUpdated = 'Updated Successfully.';
+                                    } else {
+                                        $scope.infoUpdated = 'Updated Fail.';
+                                    }
+
+                                }, function (error) {
+                                    return console.log(error);
+                                });
+                                //usergroupace
+                                var dataUserGroupAce = {
+                                    'user_group_user_group_ace': {
+                                        "userGroup": results.data.id,
+                                        "attributes": "",
+                                    }
+                                }
+                                Users.post(results.data._links.user_group_user_group_aces.href, dataUserGroupAce).then(function (results) {
+                                    if (typeof results === 'object' && results.status === 201) {
+                                        $scope.infoUpdated = 'Updated Successfully.';
+                                    } else {
+                                        $scope.infoUpdated = 'Updated Fail.';
+                                    }
+
+                                }, function (error) {
+                                    return console.log(error);
+                                });
+                                //categoryace
+                                var dataUserGroupAce = {
+                                    'category_user_group_ace': {
+                                        "userGroup": results.data.id,
+                                        "attributes": "",
+                                    }
+                                }
+                                Users.post(results.data._links.category_user_group_aces.href, dataUserGroupAce).then(function (results) {
+                                    if (typeof results === 'object' && results.status === 201) {
+                                        $scope.infoUpdated = 'Updated Successfully.';
+                                    } else {
+                                        $scope.infoUpdated = 'Updated Fail.';
+                                    }
+
+                                }, function (error) {
+                                    return console.log(error);
+                                });
+                                //END ACE-----------------------------------------------------------
+
+                            });
+
+                        } else {
+                            $scope.infoUpdated = 'Updated Fail.';
+                        }
+
+
+                    }, function (error) {
+                        return console.log(error);
+                    });
+                }, function () {
+                    $log.info('Modal dismissed at: ' + new Date());
+                });
+            };
+
+
+            //Update new grid
+            var linkCellTemplate = '<div class="ngCellText" ng-class="col.colIndex()">' +
+                '  <a href="{{COL_FIELD}}">Click to view</a>' +
+                '</div>';
+
+            var actionCellTemplate = '<div class="grid-action-cell">'
+                + '<a style="margin-left : 15px" ng-click="editRow(row.entity)" href=""><span><i class="fa fa-edit"></i></span></a>'
+                +'<a style="margin-left : 15px" ng-click="grid.appScope.deleteThisRow(row.entity)" href=""><span><i class="fa fa-trash-o"></i></span></a>'
+                +'</div>'
+            var data = [];
+            $scope.gridOptions = {
+                enableSorting: true,
+                columnDefs: [
+                    {
+                        name: 'code',
+                        displayName : 'Code',
+                        enableCellEdit: false,
+                    },
+                    {
+                        name: 'userGroupName',
+                        displayName : 'User Group Name'
+                    },
+                    {
+                        name: 'listUsers',
+                        displayName: 'List Users',
+                        enableCellEdit: false,
+                        cellTemplate: linkCellTemplate
+                    },
+                    {
+                        displayName: 'Actions',
+                        name: 'action',
+                        enableCellEdit: false,
+                        cellTemplate: actionCellTemplate
+                    }
+
+                ],
+                data : data
+            };
+
             getData = function () {
                 Users.get(_URL.Actions).then(function (results) {
                     if (results.status !== 200 || typeof results !== 'object') {
@@ -2003,42 +2231,16 @@
 
                             var group = groupResults.data._embedded.items[index];
 
-                            Users.get(group._links.user_group_user_group_aces.href).then(function (results) {
+                            Users.get(group._links.user_user_group_aces.href).then(function (results) {
                                 if (results.status !== 200 || typeof results !== 'object') {
                                     return;
                                 }
+                                var cloudbookAceGroup = {};
+                                cloudbookAceGroup.code = 'G' + group.id ;
+                                cloudbookAceGroup.userGroupName = group.name ;
+                                cloudbookAceGroup.listUsers = '#/clients/' + $routeParams.clientId + '/user-group/' + group.id + '/users';
+                                data.push(cloudbookAceGroup);
 
-                                var cloudbookAceGroup = [];
-                                cloudbookAceGroup.push('G'+group.id);
-                                cloudbookAceGroup.push(group.name);
-                                cloudbookAceGroup.push('<a href="#/clients/' + $routeParams.clientId + '/user-group/' + group.id + '/users" title="Click to view user of this group">Click To View</a>');
-                                if (results.data._embedded.items.length) {
-                                    var listActionAllow = results.data._embedded.items[0].attributes;
-                                    listCloudbookUrl[group.id] = group._links.user_group_user_group_aces.href + '/' + results.data._embedded.items[0].id;
-
-                                    angular.forEach(cloudbookAceActions, function (action) {
-                                        var permission = false;
-                                        if (listActionAllow.indexOf(action) != -1) {
-                                            permission = true;
-                                        }
-                                        cloudbookAceGroup.push(permission);
-                                        if (index === 0) {
-                                            $scope.colHeaders.push(action)
-                                            $scope.columns.push({type: 'checkbox'});
-                                        }
-                                    });
-                                    $scope.data.push(cloudbookAceGroup);
-                                } else {
-                                    angular.forEach(cloudbookAceActions, function (action) {
-                                        var permission = false;
-                                        cloudbookAceGroup.push(permission);
-                                        if (index === 0) {
-                                            $scope.colHeaders.push(action)
-                                            $scope.columns.push({type: 'checkbox'});
-                                        }
-                                    });
-                                    $scope.data.push(cloudbookAceGroup);
-                                }
 
                                 buildData(--index);
 
@@ -2068,104 +2270,48 @@
                 return attr.join(',');
             }
             $scope.infoUpdated = '';
+
+            var getAttributes = function (item) {
+                // item.splice(0, 4);
+
+                var attr = [];
+                if(item.visibility == true) {
+                    attr.push('VISIBILITY');
+                }
+                // angular.forEach(cloudbookAceActions, function (action, index) {
+                //     if (item[index] === true) {
+                //         attr.push(action);
+                //     }
+                // });
+
+                return attr.join();
+            }
+
             $scope.submit = function () {
-                var dataSubmit = hotRegisterer.getInstance('my-handsontable').getData();
+                var dataSubmit = $scope.gridOptions.data;
                 angular.forEach(dataSubmit, function (item) {
-                    if (item[0] === null) {
-                        if (item[1] != null) {
-                            //create group
-                            var dataUserGroup = {
-                                'user_group': {
-                                    "name": item[1],
-                                    "type": 1,
-                                    "organisation": $routeParams.clientId
+                    //Update Group
+                    var dataUserGroup = {
+                        'user_group': {
+                            "name": item.userGroupName,
+                            "type": 1,
+                            "organisation": $routeParams.clientId
+                        }
+                    }
+                    var userGroupId = parseInt(item.code.substring(1));
+
+                    Users.put(_URL.Groups + '/' + userGroupId, dataUserGroup).then(function (results) {
+                        if (results.status === 204) {
+                            //update handboookUserGroupAce
+                            var dataUserGroupAce = {
+                                'handbook_user_group_ace': {
+                                    "userGroup": userGroupId,
+                                    "attributes": getAttributes(item),
                                 }
                             }
-                            Users.post(_URL.Groups, dataUserGroup).then(function (results) {
-
-                                if (typeof results === 'object' && results.status === 201) {
-                                    var local = results.headers().location;
-                                    var url = config.path.baseURL + local;
-                                    //create handboookUserGroupAce
-                                    Users.get(url).then(function (results) {
-                                        if (results.status !== 200 || typeof results !== 'object') {
-                                            return;
-                                        }
-
-
-                                        //ACE---------------------------------------------------------
-                                        //handbookace
-                                        var dataUserGroupAce = {
-                                            'handbook_user_group_ace': {
-                                                "userGroup": results.data.id,
-                                                "attributes": "",
-                                            }
-                                        }
-                                        Users.post(results.data._links.handbook_user_group_aces.href, dataUserGroupAce).then(function (results) {
-                                            if (typeof results === 'object' && results.status === 201) {
-                                                $scope.infoUpdated = 'Updated Successfully.';
-                                            } else {
-                                                $scope.infoUpdated = 'Updated Fail.';
-                                            }
-
-                                        }, function (error) {
-                                            return console.log(error);
-                                        });
-                                        //userace
-                                        var dataUserGroupAce = {
-                                            'user_user_group_ace': {
-                                                "userGroup": results.data.id,
-                                                "attributes": "",
-                                            }
-                                        }
-                                        Users.post(results.data._links.user_user_group_aces.href, dataUserGroupAce).then(function (results) {
-                                            if (typeof results === 'object' && results.status === 201) {
-                                                $scope.infoUpdated = 'Updated Successfully.';
-                                            } else {
-                                                $scope.infoUpdated = 'Updated Fail.';
-                                            }
-
-                                        }, function (error) {
-                                            return console.log(error);
-                                        });
-                                        //usergroupace
-                                        var dataUserGroupAce = {
-                                            'user_group_user_group_ace': {
-                                                "userGroup": results.data.id,
-                                                "attributes": getAttributes(item),
-                                            }
-                                        }
-                                        Users.post(results.data._links.user_group_user_group_aces.href, dataUserGroupAce).then(function (results) {
-                                            if (typeof results === 'object' && results.status === 201) {
-                                                $scope.infoUpdated = 'Updated Successfully.';
-                                            } else {
-                                                $scope.infoUpdated = 'Updated Fail.';
-                                            }
-
-                                        }, function (error) {
-                                            return console.log(error);
-                                        });
-                                        //categoryace
-                                        var dataUserGroupAce = {
-                                            'category_user_group_ace': {
-                                                "userGroup": results.data.id,
-                                                "attributes": "",
-                                            }
-                                        }
-                                        Users.post(results.data._links.category_user_group_aces.href, dataUserGroupAce).then(function (results) {
-                                            if (typeof results === 'object' && results.status === 201) {
-                                                $scope.infoUpdated = 'Updated Successfully.';
-                                            } else {
-                                                $scope.infoUpdated = 'Updated Fail.';
-                                            }
-
-                                        }, function (error) {
-                                            return console.log(error);
-                                        });
-                                        //END ACE-----------------------------------------------------------
-
-                                    });
-
+                            Users.put(listCloudbookUrl[userGroupId], dataUserGroupAce).then(function (results) {
+                                if (results.status === 204) {
+                                    $scope.infoUpdated = 'Updated Successfully.';
                                 } else {
                                     $scope.infoUpdated = 'Updated Fail.';
                                 }
@@ -2174,48 +2320,13 @@
                                 return console.log(error);
                             });
 
-
+                        } else {
+                            $scope.infoUpdated = 'Updated Fail.';
                         }
-                    } else {
-                        //Update Group
-                        var dataUserGroup = {
-                            'user_group': {
-                                "name": item[1],
-                                "type": 1,
-                                "organisation": $routeParams.clientId
-                            }
-                        }
-                        var userGroupId = item[0].substr(1);
 
-                        Users.put(_URL.Groups + '/' + userGroupId, dataUserGroup).then(function (results) {
-                            if (results.status === 204) {
-                                //update handboookUserGroupAce
-                                var dataUserGroupAce = {
-                                    'user_group_user_group_ace': {
-                                        "userGroup": userGroupId,
-                                        "attributes": getAttributes(item),
-                                    }
-                                }
-                                Users.put(listCloudbookUrl[userGroupId], dataUserGroupAce).then(function (results) {
-                                    if (results.status === 204) {
-                                        $scope.infoUpdated = 'Updated Successfully.';
-                                    } else {
-                                        $scope.infoUpdated = 'Updated Fail.';
-                                    }
-
-                                }, function (error) {
-                                    return console.log(error);
-                                });
-
-                            } else {
-                                $scope.infoUpdated = 'Updated Fail.';
-                            }
-
-                        }, function (error) {
-                            return console.log(error);
-                        });
-
-                    }
+                    }, function (error) {
+                        return console.log(error);
+                    });
                 });
             }
         }

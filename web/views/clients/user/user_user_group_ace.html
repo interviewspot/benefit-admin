@@ -23,34 +23,41 @@
             </div>
             <!-- END : MENU -->
 
+            <script type="text/ng-template" id="myModalContent.html">
+                <div class="modal-header">
+                    <h3 class="modal-title">Please Add Group Name</h3>
+                </div>
+                <div class="modal-body">
+                    <label for="usr">Group Name:</label>
+                    <input type="text" class="form-control" ng-model="name" id="usr">
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
+                    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+                </div>
+            </script>
+            <!-- END : MENU -->
+            <!-- END : USER LIST -->
+            <div>
+                <form name="frm_updateuser" class="frm-updateuser" novalidate>
+                    <div class="t-r marg-bot ">
+                        <span class="msg-update"> {{infoUpdated}}</span>
+                        <button type="submit" data-ng-show="permissionUserGroup.EDIT" class="btn btn-brown" ng-click="submit()">
+                            <i class="fa fa-pencil"></i>
+                            Save Change
+                        </button>
+                    </div>
 
-                            <!-- END : MENU -->
-                            <!-- END : USER LIST -->
-                            <div>
-                                <form name="frm_updateuser" class="frm-updateuser" novalidate>
-                                    <div class="t-r marg-bot ">
-                                        <span class="msg-update"> {{infoUpdated}}</span>
-                                        <button type="submit" data-ng-show="permissionUserGroup.EDIT" class="btn btn-brown" ng-click="submit()">
-                                            <i class="fa fa-pencil"></i>
-                                            Update
-                                        </button>
-                                    </div>
-                                    <hot-table
-                                            hot-id="my-handsontable"
-                                            datarows="data"
-                                            min-spare-rows="minSpareRow"
-                                            columns="columns"
-                                            row-headers="false"
-                                            col-headers="colHeaders"
-                                    >
+                    <div id="grid1" ui-grid="gridOptions" ui-grid-edit class="grid"></div>
 
-                                    </hot-table>
-                                    <div class="row">
-                                        <div class="col-md-6 col-sm-6 col-xs-12 col-user">
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
+                    <button style="margin-top : 10px "  type="button" id="addData" class="btn btn-default" ng-click="open('sm')">Add</button>
+
+                    <div class="row">
+                        <div class="col-md-6 col-sm-6 col-xs-12 col-user">
+                        </div>
+                    </div>
+                </form>
+            </div>
 
         </div>
     </section>
