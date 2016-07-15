@@ -16,9 +16,9 @@
                 };
                 _getUsers = function (limit, goPage) {
                     return fetchContact.get(_URL_users.list + '?limit=' + limit + '&page=' + goPage).then(function (res) {
-                        
-                        
-                        
+
+
+
                         var i, item, _fn, _ref;
                         console.log(_URL_users.list);
                         if (res.data._embedded.items.length) {
@@ -207,7 +207,7 @@
                         $scope.user.position_data = pos.data;
                         $scope.user.employee_class = [];
                         $scope.user.employee_function = [];
-    
+
                         $scope.updateTags.position.employee = $scope.user.id;
                         if ($scope.user.birthday === "-0001-11-30T00:00:00+0655") {
                             $scope.user.birthday = "";
@@ -1218,10 +1218,12 @@
             }
         }
     ]).controller('HandbookUserGroupCtrl', [
-        '$scope','$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'hotRegisterer', 'authHandler', '$uibModal', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, hotRegisterer, authHandler ,$uibModal) {
+        '$scope','$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'hotRegisterer', 'authHandler', '$uibModal' , 'clientService',
+        function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, hotRegisterer, authHandler ,$uibModal, clientService ) {
             authHandler.checkLoggedIn();
             $scope.data = [];
             $scope.minSpareRow = 0;
+            $scope.clientId = $routeParams.clientId;
 
             $scope.colHeaders = [];
             $scope.colHeaders.push('Code');
@@ -1235,6 +1237,11 @@
             $scope.columns.push({renderer: "html"});
             $scope.columns.push({renderer: "html"});
 
+            clientService.get({
+                org_id: $scope.clientId,
+            }, function(data, getResponseHeaders) {
+                return $scope.clientDetail = data;
+            });
 
             var _URL, getData;
             var cloudbookAceActions = [];
@@ -1693,10 +1700,12 @@
             }
         }
     ]).controller('UserUserGroupCtrl', [
-        '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'hotRegisterer', 'authHandler', '$uibModal', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, hotRegisterer, authHandler ,$uibModal) {
+        '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'hotRegisterer', 'authHandler', '$uibModal' , 'clientService',
+        function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, hotRegisterer, authHandler ,$uibModal, clientService) {
             authHandler.checkLoggedIn();
             $scope.data = [];
             $scope.minSpareRow = 0;
+            $scope.clientId = $routeParams.clientId;
 
             $scope.colHeaders = [];
             $scope.colHeaders.push('Code');
@@ -1708,6 +1717,12 @@
             $scope.columns.push({});
             $scope.columns.push({renderer: "html"});
 
+
+            clientService.get({
+                org_id: $scope.clientId,
+            }, function(data, getResponseHeaders) {
+                return $scope.clientDetail = data;
+            });
 
             var _URL, getData;
             var cloudbookAceActions = [];
@@ -2012,10 +2027,12 @@
             }
         }
     ]).controller('UserGroupUserGroupCtrl', [
-        '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'hotRegisterer', 'authHandler' , '$uibModal' , function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, hotRegisterer, authHandler, $uibModal) {
+        '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'hotRegisterer', 'authHandler' , '$uibModal' ,'clientService',
+        function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, hotRegisterer, authHandler, $uibModal, clientService) {
             authHandler.checkLoggedIn();
             $scope.data = [];
             $scope.minSpareRow = 0;
+            $scope.clientId = $routeParams.clientId;
 
             $scope.colHeaders = [];
             $scope.colHeaders.push('Code');
@@ -2027,6 +2044,11 @@
             $scope.columns.push({});
             $scope.columns.push({renderer: "html"});
 
+            clientService.get({
+                org_id: $scope.clientId,
+            }, function(data, getResponseHeaders) {
+                return $scope.clientDetail = data;
+            });
 
             var _URL, getData;
             var cloudbookAceActions = [];
@@ -2485,77 +2507,77 @@
             loadList();
         }
     ]).controller('HandbookByGroupCtrl', [
-            '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'hotRegisterer', 'authHandler', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, hotRegisterer, authHandler) {
-                authHandler.checkLoggedIn();
-                var _URL = {
-                    handbooksByGroup: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/usergroups/' + $routeParams.groupId,
-                    handbooks: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/handbooks',
-                    postHandbookToGroup: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/usergroups/' + $routeParams.groupId +'/handbooks',
-                };
-                $scope.group = {};
-                $scope.handbooks = [];
-                $scope.clientId = $routeParams.clientId;
-                $scope.handbookChange = function (handbook) {
-                    var id = handbook.id;
-                    if(handbook.inGroup == false)
-                    {
-                        Users.delete(_URL.postHandbookToGroup + '/' + id).then(function (results) {
-                            if (results.status === 204) {
-                                $scope.infoUpdated = 'Updated Successfully.';
-                                loadList();
-                            } else {
-                                $scope.infoUpdated = 'Updated Fail.';
-                            }
-                        });
-                    } else if (handbook.inGroup == true) {
-                        Users.post(_URL.postHandbookToGroup + '/' + id, {}).then(function (results) {
-                            if (results.status === 204) {
-                                $scope.infoUpdated = 'Updated Successfully.';
-                                $scope.handbooks.push(handbook);
-                            } else {
-                                $scope.infoUpdated = 'Updated Fail.';
-                            }
-                        });
+        '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'hotRegisterer', 'authHandler', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, hotRegisterer, authHandler) {
+            authHandler.checkLoggedIn();
+            var _URL = {
+                handbooksByGroup: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/usergroups/' + $routeParams.groupId,
+                handbooks: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/handbooks',
+                postHandbookToGroup: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/usergroups/' + $routeParams.groupId +'/handbooks',
+            };
+            $scope.group = {};
+            $scope.handbooks = [];
+            $scope.clientId = $routeParams.clientId;
+            $scope.handbookChange = function (handbook) {
+                var id = handbook.id;
+                if(handbook.inGroup == false)
+                {
+                    Users.delete(_URL.postHandbookToGroup + '/' + id).then(function (results) {
+                        if (results.status === 204) {
+                            $scope.infoUpdated = 'Updated Successfully.';
+                            loadList();
+                        } else {
+                            $scope.infoUpdated = 'Updated Fail.';
+                        }
+                    });
+                } else if (handbook.inGroup == true) {
+                    Users.post(_URL.postHandbookToGroup + '/' + id, {}).then(function (results) {
+                        if (results.status === 204) {
+                            $scope.infoUpdated = 'Updated Successfully.';
+                            $scope.handbooks.push(handbook);
+                        } else {
+                            $scope.infoUpdated = 'Updated Fail.';
+                        }
+                    });
+                }
+            };
+            var loadList = function () {
+                Users.get(_URL.handbooksByGroup).then(function (results) {
+                    if (results.status !== 200 || typeof results !== 'object') {
+                        return;
                     }
-                };
-                var loadList = function () {
-                    Users.get(_URL.handbooksByGroup).then(function (results) {
+                    $scope.group = results.data;
+                    Users.get(results.data._links.handbooks.href).then(function (results) {
                         if (results.status !== 200 || typeof results !== 'object') {
                             return;
                         }
-                        $scope.group = results.data;
-                        Users.get(results.data._links.handbooks.href).then(function (results) {
-                            if (results.status !== 200 || typeof results !== 'object') {
+                        $scope.handbooks = results.data._embedded.items;
+
+                        Users.get(_URL.handbooks).then(function ( results ) {
+                            if(results.status !== 200 || typeof results !== 'object')
+                            {
                                 return;
                             }
-                            $scope.handbooks = results.data._embedded.items;
 
-                            Users.get(_URL.handbooks).then(function ( results ) {
-                                if(results.status !== 200 || typeof results !== 'object')
-                                {
-                                    return;
-                                }
+                            var handbookAll = results.data._embedded.items;
 
-                                var handbookAll = results.data._embedded.items;
-
-                                angular.forEach(handbookAll, function (handbook) {
-                                    $scope.handbooks.map(function (item) {
-                                        if(item.id == handbook.id) {
-                                            handbook.inGroup = true;
-                                        }
-                                    });
+                            angular.forEach(handbookAll, function (handbook) {
+                                $scope.handbooks.map(function (item) {
+                                    if(item.id == handbook.id) {
+                                        handbook.inGroup = true;
+                                    }
                                 });
+                            });
 
-                                $scope.listHandbook = handbookAll;
-                            })
-                        });
-
+                            $scope.listHandbook = handbookAll;
+                        })
                     });
 
-                }
-                loadList();
+                });
 
             }
+            loadList();
+
+        }
     ]).controller('HandbookByUserCtrl', [
         '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'hotRegisterer', 'authHandler', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, hotRegisterer, authHandler) {
             authHandler.checkLoggedIn();
