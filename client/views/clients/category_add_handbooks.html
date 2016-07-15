@@ -1,7 +1,15 @@
 <div class="col-lg-12">
 	<div class="page page-table" data-ng-controller="CategoryHandbookCtrl">
 		<div class="clients_list">
-			<h1 class="ttl-page">Handbook List Of Category </h1>
+			<ol class="mg_breadcrumb breadcrumb">
+				<li><a href="#/clients/{{clientDetail.id}}/info" >{{ clientDetail.name }}</a></li>
+				<li><a href="#/clients/{{clientDetail.id}}/categories/list" >Folders</a></li>
+				<li><a href="#/clients/{{clientDetail.id}}/categories/{{ categoryId }}" >{{ category.name }}</a></li>
+				<li class="active">Add CloudBook to {{ category.name }}</li>
+			</ol>
+			<div class="t-r">
+				<a class="btn btn-brown marg-bot" href="#/clients/{{clientDetail.id}}/categories/list">View List Folder</a>
+			</div>
 			<form role="form">
 				<div class="form-group">
 					<label>Search handbook by title</label>

@@ -587,8 +587,8 @@
             }
         }
     ]).controller('CategoryHandbookCtrl', [
-        '$scope' , '$routeParams', '$location', '$timeout', 'authHandler', 'config','Users',
-        function ($scope ,$routeParams , $location , $timeout , authHandler, config,Users) {
+        '$scope' , '$routeParams', '$location', '$timeout', 'authHandler', 'config','Users','categoryService' , 'clientService',
+        function ($scope ,$routeParams , $location , $timeout , authHandler, config,Users,categoryService ,clientService) {
             authHandler.checkLoggedIn();
             $scope.clientId = $routeParams.clientId;
             $scope.categoryId = $routeParams.categoryId;
@@ -599,6 +599,20 @@
                 handbooksAutocomplete: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/handbooks',
                 postHandbookToCategory: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/categories/' + $routeParams.categoryId,
             };
+            clientService.get({
+                org_id: $scope.clientId,
+            }, function(data, getResponseHeaders) {
+                return $scope.clientDetail = data;
+            });
+
+            categoryService.get({
+                org_id: $scope.clientId,
+                category_id: $scope.categoryId
+            }, function(data, getResponseHeaders) {
+                $scope.category = data;
+
+            });
+
             $scope.handbooks = [];
 
             $scope.handbookSearch = [];

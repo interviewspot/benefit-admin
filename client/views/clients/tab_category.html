@@ -5,21 +5,25 @@
 	</h1>
 	<section class="panel panel-default table-dynamic">
 		<div class="panel-body lv1">
-			<div class="table-responsive">
-				<ul class="tbl-w800 nav nav-tabs" ng-include="'views/clients/menu-tab.html'"></ul>
-			</div>
+			<!--<div class="table-responsive">-->
+				<!--<ul class="tbl-w800 nav nav-tabs" ng-include="'views/clients/menu-tab.html'"></ul>-->
+			<!--</div>-->
+			<ol class="mg_breadcrumb breadcrumb">
+				<li><a href="{{ClientPage.tabUrls.info ? ClientPage.tabUrls.info : 'javascript:;'}}" >{{ clientDetail.name }}</a></li>
+				<li class="active">Folders</li>
+			</ol>
 			<!-- END : MENU -->
 			<div data-ng-show="!isCreateCategory" data-ng-if="!isCreateCategory" class="handbook_list">
 				<h2 class="ttl-tab">
-					<span>Category</span>
+					<!--<span>Category</span>-->
 				</h2>
 				<div class="t-r marg-bot">
-					<div class="btn btn-brown" ng-click="createNewCategory()">Create Category</div>
+					<div class="btn btn-brown" ng-click="createNewCategory()">Create Folder</div>
 				</div>
 				<table class="table tbl table-hover table-striped" >
 					<tbody>
 					<tr>
-						<th class="text-center">Name</th>
+						<th class="text-center">Folder</th>
 						<th class="text-center">Enabled</th>
 						<th class="text-center">Action</th>
 					</tr>
@@ -69,16 +73,16 @@
 			</div>
 			<div data-ng-show="isCreateCategory" data-ng-if="isCreateCategory" class="handbook_list">
 				<h2 class="ttl-tab">
-					<span>Create Category</span>
+					<span>Create Folder</span>
 				</h2>
 				<div class="t-r marg-bot">
-					<span class="btn btn-brown" ng-click="createNewCategory()">View List Category</span>
+					<span class="btn btn-brown" ng-click="createNewCategory()">View List Folder</span>
 				</div>
 				<form name="frm_crt_category" novalidate ng-submit="addNewCategory(category)">
 					<table class="table tbl table-striped">
 						<tbody>
 						<tr>
-							<td class="td-20">Category Name</td>
+							<td class="td-20">Folder Name</td>
 							<td>
 
 								<input type="text"

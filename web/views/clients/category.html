@@ -5,10 +5,16 @@
 	</h1>
 	<section class="panel panel-default table-dynamic">
 		<div class="panel-body lv1">
-			<ul class="nav nav-tabs" ng-include="'views/clients/menu-tab.html'">
-			</ul>
+			<ol class="mg_breadcrumb breadcrumb">
+				<li><a href="{{ClientPage.tabUrls.info ? ClientPage.tabUrls.info : 'javascript:;'}}" >{{ clientDetail.name }}</a></li>
+				<li class="active"><a href="#/clients/{{clientDetail.id}}/categories/list" >Folders</a></li>
+				<li class="active">{{ category.name }}</li>
+			</ol>
 			<!-- END : MENU -->
 
+			<div class="t-r">
+				<a class="btn btn-brown marg-bot" href="#/clients/{{clientDetail.id}}/categories/list">View List Folder</a>
+			</div>
 			<a class="btn btn-default marg-bot" href="#/clients/{{clientDetail.id}}/category/{{category.id}}/addHandbooks">Add Handbook</a>
 			<div>
 				<form name="frm_update_category" novalidate ng-submit="submitCategory()">
