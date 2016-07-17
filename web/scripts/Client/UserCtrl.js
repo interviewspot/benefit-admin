@@ -1298,7 +1298,8 @@
                                     "userGroupName": name,
                                     "listUsers": '#/clients/' + $routeParams.clientId + '/user-group/' + results.data.id + '/users',
                                     "listHandbooks": '#/clients/' + $routeParams.clientId + '/user-group/' + results.data.id + '/handbooks',
-                                    "visibility": false
+                                    "visibility": false,
+                                    "view":false
                                 });
 
                                 //ACE---------------------------------------------------------
@@ -1415,7 +1416,8 @@
                                 "userGroupName": "",
                                 "listUsers": '#/clients/' + $routeParams.clientId + '/user-group/' + results.data.id + '/users',
                                 "listHandbooks": '#/clients/' + $routeParams.clientId + '/user-group/' + results.data.id + '/handbooks',
-                                "visibility": false
+                                "visibility": false,
+                                "view":false
                             });
 
                             //ACE---------------------------------------------------------
@@ -1506,6 +1508,7 @@
                 '</div>';
 
             var checkboxCellTemplate = '<input type="checkbox" ng-model="row.entity.visibility" ng-click="toggle(row.entity.visibility)">';
+            var checkboxViewCellTemplate = '<input type="checkbox" ng-model="row.entity.view" ng-click="toggle(row.entity.view)">';
 
             var actionCellTemplate = '<div class="grid-action-cell">'
                 + '<a style="margin-left : 15px" ng-click="editRow(row.entity)" href=""><span><i class="fa fa-edit"></i></span></a>'
@@ -1561,6 +1564,18 @@
                                             }
 
                                         }
+                                        if(action == 'VIEW')
+                                        {
+                                            if (listActionAllow) {
+                                                if(listActionAllow.indexOf(action) != -1){
+                                                    cloudbookAceGroup.view = true;
+                                                } else {
+                                                    cloudbookAceGroup.view = false;
+                                                }
+                                            } else {
+                                                cloudbookAceGroup.view = false;
+                                            }
+                                        }
 
                                     });
                                     data.push(cloudbookAceGroup);
@@ -1569,11 +1584,16 @@
                                         if (listActionAllow) {
                                             if(listActionAllow.indexOf(action) != -1){
                                                 cloudbookAceGroup.visibility = true;
+                                                cloudbookAceGroup.view = true;
                                             } else {
                                                 cloudbookAceGroup.visibility = false;
+                                                cloudbookAceGroup.view = false;
+
                                             }
                                         } else {
                                             cloudbookAceGroup.visibility = false;
+                                            cloudbookAceGroup.view = false;
+
                                         }
 
                                     });
@@ -1629,6 +1649,13 @@
                         cellTemplate: checkboxCellTemplate
                     },
                     {
+                        name: 'view',
+                        displayName: 'View',
+                        type: 'boolean',
+                        enableCellEdit: false,
+                        cellTemplate: checkboxViewCellTemplate
+                    },
+                    {
                         displayName: 'Actions',
                         name: 'action',
                         enableCellEdit: false,
@@ -1646,6 +1673,9 @@
                 var attr = [];
                 if(item.visibility == true) {
                     attr.push('VISIBILITY');
+                }
+                if(item.view == true) {
+                    attr.push('VIEW');
                 }
                 // angular.forEach(cloudbookAceActions, function (action, index) {
                 //     if (item[index] === true) {
@@ -2561,6 +2591,20 @@
                             var handbookAll = results.data._embedded.items;
 
                             angular.forEach(handbookAll, function (handbook) {
+                                handbook.locale = 'en_us';
+                                return Users.get(handbook._links.translations.href).then(function(res) {
+                                    if (res.status !== 200 || typeof res !== 'object') {
+                                        return;
+                                    }
+                                    handbook['translations'] = res.data;
+                                    if (handbook.translations['en_us']) {
+                                        handbook.title = handbook.translations['en_us'].title;
+                                    }
+                                }, function(error) {
+                                    console.log(error);
+                                });
+
+
                                 $scope.handbooks.map(function (item) {
                                     if(item.id == handbook.id) {
                                         handbook.inGroup = true;
@@ -2630,14 +2674,14 @@
                             ) {
                                 handbook.blocked = true;
                             }
-                            $scope.handbook.locale = 'en_us';
+                            handbook.locale = 'en_us';
                             return Users.get(handbook._links.translations.href).then(function(res) {
                                 if (res.status !== 200 || typeof res !== 'object') {
                                     return;
                                 }
-                                $scope.handbook['translations'] = res.data;
-                                if ($scope.handbook.translations['en_us']) {
-                                    $scope.handbook.title = $scope.handbook.translations['en_us'].title;
+                                handbook['translations'] = res.data;
+                                if (handbook.translations['en_us']) {
+                                    handbook.title = handbook.translations['en_us'].title;
                                 }
                             }, function(error) {
                                 console.log(error);

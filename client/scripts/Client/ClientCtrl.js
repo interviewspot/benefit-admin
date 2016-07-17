@@ -526,8 +526,8 @@
             };
         }
     ]).controller('CategoryCtrl', [
-        '$scope', '$routeParams', 'fetchCategory','categoryService' , 'clientService', 'sectionService', '$location', '$timeout', 'authHandler',
-        function($scope, $routeParams, fetchCategory, categoryService, clientService, sectionService, $location, $timeout, authHandler) {
+        '$scope', '$routeParams', 'fetchCategory','categoryService' , 'clientService', 'sectionService', '$location', '$timeout', 'authHandler','config','Users',
+        function($scope, $routeParams, fetchCategory, categoryService, clientService, sectionService, $location, $timeout, authHandler,config,Users) {
             authHandler.checkLoggedIn();
             $scope.clientId = $routeParams.clientId;
             $scope.categoryId = $routeParams.categoryId;
@@ -545,6 +545,9 @@
                 "imerchant": '#/clients/' +  $scope.clientId + '/imerchant',
                 "notifications": '#/clients/' +  $scope.clientId + '/notifications'
                 }
+            };
+            var _URL = {
+                handbooks: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/categories/' + $routeParams.categoryId + '/handbooks',
             };
 
             clientService.get({
@@ -585,6 +588,16 @@
                 });
 
             }
+
+            Users.get(_URL.handbooks).then(function (results) {
+                if (results.status !== 200 || typeof results !== 'object') {
+                    return;
+                }
+                $scope.handbooks = results.data._embedded.items;
+                return $timeout(function() {
+                    return $scope.infoUpdated = null;
+                }, 2000);
+            });
         }
     ]).controller('CategoryHandbookCtrl', [
         '$scope' , '$routeParams', '$location', '$timeout', 'authHandler', 'config','Users','categoryService' , 'clientService',

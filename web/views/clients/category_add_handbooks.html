@@ -31,7 +31,7 @@
 				<tbody>
 				<tr>
 					<th class="text-left">Title</th>
-					<th class="text-center">Member</th>
+					<th class="text-center">Action</th>
 				</tr>
 				<tr ng-repeat="(i, handbook) in handbooks" >
 					<td class="text-left">
@@ -39,13 +39,8 @@
 							{{handbook.title}}
 						</a>
 					</td>
-					<td class="text-center">
-						<input type="checkbox"
-						       name="handbook_chk"
-						       ng-change="catChange(handbook)"
-						       ng-model="category.inGroup"
-						/>
-						<!--data-ng-disabled=""-->
+					<td class="text-center td-control">
+						<a title="Remove out of group" ng-click="removeHandbook(handbook.id)"><i class="fa fa-trash-o"></i></a>
 					</td>
 				</tr>
 				</tbody>
