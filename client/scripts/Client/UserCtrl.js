@@ -1631,13 +1631,13 @@
                     },
                     {
                         name: 'listUsers',
-                        displayName: 'List Users',
+                        displayName: 'List User',
                         enableCellEdit: false,
                         cellTemplate: linkCellTemplate
                     },
                     {
                         name: 'listHandbooks',
-                        displayName: 'List Hanbooks',
+                        displayName: 'List Handbook',
                         enableCellEdit: false,
                         cellTemplate: linkCellTemplate
                     },
@@ -2248,7 +2248,7 @@
                     },
                     {
                         name: 'listUsers',
-                        displayName: 'List Users',
+                        displayName: 'List User',
                         enableCellEdit: false,
                         cellTemplate: linkCellTemplate
                     },
@@ -2445,16 +2445,22 @@
                                     if (result.status !== 200 || typeof result !== 'object') {
                                         return;
                                     }
-
-                                    if(result.data.roles.join().indexOf('ROLE_ADMIN') == -1 && result.data.roles.join().indexOf('ROLE_HR_ADMIN') == -1 )
+                                    var res = result.data.roles;
+                                    window.resdi = res;
+                                    if(Array.isArray(res))
                                     {
-                                        $scope.users.map(function (item) {
-                                            if(item.id == result.data.id) {
-                                                result.data.inGroup = true;
-                                            }
-                                        });
-                                        $scope.listUser.push(result.data);
+                                        if(result.data.roles.join().indexOf('ROLE_ADMIN') == -1 && result.data.roles.join().indexOf('ROLE_HR_ADMIN') == -1 )
+                                        {
+                                            $scope.users.map(function (item) {
+                                                if(item.id == result.data.id) {
+                                                    result.data.inGroup = true;
+                                                }
+                                            });
+                                            $scope.listUser.push(result.data);
+                                        }
+
                                     }
+
                                 })
                             })
                             window.uxo = $scope.listUser;
@@ -2591,6 +2597,13 @@
                             var handbookAll = results.data._embedded.items;
 
                             angular.forEach(handbookAll, function (handbook) {
+
+                                $scope.handbooks.map(function (item) {
+                                    if(item.id == handbook.id) {
+                                        handbook.inGroup = true;
+                                    }
+                                });
+
                                 handbook.locale = 'en_us';
                                 return Users.get(handbook._links.translations.href).then(function(res) {
                                     if (res.status !== 200 || typeof res !== 'object') {
@@ -2604,12 +2617,6 @@
                                     console.log(error);
                                 });
 
-
-                                $scope.handbooks.map(function (item) {
-                                    if(item.id == handbook.id) {
-                                        handbook.inGroup = true;
-                                    }
-                                });
                             });
 
                             $scope.listHandbook = handbookAll;
@@ -2661,32 +2668,47 @@
                     if (results.status !== 200 || typeof results !== 'object') {
                         return;
                     }
+
+
                     $scope.group = results.data;
-                    Users.get(_URL.handbooks).then(function (values) {
+                    Users.get(results.data._links.blocked_handbooks.href).then(function (values) {
                         if (values.status !== 200 || typeof values !== 'object') {
                             return;
                         }
                         $scope.handbooks = values.data._embedded.items;
 
-                        angular.forEach($scope.handbooks, function (handbook) {
-                            if( handbook._links.self.actions.join().indexOf('VIEW') == -1 ||
-                                handbook._links.self.actions.join().indexOf('OPERATE') == -1
-                            ) {
-                                handbook.blocked = true;
+                        Users.get(_URL.handbooks).then(function ( hbresults ) {
+                            if(hbresults.status !== 200 || typeof hbresults !== 'object')
+                            {
+                                return;
                             }
-                            handbook.locale = 'en_us';
-                            return Users.get(handbook._links.translations.href).then(function(res) {
-                                if (res.status !== 200 || typeof res !== 'object') {
-                                    return;
-                                }
-                                handbook['translations'] = res.data;
-                                if (handbook.translations['en_us']) {
-                                    handbook.title = handbook.translations['en_us'].title;
-                                }
-                            }, function(error) {
-                                console.log(error);
+
+                            var handbookAll = hbresults.data._embedded.items;
+
+                            angular.forEach(handbookAll, function (handbook) {
+                                $scope.handbooks.map(function (item) {
+                                    if(item.id == handbook.id) {
+                                        handbook.blocked = true;
+                                    }
+                                });
+
+                                handbook.locale = 'en_us';
+
+                                Users.get(handbook._links.translations.href).then(function(res) {
+                                    if (res.status !== 200 || typeof res !== 'object') {
+                                        return;
+                                    }
+                                    handbook['translations'] = res.data;
+                                    if (handbook.translations['en_us']) {
+                                        handbook.title = handbook.translations['en_us'].title;
+                                    }
+                                }, function(error) {
+                                    console.log(error);
+                                });
                             });
-                        });
+
+                            $scope.handbooks = handbookAll;
+                        })
                     });
 
                 });

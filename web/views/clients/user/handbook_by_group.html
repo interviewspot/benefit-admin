@@ -35,6 +35,7 @@
                           <td class="text-center">
                               <input type="checkbox"
                                      name="handbook_chk"
+                                     ng-disabled="isNormalUser"
                                      ng-change="handbookChange(handbook)"
                                      ng-model="handbook.inGroup"
                               />
