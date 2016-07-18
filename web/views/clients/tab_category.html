@@ -18,14 +18,14 @@
 					<!--<span>Category</span>-->
 				</h2>
 				<div class="t-r marg-bot">
-					<div class="btn btn-brown" ng-click="createNewCategory()">Create Folder</div>
+					<div class="btn btn-brown" ng-show="!isNormalUser" ng-click="createNewCategory()">Create Folder</div>
 				</div>
 				<table class="table tbl table-hover table-striped" >
 					<tbody>
 					<tr>
 						<th class="text-center">Folder</th>
-						<th class="text-center">Enabled</th>
-						<th class="text-center">Action</th>
+						<th ng-hide="isNormalUser" class="text-center">Enabled</th>
+						<th ng-hide="isNormalUser" class="text-center">Action</th>
 					</tr>
 				<tr ng-repeat="category in categories" ng-if="!category.uncategory">
 						<td class="text-center">
@@ -35,6 +35,7 @@
 						</td>
 						<td class="text-center">
 							<input
+									ng-hide="isNormalUser"
 									ng-disabled="true"
 									type="checkbox"
 									required
@@ -42,7 +43,8 @@
 									name="cat_enabled"
 							/>
 						</td>
-						<td class="text-center td-manage">
+						<td class="text-center td-manage"
+						    ng-hide="isNormalUser">
 							<a href="#/clients/{{clientDetail.id}}/category/{{category.id}}">
 								<i class="fa fa-edit"
 								   title="Edit Category"></i>

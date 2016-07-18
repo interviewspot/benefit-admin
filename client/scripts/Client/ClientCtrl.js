@@ -1,7 +1,8 @@
 (function () {
     'use strict';
     angular.module('app.clients', []).controller('clientCtrl', [
-        '$scope', '$filter', 'fetchTabData', 'fakeData', '$location', 'clientService','categoryService', 'fetchHandbook','fetchCategory', '$routeParams', '$route', 'config', 'Images', 'php', 'ClientAPI', 'Companies', 'Clients', 'handbookService', '$timeout', 'authHandler', '$rootScope', '$location', function ($scope, $filter, fetchTabData, fakeData, $location, clientService,categoryService, fetchHandbook, fetchCategory, $routeParams, $route, config, Images, php, ClientAPI, Companies, Clients, handbookService, $timeout, authHandler, $rootScope) {
+        '$scope', 'Users','$filter', 'fetchTabData', 'fakeData', '$location', 'clientService','categoryService', 'fetchHandbook','fetchCategory', '$routeParams', '$route', 'config', 'Images', 'php', 'ClientAPI', 'Companies', 'Clients', 'handbookService', '$timeout', 'authHandler', '$rootScope', '$location',
+        function ($scope, Users,$filter, fetchTabData, fakeData, $location, clientService,categoryService, fetchHandbook, fetchCategory, $routeParams, $route, config, Images, php, ClientAPI, Companies, Clients, handbookService, $timeout, authHandler, $rootScope) {
             var _URL_clients, _getClients;
             authHandler.checkLoggedIn();
             if ($location.path() == '/clients') {
@@ -10,11 +11,14 @@
                     return $route.reload();
                 }
             }
+
             _URL_clients = {
+                user: config.path.baseURL + '/users/' + $rootScope.user.user.id,
                 list: config.path.baseURL + config.path.clients,
                 handbooks: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/category/handbook/uncategorize'
 
             };
+            
             _getClients = function (limit, goPage) {
                 return Clients.get(_URL_clients.list + '?limit=' + limit + '&page=' + goPage).then(function (res) {
                     if (res.status !== 200 || typeof res !== 'object') {
@@ -199,18 +203,31 @@
                                 return;
                             }
                             $scope.handbookAll = res.data._embedded.items;
-                            return angular.forEach($scope.handbookAll, function (item, i) {
-                                return Clients.get(item._links.translations.href).then(function (res) {
-                                    if (res.status !== 200 || typeof res !== 'object') {
+
+                            Users.get(_URL_clients.user).then(function (results) {
+                                $scope.group = results.data;
+                                Users.get(results.data._links.blocked_handbooks.href).then(function (values) {
+                                    if (values.status !== 200 || typeof values !== 'object') {
                                         return;
                                     }
-                                    $scope.handbookAll[i]['translations'] = res.data;
-                                    $scope.handbookAll[i]['EDIT'] = item._links.self.actions.join().indexOf('OPERATE') ||  item._links.self.actions.join().indexOf('EDIT') ? true : false ;
-                                    $scope.handbookAll[i]['DELETE'] = item._links.self.actions.join().indexOf('OPERATE') ||  item._links.self.actions.join().indexOf('DELETE') ? true : false ;
-                                }, function (error) {
-                                    console.log(error);
+                                    $scope.handbooksBlock = values.data._embedded.items;
+
+                                    angular.forEach($scope.handbookAll, function (item, i) {
+                                        Clients.get(item._links.translations.href).then(function (res) {
+                                            if (res.status !== 200 || typeof res !== 'object') {
+                                                return;
+                                            }
+                                            $scope.handbookAll[i]['translations'] = res.data;
+                                            $scope.handbookAll[i]['EDIT'] = item._links.self.actions.join().indexOf('OPERATE') ||  item._links.self.actions.join().indexOf('EDIT') ? true : false ;
+                                            $scope.handbookAll[i]['DELETE'] = item._links.self.actions.join().indexOf('OPERATE') ||  item._links.self.actions.join().indexOf('DELETE') ? true : false ;
+                                        }, function (error) {
+                                            console.log(error);
+                                        });
+                                    });
                                 });
+
                             });
+
                         });
                     }
                     if (data._links.categories) {
