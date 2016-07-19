@@ -3,12 +3,12 @@
         '$resource', '$rootScope', function($resource, $rootScope) {
             return {
                 path: {
-                    'baseURL': 'http://api-live.sg-benefits.com',
+                    // 'baseURL': 'https://api.sg-benefits.com',
+                    'baseURL': 'http://local.api.com',
                     'clients': '/organisations',
                     'client': '/organisations/:org_id',
                     'handbooks': '/organisations/:org_id/handbooks',
                     'handbook': '/organisations/:org_id/handbooks/:hand_id',
-                    'category': '/organisations/:org_id/categories/:category_id',
                     'sections': '/organisations/:org_id/handbooks/:hand_id/sections',
                     'section': '/organisations/:org_id/handbooks/:hand_id/sections/:section_id',
                     'section_children': '/organisations/:org_id/handbooks/:hand_id/sections/:section_id/children',

@@ -1,13 +1,3 @@
-// ┌─────────────────────────────────────────────────────────────────────┐ \\
-// │ Raphaël @@VERSION - JavaScript Vector Library                       │ \\
-// ├─────────────────────────────────────────────────────────────────────┤ \\
-// │ SVG Module                                                          │ \\
-// ├─────────────────────────────────────────────────────────────────────┤ \\
-// │ Copyright (c) 2008-2011 Dmitry Baranovskiy (http://raphaeljs.com)   │ \\
-// │ Copyright (c) 2008-2011 Sencha Labs (http://sencha.com)             │ \\
-// │ Licensed under the MIT (http://raphaeljs.com/license.html) license. │ \\
-// └─────────────────────────────────────────────────────────────────────┘ \\
-
 define(["./raphael.core"], function(R) {
     if (R && !R.svg) {
         return;
@@ -1356,7 +1346,7 @@ define(["./raphael.core"], function(R) {
      * Paper.renderfix
      [ method ]
      **
-     * Fixes the issue of Firefox and IE9 regarding subpixel rendering. If paper is dependant
+     * Fixes the issue of Firefox and IE9 regarding subpixel rendering. If paper is dependent
      * on other elements after reflow it could shift half pixel which cause for lines to lost their crispness.
      * This method fixes the issue.
      **
