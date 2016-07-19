@@ -203,29 +203,17 @@
                                 return;
                             }
                             $scope.handbookAll = res.data._embedded.items;
-
-                            Users.get(_URL_clients.user).then(function (results) {
-                                $scope.group = results.data;
-                                Users.get(results.data._links.blocked_handbooks.href).then(function (values) {
-                                    if (values.status !== 200 || typeof values !== 'object') {
+                            angular.forEach($scope.handbookAll, function (item, i) {
+                                Clients.get(item._links.translations.href).then(function (res) {
+                                    if (res.status !== 200 || typeof res !== 'object') {
                                         return;
                                     }
-                                    $scope.handbooksBlock = values.data._embedded.items;
-
-                                    angular.forEach($scope.handbookAll, function (item, i) {
-                                        Clients.get(item._links.translations.href).then(function (res) {
-                                            if (res.status !== 200 || typeof res !== 'object') {
-                                                return;
-                                            }
-                                            $scope.handbookAll[i]['translations'] = res.data;
-                                            $scope.handbookAll[i]['EDIT'] = item._links.self.actions.join().indexOf('OPERATE') ||  item._links.self.actions.join().indexOf('EDIT') ? true : false ;
-                                            $scope.handbookAll[i]['DELETE'] = item._links.self.actions.join().indexOf('OPERATE') ||  item._links.self.actions.join().indexOf('DELETE') ? true : false ;
-                                        }, function (error) {
-                                            console.log(error);
-                                        });
-                                    });
+                                    $scope.handbookAll[i]['translations'] = res.data;
+                                    $scope.handbookAll[i]['EDIT'] = item._links.self.actions.join().indexOf('OPERATE') ||  item._links.self.actions.join().indexOf('EDIT') ? true : false ;
+                                    $scope.handbookAll[i]['DELETE'] = item._links.self.actions.join().indexOf('OPERATE') ||  item._links.self.actions.join().indexOf('DELETE') ? true : false ;
+                                }, function (error) {
+                                    console.log(error);
                                 });
-
                             });
 
                         });

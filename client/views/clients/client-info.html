@@ -8,9 +8,9 @@
             <ol class="mg_breadcrumb breadcrumb">
                 <li class="active">Company Info</li>
             </ol>
-            <!--<div class="table-responsive">-->
-                <!--<ul class="tbl-w800 nav nav-tabs" ng-include="'views/clients/menu-tab.html'"></ul>-->
-            <!--</div>-->
+            <div ng-show="isAdmin" class="table-responsive">
+                <ul class="tbl-w800 nav nav-tabs" ng-include="'views/clients/menu-tab.html'"></ul>
+            </div>
             <!-- END : MENU -->
             <div ng-include="'views/clients/tab_company.html'"></div>
             <!--<div data-ng-show="!isAdmin && !isNormalUser" ng-include="'views/clients/tab_category.html'"></div>-->

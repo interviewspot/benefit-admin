@@ -64,7 +64,7 @@
 							<tr ng-repeat="(i, handbook) in handbooks" >
 								<td class="text-left">
 									<a href="#clients/{{ clientDetail.id }}/handbooks/{{ handbook.id }}/view">
-										{{handbook.title}}
+										{{ handbook.translations['en_us'].title ? handbook.translations['en_us'].title : handbook.title}}
 									</a>
 								</td>
 							</tr>

@@ -2671,44 +2671,31 @@
 
 
                     $scope.group = results.data;
-                    Users.get(results.data._links.blocked_handbooks.href).then(function (values) {
-                        if (values.status !== 200 || typeof values !== 'object') {
+                    Users.get(_URL.handbooks).then(function ( hbresults ) {
+                        if(hbresults.status !== 200 || typeof hbresults !== 'object')
+                        {
                             return;
                         }
-                        $scope.handbooks = values.data._embedded.items;
 
-                        Users.get(_URL.handbooks).then(function ( hbresults ) {
-                            if(hbresults.status !== 200 || typeof hbresults !== 'object')
-                            {
-                                return;
-                            }
+                        var handbookAll = hbresults.data._embedded.items;
 
-                            var handbookAll = hbresults.data._embedded.items;
+                        angular.forEach(handbookAll, function (handbook) {
 
-                            angular.forEach(handbookAll, function (handbook) {
-                                $scope.handbooks.map(function (item) {
-                                    if(item.id == handbook.id) {
-                                        handbook.blocked = true;
-                                    }
-                                });
-
-                                handbook.locale = 'en_us';
-
-                                Users.get(handbook._links.translations.href).then(function(res) {
-                                    if (res.status !== 200 || typeof res !== 'object') {
-                                        return;
-                                    }
-                                    handbook['translations'] = res.data;
-                                    if (handbook.translations['en_us']) {
-                                        handbook.title = handbook.translations['en_us'].title;
-                                    }
-                                }, function(error) {
-                                    console.log(error);
-                                });
+                            handbook.locale = 'en_us';
+                            Users.get(handbook._links.translations.href).then(function(res) {
+                                if (res.status !== 200 || typeof res !== 'object') {
+                                    return;
+                                }
+                                handbook['translations'] = res.data;
+                                if (handbook.translations['en_us']) {
+                                    handbook.title = handbook.translations['en_us'].title;
+                                }
+                            }, function(error) {
+                                console.log(error);
                             });
+                        });
 
-                            $scope.handbooks = handbookAll;
-                        })
+                        $scope.handbooks = handbookAll;
                     });
 
                 });
