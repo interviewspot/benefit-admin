@@ -15,7 +15,7 @@
 			<div class="t-r">
 				<a class="btn btn-brown marg-bot" href="#/clients/{{clientDetail.id}}/categories/list">View List Folder</a>
 			</div>
-			<a class="btn btn-default marg-bot" href="#/clients/{{clientDetail.id}}/category/{{category.id}}/addHandbooks">Add Handbook</a>
+			<a class="btn btn-default marg-bot" href="#/clients/{{clientDetail.id}}/category/{{category.id}}/addHandbooks">Add CloudBook</a>
 			<div>
 				<form name="frm_update_category" novalidate ng-submit="submitCategory()">
 					<table class="table tbl table-striped">
@@ -59,7 +59,7 @@
 						<table class="table tbl tbl-bg table-hover table-striped tbl-w1000">
 							<tbody>
 							<tr>
-								<th class="text-left">Handbook</th>
+								<th class="text-left">CloudBook</th>
 							</tr>
 							<tr ng-repeat="(i, handbook) in handbooks" >
 								<td class="text-left">

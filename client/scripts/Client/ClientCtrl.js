@@ -127,6 +127,9 @@
                 });
             };
 
+            $scope.reloadRouterHandbook = function () {
+                $route.reload();
+            }
 
             $scope.isCreateCategory = false;
             $scope.createNewCategory = function () {
@@ -683,8 +686,19 @@
                         }
                         $scope.handbookSearch = [];
                         angular.forEach(results.data._embedded.items, function (handbook) {
-                            $scope.handbookSearch.push(handbook.title);
-                            $scope.handbookSearchObject[handbook.title] = handbook;
+                            Users.get(handbook._links.translations.href).then(function (res) {
+                                if (res.status !== 200 || typeof res !== 'object') {
+                                    return;
+                                }
+                                if(res.data.en_us.title)
+                                {
+                                    handbook.title = res.data.en_us.title;
+                                }
+                                $scope.handbookSearch.push(handbook.title);
+                                $scope.handbookSearchObject[handbook.title] = handbook;
+                            }, function (error) {
+                                console.log(error);
+                            });
                         });
                     });
                 }

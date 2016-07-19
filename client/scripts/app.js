@@ -78,6 +78,8 @@
         templateUrl: 'views/clients/category.html'
       }).when('/clients/:clientId/category/:categoryId/addHandbooks', {
         templateUrl: 'views/clients/category_add_handbooks.html'
+      }).when('/clients/:clientId/category/:categoryId/handbooksByCategory', {
+        templateUrl: 'views/clients/tab_handbook.html'
       });
       $routeProvider.when('/employees', {
         templateUrl: 'views/employee/employee.html'

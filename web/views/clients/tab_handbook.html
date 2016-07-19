@@ -1,4 +1,9 @@
 <div class="handbook_list" ng-if="!isCreateHandbook">
+	<div class="t-l marg-bot">
+		<a class="btn btn-default" ng-click="reloadRouterHandbook()">
+			<span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+		</a>
+	</div>
 	<h2 class="ttl-tab">
 		<span>Employee Handbook</span>
 	</h2>
@@ -8,7 +13,7 @@
 	<table class="table tbl table-hover table-striped" >
 		<tbody>
 		<tr>
-			<th class="text-center">Cloudbook Title</th>
+			<th class="text-center">Title</th>
 			<th class="text-center">Version</th>
 			<!--<th class="text-center">Last Modified</th>-->
 			<th class="text-center">Language</th>

@@ -5,8 +5,13 @@
     </h1>
     <section class="panel panel-default table-dynamic">
         <div class="panel-body lv1">
-            <ul class="nav nav-tabs" ng-include="'views/clients/menu-tab.html'">
-            </ul>
+            <!--<ul class="nav nav-tabs" ng-include="'views/clients/menu-tab.html'">-->
+            <!--</ul>-->
+            <ol class="mg_breadcrumb breadcrumb">
+                <li><a href="{{ClientPage.tabUrls.info ? ClientPage.tabUrls.info : 'javascript:;'}}" >{{ clientDetail.name }}</a></li>
+                <li class="active"><a href="{{ ClientPage.tabUrls.categories ? ClientPage.tabUrls.categories : 'javascript:;'}}" >Cloud Books</a></li>
+                <li>{{ handbook.title }}</li>
+            </ol>
             <!-- END : MENU -->
             <div ng-include="'views/handbooks/tab_details.html'"></div>
             <!-- END : TAB -->

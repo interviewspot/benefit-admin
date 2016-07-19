@@ -10,7 +10,7 @@
             <!--</div>-->
             <ol class="mg_breadcrumb breadcrumb">
                 <li><a href="{{ClientPage.tabUrls.info ? ClientPage.tabUrls.info : 'javascript:;'}}" >{{ clientDetail.name }}</a></li>
-                <li class="active">CloudBooks</li>
+                <li class="active"><a href="{{ClientPage.tabUrls.categories ? ClientPage.tabUrls.categories : 'javascript:;'}}">CloudBooks</a></li>
             </ol>
             <!-- END : MENU -->
             <div ng-show="!isHandbookShow" ng-include="'views/clients/tab_category_handbook.html'"></div>

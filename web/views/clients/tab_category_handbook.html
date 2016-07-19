@@ -1,11 +1,11 @@
 <div ng-show="!isHandbookShow" class="handbook_list">
     <h2 class="ttl-tab">
-        <span>Employee Handbook</span>
+        <span>Employee CloudBook</span>
     </h2>
 
     <div style="margin-bottom: 15px; height: 30px;">
         <div class="col-md-6 col-xs-6 t-l marg-bot">
-            <div class="btn btn-brown" ng-click="magicShowCategoryHandbook()">{{ showAllHandbook ? 'View By Category' : 'View By List Handbook' }}</div>
+            <div class="btn btn-brown" ng-click="magicShowCategoryHandbook()">{{ showAllHandbook ? 'View By Category' : 'View By List CloudBook' }}</div>
         </div>
         <div class="col-md-6 col-xs-6 t-r marg-bot" data-ng-show="permissionHandbook.CREATE">
             <div class="btn btn-brown" ng-click="createNewVersion()">Create New Cloud Book</div>
@@ -82,7 +82,7 @@
 <!-- END: HANDBOOK LIST -->
 <div class="create_handbook" ng-if="isCreateHandbook">
     <h2 class="ttl-tab">
-        <span>Create Employee Handbook</span>
+        <span>Create Employee CloudBook</span>
     </h2>
     <tabset class="client-tabs lv2">
         <tab heading="Handbook Info">
