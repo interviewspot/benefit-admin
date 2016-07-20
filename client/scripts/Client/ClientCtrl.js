@@ -641,85 +641,73 @@
             $scope.modelHandbook = '';
             $scope.allowAdd = false;
 
-            $scope.addHandbook = function () {
-                if($scope.handbookSearchObject[$scope.modelHandbook] != undefined) {
-
-                    var handbook = $scope.handbookSearchObject[$scope.modelHandbook];
-                    Users.post(_URL.postHandbookToCategory + '/handbooks/' +handbook.id, {}).then(function (results) {
+            $scope.handbookChange = function (handbook) {
+                var id = handbook.id;
+                if(handbook.inGroup == false)
+                {
+                    Users.delete(_URL.postHandbookToCategory + '/handbooks/' + id).then(function (results) {
+                        if (results.status === 204) {
+                            $scope.infoUpdated = 'Updated Successfully.';
+                            loadList();
+                        } else {
+                            $scope.infoUpdated = 'Updated Fail.';
+                        }
+                    });
+                } else if (handbook.inGroup == true) {
+                    Users.post(_URL.postHandbookToCategory + '/handbooks/' + id, {}).then(function (results) {
                         if (results.status === 204) {
                             $scope.infoUpdated = 'Updated Successfully.';
                             $scope.handbooks.push(handbook);
-                            $scope.modelHandbook = '';
-                            delete $scope.handbookSearchObject[$scope.modelHandbook];
-                            return $timeout(function() {
-                                return $scope.infoUpdated = null;
-                            }, 2000);
                         } else {
                             $scope.infoUpdated = 'Updated Fail.';
-                            $scope.modelHandbook = '';
-                            delete $scope.handbookSearchObject[$scope.modelHandbook];
-                            return $timeout(function() {
-                                return $scope.infoUpdated = null;
-                            }, 2000);
                         }
                     });
                 }
-            }
-            $scope.removeHandbook = function (id) {
-                Users.delete(_URL.postHandbookToCategory + '/handbooks/' +id).then(function (results) {
-                    if (results.status === 204) {
-                        $scope.infoUpdated = 'Updated Successfully.';
-                        loadList();
-                    } else {
-                        $scope.infoUpdated = 'Updated Fail.';
-                        return $timeout(function() {
-                            return $scope.infoUpdated = null;
-                        }, 2000);
-                    }
-                });
-            }
-            $scope.$watch('modelHandbook', function (modelHandbook) {
-                if (modelHandbook != '') {
-                    Users.get(_URL.handbooksAutocomplete + '?search=handbook.title=%' + modelHandbook + '%').then(function (results) {
-                        if (results.status !== 200 || typeof results !== 'object') {
-                            return;
-                        }
-                        $scope.handbookSearch = [];
-                        angular.forEach(results.data._embedded.items, function (handbook) {
-                            Users.get(handbook._links.translations.href).then(function (res) {
-                                if (res.status !== 200 || typeof res !== 'object') {
-                                    return;
-                                }
-                                if(res.data)
-                                {
-                                    if(res.data.en_us)
-                                    {
-                                        if(res.data.en_us.title)
-                                        {
-                                            handbook.title = res.data.en_us.title;
-                                        }
-                                    }
-                                }
-                                $scope.handbookSearch.push(handbook.title);
-                                $scope.handbookSearchObject[handbook.title] = handbook;
-                            }, function (error) {
-                                console.log(error);
-                            });
-                        });
-                    });
-                }
+            };
 
-            }, true);
             var loadList = function () {
                 Users.get(_URL.handbooks).then(function (results) {
                     if (results.status !== 200 || typeof results !== 'object') {
                         return;
                     }
                     $scope.handbooks = results.data._embedded.items;
-                    return $timeout(function() {
-                        return $scope.infoUpdated = null;
-                    }, 2000);
+
+                    Users.get(_URL.handbooksAutocomplete).then(function ( results ) {
+                        if(results.status !== 200 || typeof results !== 'object')
+                        {
+                            return;
+                        }
+
+                        var handbookAll = results.data._embedded.items;
+
+                        angular.forEach(handbookAll, function (handbook) {
+
+                            $scope.handbooks.map(function (item) {
+                                if(item.id == handbook.id) {
+                                    handbook.inGroup = true;
+                                }
+                            });
+
+                            handbook.locale = 'en_us';
+                            return Users.get(handbook._links.translations.href).then(function(res) {
+                                if (res.status !== 200 || typeof res !== 'object') {
+                                    return;
+                                }
+                                handbook['translations'] = res.data;
+                                if (handbook.translations['en_us']) {
+                                    handbook.title = handbook.translations['en_us'].title;
+                                }
+                            }, function(error) {
+                                console.log(error);
+                            });
+
+                        });
+
+                        $scope.listHandbook = handbookAll;
+                    });
+
                 });
+
             }
             loadList();
         }

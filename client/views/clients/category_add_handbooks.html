@@ -10,14 +10,14 @@
 			<div class="t-r">
 				<a class="btn btn-brown marg-bot" href="#/clients/{{clientDetail.id}}/categories/list">View List Folder</a>
 			</div>
-			<form role="form">
-				<div class="form-group">
-					<label>Search cloudbook by title</label>
-					<!--<input type="email" class="form-control" id="email">-->
-					<autocomplete ng-model="modelHandbook" data="handbookSearch"></autocomplete>
-				</div>
-				<button type="submit" class="btn btn-default" data-ng-click="addHandbook()">Add Cloudbook</button>
-			</form>
+			<!--<form role="form">-->
+				<!--<div class="form-group">-->
+					<!--<label>Search cloudbook by title</label>-->
+					<!--&lt;!&ndash;<input type="email" class="form-control" id="email">&ndash;&gt;-->
+					<!--<autocomplete ng-model="modelHandbook" data="handbookSearch"></autocomplete>-->
+				<!--</div>-->
+				<!--<button type="submit" class="btn btn-default" data-ng-click="addHandbook()">Add Cloudbook</button>-->
+			<!--</form>-->
 
             <span class="msg-update">
                 {{infoUpdated}}
@@ -31,16 +31,22 @@
 				<tbody>
 				<tr>
 					<th class="text-left">Title</th>
-					<th class="text-center">Action</th>
+					<th class="text-center">In Category</th>
 				</tr>
-				<tr ng-repeat="(i, handbook) in handbooks" >
+				<tr ng-repeat="(i, handbook) in listHandbook" >
 					<td class="text-left">
 						<a href="">
-							{{handbook.title}}
+							{{ handbook.translations['en_us'].title ? handbook.translations['en_us'].title : handbook.title}}
 						</a>
 					</td>
-					<td class="text-center td-control">
-						<a title="Remove out of group" ng-click="removeHandbook(handbook.id)"><i class="fa fa-trash-o"></i></a>
+					<td class="text-center">
+						<input type="checkbox"
+						       name="handbook_chk"
+						       ng-disabled="isNormalUser"
+						       ng-change="handbookChange(handbook)"
+						       ng-model="handbook.inGroup"
+						/>
+						<!--data-ng-disabled=""-->
 					</td>
 				</tr>
 				</tbody>
