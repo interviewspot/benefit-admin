@@ -690,9 +690,15 @@
                                 if (res.status !== 200 || typeof res !== 'object') {
                                     return;
                                 }
-                                if(res.data.en_us.title)
+                                if(res.data)
                                 {
-                                    handbook.title = res.data.en_us.title;
+                                    if(res.data.en_us)
+                                    {
+                                        if(res.data.en_us.title)
+                                        {
+                                            handbook.title = res.data.en_us.title;
+                                        }
+                                    }
                                 }
                                 $scope.handbookSearch.push(handbook.title);
                                 $scope.handbookSearchObject[handbook.title] = handbook;

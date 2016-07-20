@@ -2639,7 +2639,7 @@
             };
 
             $scope.clientId = $routeParams.clientId;
-
+            $scope.groupId = $routeParams.groupId;
             $scope.handbookChange = function (handbook) {
                 var id = handbook.id;
                 if(handbook.blocked == false)
