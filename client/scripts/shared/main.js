@@ -52,6 +52,7 @@
 
             user = localStorageService.cookie.get('user');
             $rootScope.user = user;
+            $rootScope.currentUser = user.user;
             var employerId = localStorageService.cookie.get('employerId');
             var positionId = localStorageService.cookie.get('positionId');
             $rootScope.employerId = employerId;

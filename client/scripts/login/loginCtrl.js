@@ -21,6 +21,9 @@
                 user: res.data
               }, 1);
               $rootScope.user = localStorageService.cookie.get('user');
+
+              $rootScope.currentUser = res.data;
+              
               $rootScope.isLoggedIn = true;
               $scope.roles = res.data.roles;
 

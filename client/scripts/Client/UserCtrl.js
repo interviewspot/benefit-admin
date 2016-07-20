@@ -193,7 +193,6 @@
                             return;
                         }
                         $scope.user = res.data;
-                        if(res.data.roles != '') {
                             var arrRoles = Object.keys(res.data.roles).map(function (key) {return res.data.roles[key]});
                             console.log(arrRoles)
                             if (arrRoles.join().indexOf('ROLE_ADMIN') > -1) {
@@ -201,9 +200,8 @@
                             } else if (arrRoles.join().indexOf('ROLE_HR_ADMIN') > -1) {
                                 $scope.user.roles = 'ROLE_HR_ADMIN';
                             }else {
-                                $scope.user.roles = '';
+                                $scope.user.roles = 'ROLE_USER';
                             }
-                        }
                         $scope.user.position_data = pos.data;
                         $scope.user.employee_class = [];
                         $scope.user.employee_function = [];
@@ -279,7 +277,12 @@
                     date_added = $filter('date')(new Date($scope.user.date_added), 'yyyy-MM-ddT00:00:00+0000');
                 }
                 var roles = [];
-                roles.push($scope.user.roles);
+                if(Array.isArray($scope.user.roles))
+                {
+                    roles.push($scope.user.roles.join());
+                } else {
+                    roles.push($scope.user.roles);
+                }
                 newData = {
                     "user": {
                         "roles": roles,

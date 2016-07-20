@@ -602,6 +602,22 @@
                     return;
                 }
                 $scope.handbooks = results.data._embedded.items;
+                angular.forEach($scope.handbooks, function (handbook) {
+                    handbook.locale = 'en_us';
+                    Users.get(handbook._links.translations.href).then(function(res) {
+                        if (res.status !== 200 || typeof res !== 'object') {
+                            return;
+                        }
+                        handbook['translations'] = res.data;
+                        if (handbook.translations['en_us']) {
+                            handbook.title = handbook.translations['en_us'].title;
+                        }
+                    }, function(error) {
+                        console.log(error);
+                    });
+
+                });
+
                 return $timeout(function() {
                     return $scope.infoUpdated = null;
                 }, 2000);
