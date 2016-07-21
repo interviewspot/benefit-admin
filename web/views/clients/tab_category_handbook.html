@@ -4,30 +4,30 @@
     </h2>
 
     <div style="margin-bottom: 15px; height: 30px;">
-        <div class="col-md-6 col-xs-6 t-l marg-bot">
-            <div class="btn btn-brown" ng-click="magicShowCategoryHandbook()">{{ showAllHandbook ? 'View By Category' : 'View By List CloudBook' }}</div>
-        </div>
-        <div class="col-md-6 col-xs-6 t-r marg-bot" data-ng-show="permissionHandbook.CREATE">
+        <!--<div class="col-md-6 col-xs-6 t-l marg-bot">-->
+            <!--<div class="btn btn-brown" ng-click="magicShowCategoryHandbook()">{{ showAllHandbook ? 'View By Category' : 'View By List CloudBook' }}</div>-->
+        <!--</div>-->
+        <div class="col-md-6 col-xs-6 marg-bot" data-ng-show="permissionHandbook.CREATE">
             <div class="btn btn-brown" ng-click="createNewVersion()">Create New Cloud Book</div>
         </div>
     </div>
     <!--Handbook by category -->
-    <div data-ng-show="!showAllHandbook" data-ng-if="!showAllHandbook" >
-        <div ng-repeat="cat in categories" ng-if="cat.enabled == true" ng-class="{active_hanbook: cat == 1}" class="handbook_category" ng-click="handbookShow(cat)">
-            {{ cat.name }}
-        </div>
+    <!--<div data-ng-show="!showAllHandbook" data-ng-if="!showAllHandbook" >-->
+        <!--<div ng-repeat="cat in categories" ng-if="cat.enabled == true" ng-class="{active_hanbook: cat == 1}" class="handbook_category" ng-click="handbookShow(cat)">-->
+            <!--{{ cat.name }}-->
+        <!--</div>-->
 
-    </div>
+    <!--</div>-->
     <!--Handbooks all -->
-    <div data-ng-show="showAllHandbook" data-ng-if="showAllHandbook">
+    <div>
         <table class="table tbl table-hover table-striped" >
             <tbody>
             <tr>
                 <th class="text-center">Title</th>
                 <th class="text-center">Version</th>
                 <th class="text-center">Language</th>
-                <th class="text-center">Published</th>
-                <th class="text-center">Manage</th>
+                <th ng-show="!isNormalUser" class="text-center">Published</th>
+                <th ng-show="!isNormalUser" class="text-center">Manage</th>
             </tr>
             <tr ng-repeat="hb_list in handbookAll">
                 <td class="text-center">
@@ -36,9 +36,8 @@
                     </a>
                 </td>
                 <td class="text-center">{{hb_list.version}}</td>
-                <!--<td class="text-center">Not Available Yet!</td>-->
                 <td class="text-center">English</td>
-                <td class="text-center">
+                <td ng-show="!isNormalUser" class="text-center">
                     <input type="checkbox"
                            name="handbook_chk"
                            id="{{hb_list.id}}"
@@ -47,7 +46,7 @@
                            data-ng-disabled="!hb_list.EDIT"
                     />
                 </td>
-                <td class="text-center td-manage">
+                <td ng-show="!isNormalUser" class="text-center td-manage">
                     <a href="#/clients/{{clientDetail.id}}/handbooks/{{hb_list.id}}">
                         <i class="fa fa-edit"
                            title="Edit Handbook" data-ng-show="hb_list.EDIT"></i>

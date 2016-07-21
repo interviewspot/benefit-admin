@@ -142,51 +142,53 @@
 
             }
             $scope.isHandbookShow = false;
-            $scope.handbookShow = function (category) {
-                $scope.isHandbookShow = true;
+            //Don't use it anymore
+            // $scope.handbookShow = function (category) {
+            //     $scope.isHandbookShow = true;
+            //
+            //     if(category.uncategory == true){
+            //         return Clients.get(_URL_clients.handbooks).then(function (res){
+            //             if (res.status !== 200 || typeof res !== 'object') {
+            //                 return;
+            //             }
+            //             $scope.handbooks = res.data._embedded.items;
+            //             return angular.forEach($scope.handbooks, function (item, i) {
+            //                 return Clients.get(item._links.translations.href).then(function (res) {
+            //                     if (res.status !== 200 || typeof res !== 'object') {
+            //                         return;
+            //                     }
+            //                     $scope.handbooks[i]['translations'] = res.data;
+            //                     $scope.handbooks[i]['EDIT'] = item._links.self.actions.join().indexOf('OPERATE') > -1 ||  item._links.self.actions.join().indexOf('EDIT') > -1 ? true : false ;
+            //                     $scope.handbooks[i]['DELETE'] = item._links.self.actions.join().indexOf('OPERATE') > -1 ||  item._links.self.actions.join().indexOf('DELETE') > -1 ? true : false ;
+            //                 }, function (error) {
+            //                     console.log(error);
+            //                 });
+            //             });
+            //         })
+            //     } else {
+            //         return Clients.get(category._links.handbooks.href).then(function (res) {
+            //             if (res.status !== 200 || typeof res !== 'object') {
+            //                 return;
+            //             }
+            //             $scope.handbooks = res.data._embedded.items;
+            //             return angular.forEach($scope.handbooks, function (item, i) {
+            //                 return Clients.get(item._links.translations.href).then(function (res) {
+            //                     if (res.status !== 200 || typeof res !== 'object') {
+            //                         return;
+            //                     }
+            //                     $scope.handbooks[i]['translations'] = res.data;
+            //                     $scope.handbooks[i]['EDIT'] = item._links.self.actions.join().indexOf('OPERATE') > -1 ||  item._links.self.actions.join().indexOf('EDIT') > -1 ? true : false ;
+            //                     $scope.handbooks[i]['DELETE'] = item._links.self.actions.join().indexOf('OPERATE') > -1 ||  item._links.self.actions.join().indexOf('DELETE') > -1 ? true : false ;
+            //                 }, function (error) {
+            //                     console.log(error);
+            //                 });
+            //             });
+            //         })
+            //     }
+            //
+            //
+            // }
 
-                if(category.uncategory == true){
-                    return Clients.get(_URL_clients.handbooks).then(function (res){
-                        if (res.status !== 200 || typeof res !== 'object') {
-                            return;
-                        }
-                        $scope.handbooks = res.data._embedded.items;
-                        return angular.forEach($scope.handbooks, function (item, i) {
-                            return Clients.get(item._links.translations.href).then(function (res) {
-                                if (res.status !== 200 || typeof res !== 'object') {
-                                    return;
-                                }
-                                $scope.handbooks[i]['translations'] = res.data;
-                                $scope.handbooks[i]['EDIT'] = item._links.self.actions.join().indexOf('OPERATE') > -1 ||  item._links.self.actions.join().indexOf('EDIT') > -1 ? true : false ;
-                                $scope.handbooks[i]['DELETE'] = item._links.self.actions.join().indexOf('OPERATE') > -1 ||  item._links.self.actions.join().indexOf('DELETE') > -1 ? true : false ;
-                            }, function (error) {
-                                console.log(error);
-                            });
-                        });
-                    })
-                } else {
-                    return Clients.get(category._links.handbooks.href).then(function (res) {
-                        if (res.status !== 200 || typeof res !== 'object') {
-                            return;
-                        }
-                        $scope.handbooks = res.data._embedded.items;
-                        return angular.forEach($scope.handbooks, function (item, i) {
-                            return Clients.get(item._links.translations.href).then(function (res) {
-                                if (res.status !== 200 || typeof res !== 'object') {
-                                    return;
-                                }
-                                $scope.handbooks[i]['translations'] = res.data;
-                                $scope.handbooks[i]['EDIT'] = item._links.self.actions.join().indexOf('OPERATE') > -1 ||  item._links.self.actions.join().indexOf('EDIT') > -1 ? true : false ;
-                                $scope.handbooks[i]['DELETE'] = item._links.self.actions.join().indexOf('OPERATE') > -1 ||  item._links.self.actions.join().indexOf('DELETE') > -1 ? true : false ;
-                            }, function (error) {
-                                console.log(error);
-                            });
-                        });
-                    })
-                }
-
-
-            }
             $scope.categoryShow = function () {
                 $scope.isHandbookShow = false;
                 console.log($scope.isHandbookShow);
@@ -212,8 +214,8 @@
                                         return;
                                     }
                                     $scope.handbookAll[i]['translations'] = res.data;
-                                    $scope.handbookAll[i]['EDIT'] = item._links.self.actions.join().indexOf('OPERATE') ||  item._links.self.actions.join().indexOf('EDIT') ? true : false ;
-                                    $scope.handbookAll[i]['DELETE'] = item._links.self.actions.join().indexOf('OPERATE') ||  item._links.self.actions.join().indexOf('DELETE') ? true : false ;
+                                    $scope.handbookAll[i]['EDIT'] = item._links.self.actions.join().indexOf('OPERATE') > -1 ||  item._links.self.actions.join().indexOf('EDIT') > -1 ? true : false ;
+                                    $scope.handbookAll[i]['DELETE'] = item._links.self.actions.join().indexOf('OPERATE') > -1 ||  item._links.self.actions.join().indexOf('DELETE') > -1 ? true : false ;
                                 }, function (error) {
                                     console.log(error);
                                 });
@@ -251,7 +253,8 @@
                                 return;
                             }
                             logo_id_arr = php.explode('/media/', data._links.logo.href);
-                            $scope.urlUpload = $scope.clientDetail._links['logo.post'].href;
+                            // $scope.urlUpload = $scope.clientDetail._links['logo.post'].href;
+                            $scope.urlUpload = $scope.clientDetail._links.logo.href;
                             $scope.clientDetail['logo'] = res.data;
                             if (typeof res.data._links.url === 'object' && res.data._links.url.href) {
                                 Images.get(data._links.logo.href + '/url').then(function (url) {
@@ -267,7 +270,9 @@
                             return console.log(error);
                         });
                     } else {
-                        $scope.urlUpload = $scope.clientDetail._links['logo.post'].href;
+                        // $scope.urlUpload = $scope.clientDetail._links['logo.post'].href;
+                        $scope.urlUpload = $scope.clientDetail._links.logo.href;
+
                     }
                     if (typeof data._links.banners === 'object' && data._links.banners != undefined) {
                         Images.get(data._links.banners.href).then(function (res) {

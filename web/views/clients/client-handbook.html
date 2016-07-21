@@ -13,8 +13,8 @@
                 <li class="active"><a href="{{ClientPage.tabUrls.categories ? ClientPage.tabUrls.categories : 'javascript:;'}}">CloudBooks</a></li>
             </ol>
             <!-- END : MENU -->
-            <div ng-show="!isHandbookShow" ng-include="'views/clients/tab_category_handbook.html'"></div>
-            <div ng-show="isHandbookShow" ng-include="'views/clients/tab_handbook.html'"></div>
+            <div ng-include="'views/clients/tab_category_handbook.html'"></div>
+            <!--<div ng-show="isHandbookShow" ng-include="'views/clients/tab_handbook.html'"></div>-->
             <!-- END : TAB -->
         </div>
     </section>

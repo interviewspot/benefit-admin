@@ -1300,9 +1300,7 @@
                                     "code": "G" + results.data.id,
                                     "userGroupName": name,
                                     "listUsers": '#/clients/' + $routeParams.clientId + '/user-group/' + results.data.id + '/users',
-                                    "listHandbooks": '#/clients/' + $routeParams.clientId + '/user-group/' + results.data.id + '/handbooks',
-                                    "visibility": false,
-                                    "view":false
+                                    "listHandbooks": '#/clients/' + $routeParams.clientId + '/user-group/' + results.data.id + '/handbooks'
                                 });
 
                                 //ACE---------------------------------------------------------
@@ -1310,7 +1308,7 @@
                                 var dataUserGroupAce = {
                                     'handbook_user_group_ace': {
                                         "userGroup": results.data.id,
-                                        "attributes": "",
+                                        "attributes": "VIEW",
                                     }
                                 }
                                 Users.post(results.data._links.handbook_user_group_aces.href, dataUserGroupAce).then(function (results) {
@@ -1324,56 +1322,56 @@
                                     return console.log(error);
                                 });
                                 //userace
-                                var dataUserGroupAce = {
-                                    'user_user_group_ace': {
-                                        "userGroup": results.data.id,
-                                        "attributes": "",
-                                    }
-                                }
-                                Users.post(results.data._links.user_user_group_aces.href, dataUserGroupAce).then(function (results) {
-                                    if (typeof results === 'object' && results.status === 201) {
-                                        $scope.infoUpdated = 'Updated Successfully.';
-                                    } else {
-                                        $scope.infoUpdated = 'Updated Fail.';
-                                    }
-
-                                }, function (error) {
-                                    return console.log(error);
-                                });
-                                //usergroupace
-                                var dataUserGroupAce = {
-                                    'user_group_user_group_ace': {
-                                        "userGroup": results.data.id,
-                                        "attributes": "",
-                                    }
-                                }
-                                Users.post(results.data._links.user_group_user_group_aces.href, dataUserGroupAce).then(function (results) {
-                                    if (typeof results === 'object' && results.status === 201) {
-                                        $scope.infoUpdated = 'Updated Successfully.';
-                                    } else {
-                                        $scope.infoUpdated = 'Updated Fail.';
-                                    }
-
-                                }, function (error) {
-                                    return console.log(error);
-                                });
-                                //categoryace
-                                var dataUserGroupAce = {
-                                    'category_user_group_ace': {
-                                        "userGroup": results.data.id,
-                                        "attributes": "",
-                                    }
-                                }
-                                Users.post(results.data._links.category_user_group_aces.href, dataUserGroupAce).then(function (results) {
-                                    if (typeof results === 'object' && results.status === 201) {
-                                        $scope.infoUpdated = 'Updated Successfully.';
-                                    } else {
-                                        $scope.infoUpdated = 'Updated Fail.';
-                                    }
-
-                                }, function (error) {
-                                    return console.log(error);
-                                });
+                                // var dataUserGroupAce = {
+                                //     'user_user_group_ace': {
+                                //         "userGroup": results.data.id,
+                                //         "attributes": "",
+                                //     }
+                                // }
+                                // Users.post(results.data._links.user_user_group_aces.href, dataUserGroupAce).then(function (results) {
+                                //     if (typeof results === 'object' && results.status === 201) {
+                                //         $scope.infoUpdated = 'Updated Successfully.';
+                                //     } else {
+                                //         $scope.infoUpdated = 'Updated Fail.';
+                                //     }
+                                //
+                                // }, function (error) {
+                                //     return console.log(error);
+                                // });
+                                // //usergroupace
+                                // var dataUserGroupAce = {
+                                //     'user_group_user_group_ace': {
+                                //         "userGroup": results.data.id,
+                                //         "attributes": "",
+                                //     }
+                                // }
+                                // Users.post(results.data._links.user_group_user_group_aces.href, dataUserGroupAce).then(function (results) {
+                                //     if (typeof results === 'object' && results.status === 201) {
+                                //         $scope.infoUpdated = 'Updated Successfully.';
+                                //     } else {
+                                //         $scope.infoUpdated = 'Updated Fail.';
+                                //     }
+                                //
+                                // }, function (error) {
+                                //     return console.log(error);
+                                // });
+                                // //categoryace
+                                // var dataUserGroupAce = {
+                                //     'category_user_group_ace': {
+                                //         "userGroup": results.data.id,
+                                //         "attributes": "",
+                                //     }
+                                // }
+                                // Users.post(results.data._links.category_user_group_aces.href, dataUserGroupAce).then(function (results) {
+                                //     if (typeof results === 'object' && results.status === 201) {
+                                //         $scope.infoUpdated = 'Updated Successfully.';
+                                //     } else {
+                                //         $scope.infoUpdated = 'Updated Fail.';
+                                //     }
+                                //
+                                // }, function (error) {
+                                //     return console.log(error);
+                                // });
                                 //END ACE-----------------------------------------------------------
 
                             });
@@ -1391,128 +1389,13 @@
                 });
             };
 
-
-            $scope.addData = function() {
-                var dataUserGroup = {
-                    'user_group': {
-                        "name": 'New Group',
-                        "type": 1,
-                        "organisation": $routeParams.clientId
-                    }
-                }
-                Users.post(_URL.Groups, dataUserGroup).then(function (results) {
-
-                    if (typeof results === 'object' && results.status === 201) {
-                        var local = results.headers().location;
-                        var url = config.path.baseURL + local;
-
-
-
-                        //create handboookUserGroupAce
-                        Users.get(url).then(function (results) {
-                            if (results.status !== 200 || typeof results !== 'object') {
-                                return;
-                            }
-
-                            $scope.gridOptions.data.push({
-                                "code": "G" + results.data.id,
-                                "userGroupName": "",
-                                "listUsers": '#/clients/' + $routeParams.clientId + '/user-group/' + results.data.id + '/users',
-                                "listHandbooks": '#/clients/' + $routeParams.clientId + '/user-group/' + results.data.id + '/handbooks',
-                                "visibility": false,
-                                "view":false
-                            });
-
-                            //ACE---------------------------------------------------------
-                            //handbookace
-                            var dataUserGroupAce = {
-                                'handbook_user_group_ace': {
-                                    "userGroup": results.data.id,
-                                    "attributes": "",
-                                }
-                            }
-                            Users.post(results.data._links.handbook_user_group_aces.href, dataUserGroupAce).then(function (results) {
-                                if (typeof results === 'object' && results.status === 201) {
-                                    $scope.infoUpdated = 'Updated Successfully.';
-                                } else {
-                                    $scope.infoUpdated = 'Updated Fail.';
-                                }
-
-                            }, function (error) {
-                                return console.log(error);
-                            });
-                            //userace
-                            var dataUserGroupAce = {
-                                'user_user_group_ace': {
-                                    "userGroup": results.data.id,
-                                    "attributes": "",
-                                }
-                            }
-                            Users.post(results.data._links.user_user_group_aces.href, dataUserGroupAce).then(function (results) {
-                                if (typeof results === 'object' && results.status === 201) {
-                                    $scope.infoUpdated = 'Updated Successfully.';
-                                } else {
-                                    $scope.infoUpdated = 'Updated Fail.';
-                                }
-
-                            }, function (error) {
-                                return console.log(error);
-                            });
-                            //usergroupace
-                            var dataUserGroupAce = {
-                                'user_group_user_group_ace': {
-                                    "userGroup": results.data.id,
-                                    "attributes": "",
-                                }
-                            }
-                            Users.post(results.data._links.user_group_user_group_aces.href, dataUserGroupAce).then(function (results) {
-                                if (typeof results === 'object' && results.status === 201) {
-                                    $scope.infoUpdated = 'Updated Successfully.';
-                                } else {
-                                    $scope.infoUpdated = 'Updated Fail.';
-                                }
-
-                            }, function (error) {
-                                return console.log(error);
-                            });
-                            //categoryace
-                            var dataUserGroupAce = {
-                                'category_user_group_ace': {
-                                    "userGroup": results.data.id,
-                                    "attributes": "",
-                                }
-                            }
-                            Users.post(results.data._links.category_user_group_aces.href, dataUserGroupAce).then(function (results) {
-                                if (typeof results === 'object' && results.status === 201) {
-                                    $scope.infoUpdated = 'Updated Successfully.';
-                                } else {
-                                    $scope.infoUpdated = 'Updated Fail.';
-                                }
-
-                            }, function (error) {
-                                return console.log(error);
-                            });
-                            //END ACE-----------------------------------------------------------
-
-                        });
-
-                    } else {
-                        $scope.infoUpdated = 'Updated Fail.';
-                    }
-
-
-                }, function (error) {
-                    return console.log(error);
-                });
-            };
-
             var linkCellTemplate = '<div class="ngCellText" ng-class="col.colIndex()">' +
                 '  <a href="{{COL_FIELD}}">Click to view</a>' +
                 '</div>';
-
+            /**
             var checkboxCellTemplate = '<input type="checkbox" ng-model="row.entity.visibility" ng-click="toggle(row.entity.visibility)">';
             var checkboxViewCellTemplate = '<input type="checkbox" ng-model="row.entity.view" ng-click="toggle(row.entity.view)">';
-
+            */
             var actionCellTemplate = '<div class="grid-action-cell">'
                 + '<a style="margin-left : 15px" ng-click="editRow(row.entity)" href=""><span><i class="fa fa-edit"></i></span></a>'
                 +'<a style="margin-left : 15px" ng-click="grid.appScope.deleteThisRow(row.entity)" href=""><span><i class="fa fa-trash-o"></i></span></a>'
@@ -1548,61 +1431,63 @@
                                 cloudbookAceGroup.userGroupName = group.name ;
                                 cloudbookAceGroup.listUsers = '#/clients/' + $routeParams.clientId + '/user-group/' + group.id + '/users';
                                 cloudbookAceGroup.listHandbooks = '#/clients/' + $routeParams.clientId + '/user-group/' + group.id + '/handbooks';
-                                if (results.data._embedded.items.length) {
-                                    var listActionAllow = results.data._embedded.items[0].attributes;
-                                    listCloudbookUrl[group.id] = group._links.handbook_user_group_aces.href + '/' + results.data._embedded.items[0].id;
 
-                                    angular.forEach(cloudbookAceActions, function (action) {
-                                        if(action == 'VISIBILITY')
-                                        {
-                                            var permission = false;
-                                            if (listActionAllow) {
-                                                if(listActionAllow.indexOf(action) != -1){
-                                                    cloudbookAceGroup.visibility = true;
-                                                } else {
-                                                    cloudbookAceGroup.visibility = false;
-                                                }
-                                            } else {
-                                                cloudbookAceGroup.visibility = false;
-                                            }
-
-                                        }
-                                        if(action == 'VIEW')
-                                        {
-                                            if (listActionAllow) {
-                                                if(listActionAllow.indexOf(action) != -1){
-                                                    cloudbookAceGroup.view = true;
-                                                } else {
-                                                    cloudbookAceGroup.view = false;
-                                                }
-                                            } else {
-                                                cloudbookAceGroup.view = false;
-                                            }
-                                        }
-
-                                    });
-                                    data.push(cloudbookAceGroup);
-                                } else {
-                                    angular.forEach(cloudbookAceActions, function (action) {
-                                        if (listActionAllow) {
-                                            if(listActionAllow.indexOf(action) != -1){
-                                                cloudbookAceGroup.visibility = true;
-                                                cloudbookAceGroup.view = true;
-                                            } else {
-                                                cloudbookAceGroup.visibility = false;
-                                                cloudbookAceGroup.view = false;
-
-                                            }
-                                        } else {
-                                            cloudbookAceGroup.visibility = false;
-                                            cloudbookAceGroup.view = false;
-
-                                        }
-
-                                    });
-                                    data.push(cloudbookAceGroup);
-                                }
-
+                                //Hide View and Visibility checkbox,Don't use it anymore
+                                // if (results.data._embedded.items.length) {
+                                //     var listActionAllow = results.data._embedded.items[0].attributes;
+                                //     listCloudbookUrl[group.id] = group._links.handbook_user_group_aces.href + '/' + results.data._embedded.items[0].id;
+                                //
+                                //     angular.forEach(cloudbookAceActions, function (action) {
+                                //         if(action == 'VISIBILITY')
+                                //         {
+                                //             var permission = false;
+                                //             if (listActionAllow) {
+                                //                 if(listActionAllow.indexOf(action) != -1){
+                                //                     cloudbookAceGroup.visibility = true;
+                                //                 } else {
+                                //                     cloudbookAceGroup.visibility = false;
+                                //                 }
+                                //             } else {
+                                //                 cloudbookAceGroup.visibility = false;
+                                //             }
+                                //
+                                //         }
+                                //         if(action == 'VIEW')
+                                //         {
+                                //             if (listActionAllow) {
+                                //                 if(listActionAllow.indexOf(action) != -1){
+                                //                     cloudbookAceGroup.view = true;
+                                //                 } else {
+                                //                     cloudbookAceGroup.view = false;
+                                //                 }
+                                //             } else {
+                                //                 cloudbookAceGroup.view = false;
+                                //             }
+                                //         }
+                                //
+                                //     });
+                                //     data.push(cloudbookAceGroup);
+                                // } else {
+                                //     angular.forEach(cloudbookAceActions, function (action) {
+                                //         if (listActionAllow) {
+                                //             if(listActionAllow.indexOf(action) != -1){
+                                //                 cloudbookAceGroup.visibility = true;
+                                //                 cloudbookAceGroup.view = true;
+                                //             } else {
+                                //                 cloudbookAceGroup.visibility = false;
+                                //                 cloudbookAceGroup.view = false;
+                                //
+                                //             }
+                                //         } else {
+                                //             cloudbookAceGroup.visibility = false;
+                                //             cloudbookAceGroup.view = false;
+                                //
+                                //         }
+                                //
+                                //     });
+                                //     data.push(cloudbookAceGroup);
+                                // }
+                                data.push(cloudbookAceGroup);
                                 buildData(--index);
 
                             }, function (error) {
@@ -1645,20 +1530,6 @@
                         cellTemplate: linkCellTemplate
                     },
                     {
-                        name: 'visibility',
-                        displayName: 'Visibility',
-                        type: 'boolean',
-                        enableCellEdit: false,
-                        cellTemplate: checkboxCellTemplate
-                    },
-                    {
-                        name: 'view',
-                        displayName: 'View',
-                        type: 'boolean',
-                        enableCellEdit: false,
-                        cellTemplate: checkboxViewCellTemplate
-                    },
-                    {
                         displayName: 'Actions',
                         name: 'action',
                         enableCellEdit: false,
@@ -1670,25 +1541,27 @@
 
 
 
-            var getAttributes = function (item) {
+            // var getAttributes = function (item) {
                 // item.splice(0, 4);
 
-                var attr = [];
-                if(item.visibility == true) {
-                    attr.push('VISIBILITY');
-                }
-                if(item.view == true) {
-                    attr.push('VIEW');
-                }
+                // var attr = [];
+                // if(item.visibility == true) {
+                //     attr.push('VISIBILITY');
+                // }
+                // if(item.view == true) {
+                //     attr.push('VIEW');
+                // }
                 // angular.forEach(cloudbookAceActions, function (action, index) {
                 //     if (item[index] === true) {
                 //         attr.push(action);
                 //     }
                 // });
 
-                return attr.join();
-            }
+                // return attr.join();
+            // }
+
             $scope.infoUpdated = '';
+            //Submit Group
             $scope.submit = function () {
                 var dataSubmit = $scope.gridOptions.data;
                 angular.forEach(dataSubmit, function (item) {
@@ -1708,7 +1581,7 @@
                             var dataUserGroupAce = {
                                 'handbook_user_group_ace': {
                                     "userGroup": userGroupId,
-                                    "attributes": getAttributes(item),
+                                    "attributes": 'VIEW',
                                 }
                             }
                             Users.put(listCloudbookUrl[userGroupId], dataUserGroupAce).then(function (results) {
