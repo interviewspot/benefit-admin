@@ -1263,3 +1263,20 @@ hr.line {
 .mg_breadcrumb {
 	margin-top: 10px;
 }
+.sort-icon {
+	position: absolute;
+	top: 50%;
+	right: 5px;
+	margin-top: -12px;
+	font-size: 13px;
+	color: #464545;
+}
+.sort-icon .glyphicon {
+	display: block;
+}
+.sort-icon .glyphicon.reverse {
+	color: #000;
+}
+.sort-icon .glyphicon-triangle-bottom {
+	top: -3px;
+}

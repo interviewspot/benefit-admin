@@ -6,6 +6,9 @@
                 var _URL_users, _getUsers, _updateUser;
                 authHandler.checkLoggedIn();
                 $scope.clientId = $routeParams.clientId;
+                $scope.sortType     = 'email'; // set the default sort type
+                $scope.sortReverse  = false;  // set the default sort order
+                $scope.searchFish   = '';     // set the default search/filter term
                 _URL_users = {
                     list: config.path.baseURL + config.path.contacts.replace(":org_id", $routeParams.clientId)
                 };

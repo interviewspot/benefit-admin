@@ -19,13 +19,43 @@
             <table class="table tbl tbl-w1000 tbl-bg table-hover table-striped">
                 <tbody>
                     <tr>
-                        <th class="text-center">Email</th>
-                        <th class="text-center">First name</th>
-                        <th class="text-center">Last Name</th>
+                        <th class="text-center">
+                            <a href="" ng-click="sortType = 'email'; sortReverse = !sortReverse">Email
+                                <span ng-show="sortType == 'email'&& !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'email'&& sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </th>
+                        <th class="text-center">
+                            <a href="" ng-click="sortType = 'firstName'; sortReverse = !sortReverse">First Name
+                                <span ng-show="sortType == 'firstName'&& !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'firstName'&& sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </th>
+                        <th class="text-center">
+                            <a href="" ng-click="sortType = 'lastName'; sortReverse = !sortReverse">Last Name
+                                <span ng-show="sortType == 'lastName'&& !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'lastName'&& sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </th>
                         <th class="text-center">Contact No.</th>
-                        <th class="text-center">Verification Code</th>
-                        <th class="text-center">Employee Class</th>
-                        <th class="text-center td-18">Date Added</th>
+                        <th class="text-center">
+                            <a href="" ng-click="sortType = 'code'; sortReverse = !sortReverse">Verification Code
+                                <span ng-show="sortType == 'code'&& !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'code'&& sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </th>
+                        <th class="text-center">
+                            <a href="" ng-click="sortType = 'class'; sortReverse = !sortReverse">Employee Class
+                                <span ng-show="sortType == 'class'&& !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'class'&& sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </th>
+                        <th class="text-center td-18">
+                            <a href="" ng-click="sortType = 'date'; sortReverse = !sortReverse">Date Added
+                                <span ng-show="sortType == 'date'&& !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'date'&& sortReverse" class="fa fa-caret-up"></span>
+                            </a>
+                        </th>
                         <th class="text-center td-15">Actions</th>
                     </tr>
                     <tr ng-repeat="(i, user) in users.items">

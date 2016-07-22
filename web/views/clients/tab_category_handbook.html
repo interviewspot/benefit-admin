@@ -23,13 +23,31 @@
         <table class="table tbl table-hover table-striped" >
             <tbody>
             <tr>
-                <th class="text-center">Title</th>
-                <th class="text-center">Version</th>
-                <th class="text-center">Language</th>
-                <th ng-show="!isNormalUser" class="text-center">Published</th>
+                <th class="text-center">
+                    <a href="" ng-click="sortType = 'title'; sortReverse = !sortReverse">Title
+                        <span ng-show="sortType == 'title'&& !sortReverse" class="fa fa-caret-down"></span>
+                        <span ng-show="sortType == 'title'&& sortReverse" class="fa fa-caret-up"></span>
+                    </a>
+                </th>
+                <th class="text-center">
+                    <a href="" ng-click="sortType = 'version'; sortReverse = !sortReverse">Version
+                        <span ng-show="sortType == 'version'&& !sortReverse" class="fa fa-caret-down"></span>
+                        <span ng-show="sortType == 'version'&& sortReverse" class="fa fa-caret-up"></span>
+                    </a>
+                </th>
+                <th class="text-center">
+                    <a href="" ng-click="sortType = 'language'; sortReverse = !sortReverse">Language
+                        <span ng-show="sortType == 'language'&& !sortReverse" class="fa fa-caret-down"></span>
+                        <span ng-show="sortType == 'language'&& sortReverse" class="fa fa-caret-up"></span>
+                    </a>
+                </th>
+                <th ng-show="!isNormalUser" class="text-center">
+                    <a href="">Published
+                    </a>
+                </th>
                 <th ng-show="!isNormalUser" class="text-center">Manage</th>
             </tr>
-            <tr ng-repeat="hb_list in handbookAll">
+            <tr ng-repeat="hb_list in handbookAll | orderBy:sortType:sortReverse">
                 <td class="text-center">
                     <a href="#/clients/{{clientDetail.id}}/handbooks/{{hb_list.id}}/view">
                         {{hb_list.translations['en_us'].title ? hb_list.translations['en_us'].title : hb_list.title}}

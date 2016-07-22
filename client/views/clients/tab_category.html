@@ -23,11 +23,15 @@
 				<table class="table tbl table-hover table-striped" >
 					<tbody>
 					<tr>
-						<th class="text-center">Folder</th>
+						<th class="text-center">
+							<a href="" ng-click="sortType = 'title'; sortReverse = !sortReverse">Folder
+								<span ng-show="sortType == 'title'&& !sortReverse" class="fa fa-caret-down"></span>
+								<span ng-show="sortType == 'title'&& sortReverse" class="fa fa-caret-up"></span>
+						</th>
 						<th ng-hide="isNormalUser" class="text-center">Enabled</th>
 						<th ng-hide="isNormalUser" class="text-center">Action</th>
 					</tr>
-				<tr ng-repeat="category in categories" ng-if="!category.uncategory">
+				<tr ng-repeat="category in categories | orderBy:sortType:sortReverse" ng-if="!category.uncategory">
 						<td class="text-center">
 							<a href="#/clients/{{clientDetail.id}}/category/{{category.id}}">
 								{{ category.name }}

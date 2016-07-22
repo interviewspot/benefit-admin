@@ -11,6 +11,10 @@
                     return $route.reload();
                 }
             }
+            $scope.sortType     = 'title'; // set the default sort type
+            $scope.sortReverse  = false;  // set the default sort order
+            $scope.searchFish   = '';     // set the default search/filter term
+
 
             _URL_clients = {
                 user: config.path.baseURL + '/users/' + $rootScope.user.user.id,
@@ -559,6 +563,9 @@
                 "notifications": '#/clients/' +  $scope.clientId + '/notifications'
                 }
             };
+
+
+            
             var _URL = {
                 handbooks: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/categories/' + $routeParams.categoryId + '/handbooks',
             };

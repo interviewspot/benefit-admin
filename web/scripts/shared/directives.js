@@ -136,6 +136,21 @@
         }
       };
     }
+  ]).directive('sortIcon', [
+      function () {
+        return {
+          restrict: 'E',
+          templateUrl: '../../views/directives/sortIconTemplate.html',
+          scope: {
+            reverse: '=',
+            sortKey: '='
+          },
+          link: function(scope, element, attrs) {
+
+            scope.sortKeyword = attrs.sortKeyword;
+          }
+        };
+      }
   ]);
 
 }).call(this);
