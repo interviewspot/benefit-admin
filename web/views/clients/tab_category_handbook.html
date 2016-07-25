@@ -11,6 +11,16 @@
             <div class="btn btn-brown" ng-click="createNewVersion()">Create New Cloud Book</div>
         </div>
     </div>
+    <form>
+    <div style="margin-top: -44px" class="form-group">
+      <div class="input-group">
+        <div class="input-group-addon"><i class="fa fa-search"></i></div>
+
+        <input type="text" class="form-control" placeholder="Search Handbooks" ng-model="searchHandbook">
+
+      </div>      
+    </div>
+  </form>
     <!--Handbook by category -->
     <!--<div data-ng-show="!showAllHandbook" data-ng-if="!showAllHandbook" >-->
         <!--<div ng-repeat="cat in categories" ng-if="cat.enabled == true" ng-class="{active_hanbook: cat == 1}" class="handbook_category" ng-click="handbookShow(cat)">-->
@@ -47,7 +57,7 @@
                 </th>
                 <th ng-show="!isNormalUser" class="text-center">Manage</th>
             </tr>
-            <tr ng-repeat="hb_list in handbookAll | orderBy:sortType:sortReverse">
+            <tr ng-repeat="hb_list in handbookAll | orderBy:sortType:sortReverse | filter:searchHandbook ">
                 <td class="text-center">
                     <a href="#/clients/{{clientDetail.id}}/handbooks/{{hb_list.id}}/view">
                         {{hb_list.translations['en_us'].title ? hb_list.translations['en_us'].title : hb_list.title}}

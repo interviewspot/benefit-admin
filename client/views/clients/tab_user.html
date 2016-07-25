@@ -13,8 +13,18 @@
         <div class="t-r clearfix">
             <span class="f-l msg-update" ng-show="infoUpdated" >{{infoUpdated}}</span>
             <a href="#/clients/{{clientId}}/new-user" class="btn btn-brown btn-add-user">Add new user</a>
-        </div>      
+            <form>
+            <div style="margin-top: 10px; width: 20%; float:right" class="t-r form-group">
+              <div class="input-group">
+                <div class="input-group-addon"><i class="fa fa-search"></i></div>
 
+                <input type="text" class="form-control" placeholder="Search User" ng-model="searchUser">
+
+              </div>      
+            </div>
+            </form>
+        </div>      
+        
         <div class="table-responsive" ng-show="users.items.length">
             <table class="table tbl tbl-w1000 tbl-bg table-hover table-striped">
                 <tbody>
@@ -25,7 +35,7 @@
                                 <span ng-show="sortType == 'email'&& sortReverse" class="fa fa-caret-up"></span>
                             </a>
                         </th>
-                        <th class="text-center">
+                        <th class="text-center td-15">
                             <a href="" ng-click="sortType = 'firstName'; sortReverse = !sortReverse">First Name
                                 <span ng-show="sortType == 'firstName'&& !sortReverse" class="fa fa-caret-down"></span>
                                 <span ng-show="sortType == 'firstName'&& sortReverse" class="fa fa-caret-up"></span>
@@ -56,10 +66,11 @@
                                 <span ng-show="sortType == 'date'&& sortReverse" class="fa fa-caret-up"></span>
                             </a>
                         </th>
-                        <th class="text-center td-15">Actions</th>
+                        <th class="text-center">Active</th>
+                        <th class="text-center">Actions</th>
                     </tr>
-                    <tr ng-repeat="(i, user) in users.items">
-                        <td><a href="#/clients/{{clientId}}/user/{{user.position_data.id}}">{{user.email}}</a></td>
+                    <tr ng-repeat="(i, user) in users.items | orderBy:sortType:sortReverse | filter:searchUser">
+                        <td><a href="#/clients/{{clientId}}/user/{{user.position_data.id}}">{{user.email ? user.email : user.email_canonical }}</a></td>
                         <td  class="text-center">{{user.first_name}}</td>
                         <td  class="text-center">{{user.last_name}}</td>
                         <td  class="text-center">{{user.mobile_no ? user.mobile_no : '-'}}</td>
@@ -68,17 +79,24 @@
                         <td  class="text-center td-18" ng-if="getTime(user.date_added)">
                             {{getTime(user.date_added) | date:'MM.dd.yyyy'}}
                         </td>
-                        <td  class="text-center td-18" ng-if="!getTime(user.date_added)">-</td>
-                        <td class="td-control text-center td-15">
-                            <a title="Enabled/Not"
-                                ng-click="enabUser(user, i)">
-                                <i class="fa fa-check" ng-show="user.enabled"></i>
-                                <i class="fa fa-times" ng-show="!user.enabled"></i>
-                            </a>
+                        <td  class="text-center" ng-if="!getTime(user.date_added)">-</td>
+                        <td class="td-control text-center td-18">
+                            <input type="checkbox"
+                                   name="handbook_chk"
+                                   id="{{user.id}}"
+                                   ng-change="enabUser(user, i)"
+                                   ng-model="user.enabled"
+                            />
                             <!--|-->
                             <!--<a title="Ban"><i class="fa fa-ban"></i></a>-->
                             <!--|-->
                             <!--<a title="Delete User" ng-click="removeUser(user)"><i class="fa fa-trash-o"></i></a>-->
+                        </td>
+                        <td class="td-control text-center">
+                            <a href="#/clients/{{clientId}}/user/{{user.position_data.id}}">
+                                <i class="fa fa-edit"
+                                   title="Edit User"></i>
+                            </a>
                         </td>
                     </tr>
                 </tbody>

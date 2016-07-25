@@ -6,6 +6,7 @@
                 var _URL_users, _getUsers, _updateUser;
                 authHandler.checkLoggedIn();
                 $scope.clientId = $routeParams.clientId;
+                
                 $scope.sortType     = 'email'; // set the default sort type
                 $scope.sortReverse  = false;  // set the default sort order
                 $scope.searchFish   = '';     // set the default search/filter term
@@ -104,12 +105,12 @@
                             "first_name": user.first_name,
                             "last_name": user.last_name,
                             "username": user.username,
-                            "email": user.email,
+                            "email": user.email ? user.email : user.email_canonical,
                             "code": user.code,
                             "four_digit_pin": user.four_digit_pin || '',
                             "mobile_no": user.mobile_no || '',
                             "office_no": user.office_no || '',
-                            "enabled": !user.enabled,
+                            "enabled": user.enabled,
                             "date_added": $filter('date')(new Date(user.date_added), 'yyyy-MM-ddT00:00:00+0000')
                         }
                     };
