@@ -1404,7 +1404,17 @@
                 + '<a style="margin-left : 15px" ng-click="editRow(row.entity)" href=""><span><i class="fa fa-edit"></i></span></a>'
                 +'<a style="margin-left : 15px" ng-click="grid.appScope.deleteThisRow(row.entity)" href=""><span><i class="fa fa-trash-o"></i></span></a>'
                 +'</div>'
-            var data = [];
+            var data = [
+                {
+                    'userGroupName' : 'Everyone',
+                    'listUsers' : '#/clients/' + $routeParams.clientId + '/everyone',
+                    'listHandbooks' : '#/clients/' + $routeParams.clientId + '/everyone/handbooks',
+                    'action' : '<div class="grid-action-cell">'
+                    + '<a disabled="true" style="margin-left : 15px" ng-click="editRow(row.entity)" href=""><span><i class="fa fa-edit"></i></span></a>'
+                    +'<a  disabled="true" style="margin-left : 15px" ng-click="grid.appScope.deleteThisRow(row.entity)" href=""><span><i class="fa fa-trash-o"></i></span></a>'
+                    +'</div>'
+                }
+            ];
             getData = function () {
                 Users.get(_URL.Actions).then(function (results) {
                     if (results.status !== 200 || typeof results !== 'object') {
@@ -1431,7 +1441,6 @@
                                 }
 
                                 var cloudbookAceGroup = {};
-                                cloudbookAceGroup.code = 'G' + group.id ;
                                 cloudbookAceGroup.userGroupName = group.name ;
                                 cloudbookAceGroup.listUsers = '#/clients/' + $routeParams.clientId + '/user-group/' + group.id + '/users';
                                 cloudbookAceGroup.listHandbooks = '#/clients/' + $routeParams.clientId + '/user-group/' + group.id + '/handbooks';
@@ -1512,11 +1521,11 @@
             $scope.gridOptions = {
                 enableSorting: true,
                 columnDefs: [
-                    {
-                        name: 'code',
-                        displayName : 'Code',
-                        enableCellEdit: false,
-                    },
+                    // {
+                    //     name: 'code',
+                    //     displayName : 'Code',
+                    //     enableCellEdit: false,
+                    // },
                     {
                         name: 'userGroupName',
                         displayName : 'User Group Name'
@@ -1537,7 +1546,8 @@
                         displayName: 'Actions',
                         name: 'action',
                         enableCellEdit: false,
-                        cellTemplate: actionCellTemplate}
+                        cellTemplate: actionCellTemplate
+                    }
 
                 ],
                 data : data
@@ -2352,6 +2362,53 @@
             }
             loadList();
         }
+    ]).controller('EveryoneGroupController', [
+        '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'hotRegisterer', 'authHandler', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, hotRegisterer, authHandler) {
+            authHandler.checkLoggedIn();
+            var _URL = {
+                users: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/positions',
+            };
+            $scope.clientId = $routeParams.clientId;
+            $scope.groupId = $routeParams.groupId;
+
+            $scope.userSearch = [];
+            $scope.userSearchObject = [];
+            $scope.modelUser = '';
+            $scope.allowAdd = false;
+
+            var loadList = function () {
+
+                Users.get(_URL.users).then(function ( results ) {
+                    if(results.status !== 200 || typeof results !== 'object')
+                    {
+                        return;
+                    }
+
+                    $scope.listUser = [];
+                    angular.forEach(results.data._embedded.items, function (item) {
+                        Users.get(item._links.employee.href).then(function (result) {
+                            if (result.status !== 200 || typeof result !== 'object') {
+                                return;
+                            }
+                            var res = result.data.roles;
+                            window.resdi = res;
+                            if(Array.isArray(res))
+                            {
+                                if(result.data.roles.join().indexOf('ROLE_ADMIN') == -1 && result.data.roles.join().indexOf('ROLE_HR_ADMIN') == -1 && result.data.enabled == true )
+                                {
+                                    result.data.inGroup = true;
+                                    $scope.listUser.push(result.data);
+                                }
+
+                            }
+
+                        })
+                    })
+                })
+
+            }
+            loadList();
+        }
     ]).controller('CategoryByGroupCtrl', [
         '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'hotRegisterer', 'authHandler', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, hotRegisterer, authHandler) {
             authHandler.checkLoggedIn();
@@ -2505,6 +2562,75 @@
 
                 });
 
+            }
+            loadList();
+
+        }
+    ]).controller('PublicHandbookByGroupController', [
+        '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'hotRegisterer', 'authHandler', function ($scope, $filter, fetchTabData, $location, $routeParams, config, $q, UserService, Users, $timeout, hotRegisterer, authHandler) {
+            authHandler.checkLoggedIn();
+            var _URL = {
+                handbooks: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/handbooks',
+            };
+            $scope.group = {};
+            $scope.handbooks = [];
+            $scope.clientId = $routeParams.clientId;
+            $scope.handbookChange = function (handbook) {
+                var id = handbook.id;
+                if(handbook.inGroup == false)
+                {
+                    Users.delete(_URL.postHandbookToGroup + '/' + id).then(function (results) {
+                        if (results.status === 204) {
+                            $scope.infoUpdated = 'Updated Successfully.';
+                            loadList();
+                        } else {
+                            $scope.infoUpdated = 'Updated Fail.';
+                        }
+                    });
+                } else if (handbook.inGroup == true) {
+                    Users.post(_URL.postHandbookToGroup + '/' + id, {}).then(function (results) {
+                        if (results.status === 204) {
+                            $scope.infoUpdated = 'Updated Successfully.';
+                            $scope.handbooks.push(handbook);
+                        } else {
+                            $scope.infoUpdated = 'Updated Fail.';
+                        }
+                    });
+                }
+            };
+            var loadList = function () {
+                Users.get(_URL.handbooks).then(function ( results ) {
+                    if(results.status !== 200 || typeof results !== 'object')
+                    {
+                        return;
+                    }
+
+                    var handbookAll = results.data._embedded.items;
+                    var handbooks = [];
+                    angular.forEach(handbookAll, function (handbook) {
+
+                        if(handbook.enabled == true && handbook.public == true)
+                        {
+                            handbook.inGroup = true;
+                            handbook.locale = 'en_us';
+                            handbooks.push(handbook);
+                            Users.get(handbook._links.translations.href).then(function(res) {
+                                if (res.status !== 200 || typeof res !== 'object') {
+                                    return;
+                                }
+                                handbook['translations'] = res.data;
+                                if (handbook.translations['en_us']) {
+                                    handbook.title = handbook.translations['en_us'].title;
+                                }
+                            }, function(error) {
+                                console.log(error);
+                            });
+                        }
+
+                    });
+
+                    $scope.listHandbook = handbooks;
+                });
             }
             loadList();
 
