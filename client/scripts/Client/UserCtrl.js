@@ -412,7 +412,7 @@
                 var r;
                 r = confirm("Do you want to delete this user \"" + $scope.user.email + "\"?");
                 if (r === true) {
-                    Users["delete"](_URL.detail + $scope.user.id).then(function (res) {
+                    Users["delete"](config.path.baseURL + '/organisations/' + $scope.user.position_data.id + '/position').then(function (res) {
                         if (typeof res === 'object' && res.status === 204) {
                             $scope.infoUpdated = 'Deleted user successfully!';
                             $timeout(function () {
