@@ -357,6 +357,10 @@
                 if ($scope.frm_section.$error.required) {
                     return false;
                 }
+                if($scope.formSection.description == undefined)
+                {
+                    $scope.formSection.description = ' ';
+                }
                 sectionItem = {
                     section: {
                         description: $scope.formSection.description,

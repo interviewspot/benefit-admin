@@ -117,7 +117,7 @@
                     updateContact = {
                         "position": {
                             "employee": user.id,
-                            "enabled": !user.enabled,
+                            "enabled": user.enabled,
                             "employer": $scope.clientId,
                             "handbook_contact": user.position_data.position_data
                         }
@@ -1261,7 +1261,11 @@
 
             $scope.deleteThisRow = function(row) {
                 var id = parseInt(row.code.substring(1));
-                var deleteGroup = confirm('Are you sure you want to delete this group?');
+                if(id != 0){
+                    var deleteGroup = confirm('Are you sure you want to delete this group?');
+                } else {
+                    confirm('You can\'t delete default group');
+                }
 
                 if(deleteGroup) {
                     Users.delete(_URL.Groups + '/' + id).then( function ( results) {
@@ -1401,18 +1405,14 @@
             var checkboxViewCellTemplate = '<input type="checkbox" ng-model="row.entity.view" ng-click="toggle(row.entity.view)">';
             */
             var actionCellTemplate = '<div class="grid-action-cell">'
-                + '<a style="margin-left : 15px" ng-click="editRow(row.entity)" href=""><span><i class="fa fa-edit"></i></span></a>'
                 +'<a style="margin-left : 15px" ng-click="grid.appScope.deleteThisRow(row.entity)" href=""><span><i class="fa fa-trash-o"></i></span></a>'
                 +'</div>'
             var data = [
                 {
+                    'code' : 'G0',
                     'userGroupName' : 'Everyone',
                     'listUsers' : '#/clients/' + $routeParams.clientId + '/everyone',
-                    'listHandbooks' : '#/clients/' + $routeParams.clientId + '/everyone/handbooks',
-                    'action' : '<div class="grid-action-cell">'
-                    + '<a disabled="true" style="margin-left : 15px" ng-click="editRow(row.entity)" href=""><span><i class="fa fa-edit"></i></span></a>'
-                    +'<a  disabled="true" style="margin-left : 15px" ng-click="grid.appScope.deleteThisRow(row.entity)" href=""><span><i class="fa fa-trash-o"></i></span></a>'
-                    +'</div>'
+                    'listHandbooks' : '#/clients/' + $routeParams.clientId + '/everyone/handbooks'
                 }
             ];
             getData = function () {
@@ -1441,6 +1441,7 @@
                                 }
 
                                 var cloudbookAceGroup = {};
+                                cloudbookAceGroup.code = 'G' + group.id ;
                                 cloudbookAceGroup.userGroupName = group.name ;
                                 cloudbookAceGroup.listUsers = '#/clients/' + $routeParams.clientId + '/user-group/' + group.id + '/users';
                                 cloudbookAceGroup.listHandbooks = '#/clients/' + $routeParams.clientId + '/user-group/' + group.id + '/handbooks';
@@ -1521,11 +1522,12 @@
             $scope.gridOptions = {
                 enableSorting: true,
                 columnDefs: [
-                    // {
-                    //     name: 'code',
-                    //     displayName : 'Code',
-                    //     enableCellEdit: false,
-                    // },
+                    {
+                        name: 'code',
+                        displayName : 'Code',
+                        enableCellEdit: false,
+                        visible : false
+                    },
                     {
                         name: 'userGroupName',
                         displayName : 'User Group Name'
@@ -1546,8 +1548,7 @@
                         displayName: 'Actions',
                         name: 'action',
                         enableCellEdit: false,
-                        cellTemplate: actionCellTemplate
-                    }
+                        cellTemplate: actionCellTemplate}
 
                 ],
                 data : data
