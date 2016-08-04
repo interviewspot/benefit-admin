@@ -60,16 +60,17 @@
 					<div class="table-responsive">
 						<table class="table tbl tbl-bg table-hover table-striped tbl-w1000">
 							<tbody>
-							<tr>
-								<th class="text-left">CloudBook</th>
-							</tr>
-							<tr ng-repeat="(i, handbook) in handbooks" >
-								<td class="text-left">
-									<a href="#clients/{{ clientDetail.id }}/handbooks/{{ handbook.id }}/view">
-										{{ handbook.translations['en_us'].title ? handbook.translations['en_us'].title : handbook.title}}
-									</a>
-								</td>
-							</tr>
+								<tr>
+									<th class="text-left">CloudBook</th>
+								</tr>
+								<tr ng-repeat="(i, handbook) in handbooks" >
+									<td class="text-left">
+										<a href=""><i class="fa fa-close" ng-click="removeHandbook(handbook)" title="Remove Handbook"></i></a>
+										<a href="#clients/{{ clientDetail.id }}/handbooks/{{ handbook.id }}/view">
+											{{ handbook.translations['en_us'].title ? handbook.translations['en_us'].title : handbook.title}}
+										</a>
+									</td>
+								</tr>
 							</tbody>
 						</table>
 					</div>

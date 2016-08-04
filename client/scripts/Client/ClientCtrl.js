@@ -568,6 +568,8 @@
             
             var _URL = {
                 handbooks: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/categories/' + $routeParams.categoryId + '/handbooks',
+                postHandbookToCategory: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/categories/' + $routeParams.categoryId
+
             };
 
             clientService.get({
@@ -609,31 +611,49 @@
 
             }
 
-            Users.get(_URL.handbooks).then(function (results) {
-                if (results.status !== 200 || typeof results !== 'object') {
-                    return;
+            $scope.removeHandbook = function(handbook){
+                var r;
+                r = confirm("Woud you like to remove this handbook out of category ?");
+                if(r) {
+                    Users.delete(_URL.postHandbookToCategory + '/handbooks/' + handbook.id).then(function (results) {
+                        if (results.status === 204) {
+                            $scope.infoUpdated = 'Updated Successfully.';
+                            loadList();
+                        } else {
+                            $scope.infoUpdated = 'Updated Fail.';
+                        }
+                    });
                 }
-                $scope.handbooks = results.data._embedded.items;
-                angular.forEach($scope.handbooks, function (handbook) {
-                    handbook.locale = 'en_us';
-                    Users.get(handbook._links.translations.href).then(function(res) {
-                        if (res.status !== 200 || typeof res !== 'object') {
-                            return;
-                        }
-                        handbook['translations'] = res.data;
-                        if (handbook.translations['en_us']) {
-                            handbook.title = handbook.translations['en_us'].title;
-                        }
-                    }, function(error) {
-                        console.log(error);
+            }
+
+            var loadList = function() {
+                Users.get(_URL.handbooks).then(function (results) {
+                    if (results.status !== 200 || typeof results !== 'object') {
+                        return;
+                    }
+                    $scope.handbooks = results.data._embedded.items;
+                    angular.forEach($scope.handbooks, function (handbook) {
+                        handbook.locale = 'en_us';
+                        Users.get(handbook._links.translations.href).then(function(res) {
+                            if (res.status !== 200 || typeof res !== 'object') {
+                                return;
+                            }
+                            handbook['translations'] = res.data;
+                            if (handbook.translations['en_us']) {
+                                handbook.title = handbook.translations['en_us'].title;
+                            }
+                        }, function(error) {
+                            console.log(error);
+                        });
+
                     });
 
+                    return $timeout(function() {
+                        return $scope.infoUpdated = null;
+                    }, 2000);
                 });
-
-                return $timeout(function() {
-                    return $scope.infoUpdated = null;
-                }, 2000);
-            });
+            }
+            loadList();
         }
     ]).controller('CategoryHandbookCtrl', [
         '$scope' , '$routeParams', '$location', '$timeout', 'authHandler', 'config','Users','categoryService' , 'clientService',
