@@ -2,8 +2,8 @@
 	<div class="page page-table" data-ng-controller="HandbookByUserCtrl">
 		<div class="clients_list" ng-show="!isEditClients">
 			<h1 class="ttl-page">Security CloudBook List</h1>
-			<br>
-			<br>
+			<h4>User : {{ group.first_name }} {{ group.last_name }}</h4>
+			<br/>
 		</div>
 		<div class="t-l marg-bot">
 			<a href="#/clients/{{ clientId }}/user-group/{{ groupId }}/users" class="btn btn-default" ng-click="createNewVersion()">

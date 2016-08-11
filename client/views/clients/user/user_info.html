@@ -1,0 +1,270 @@
+<form name="frm_updateuser" class="frm-updateuser" novalidate>
+    <div class="t-r marg-bot ">
+        <span class="msg-update">{{infoUpdated}} </span>
+        <button type="submit" class="btn btn-brown" ng-click="updateUser()">
+            <i class="fa fa-pencil"></i>
+            Submit to save
+        </button>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <button class="btn btn-edit" ng-click="deleteUser()">Delete</button>
+    </div>
+    <div class="row">
+        <div class="col-md-6 col-sm-6 col-xs-12 col-user">
+            <input type="hidden" ng-model="user.id" value="{{user.id}}">
+            <table class="table tbl table-striped">
+                <tbody>
+                    <tr>
+                        <th class="td-30">First Name <span class="red">*</span></th>
+                        <td>
+                            <input type="text"
+                                name="firstname"
+                                class="txt-ipt"
+                                ng-class="{txt_disabled : !isDisable}"
+                                ng-model="user.first_name"
+                                required>
+                            <p style="color:red" ng-show="frm_updateuser.firstname.$dirty && frm_updateuser.firstname.$invalid">
+                              <span ng-show="frm_updateuser.firstname.$error.required && frm_updateuser.firstname.$dirty">First name is required.</span>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Last Name</th>
+                        <td><input type="text"
+                                class="txt-ipt"
+                                ng-model="user.last_name"></td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Email <span class="red">*</span></th>
+                        <td><input type="email"
+                                name="email"
+                                class="txt-ipt"
+                                ng-model="user.email"
+                                required>
+                            <p style="color:red" ng-show="frm_updateuser.email.$dirty && frm_updateuser.email.$invalid">
+                              <span ng-show="frm_updateuser.email.$error.required">Email is required.</span>
+                              <span ng-show="frm_updateuser.email.$error.email">Invalid email address.</span>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="td-20">Password <span class="red">*</span></th>
+                        <td>
+                            <input type="password" name="password" class="ipt-user"
+                                   ng-class="{txt_err : frm_adduser.password.$error.required}"
+                                   ng-model="user.password"
+                                   ng-minlength="4"
+                                   ng-pattern="/^[a-zA-Z\d\-\_~@#$^*()_+=[\]{}|\\,.?:!%&]+$/"
+                                   ng-trim="false"
+                                   required  >
+                            <p style="color:red">
+                                <span ng-show="frm_adduser.password.$invalid  && frm_adduser.password.$dirty">Password need at least 4 chars without whitespace.</span>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Contact no.</th>
+                        <td><input type="text"
+                                name="mobile_no"
+                                ng-model="user.mobile_no"
+                                class="txt-ipt"
+                                ng-class="{txt_disabled : !isDisable}"
+                                ng-pattern="/^[\d+ ]+$/">
+                            <p style="color:red">
+                                <span ng-show="frm_updateuser.mobile_no.$invalid  && frm_updateuser.mobile_no.$dirty">Mobile number only contain number, whitespace and +.</span>
+                            </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Employee Class</th>
+                        <td>
+                            <tags-input class="txt-ipt"
+                                ng-model="user.employee_class"
+                                display-property="name"
+                                replace-spaces-with-dashes="false">
+                              <auto-complete source="tags.getEmployeeClass($query)"></auto-complete>
+                            </tags-input>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Function</th>
+                        <td><tags-input class="txt-ipt"
+                                ng-model="user.employee_function"
+                                display-property="name"
+                                replace-spaces-with-dashes="false">
+                              <auto-complete source="tags.getEmployeeFunction($query)"></auto-complete>
+                            </tags-input></td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Office no.</th>
+                        <td><input type="text"
+                                name="office_no"
+                                ng-model="user.office_no"
+                                class="txt-ipt"
+                                ng-class="{txt_disabled : !isDisable}"
+                                ng-pattern="/^[\d+ ]+$/">
+                            <p style="color:red">
+                                <span ng-show="frm_updateuser.office_no.$invalid  && frm_updateuser.office_no.$dirty">Office number only contain number, whitespace and +.</span>
+                            </p>
+                    </tr>
+                    <!--<tr>-->
+                        <!--<th class="td-30">NRIC No.</th>-->
+                        <!--<td><input type="text"-->
+                                <!--value="Not Available Yet!"-->
+                                <!--class="txt-ipt"-->
+                                <!--ng-class="{txt_disabled : !isDisable}"></td>-->
+                    <!--</tr>-->
+                </tbody>
+            </table>
+        </div>
+        <!-- END: COL -->
+        <div class="col-md-6 col-sm-6 col-xs-12 col-user">
+            <table class="table tbl table-striped">
+                <tbody>
+                    <tr>
+                        <th class="td-30">Date Added</th>
+                        <td><input type="text"
+                                ng-model="user.date_added"
+                                class="txt-ipt txt_disabled" disabled></td>
+                    </tr>
+                    <!--<tr>-->
+                        <!--<th class="td-30">De-activated Date</th>-->
+                        <!--<td><input type="text"-->
+                                <!--value="Not Available Yet!"-->
+                                <!--class="txt-ipt"-->
+                                <!--ng-class="{txt_disabled : !isDisable}"></td>-->
+                    <!--</tr>-->
+                    <tr>
+                        <th class="td-30">Birthday</th>
+                        <td><input type="text"
+                                    name="birthday"
+                                    class="ipt-user"
+                                    datepicker-popup="MM/dd/yyyy"
+                                    ng-model="user.birthday"
+                                    is-open="datepickerOpened"
+                                    close-text="Close"
+                                    show-button-bar="false"
+                                    ng-click="openDatepicker($event)"
+                                    ng-class="{txt_disabled : !isDisable}"
+                                    />
+                        </td>
+                    </tr>
+                    <!--<tr>-->
+                        <!--<th class="td-30">App Status</th>-->
+                        <!--<td>-->
+                            <!--<input type="text"-->
+                                <!--value="Not Available Yet!"-->
+                                <!--class="txt-ipt"-->
+                                <!--ng-class="{txt_disabled : !isDisable}">-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                    <tr>
+                        <th class="td-30">Verification Code</th>
+                        <td><input type="text"
+                                name="code"
+                                class="txt-ipt"
+                                required
+                                placeholder="Verification code 6 chars"
+                                ng-minlength="6"
+                                ng-model="user.code"
+                                ng-pattern="/^[a-z\d\-\_]+$/"
+                                ng-class="{txt_err : frm_updateuser.code.$invalid}"
+                                ></td>
+                    </tr>
+                    <!--<tr>-->
+                        <!--<th class="td-30">Pin Code</th>-->
+                        <!--<td><input type="text"-->
+                                <!--name="four_digit_pin"-->
+                                <!--class="txt-ipt"-->
+                                <!--required-->
+                                <!--placeholder="Pin code 4 chars"-->
+                                <!--ng-minlength="4"-->
+                                <!--ng-maxlength="4"-->
+                                <!--ng-model="user.four_digit_pin"-->
+                                <!--ng-pattern="/^[a-z\d\-\_]+$/"-->
+                                <!--ng-class="{txt_err : frm_updateuser.four_digit_pin.$invalid}"-->
+                                <!--&gt;</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<th class="td-30">Redemptions</th>-->
+                        <!--<td><input type="text"-->
+                                <!--value="Not Available Yet!"-->
+                                <!--class="txt-ipt"-->
+                                <!--ng-class="{txt_disabled : !isDisable}"></td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<th class="td-30">Est. Savings</th>-->
+                        <!--<td><input type="text"-->
+                                <!--value="Not Available Yet!"-->
+                                <!--class="txt-ipt"-->
+                                <!--ng-class="{txt_disabled : !isDisable}"></td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<th class="td-30">Medical Card ID</th>-->
+                        <!--<td><input type="text"-->
+                                <!--value="Not Available Yet!"-->
+                                <!--class="txt-ipt"-->
+                                <!--ng-class="{txt_disabled : !isDisable}"></td>-->
+                    <!--</tr>-->
+                    <tr>
+                        <th class="td-30">Enabled / Not:</th>
+                        <td>
+                            <input type="checkbox"
+                                name="user_enabled"
+                                ng-model="updateTags.position.enabled"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Show in CloudBook Contacts:</th>
+                        <td>
+                            <input type="checkbox"
+                                name="handbook_contact"
+                                ng-model="user.position_data.handbook_contact"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="td-30">Role</th>
+                        <td>
+                            <select ng-model="user.roles">
+                                <option value="ROLE_USER" selected="selected">Regular User</option>
+                                <option value="ROLE_HR_ADMIN">--Hr Admin</option>
+                                <option ng-show="isAdmin==true" value="ROLE_ADMIN">----System Admin</option>
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- END: COL -->
+        <!--<div class="col-xs-12 user-history">-->
+            <!--<h2 class="ttl-tab">-->
+                <!--<span>Redemption History</span>-->
+            <!--</h2>-->
+            <!--<div class="table-responsive">-->
+                <!--<table class="table tbl tbl-bg table-striped tbl-w1000">-->
+                    <!--<tbody>-->
+                        <!--<tr>-->
+                            <!--<th class="text-center">Date/Time</th>-->
+                            <!--<th>Merchant</th>-->
+                            <!--<th>Item</th>-->
+                            <!--<th>Location</th>-->
+                            <!--<th>Category</th>-->
+                            <!--<th>Est. Value</th>-->
+                            <!--<th>Ref </th>-->
+                        <!--</tr>-->
+                        <!--<tr ng-repeat="redemption in clients_user_redemptions_list">-->
+                            <!--<td>{{redemption.date}}</td>-->
+                            <!--<td>{{redemption.merchant}}</td>-->
+                            <!--<td>{{redemption.item}}</td>-->
+                            <!--<td>{{redemption.location}}</td>-->
+                            <!--<td>{{redemption.category}}</td>-->
+                            <!--<td>{{redemption.est_save}}</td>-->
+                            <!--<td>{{redemption.ref}}</td>-->
+                        <!--</tr>-->
+                    <!--</tbody>-->
+                <!--</table>-->
+            <!--</div>-->
+        <!--</div>-->
+        <!-- END: HISTORY -->
+    </div>
+    </form>

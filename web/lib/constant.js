@@ -3,8 +3,7 @@
         '$resource', '$rootScope', function($resource, $rootScope) {
             return {
                 path: {
-                    // 'baseURL': 'https://api.sg-benefits.com',
-                    'baseURL': 'http://local.api.com',
+                    'baseURL': 'http://api-live.sg-benefits.com',
                     'clients': '/organisations',
                     'client': '/organisations/:org_id',
                     'handbooks': '/organisations/:org_id/handbooks',

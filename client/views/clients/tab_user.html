@@ -67,6 +67,7 @@
                             </a>
                         </th>
                         <th class="text-center">Active</th>
+                        <th class="text-center">CloudBook</th>
                         <th class="text-center">Actions</th>
                     </tr>
                     <tr ng-repeat="(i, user) in users.items | orderBy:sortType:sortReverse | filter:searchUser">
@@ -91,6 +92,12 @@
                             <!--<a title="Ban"><i class="fa fa-ban"></i></a>-->
                             <!--|-->
                             <!--<a title="Delete User" ng-click="removeUser(user)"><i class="fa fa-trash-o"></i></a>-->
+                        </td>
+                        <td class="td-control text-center">
+                            <a href="#/clients/{{clientId}}/user-group-user/{{user.id}}/handbooks">
+                                <i class="fa fa-arrow-circle-right"
+                                   title="CloudBook User"></i>
+                            </a>
                         </td>
                         <td class="td-control text-center">
                             <a href="#/clients/{{clientId}}/user/{{user.position_data.id}}">

@@ -1270,6 +1270,7 @@ hr.line {
 	margin-top: -12px;
 	font-size: 13px;
 	color: #464545;
+
 }
 .sort-icon .glyphicon {
 	display: block;
@@ -1279,4 +1280,9 @@ hr.line {
 }
 .sort-icon .glyphicon-triangle-bottom {
 	top: -3px;
+}
+.my-css-class {
+    pointer-events: none; 
+    cursor: default; 
+    opacity: 0.4;
 }

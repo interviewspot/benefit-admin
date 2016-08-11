@@ -1,0 +1,40 @@
+<div class="table-responsive">
+  <table class="table tbl tbl-bg table-hover table-striped tbl-w1000">
+    <tbody>
+    <tr>
+      <th class="text-left">Group Name</th>
+    </tr>
+    <tr ng-repeat="(i, group) in groups" >
+      <td class="text-left">
+        <a href="">
+          {{ group.name}}
+        </a>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+<footer class="table-footer" ng-show="users.pages >= 2">
+  <div class="row">
+    <div class="col-md-6 page-num-info">
+    <span>
+        Show
+        <select data-ng-model="numPerPage"
+                data-ng-options="num for num in numPerPageOpt"
+                data-ng-change="onNPPChange()">
+        </select>
+        users / page
+    </span>
+    </div>
+    <div class="col-md-6 text-right pagination-container">
+      <pagination class="pagination-sm"
+                  ng-model="currentPage"
+                  total-items="users.total"
+                  max-size="4"
+                  ng-change="gotoPage(currentPage)"
+                  items-per-page="numPerPage"
+                  rotate="false"
+                  boundary-links="true"></pagination>
+    </div>
+  </div>
+</footer>

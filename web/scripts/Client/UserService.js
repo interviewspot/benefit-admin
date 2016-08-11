@@ -309,12 +309,15 @@
                             workbook = XLSX.read(data, {
                                 type: 'binary'
                             });
-                            first_sheet_name = workbook.SheetNames[0];
-                            worksheet = workbook.Sheets[first_sheet_name];
-                            json = sheet_to_custom_json(worksheet);
+
+                            var result = to_json(workbook);
+
+                            // first_sheet_name = workbook.SheetNames[0];
+                            // worksheet = workbook.Sheets[first_sheet_name];
+                            // json = sheet_to_custom_json(worksheet);
                             data = {
                                 name: name,
-                                json: json
+                                json: result
                             };
                             return scope.parsedJson = data;
                         };
@@ -323,6 +326,16 @@
                         return scope.parsedJson = false;
                     }
                 });
+            };
+            var to_json = function(workbook) {
+                var result = {};
+                workbook.SheetNames.forEach(function(sheetName) {
+                    var roa = XLSX.utils.sheet_to_row_object_array(workbook.Sheets[sheetName]);
+                    if(roa.length > 0){
+                        result[sheetName] = roa;
+                    }
+                });
+                return result;
             };
             sheet_to_custom_json = function (sheet) {
                 var firstCol, secondCol, status, tempCell, tempObj;
