@@ -1,9 +1,11 @@
-@media (min-width: 2300px) {
+@media (min-width: 2299px) {
   .sec_content_right {
     margin-left: 30.1%; } }
-@media (min-width: 1920px) {
+@media (min-width: 1919px) {
   .sec_content_right {
-    margin-left: 29%; } }
+    margin-left: 29%; 
+  } 
+} 
 @media (max-width: 1200px) {
   .lv1 > .nav-tabs > li > a {
     font-size: 14px;
