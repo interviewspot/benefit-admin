@@ -22,7 +22,7 @@
                 handbooks: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/category/handbook/uncategorize'
 
             };
-            
+
             _getClients = function (limit, goPage) {
                 return Clients.get(_URL_clients.list + '?limit=' + limit + '&page=' + goPage).then(function (res) {
                     if (res.status !== 200 || typeof res !== 'object') {
@@ -88,7 +88,24 @@
                 }, function(error) {
                     return $scope.infoUpdated = error.status + ': Error, refresh & try again !';
                 });
+            };
+
+
+            $scope.removeCategory = function(category){
+                var r;
+                r = confirm("Would you like to remove this category ?");
+                if(r) {
+                    Users.delete(config.path.baseURL + '/organisations/' + $routeParams.clientId + '/categories/' + category.id ).then(function (results) {
+                        if (results.status === 204) {
+                            $scope.infoUpdated = 'Remove category successfully.';
+                            return location.reload();
+                        } else {
+                            $scope.infoUpdated = 'Remove category fail.';
+                        }
+                    });
+                }
             }
+
             $scope.changePublished = function (handbook, clientId) {
                 var desc, r, title, updateData;
                 r = confirm("Do you want to change this Handbook ?");
@@ -613,7 +630,7 @@
 
             $scope.removeHandbook = function(handbook){
                 var r;
-                r = confirm("Woud you like to remove this handbook out of category ?");
+                r = confirm("Would you like to remove this handbook out of category ?");
                 if(r) {
                     Users.delete(_URL.postHandbookToCategory + '/handbooks/' + handbook.id).then(function (results) {
                         if (results.status === 204) {
