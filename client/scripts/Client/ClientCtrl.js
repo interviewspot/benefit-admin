@@ -743,7 +743,13 @@
                             return;
                         }
 
-                        var handbookAll = results.data._embedded.items;
+                        var handbookAll = [];
+                        angular.forEach(results.data._embedded.items,function (item) {
+                            if(item.enabled == true)
+                            {
+                                handbookAll.push(item);
+                            }
+                        });
 
                         angular.forEach(handbookAll, function (handbook) {
 

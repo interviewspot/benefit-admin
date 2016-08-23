@@ -25,12 +25,17 @@
               <table class="table tbl tbl-bg table-hover table-striped tbl-w1000">
                   <tbody>
                       <tr>
-                          <th class="text-left">Name</th>
+                          <th class="text-left">
+                              <a href="" ng-click="sortType = 'first_name'; sortReverse = !sortReverse">Name
+                                  <span ng-show="sortType == 'first_name'&& !sortReverse" class="fa fa-caret-down"></span>
+                                  <span ng-show="sortType == 'first_name'&& sortReverse" class="fa fa-caret-up"></span>
+                              </a>
+                          </th>
                           <th class="text-left">Email</th>
                           <th class="text-center">Member</th>
                           <th class="text-center">Action</th>
                       </tr>
-                      <tr ng-repeat="(i, user) in listUser" >
+                      <tr ng-repeat="(i, user) in listUser | orderBy:sortType:sortReverse" >
                           <td class="text-left">
                               <a href="">
                                   {{user.first_name + ' ' + user.last_name}}
