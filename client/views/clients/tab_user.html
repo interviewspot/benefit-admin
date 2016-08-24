@@ -30,21 +30,21 @@
                 <tbody>
                     <tr>
                         <th class="text-center">
-                            <a href="" ng-click="sortType = 'email'; sortReverse = !sortReverse">Email
-                                <span ng-show="sortType == 'email'&& !sortReverse" class="fa fa-caret-down"></span>
-                                <span ng-show="sortType == 'email'&& sortReverse" class="fa fa-caret-up"></span>
+                            <a href="">Email
+                                <span ng-click="sorting('email' ,'desc')" class="fa fa-caret-down"></span>
+                                <span ng-click="sorting('email', 'asc')" class="fa fa-caret-up"></span>
                             </a>
                         </th>
                         <th class="text-center td-15">
-                            <a href="" ng-click="sortType = 'firstName'; sortReverse = !sortReverse">First Name
-                                <span ng-show="sortType == 'firstName'&& !sortReverse" class="fa fa-caret-down"></span>
-                                <span ng-show="sortType == 'firstName'&& sortReverse" class="fa fa-caret-up"></span>
+                            <a href="">First Name
+                                <span ng-click="sorting('firstName' ,'desc')" class="fa fa-caret-down"></span>
+                                <span ng-click="sorting('firstName' ,'asc')" class="fa fa-caret-up"></span>
                             </a>
                         </th>
-                        <th class="text-center">
-                            <a href="" ng-click="sortType = 'lastName'; sortReverse = !sortReverse">Last Name
-                                <span ng-show="sortType == 'lastName'&& !sortReverse" class="fa fa-caret-down"></span>
-                                <span ng-show="sortType == 'lastName'&& sortReverse" class="fa fa-caret-up"></span>
+                        <th class="text-center td-15">
+                            <a href="">Last Name
+                                <span ng-click="sorting('lastName' ,'desc')" class="fa fa-caret-down"></span>
+                                <span ng-click="sorting('firstName' ,'asc')" class="fa fa-caret-up"></span>
                             </a>
                         </th>
                         <th class="text-center">Contact No.</th>
@@ -70,7 +70,7 @@
                         <th class="text-center">CloudBook</th>
                         <th class="text-center">Actions</th>
                     </tr>
-                    <tr ng-repeat="(i, user) in users.items | orderBy:sortType:sortReverse | filter:searchUser">
+                    <tr ng-repeat="(i, user) in users.items| filter:searchUser">
                         <td><a href="#/clients/{{clientId}}/user/{{user.position_data.id}}">{{user.email ? user.email : user.email_canonical }}</a></td>
                         <td  class="text-center">{{user.first_name}}</td>
                         <td  class="text-center">{{user.last_name}}</td>
