@@ -1244,8 +1244,7 @@ hr.line {
 .sec_content_right {
 	border: 1px solid #ddd;
 	min-height: 42px;
-	position: fixed;
-	margin-left: 27.6%;
+	float :left;
 }
 .sec_right_text {
 	margin-top: 16px;
