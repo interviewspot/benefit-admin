@@ -291,8 +291,8 @@
                             return console.log(error);
                         });
                     } else {
-                        // $scope.urlUpload = $scope.clientDetail._links['logo.post'].href;
-                        $scope.urlUpload = $scope.clientDetail._links.logo.href;
+                        $scope.urlUpload = $scope.clientDetail._links['logo.post'].href;
+                        // $scope.urlUpload = $scope.clientDetail._links.logo.href;
 
                     }
                     if (typeof data._links.banners === 'object' && data._links.banners != undefined) {
