@@ -1,140 +1,129 @@
 <div style="margin-top : 100px" class="item-preview" data-ng-controller="HandbookSectionViewCtrl">
-	<div style="margin-left : 17px" class="t-l marg-bot">
-		<a href="#/clients/{{ clientId }}/categories/handbooks" class="btn btn-default" ng-click="createNewVersion()">
-			<span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
-		</a>
-	</div>
-	<div class="col-md-12">
-		<div style="padding-right: 1px" class="col-md-4 col-sm-4 col-xs-4">
-			<!-- SECTION LIST -->
-			<div class="tbl-div sction-list">
-				<div class="tbl-r">
-					<div class="t-tr td-bold">
-						<div class="t-td text-center t-ct">Cloud Book Content</div>
-					</div>
-				</div>
+    <div style="margin-left : 17px" class="t-l marg-bot">
+        <a href="#" ng-click="doTheBack()" class="btn btn-default">
+            <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+        </a>
+    </div>
+    <div class="col-md-12">
+        <div style="padding-right: 1px" class="col-md-4 col-sm-4 col-xs-4">
+            <!-- SECTION LIST -->
+            <div class="tbl-div sction-list">
+                <div class="tbl-r">
+                    <div class="t-tr td-bold">
+                        <div class="t-td text-center t-ct">Cloud Book Content</div>
+                    </div>
+                </div>
 
-				<div class="tbl-r sc-itm"
-					 ng-repeat="section in sections.items"
-					 ng-class="{active: section.id == selectedSec}">
-					<div class="t-tr"
-						 ng-click="showChildren(section);editSection(section ,true)">
-						<div id="sec_title" class="t-td t-3"><i class="fa fa-plus-square-o"></i><span>{{section.ordering}}</span></div>
-						<div class="t-td t-ct"
-							 ng-bind-html="section.translations['en_us'].title ? section.translations['en_us'].title : section.title"
-						></div>
-					</div>
-					<div ng-show="section.children.total > 0 && section.children.show && section.id == currentParent">
-						<div class="tbl-r sc-itm"
-							 ng-repeat="child_sec in section.children.items"
-							 ng-class="{active: child_sec.id == selectedSec}">
-							<div class="t-tr"
-								 ng-click="showChildren(child_sec); editSection(child_sec ,false)">
-								<div id="sec_title" class="t-td t-3"><i class="fa fa-long-arrow-right"></i><span> {{section.ordering}}.{{child_sec.ordering}} </span></div>
-								<div class="t-td t-ct"
-									 ng-bind-html="child_sec.translations['en_us'].title ? child_sec.translations['en_us'].title : child_sec.title"
-								></div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- END: TBL-div -->
+                <div class="tbl-r sc-itm" ng-repeat="section in sections.items" ng-class="{active: section.id == selectedSec}">
+                    <div class="t-tr" ng-click="showChildren(section);editSection(section ,true)">
+                        <div id="sec_title" class="t-td t-3"><i class="fa fa-plus-square-o"></i><span>{{section.ordering}}</span></div>
+                        <div class="t-td t-ct" ng-bind-html="section.translations['en_us'].title ? section.translations['en_us'].title : section.title"></div>
+                    </div>
+                    <div ng-show="section.children.total > 0 && section.children.show && section.id == currentParent">
+                        <div class="tbl-r sc-itm" ng-repeat="child_sec in section.children.items" ng-class="{active: child_sec.id == selectedSec}">
+                            <div class="t-tr" ng-click="showChildren(child_sec); editSection(child_sec ,false)">
+                                <div id="sec_title" class="t-td t-3"><i class="fa fa-long-arrow-right"></i><span> {{section.ordering}}.{{child_sec.ordering}} </span></div>
+                                <div class="t-td t-ct" ng-bind-html="child_sec.translations['en_us'].title ? child_sec.translations['en_us'].title : child_sec.title"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END: TBL-div -->
 
-		</div>
-		<div class="sec_content_right col-md-8 col-sm-8 col-xs-8">
-			<div class="sec_right_text sec-itm blk-preview">
-				<div class="modal_frm" ng-bind-html="formSection.description" ></div>
-			</div>
+        </div>
+        <div class="sec_content_right col-md-8 col-sm-8 col-xs-8">
+            <div class="sec_right_text sec-itm blk-preview">
+                <div class="modal_frm" ng-bind-html="formSection.description"></div>
+            </div>
 
 
-			<div data-ng-show="contents.length > 0">
-				<div ng-repeat="content in contents" >
-					<div ng-show="content != 'undefined' && content.html_text!='none' && content.html_text!='none_pdf'">
-						<div text-angular ng-model="content.html_text"></div>
-						<p></p>
-					</div>
-					<img ng-show="content != 'undefined' && content.html_text=='none'" width="90px"
-						 ng-src="{{content.url}}"/>
-					<a ng-show="content != 'undefined' && content.html_text=='none_pdf'"
-					   href="{{content.pdf_binary}}?locale=en_us&x-session={{user.user.session_key}}">{{content.pdf_name}}</a>
-				</div>
-			</div>
-			<!-- END : FORWARD -->
-		</div>
-	</div>
+            <div data-ng-show="contents.length > 0">
+                <div ng-repeat="content in contents">
+                    <div ng-show="content != 'undefined' && content.html_text!='none' && content.html_text!='none_pdf'">
+                        <div text-angular ng-model="content.html_text"></div>
+                        <p></p>
+                    </div>
+                    <img ng-show="content != 'undefined' && content.html_text=='none'" width="90px" ng-src="{{content.url}}" />
+                    <a ng-show="content != 'undefined' && content.html_text=='none_pdf'" href="{{content.pdf_binary}}?locale=en_us&x-session={{user.user.session_key}}" target="_blank">{{content.pdf_name}}</a>
+                </div>
+            </div>
+            <!-- END : FORWARD -->
+        </div>
+    </div>
 </div>
 <!-- END : ITEM -->
 
 <!-- END : ITEM -->
 
 <style>
-	/**
+    /**
  * For the correct positioning of the placeholder element, the dnd-list and
  * it's children must have position: relative
  */
-	.simpleDemo ul[dnd-list],
-	.simpleDemo ul[dnd-list] > li {
-		position: relative;
-	}
-
-	/**
+    
+    .simpleDemo ul[dnd-list],
+    .simpleDemo ul[dnd-list] > li {
+        position: relative;
+    }
+    /**
 	 * The dnd-list should always have a min-height,
 	 * otherwise you can't drop to it once it's empty
 	 */
-	.simpleDemo ul[dnd-list] {
-		min-height: 42px;
-		padding-left: 0px;
-	}
-
-	/**
+    
+    .simpleDemo ul[dnd-list] {
+        min-height: 42px;
+        padding-left: 0px;
+    }
+    /**
 	 * The dndDraggingSource class will be applied to
 	 * the source element of a drag operation. It makes
 	 * sense to hide it to give the user the feeling
 	 * that he's actually moving it.
 	 */
-	.simpleDemo ul[dnd-list] .dndDraggingSource {
-		display: none;
-	}
-
-	/**
+    
+    .simpleDemo ul[dnd-list] .dndDraggingSource {
+        display: none;
+    }
+    /**
 	 * An element with .dndPlaceholder class will be
 	 * added to the dnd-list while the user is dragging
 	 * over it.
 	 */
-	.simpleDemo ul[dnd-list] .dndPlaceholder {
-		display: block;
-		background-color: #ddd;
-		min-height: 42px;
-	}
-
-	/**
+    
+    .simpleDemo ul[dnd-list] .dndPlaceholder {
+        display: block;
+        background-color: #ddd;
+        min-height: 42px;
+    }
+    /**
 	 * The dnd-lists's child elements currently MUST have
 	 * position: relative. Otherwise we can not determine
 	 * whether the mouse pointer is in the upper or lower
 	 * half of the element we are dragging over. In other
 	 * browsers we can use event.offsetY for this.
 	 */
-	.simpleDemo ul[dnd-list] li {
-		background-color: #fff;
-		border: 1px solid #ddd;
-		border-top-right-radius: 4px;
-		border-top-left-radius: 4px;
-		display: block;
-		padding: 10px 15px;
-		margin-bottom: -1px;
-	}
-
-	/**
+    
+    .simpleDemo ul[dnd-list] li {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-top-right-radius: 4px;
+        border-top-left-radius: 4px;
+        display: block;
+        padding: 10px 15px;
+        margin-bottom: -1px;
+    }
+    /**
 	 * Show selected elements in green
 	 */
-	.simpleDemo ul[dnd-list] li.selected {
-		background-color: #dff0d8;
-		color: #3c763d;
-	}
-
-	.content-only:hover {
-		background-color: #8abeb7;
-		cursor: pointer;
-	}
+    
+    .simpleDemo ul[dnd-list] li.selected {
+        background-color: #dff0d8;
+        color: #3c763d;
+    }
+    
+    .content-only:hover {
+        background-color: #8abeb7;
+        cursor: pointer;
+    }
 </style>
