@@ -21,8 +21,12 @@
                 };
                 $scope.sortQuery = 'position.employee.firstName:asc';
                 // $scope.sortReverse = false;
+                $scope.searchUserKey = '';
+
                 _getUsers = function(limit, goPage) {
-                    return fetchContact.get(_URL_users.list + '?limit=' + limit + '&page=' + goPage + '&sort=' + $scope.sortQuery).then(function(res) {
+                    var searchQuery = 'position.employee.firstName:%' + $scope.searchUserKey + '%';
+                    var url = _URL_users.list + '?limit=' + limit + '&page=' + goPage + '&sort=' + $scope.sortQuery + '&search=' + searchQuery;
+                    return fetchContact.get(url).then(function(res) {
 
 
 
@@ -82,7 +86,9 @@
                     $scope.sortQuery = 'position.employee.' + field + ':' + type;
                     return _getUsers($scope.numPerPage, $scope.currentPage)
                 }
-
+                $scope.searchUser = function() {
+                    return _getUsers($scope.numPerPage, $scope.currentPage);
+                }
 
                 $scope.removeUser = function(user) {
                     var deleteUrl, r;
@@ -396,7 +402,7 @@
                     };
                     var isHr = $scope.user.roles == 'ROLE_HR_ADMIN' ? true : false;
                     $scope.updateTags.position = {
-                        "title": $scope.user.first_name +' '+ $scope.user.last_name,
+                        "title": $scope.user.first_name + ' ' + $scope.user.last_name,
                         "employee": $scope.user.id,
                         "enabled": $scope.updateTags.position.enabled,
                         "employer": $scope.clientId,
@@ -2342,19 +2348,22 @@
                         });
                     }
                 };
+                $scope.searchUserKey = '';
                 var loadList = function() {
                     Users.get(_URL.checkedUsers).then(function(results) {
                         if (results.status !== 200 || typeof results !== 'object') {
                             return;
                         }
                         $scope.group = results.data;
+
                         Users.get(results.data._links.users.href).then(function(results) {
                             if (results.status !== 200 || typeof results !== 'object') {
                                 return;
                             }
                             $scope.users = results.data._embedded.items;
-
-                            Users.get(_URL.users).then(function(results) {
+                            var searchQuery = 'position.employee.firstName:%' + $scope.searchUserKey + '%';
+                            var url = _URL.users + '?search=' + searchQuery;
+                            Users.get(url).then(function(results) {
                                 if (results.status !== 200 || typeof results !== 'object') {
                                     return;
                                 }
@@ -2389,6 +2398,9 @@
 
                 }
                 loadList();
+                $scope.searchUser = function() {
+                    loadList();
+                }
             }
         ]).controller('EveryoneGroupController', [
             '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'hotRegisterer', 'authHandler',
@@ -2405,9 +2417,12 @@
                 $scope.modelUser = '';
                 $scope.allowAdd = false;
 
+                $scope.searchUserKey = '';
                 var loadList = function() {
 
-                    Users.get(_URL.users).then(function(results) {
+                    var searchQuery = 'position.employee.firstName:%' + $scope.searchUserKey + '%';
+                    var url = _URL.users + '?search=' + searchQuery;
+                    Users.get(url).then(function(results) {
                         if (results.status !== 200 || typeof results !== 'object') {
                             return;
                         }
@@ -2434,6 +2449,9 @@
 
                 }
                 loadList();
+                $scope.searchUser = function() {
+                    loadList();
+                }
             }
         ]).controller('CategoryByGroupCtrl', [
             '$scope', '$filter', 'fetchTabData', '$location', '$routeParams', 'config', '$q', 'UserService', 'Users', '$timeout', 'hotRegisterer', 'authHandler',
@@ -2627,8 +2645,12 @@
                         });
                     }
                 };
+                $scope.searchHandbookKey = '';
                 var loadList = function() {
-                    Users.get(_URL.handbooks).then(function(results) {
+                    var searchQuery = 'handbook.title:%' + $scope.searchHandbookKey + '%';
+                    var url = _URL.handbooks + '?search=' + searchQuery;
+                    // var url = _URL.handbooks;
+                    Users.get(url).then(function(results) {
                         if (results.status !== 200 || typeof results !== 'object') {
                             return;
                         }
@@ -2660,6 +2682,9 @@
                     });
                 }
                 loadList();
+                $scope.searchHandbook = function() {
+                    loadList();
+                }
 
             }
         ]).controller('HandbookByUserCtrl', [

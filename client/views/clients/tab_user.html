@@ -2,7 +2,7 @@
     <div class="user-list">
         <div class="row">
             <br/>
-            <p class="marg-bot col-md-4 col-sm-4">Total No.  User: <strong>{{users.total ? users.total : 0}}</strong></p>
+            <p class="marg-bot col-md-4 col-sm-4">Total No. User: <strong>{{users.total ? users.total : 0}}</strong></p>
             <p class="user-sts col-md-8 col-sm-8 t-r">
                 <!--<span class="active">Active</span>-->
                 <!--<span>Un-Active</span>-->
@@ -11,20 +11,19 @@
         </div>
         <br/>
         <div class="t-r clearfix">
-            <span class="f-l msg-update" ng-show="infoUpdated" >{{infoUpdated}}</span>
+            <span class="f-l msg-update" ng-show="infoUpdated">{{infoUpdated}}</span>
             <a href="#/clients/{{clientId}}/new-user" class="btn btn-brown btn-add-user">Add new user</a>
-            <form>
-            <div style="margin-top: 10px; width: 20%; float:right" class="t-r form-group">
-              <div class="input-group">
-                <div class="input-group-addon"><i class="fa fa-search"></i></div>
+    
+                <div style="margin-top: 10px;" class="t-r form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon" ng-click="searchUser()"><i class="fa fa-search"></i></div>
 
-                <input type="text" class="form-control" placeholder="Search User" ng-model="searchUser">
+                        <input type="text" class="form-control" placeholder="Search User" ng-model="searchUserKey">
 
-              </div>      
-            </div>
-            </form>
-        </div>      
-        
+                    </div>
+                </div>
+        </div>
+
         <div class="table-responsive" ng-show="users.items.length">
             <table class="table tbl tbl-w1000 tbl-bg table-hover table-striped">
                 <tbody>
@@ -70,24 +69,19 @@
                         <th class="text-center">CloudBook</th>
                         <th class="text-center">Actions</th>
                     </tr>
-                    <tr ng-repeat="(i, user) in users.items| filter:searchUser">
+                    <tr ng-repeat="(i, user) in users.items">
                         <td><a href="#/clients/{{clientId}}/user/{{user.position_data.id}}">{{user.email ? user.email : user.email_canonical }}</a></td>
-                        <td  class="text-center">{{user.first_name}}</td>
-                        <td  class="text-center">{{user.last_name}}</td>
-                        <td  class="text-center">{{user.mobile_no ? user.mobile_no : '-'}}</td>
-                        <td  class="text-center">{{user.code ? user.code : '-'}}</td>
-                        <td  class="text-center">{{user.employee_class ? user.employee_class : '-'}}</td>
-                        <td  class="text-center td-18" ng-if="getTime(user.date_added)">
+                        <td class="text-center">{{user.first_name}}</td>
+                        <td class="text-center">{{user.last_name}}</td>
+                        <td class="text-center">{{user.mobile_no ? user.mobile_no : '-'}}</td>
+                        <td class="text-center">{{user.code ? user.code : '-'}}</td>
+                        <td class="text-center">{{user.employee_class ? user.employee_class : '-'}}</td>
+                        <td class="text-center td-18" ng-if="getTime(user.date_added)">
                             {{getTime(user.date_added) | date:'MM.dd.yyyy'}}
                         </td>
-                        <td  class="text-center" ng-if="!getTime(user.date_added)">-</td>
+                        <td class="text-center" ng-if="!getTime(user.date_added)">-</td>
                         <td class="td-control text-center td-18">
-                            <input type="checkbox"
-                                   name="handbook_chk"
-                                   id="{{user.id}}"
-                                   ng-change="enabUser(user, i)"
-                                   ng-model="user.enabled"
-                            />
+                            <input type="checkbox" name="handbook_chk" id="{{user.id}}" ng-change="enabUser(user, i)" ng-model="user.enabled" />
                             <!--|-->
                             <!--<a title="Ban"><i class="fa fa-ban"></i></a>-->
                             <!--|-->
@@ -95,14 +89,12 @@
                         </td>
                         <td class="td-control text-center">
                             <a href="#/clients/{{clientId}}/user-group-user/{{user.id}}/handbooks">
-                                <i class="fa fa-arrow-circle-right"
-                                   title="CloudBook User"></i>
+                                <i class="fa fa-arrow-circle-right" title="CloudBook User"></i>
                             </a>
                         </td>
                         <td class="td-control text-center">
                             <a href="#/clients/{{clientId}}/user/{{user.position_data.id}}">
-                                <i class="fa fa-edit"
-                                   title="Edit User"></i>
+                                <i class="fa fa-edit" title="Edit User"></i>
                             </a>
                         </td>
                     </tr>
@@ -112,7 +104,7 @@
         <footer class="table-footer" ng-show="users.pages >= 2">
             <div class="row">
                 <div class="col-md-6 page-num-info">
-            <span>
+                    <span>
                 Show
                 <select data-ng-model="numPerPage"
                         data-ng-options="num for num in numPerPageOpt"
@@ -122,17 +114,10 @@
             </span>
                 </div>
                 <div class="col-md-6 text-right pagination-container">
-                    <pagination class="pagination-sm"
-                                ng-model="currentPage"
-                                total-items="users.total"
-                                max-size="4"
-                                ng-change="gotoPage(currentPage)"
-                                items-per-page="numPerPage"
-                                rotate="false"
-                                boundary-links="true"></pagination>
+                    <pagination class="pagination-sm" ng-model="currentPage" total-items="users.total" max-size="4" ng-change="gotoPage(currentPage)" items-per-page="numPerPage" rotate="false" boundary-links="true"></pagination>
                 </div>
             </div>
         </footer>
-    <!-- END : PAGINATION -->
+        <!-- END : PAGINATION -->
     </div>
 </div>

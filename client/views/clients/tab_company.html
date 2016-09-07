@@ -134,42 +134,43 @@
         <h2 class="ttl-tab">
             <span>About Company</span>
         </h2>
-        <div text-angular ng-model="clientDetail.about_company"></div>
+        <div data-ng-show="!isNormalUser " text-angular ng-model="clientDetail.about_company"></div>
+        <p data-ng-show="isNormalUser " ng-bind-html="clientDetail.about_company" "></p>
 
 
     </div>
     <!-- END : COL LEFT -->
-    <div class="col-md-4 col-sm-4 col-xs-12 cpn-right">
-        <table class="table tbl table-striped">
+    <div class="col-md-4 col-sm-4 col-xs-12 cpn-right ">
+        <table class="table tbl table-striped ">
             <tbody>
                 <tr>
-                    <th class="text-center">
+                    <th class="text-center ">
                         Company Logo
                     </th>
                 </tr>
-                <tr ng-if="!clientDetail.logo_url">
-                    <td class="t-c">
+                <tr ng-if="!clientDetail.logo_url ">
+                    <td class="t-c ">
                         NO LOGO
                     </td>
                 </tr>
-                <tr ng-if="clientDetail.logo_url" ng-cloak>
-                    <td class="text-center td-logo" ng-model="clientDetail.logo">
-                        <img ng-src="{{clientDetail.logo_url}}" alt="{{clientDetail.name}}" />
-                        <!--<i class="fa fa-times" ng-click="delLogo()"></i>-->
+                <tr ng-if="clientDetail.logo_url " ng-cloak>
+                    <td class="text-center td-logo " ng-model="clientDetail.logo ">
+                        <img ng-src="{{clientDetail.logo_url}} " alt="{{clientDetail.name}} " />
+                        <i class="fa fa-times " data-ng-show="!isNormalUser " ng-click="delLogo() "></i>
                     </td>
                 </tr>
-                <tr ng-show="isDisable">
-                    <td class="text-center">
-                        <upload-file upload-url="urlUpload" ng-uploadresponse="uploadresponse" ng-label="uploadButtonLabel" ng-progress-color="'#CFAE79'">
+                <tr ng-show="isDisable ">
+                    <td class="text-center ">
+                        <upload-file upload-url="urlUpload " ng-uploadresponse="uploadresponse " ng-label="uploadButtonLabel " ng-progress-color=" '#CFAE79' ">
                         </upload-file>
                     </td>
                 </tr>
                 <!--tr>
-                            <td class="text-center">
-                                <div class="fileUpload">
+                            <td class="text-center ">
+                                <div class="fileUpload ">
                                     <span>Upload New Image</span>
-                                    <div style="height: 0px; width: 0px; overflow: hidden;">
-                                        <input type="file" name="userfile" class="fileToUpload">
+                                    <div style="height: 0px; width: 0px; overflow: hidden; ">
+                                        <input type="file " name="userfile " class="fileToUpload ">
                                     </div>
                                 </div>
                             </td>
@@ -177,41 +178,32 @@
             </tbody>
         </table>
         <!-- END: UPLOAD -->
-        <!-- <table class="table tbl tbl-upload">
+        <!-- <table class="table tbl tbl-upload ">
         <tbody>
             <tr>
-                <th class="text-center">
+                <th class="text-center ">
                     (MaBanner Images x 5 images)
                 </th>
             </tr>
-            <tr ng-if="clientDetail.banners.length <= 0">
-                <td class="t-c">
+            <tr ng-if="clientDetail.banners.length <=0 ">
+                <td class="t-c ">
                     NO BANNER
                 </td>
             </tr>
-            <tr ng-if="clientDetail.banners.length > 0" ng-repeat="banner in clientDetail.banners" ng-cloak>
-                <td class="text-center td-logo">
-                    <img ng-src="{{banner.banner_url}}" alt="{{clientDetail.name}}"/>
-                    <i class="fa fa-times" ng-click="delBanner(banner)"></i>
-                </td>
+            <tr ng-if="clientDetail.banners.length> 0" ng-repeat="banner in clientDetail.banners" ng-cloak>
+            <td class="text-center td-logo">
+                <img ng-src="{{banner.banner_url}}" alt="{{clientDetail.name}}" />
+                <i class="fa fa-times" ng-click="delBanner(banner)"></i>
+            </td>
             </tr>
             <tr ng-show="isDisable && (clientDetail.banners.length < 5 || !clientDetail.banners)">
                 <td class="text-center">
-                    <upload-file
-                        upload-url="urlUploadBanner"
-                        ng-uploadresponse="uploadbanner"
-                        ng-label="uploadButtonLabel"
-                        ng-progress-color="'#CFAE79'">
+                    <upload-file upload-url="urlUploadBanner" ng-uploadresponse="uploadbanner" ng-label="uploadButtonLabel" ng-progress-color="'#CFAE79'">
                     </upload-file>
                 </td>
             </tr>
-        </tbody>
-    </table> -->
+            </tbody>
+            </table> -->
     </div>
     <!-- END : COL RIGHT -->
 </form>
-<style>
-    .btn-toolbar {
-        display: none;
-    }
-</style>
