@@ -1,9 +1,12 @@
 (function() {
     angular.module('app.constant', []).factory('config', [
-        '$resource', '$rootScope', function($resource, $rootScope) {
+        '$resource', '$rootScope',
+        function($resource, $rootScope) {
             return {
                 path: {
-                    'baseURL': 'http://api-live.sg-benefits.com',
+                    // 'baseURL': 'https://api.sg-benefits.com',
+                    // 'baseURL': 'http://api-live.sg-benefits.com',
+                    'baseURL': 'http://mac.api.com',
                     'clients': '/organisations',
                     'client': '/organisations/:org_id',
                     'handbooks': '/organisations/:org_id/handbooks',

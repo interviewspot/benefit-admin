@@ -5,83 +5,76 @@
 
     <div style="margin-bottom: 15px; height: 30px;">
         <!--<div class="col-md-6 col-xs-6 t-l marg-bot">-->
-            <!--<div class="btn btn-brown" ng-click="magicShowCategoryHandbook()">{{ showAllHandbook ? 'View By Category' : 'View By List CloudBook' }}</div>-->
+        <!--<div class="btn btn-brown" ng-click="magicShowCategoryHandbook()">{{ showAllHandbook ? 'View By Category' : 'View By List CloudBook' }}</div>-->
         <!--</div>-->
         <div class="col-md-6 col-xs-6 marg-bot" data-ng-show="permissionHandbook.CREATE">
             <div class="btn btn-brown" ng-click="createNewVersion()">Create New Cloud Book</div>
         </div>
     </div>
     <form>
-    <div style="margin-top: -44px" class="form-group">
-      <div class="input-group">
-        <div class="input-group-addon"><i class="fa fa-search"></i></div>
+        <div style="margin-top: -44px" class="form-group">
+            <div class="input-group">
+                <div class="input-group-addon"><i class="fa fa-search"></i></div>
 
-        <input type="text" class="form-control" placeholder="Search Handbooks" ng-model="searchHandbook">
+                <input type="text" class="form-control" placeholder="Search Cloudbooks" ng-model="searchHandbook">
 
-      </div>      
-    </div>
-  </form>
+            </div>
+        </div>
+    </form>
     <!--Handbook by category -->
     <!--<div data-ng-show="!showAllHandbook" data-ng-if="!showAllHandbook" >-->
-        <!--<div ng-repeat="cat in categories" ng-if="cat.enabled == true" ng-class="{active_hanbook: cat == 1}" class="handbook_category" ng-click="handbookShow(cat)">-->
-            <!--{{ cat.name }}-->
-        <!--</div>-->
+    <!--<div ng-repeat="cat in categories" ng-if="cat.enabled == true" ng-class="{active_hanbook: cat == 1}" class="handbook_category" ng-click="handbookShow(cat)">-->
+    <!--{{ cat.name }}-->
+    <!--</div>-->
 
     <!--</div>-->
     <!--Handbooks all -->
     <div>
-        <table class="table tbl table-hover table-striped" >
+        <table class="table tbl table-hover table-striped">
             <tbody>
-            <tr>
-                <th class="text-center">
-                    <a href="" ng-click="sortType = 'title'; sortReverse = !sortReverse">Title
+                <tr>
+                    <th class="text-center">
+                        <a href="" ng-click="sortType = 'title'; sortReverse = !sortReverse">Title
                         <span ng-show="sortType == 'title'&& !sortReverse" class="fa fa-caret-down"></span>
                         <span ng-show="sortType == 'title'&& sortReverse" class="fa fa-caret-up"></span>
                     </a>
-                </th>
-                <th class="text-center">
-                    <a href="" ng-click="sortType = 'version'; sortReverse = !sortReverse">Version
+                    </th>
+                    <th class="text-center">
+                        <a href="" ng-click="sortType = 'version'; sortReverse = !sortReverse">Version
                         <span ng-show="sortType == 'version'&& !sortReverse" class="fa fa-caret-down"></span>
                         <span ng-show="sortType == 'version'&& sortReverse" class="fa fa-caret-up"></span>
                     </a>
-                </th>
-                <th class="text-center">
-                    <a href="" ng-click="sortType = 'language'; sortReverse = !sortReverse">Language
+                    </th>
+                    <th class="text-center">
+                        <a href="" ng-click="sortType = 'language'; sortReverse = !sortReverse">Language
                         <span ng-show="sortType == 'language'&& !sortReverse" class="fa fa-caret-down"></span>
                         <span ng-show="sortType == 'language'&& sortReverse" class="fa fa-caret-up"></span>
                     </a>
-                </th>
-                <th ng-show="!isNormalUser" class="text-center">
-                    <a href="">Published
+                    </th>
+                    <th ng-show="!isNormalUser" class="text-center">
+                        <a href="">Published
                     </a>
-                </th>
-                <th ng-show="!isNormalUser" class="text-center">Manage</th>
-            </tr>
-            <tr ng-repeat="hb_list in handbookAll | orderBy:sortType:sortReverse | filter:searchHandbook ">
-                <td class="text-center">
-                    <a href="#/clients/{{clientDetail.id}}/handbooks/{{hb_list.id}}/view">
+                    </th>
+                    <th ng-show="!isNormalUser" class="text-center">Manage</th>
+                </tr>
+                <tr ng-repeat="hb_list in handbookAll | orderBy:sortType:sortReverse | filter:searchHandbook ">
+                    <td class="text-center">
+                        <a href="#/clients/{{clientDetail.id}}/handbooks/{{hb_list.id}}/view">
                         {{hb_list.translations['en_us'].title ? hb_list.translations['en_us'].title : hb_list.title}}
                     </a>
-                </td>
-                <td class="text-center">{{hb_list.version}}</td>
-                <td class="text-center">English</td>
-                <td ng-show="!isNormalUser" class="text-center">
-                    <input type="checkbox"
-                           name="handbook_chk"
-                           id="{{hb_list.id}}"
-                           ng-change="changePublished(hb_list, clientDetail.id)"
-                           ng-model="hb_list.enabled"
-                           data-ng-disabled="!hb_list.EDIT"
-                    />
-                </td>
-                <td ng-show="!isNormalUser" class="text-center td-manage">
-                    <a href="#/clients/{{clientDetail.id}}/handbooks/{{hb_list.id}}">
-                        <i class="fa fa-edit"
-                           title="Edit Handbook" data-ng-show="hb_list.EDIT"></i>
-                    </a>
-                    <i data-ng-show="hb_list.DELETE" class="fa fa-trash-o" title="Remove Handbook" ng-click="deleteHandbook(hb_list)"></i>
-                </td>
-            </tr>
+                    </td>
+                    <td class="text-center">{{hb_list.version}}</td>
+                    <td class="text-center">English</td>
+                    <td ng-show="!isNormalUser" class="text-center">
+                        <input type="checkbox" name="handbook_chk" id="{{hb_list.id}}" ng-change="changePublished(hb_list, clientDetail.id)" ng-model="hb_list.enabled" data-ng-disabled="!hb_list.EDIT" />
+                    </td>
+                    <td ng-show="!isNormalUser" class="text-center td-manage">
+                        <a href="#/clients/{{clientDetail.id}}/handbooks/{{hb_list.id}}">
+                            <i class="fa fa-edit" title="Edit Handbook" data-ng-show="hb_list.EDIT"></i>
+                        </a>
+                        <i data-ng-show="hb_list.DELETE" class="fa fa-trash-o" title="Remove Handbook" ng-click="deleteHandbook(hb_list)"></i>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>

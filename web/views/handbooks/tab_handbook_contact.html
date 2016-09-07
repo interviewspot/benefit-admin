@@ -1,75 +1,82 @@
-<div style="margin: 80px 10px"  class="handbook_contact_wrapper row" data-ng-controller="ContactCtrl">
-    <div class="col-xs-12 blk-create">
-        <div class="row">
-            <!--<div class="col-md-9 col-sm-9 col-xs-12 ctc-left">-->
-                <!--<h2 class="ttl-tab"><span>Create New Contact</span></h2>-->
-                <!--<form class="frm-create-ctact modal_frm" ng-submit="createContact()" name="frm_contact" novalidate>-->
-                    <!--<div class="row">-->
-                        <!--<div class="col-md-5 col-sm-5 col-xs-12 frm-itm">-->
-                            <!--<div class="srch-em-wrap">-->
+<div style="margin: 80px 10px" class="handbook_contact_wrapper row" data-ng-controller="ContactCtrl">
+    <div class="col-md-12 col-sm-12 col-xs-12">
 
-                                <!--<label>Search by email:</label>-->
-                                <!--<input type="text"-->
-                                    <!--class="ipt txt-email"-->
-                                    <!--name="txt_email"-->
-                                    <!--placeholder="Search by user's email"-->
-                                    <!--keyboard-poster-->
-                                    <!--post-function="searchMail"-->
-                                    <!--list="_users"-->
-                                    <!--required=""-->
-                                    <!--ng-model='contact.email'-->
-                                    <!--ng-class='{txt_err : (frm_contact.txt_email.$invalid && frm_contact.txt_email.$dirty)}'-->
-                                <!--/>-->
-                                <!--<datalist id="_users">-->
-                                    <!--<select style="display: none;"-->
-                                        <!--id="_select"-->
-                                        <!--name="_select"-->
-                                        <!--ng-model='selectedUser'-->
-                                        <!--ng-options='k as v for (k,v) in srch_users'></select>-->
-                                <!--</datalist>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <!--<div class="col-md-2 col-sm-2 col-xs-12 text-center frm-itm">-->
-                            <!--<label>&nbsp;</label>-->
-                            <!--<button type="submit" class="btn btn-submit btn-primary">ADD</button>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</form>&lt;!&ndash; END: FORM &ndash;&gt;-->
-            <!--</div>-->
+        <!--<div class="col-md-9 col-sm-9 col-xs-12 ctc-left">-->
+        <!--<h2 class="ttl-tab"><span>Create New Contact</span></h2>-->
+        <!--<form class="frm-create-ctact modal_frm" ng-submit="createContact()" name="frm_contact" novalidate>-->
+        <!--<div class="row">-->
+        <!--<div class="col-md-5 col-sm-5 col-xs-12 frm-itm">-->
+        <!--<div class="srch-em-wrap">-->
 
-            <!-- END: LEFT -->
-            <div class="col-md-6 col-sm-6 col-xs-12" data-ng-show="hanbook.DELETEHANBOOK">
+        <!--<label>Search by email:</label>-->
+        <!--<input type="text"-->
+        <!--class="ipt txt-email"-->
+        <!--name="txt_email"-->
+        <!--placeholder="Search by user's email"-->
+        <!--keyboard-poster-->
+        <!--post-function="searchMail"-->
+        <!--list="_users"-->
+        <!--required=""-->
+        <!--ng-model='contact.email'-->
+        <!--ng-class='{txt_err : (frm_contact.txt_email.$invalid && frm_contact.txt_email.$dirty)}'-->
+        <!--/>-->
+        <!--<datalist id="_users">-->
+        <!--<select style="display: none;"-->
+        <!--id="_select"-->
+        <!--name="_select"-->
+        <!--ng-model='selectedUser'-->
+        <!--ng-options='k as v for (k,v) in srch_users'></select>-->
+        <!--</datalist>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--<div class="col-md-2 col-sm-2 col-xs-12 text-center frm-itm">-->
+        <!--<label>&nbsp;</label>-->
+        <!--<button type="submit" class="btn btn-submit btn-primary">ADD</button>-->
+        <!--</div>-->
+        <!--</div>-->
+        <!--</form>&lt;!&ndash; END: FORM &ndash;&gt;-->
+        <!--</div>-->
+
+        <!-- END: LEFT -->
+        <!--<div class="col-md-6 col-sm-6 col-xs-12" data-ng-show="hanbook.DELETEHANBOOK">
                 <p>
                     <strong>{{totalSelected}}</strong> chosen item(s)
                 </p>
                 <p>
-                    <a  class="btn btn-primary btn-delete" ng-click="deleteSelectedContacts()">DELETE</a>
+                    <a class="btn btn-primary btn-delete" ng-click="deleteSelectedContacts()">DELETE</a>
                 </p>
+            </div>-->
+        <!-- END: RIGHT -->
+        <form>
+            <div style="margin-top: 20px" class="form-group">
+                <div class="input-group">
+                    <div class="input-group-addon" ng-click="searchContact()"><i class="fa fa-search"></i></div>
+
+                    <input type="text" value="" class="form-control" placeholder="Search Contact" ng-model="searchContactKeyword">
+
+                </div>
             </div>
-            <!-- END: RIGHT -->
-        </div>
+        </form>
     </div>
     <!-- END: CREATE CONTACT -->
 
     <!-- START: LIST CONTACT -->
     <div class="col-md-12 col-sm-12 col-xs-12" ng-repeat="(i, item) in contacts | orderBy : 'alphabet' | groupBy : 'alphabet'">
-        <div class="ctc-itm" >
+        <div class="ctc-itm">
             <h2>{{i}}</h2>
             <div class="ctc-content" ng-repeat="contact in item">
                 <div class="ctc-control">
                     <i data-ng-show="hanbook.EDITHANBOOK" class="fa fa-edit" data-toggle="modal" data-target="#editContact" ng-click="editContact(contact)"></i>
                     <i data-ng-show="hanbook.DELETEHANBOOK" class="fa fa-trash-o" ng-click="deleteContact(contact)"></i>
-                    <input data-ng-show="hanbook.DELETEHANBOOK" type="checkbox" id="ctc-chk1" name="ctc-chk" ng-model="contact.checked" ng-change="contactSelect()"/>
+                    <input data-ng-show="hanbook.DELETEHANBOOK" type="checkbox" id="ctc-chk1" name="ctc-chk" ng-model="contact.checked" ng-change="contactSelect()" />
                 </div>
                 <!-- END: CONTROL -->
                 <h3>{{contact.user.first_name}}  {{contact.user.last_name}}</h3>
                 <p class="ctc-add l-tags">Singapore,
-                    <span class="tag"
-                          ng-repeat="tag in contact.tags._embedded.items | filter:{employee_class:true} | filter:{enabled:true}">
+                    <span class="tag" ng-repeat="tag in contact.tags._embedded.items | filter:{employee_class:true} | filter:{enabled:true}">
                         {{tag.name}}
                     </span>
-                    <span class="tag"
-                          ng-repeat="tag in contact.tags._embedded.items | filter:{employee_function:true} | filter:{enabled:true}">
+                    <span class="tag" ng-repeat="tag in contact.tags._embedded.items | filter:{employee_function:true} | filter:{enabled:true}">
                         {{tag.name}}
                     </span>
                 </p>
@@ -88,11 +95,12 @@
     <!-- END: COL -->
 
 
-<!-- MODAL: EDIT CONTACT -->
-<!-- <div id="editContact" class="modal fade" role="dialog">
+    <!-- MODAL: EDIT CONTACT -->
+    <!-- <div id="editContact" class="modal fade" role="dialog">
     <div class="modal-dialog">
 
     </div>
 </div> -->
-<!-- END : MODAL EDIT CONTACT-->
-</div><!-- END: ROW -->
+    <!-- END : MODAL EDIT CONTACT-->
+</div>
+<!-- END: ROW -->
