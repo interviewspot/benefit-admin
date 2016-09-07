@@ -162,7 +162,7 @@
                     var temp;
                     temp = eval(section._links.parent.href.split('sections/')[1]);
                     $scope.parentSelect = temp;
-                    $scope.changedValue(temp);
+                    // $scope.changedValue(temp);
                 } else {
                     $scope.isCreateSubSection = false;
                     $scope.parentSelect = null;

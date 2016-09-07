@@ -1,26 +1,27 @@
-(function () {
+(function() {
     'use strict';
     angular.module('app.contacts', []).controller('ContactCtrl', [
-        '$scope', '$filter', 'fetchTabData', 'fakeData', '$location', '$routeParams', 'ContactService', 'fetchContact', 'SearchUsers', 'fetchUsers', 'config', '$q', '$modal', 'authHandler', function ($scope, $filter, fetchTabData, fakeData, $location, $routeParams, ContactService, fetchContact, SearchUsers, fetchUsers, config, $q, $modal, authHandler) {
+        '$scope', '$filter', 'fetchTabData', 'fakeData', '$location', '$routeParams', 'ContactService', 'fetchContact', 'SearchUsers', 'fetchUsers', 'config', '$q', '$modal', 'authHandler',
+        function($scope, $filter, fetchTabData, fakeData, $location, $routeParams, ContactService, fetchContact, SearchUsers, fetchUsers, config, $q, $modal, authHandler) {
             var _URL;
             _URL = {
                 list: config.path.baseURL + config.path.contacts.replace(":org_id", $routeParams.clientId) + '?search=position.handbookContact:1,position.enabled:1'
             };
             authHandler.checkLoggedIn();
-            $scope.loadContactList = function () {
-                return fetchContact.get(_URL.list).then(function (res) {
-                    console.log(_URL.list);
+            $scope.loadContactList = function(url) {
+                return fetchContact.get(url).then(function(res) {
+                    console.log(url);
+                    $scope.contacts = [];
                     if (res.data._embedded.items.length) {
-                        $scope.contacts = [];
-                        angular.forEach(res.data._embedded.items, function (item, i) {
+                        angular.forEach(res.data._embedded.items, function(item, i) {
                             $scope.contacts[i] = {};
-                            return (function (itemInstance) {
-                                return fetchContact.get(itemInstance._links.employee.href).then(function (res) {
+                            return (function(itemInstance) {
+                                return fetchContact.get(itemInstance._links.employee.href).then(function(res) {
                                     $scope.contacts[i]['position'] = itemInstance;
                                     $scope.contacts[i]['user'] = res.data;
                                     $scope.contacts[i]['alphabet'] = res.data.first_name ? res.data.first_name.charAt(0).toLowerCase() : res.data.username.charAt(0).toLowerCase();
                                     console.log($scope.contacts[i]['position']);
-                                    return fetchContact.get(itemInstance._links.tags.href).then(function (res) {
+                                    return fetchContact.get(itemInstance._links.tags.href).then(function(res) {
                                         return $scope.contacts[i]['tags'] = res.data;
                                     });
                                 });
@@ -30,7 +31,7 @@
                 });
             };
             if ($routeParams.clientId) {
-                $scope.loadContactList();
+                $scope.loadContactList(_URL.list);
             }
             $scope.contact = {
                 email: '',
@@ -39,12 +40,23 @@
             $scope.srch_users = {
                 'email': 0
             };
-            $scope.searchMail = function (term) {
+            $scope.searchContact = function() {
+                var keyword = $scope.searchContactKeyword;
+                if(keyword === undefined){
+                    keyword='';
+                }
+                var _URL;
+                _URL = {
+                    list: config.path.baseURL + config.path.contacts.replace(":org_id", $routeParams.clientId) + '?search=position.handbookContact:1,position.enabled:1,position.title:%' + keyword + '%'
+                };
+                $scope.loadContactList(_URL.list);
+            }
+            $scope.searchMail = function(term) {
                 var d, q, results;
                 d = $q.defer();
                 q = term.toLowerCase().trim();
                 results = {};
-                fetchUsers.get(config.path.baseURL + config.path.users + '?search=user.email:%' + q + '%').then(function (res) {
+                fetchUsers.get(config.path.baseURL + config.path.users + '?search=user.email:%' + q + '%').then(function(res) {
                     var i, item, users, _i, _ref;
                     if (res.data._embedded) {
                         $scope.srch_users = {};
@@ -58,15 +70,15 @@
                     } else {
 
                     }
-                }, function () {
+                }, function() {
                     return d.resolve(results);
                 });
                 return d.promise;
             };
             $scope.selectedUser = null;
-            $scope.createContact = function () {
+            $scope.createContact = function() {
                 var newContact;
-                angular.forEach($scope.frm_contact.$error.required, function (field) {
+                angular.forEach($scope.frm_contact.$error.required, function(field) {
                     return field.$dirty = true;
                 });
                 if ($scope.frm_contact.$error.required) {
@@ -83,25 +95,25 @@
                 };
                 return ContactService.save({
                     org_id: $routeParams.clientId
-                }, newContact, function (res) {
+                }, newContact, function(res) {
                     return $scope.loadContactList();
                 });
             };
-            $scope.editContact = function (contact) {
+            $scope.editContact = function(contact) {
                 var modalInstance;
                 $scope.editcontact = contact;
                 return modalInstance = $modal.open({
                     templateUrl: 'views/handbooks/contact_form.html',
                     controller: 'ContactFormCtrl',
                     resolve: {
-                        contact: function () {
+                        contact: function() {
                             return contact;
                         }
                     },
                     scope: $scope
                 });
             };
-            $scope.deleteContact = function (contact) {
+            $scope.deleteContact = function(contact) {
                 var r;
                 r = confirm("Do you want to delete \"" + contact.position.title + "\"?");
                 if (r === true) {
@@ -119,10 +131,10 @@
                             "hr_admin": contact.position.hr_admin
                         }
                     };
-                    return fetchContact.update(contact.position._links.self.href, updateContact).then(function (res) {
+                    return fetchContact.update(contact.position._links.self.href, updateContact).then(function(res) {
                         $scope.loadContactList();
                         return;
-                    }, function (error) {
+                    }, function(error) {
                         return alert(error.status + ' : Wrong email! Try again.');
                     });
                 }
@@ -130,7 +142,7 @@
 
             };
             $scope.totalSelected = 0;
-            $scope.contactSelect = function () {
+            $scope.contactSelect = function() {
                 var i, item, _ref, _results;
                 $scope.totalSelected = 0;
                 _ref = $scope.contacts;
@@ -145,7 +157,7 @@
                 }
                 return _results;
             };
-            $scope.deleteSelectedContacts = function () {
+            $scope.deleteSelectedContacts = function() {
                 var count, i, item, r, _ref, _results;
                 r = confirm("Do you want to delete all selected contacts ?");
                 count = 0;
@@ -169,10 +181,10 @@
                                     "hr_admin": item.position.hr_admin
                                 }
                             };
-                            return fetchContact.update(item.position._links.self.href, updateContact).then(function (res) {
+                            return fetchContact.update(item.position._links.self.href, updateContact).then(function(res) {
                                 $scope.loadContactList();
                                 return;
-                            }, function (error) {
+                            }, function(error) {
                                 return alert(error.status + ' : Wrong email! Try again.');
                             });
                         } else {
@@ -184,18 +196,19 @@
             };
         }
     ]).controller('ContactFormCtrl', [
-        '$scope', '$routeParams', 'fetchContact', 'config', '$modalInstance', 'fetchUsers', '$q', 'contact', 'authHandler', function ($scope, $routeParams, fetchContact, config, $modalInstance, fetchUsers, $q, contact, authHandler) {
+        '$scope', '$routeParams', 'fetchContact', 'config', '$modalInstance', 'fetchUsers', '$q', 'contact', 'authHandler',
+        function($scope, $routeParams, fetchContact, config, $modalInstance, fetchUsers, $q, contact, authHandler) {
             authHandler.checkLoggedIn();
             $scope.contact = contact;
             $scope.srch_users = {
                 'email': 0
             };
-            $scope.searchMail = function (term) {
+            $scope.searchMail = function(term) {
                 var d, q, results;
                 d = $q.defer();
                 q = term.toLowerCase().trim();
                 results = {};
-                fetchUsers.get(config.path.baseURL + config.path.users + '?search=user.email:%' + q + '%').then(function (res) {
+                fetchUsers.get(config.path.baseURL + config.path.users + '?search=user.email:%' + q + '%').then(function(res) {
                     var i, item, users, _i, _ref;
                     if (res.data._embedded) {
                         $scope.srch_users = {};
@@ -209,12 +222,12 @@
                     } else {
 
                     }
-                }, function () {
+                }, function() {
                     return d.resolve(results);
                 });
                 return d.promise;
             };
-            $scope.save = function () {
+            $scope.save = function() {
                 var updateContact;
                 updateContact = {
                     "position": {
@@ -229,32 +242,32 @@
                         "hr_admin": contact.position.hr_admin
                     }
                 };
-                return fetchContact.update(contact.position._links.self.href, updateContact).then(function (res) {
+                return fetchContact.update(contact.position._links.self.href, updateContact).then(function(res) {
                     $scope.loadContactList();
                     return $modalInstance.close();
-                }, function (error) {
+                }, function(error) {
                     return alert(error.status + ' : Wrong email! Try again.');
                 });
             };
-            return $scope.cancel = function () {
+            return $scope.cancel = function() {
                 return $modalInstance.dismiss('cancel');
             };
         }
-    ]).directive('keyboardPoster', function ($parse, $timeout) {
+    ]).directive('keyboardPoster', function($parse, $timeout) {
         var DELAY_TIME_BEFORE_POSTING;
         DELAY_TIME_BEFORE_POSTING = 1000;
-        return function (scope, elem, attrs) {
+        return function(scope, elem, attrs) {
             var currentTimeout, element;
             element = angular.element(elem)[0];
             currentTimeout = null;
-            element.oninput = function () {
+            element.oninput = function() {
                 var model, poster;
                 model = $parse(attrs.postFunction);
                 poster = model(scope);
                 if (currentTimeout) {
                     $timeout.cancel(currentTimeout);
                 }
-                currentTimeout = $timeout(function () {
+                currentTimeout = $timeout(function() {
                     poster(angular.element(element).val());
                 }, DELAY_TIME_BEFORE_POSTING);
             };
