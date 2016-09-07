@@ -42,8 +42,8 @@
             };
             $scope.searchContact = function() {
                 var keyword = $scope.searchContactKeyword;
-                if(keyword === undefined){
-                    keyword='';
+                if (keyword === undefined) {
+                    keyword = '';
                 }
                 var _URL;
                 _URL = {

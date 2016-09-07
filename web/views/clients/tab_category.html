@@ -1,30 +1,43 @@
 <div class="clients_edit" data-ng-controller="clientCtrl">
-	<h1 class="ttl-page">
+
+
+    <h1 class="ttl-page">
 		{{clientDetail.name}}
 		<span class="sp-sts green" ng-if="clientDetail.status">{{clientDetail.status}}</span>
 	</h1>
-	<section class="panel panel-default table-dynamic">
-		<div class="panel-body lv1">
-			<!--<div class="table-responsive">-->
-				<!--<ul class="tbl-w800 nav nav-tabs" ng-include="'views/clients/menu-tab.html'"></ul>-->
-			<!--</div>-->
-			<ol class="mg_breadcrumb breadcrumb">
-				<li><a href="{{ClientPage.tabUrls.info ? ClientPage.tabUrls.info : 'javascript:;'}}" >{{ clientDetail.name }}</a></li>
-				<li class="active">Folders</li>
-			</ol>
-			<!-- END : MENU -->
-			<div data-ng-show="!isCreateCategory" data-ng-if="!isCreateCategory" class="handbook_list">
-				<h2 class="ttl-tab">
-					<!--<span>Category</span>-->
-				</h2>
-				<div class="t-r marg-bot">
-					<div class="btn btn-brown" ng-show="!isNormalUser" ng-click="createNewCategory()">Create Folder</div>
-				</div>
-				<table class="table tbl table-hover table-striped" >
-					<tbody>
-					<tr>
-						<th class="text-center">
-							<a href="" ng-click="sortType = 'title'; sortReverse = !sortReverse">Folder
+
+    <section class="panel panel-default table-dynamic">
+        <div class="panel-body lv1">
+
+            <!--<div class="table-responsive">-->
+            <!--<ul class="tbl-w800 nav nav-tabs" ng-include="'views/clients/menu-tab.html'"></ul>-->
+            <!--</div>-->
+            <ol class="mg_breadcrumb breadcrumb">
+                <li><a href="{{ClientPage.tabUrls.info ? ClientPage.tabUrls.info : 'javascript:;'}}">{{ clientDetail.name }}</a></li>
+                <li class="active">Folders</li>
+            </ol>
+            <!-- END : MENU -->
+            <div class="t-r marg-bot" data-ng-show="!isCreateCategory">
+                <div class="btn btn-brown" ng-show="!isNormalUser" ng-click="createNewCategory()">Create Folder</div>
+            </div>
+            <div style="margin-top: 20px" class="form-group" data-ng-show="!isCreateCategory">
+                <div class="input-group">
+                    <div class="input-group-addon" ng-click="searchFolder()"><i class="fa fa-search"></i></div>
+
+                    <input type="text" value="" class="form-control" placeholder="Search Folder" ng-model="searchk">
+                    <!--<h1>{{searchk}}</h1>-->
+                </div>
+            </div>
+            <div data-ng-show="!isCreateCategory" data-ng-if="!isCreateCategory" class="handbook_list">
+
+
+
+
+                <table class="table tbl table-hover table-striped">
+                    <tbody>
+                        <tr>
+                            <th class="text-center">
+                                <a href="" ng-click="sortType = 'title'; sortReverse = !sortReverse">Folder
 								<span ng-show="sortType == 'title'&& !sortReverse" class="fa fa-caret-down"></span>
 								<span ng-show="sortType == 'title'&& sortReverse" class="fa fa-caret-up"></span>
 						</th>
@@ -36,31 +49,23 @@
 							<a href="#/clients/{{clientDetail.id}}/category/{{category.id}}">
 								{{ category.name }}
 							</a>
-						</td>
-						<td ng-hide="isNormalUser" class="text-center">
-							<input
-									ng-disabled="true"
-									type="checkbox"
-									required
-									ng-model="category.enabled"
-									name="cat_enabled"
-							/>
-						</td>
-						<td class="text-center td-manage"
-						    ng-hide="isNormalUser">
-							<a href="#/clients/{{clientDetail.id}}/category/{{category.id}}">
-								<i class="fa fa-edit"
-								   title="Edit Category"></i>
-							</a>
-							<i class="fa fa-trash-o" title="Remove Category" ng-click="removeCategory(category)"></i>
-						</td>
-					</tr>
-					</tbody>
-				</table>
-				<footer class="table-footer" ng-if="categories.length">
-					<div class="row">
-						<div class="col-md-6 page-num-info">
-                <span>
+                                </td>
+                                <td ng-hide="isNormalUser" class="text-center">
+                                    <input ng-disabled="true" type="checkbox" required ng-model="category.enabled" name="cat_enabled" />
+                                </td>
+                                <td class="text-center td-manage" ng-hide="isNormalUser">
+                                    <a href="#/clients/{{clientDetail.id}}/category/{{category.id}}">
+                                        <i class="fa fa-edit" title="Edit Category"></i>
+                                    </a>
+                                    <i class="fa fa-trash-o" title="Remove Category" ng-click="removeCategory(category)"></i>
+                                </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <footer class="table-footer" ng-if="categories.length">
+                    <div class="row">
+                        <div class="col-md-6 page-num-info">
+                            <span>
                     Show
                     <select data-ng-model="numPerPage"
                             data-ng-options="num for num in numPerPageOpt"
@@ -68,70 +73,56 @@
                     </select>
                     entries per page
                 </span>
-						</div>
-						<div class="col-md-6 text-right pagination-container">
-							<pagination class="pagination-sm" ng-model="currentPage" total-items="filteredStores.length" max-size="4" ng-change="select(currentPage)" items-per-page="numPerPage" rotate="false" boundary-links="true"></pagination>
-						</div>
-					</div>
-				</footer>
-				<!-- END : PAGINATION -->
-			</div>
-			<div data-ng-show="isCreateCategory" data-ng-if="isCreateCategory" class="handbook_list">
-				<h2 class="ttl-tab">
+                        </div>
+                        <div class="col-md-6 text-right pagination-container">
+                            <pagination class="pagination-sm" ng-model="currentPage" total-items="filteredStores.length" max-size="4" ng-change="select(currentPage)" items-per-page="numPerPage" rotate="false" boundary-links="true"></pagination>
+                        </div>
+                    </div>
+                </footer>
+                <!-- END : PAGINATION -->
+            </div>
+            <div data-ng-show="isCreateCategory" data-ng-if="isCreateCategory" class="handbook_list">
+                <h2 class="ttl-tab">
 					<span>Create Folder</span>
 				</h2>
-				<div class="t-r marg-bot">
-					<span class="btn btn-brown" ng-click="createNewCategory()">View List Folder</span>
-				</div>
-				<form name="frm_crt_category" novalidate ng-submit="addNewCategory(category)">
-					<table class="table tbl table-striped">
-						<tbody>
-						<tr>
-							<td class="td-20">Folder Name</td>
-							<td>
+                <div class="t-r marg-bot">
+                    <span class="btn btn-brown" ng-click="createNewCategory()">View List Folder</span>
+                </div>
+                <form name="frm_crt_category" novalidate ng-submit="addNewCategory(category)">
+                    <table class="table tbl table-striped">
+                        <tbody>
+                            <tr>
+                                <td class="td-20">Folder Name</td>
+                                <td>
 
-								<input type="text"
-								       ng-model="category.name"
-								       class="txt-ipt"
-								       required
-								       name="cat_name"
-								       ng-class='{txt_err : (frm_crt_category.cat_name.$invalid && frm_crt_category.cat_name.$dirty)}'
-								/>
-								<p style="color:red">
-									<span ng-show="frm_crt_category.cat_name.$invalid  && frm_crt_category.cat_name.$dirty">Category name is required.</span>
-								</p>
-							</td>
-						</tr>
-						<tr>
-							<td class="td-20">Enable</td>
-							<td>
-								<input
-										type="checkbox"
-										required
-										ng-model="category.enabled"
-										name="cat_enabled"
-										class="txt-ipt"
-								/>
+                                    <input type="text" ng-model="category.name" class="txt-ipt" required name="cat_name" ng-class='{txt_err : (frm_crt_category.cat_name.$invalid && frm_crt_category.cat_name.$dirty)}' />
+                                    <p style="color:red">
+                                        <span ng-show="frm_crt_category.cat_name.$invalid  && frm_crt_category.cat_name.$dirty">Category name is required.</span>
+                                    </p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td-20">Enable</td>
+                                <td>
+                                    <input type="checkbox" required ng-model="category.enabled" name="cat_enabled" class="txt-ipt" />
 
-							</td>
-						</tr>
-						</tbody>
-					</table>
-					<p>
-						<button
-								type="submit"
-								class="save btn-brown">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p>
+                        <button type="submit" class="save btn-brown">
 							<i class="fa fa-save"></i>&nbsp;SAVE
 						</button>
-				        <span class="msg-update">
+                        <span class="msg-update">
 				            {{infoUpdated}}
 				        </span>
-					</p>
-					<!-- END : TBL -->
-				</form>
-			</div>
-		</div>
-	</section>
+                    </p>
+                    <!-- END : TBL -->
+                </form>
+            </div>
+        </div>
+    </section>
 </div>
 
 <!-- EWT -->

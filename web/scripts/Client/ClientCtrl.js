@@ -1,8 +1,8 @@
-(function () {
+(function() {
     'use strict';
     angular.module('app.clients', []).controller('clientCtrl', [
-        '$scope', 'Users','$filter', 'fetchTabData', 'fakeData', '$location', 'clientService','categoryService', 'fetchHandbook','fetchCategory', '$routeParams', '$route', 'config', 'Images', 'php', 'ClientAPI', 'Companies', 'Clients', 'handbookService', '$timeout', 'authHandler', '$rootScope', '$location',
-        function ($scope, Users,$filter, fetchTabData, fakeData, $location, clientService,categoryService, fetchHandbook, fetchCategory, $routeParams, $route, config, Images, php, ClientAPI, Companies, Clients, handbookService, $timeout, authHandler, $rootScope) {
+        '$scope', 'Users', '$filter', 'fetchTabData', 'fakeData', '$location', 'clientService', 'categoryService', 'fetchHandbook', 'fetchCategory', '$routeParams', '$route', 'config', 'Images', 'php', 'ClientAPI', 'Companies', 'Clients', 'handbookService', '$timeout', 'authHandler', '$rootScope', '$location',
+        function($scope, Users, $filter, fetchTabData, fakeData, $location, clientService, categoryService, fetchHandbook, fetchCategory, $routeParams, $route, config, Images, php, ClientAPI, Companies, Clients, handbookService, $timeout, authHandler, $rootScope) {
             var _URL_clients, _getClients;
             authHandler.checkLoggedIn();
             if ($location.path() == '/clients') {
@@ -11,9 +11,9 @@
                     return $route.reload();
                 }
             }
-            $scope.sortType     = 'title'; // set the default sort type
-            $scope.sortReverse  = false;  // set the default sort order
-            $scope.searchFish   = '';     // set the default search/filter term
+            $scope.sortType = 'title'; // set the default sort type
+            $scope.sortReverse = false; // set the default sort order
+            $scope.searchFish = ''; // set the default search/filter term
 
 
             _URL_clients = {
@@ -23,27 +23,27 @@
 
             };
 
-            _getClients = function (limit, goPage) {
-                return Clients.get(_URL_clients.list + '?limit=' + limit + '&page=' + goPage).then(function (res) {
+            _getClients = function(limit, goPage) {
+                return Clients.get(_URL_clients.list + '?limit=' + limit + '&page=' + goPage).then(function(res) {
                     if (res.status !== 200 || typeof res !== 'object') {
                         return;
                     }
                     $scope.clients = res.data;
                     $scope.clients_list = res.data._embedded.items;
-                }, function (error) {
+                }, function(error) {
                     console.log(error);
                 });
             };
-            
+
             $scope.numPerPageOpt = [5, 10, 20, 30];
             $scope.numPerPage = $scope.numPerPageOpt[1];
             $scope.currentPage = 1;
             $scope.filteredUsers = [];
             $scope.currentPageUsers = [];
-            $scope.onNPPChange = function () {
+            $scope.onNPPChange = function() {
                 return _getClients($scope.numPerPage, $scope.currentPage);
             };
-            $scope.gotoPage = function (page) {
+            $scope.gotoPage = function(page) {
                 return _getClients($scope.numPerPage, $scope.currentPage);
             };
             _getClients($scope.numPerPage, $scope.currentPage);
@@ -54,20 +54,20 @@
             $scope.isForward = false;
             $scope.isOurCpny = false;
             $scope.isCreateNew = false;
-            $scope.fnCreateNew = function () {
+            $scope.fnCreateNew = function() {
                 return $scope.isCreateNew = !$scope.isCreateNew;
             };
             $scope.isEditHandbook = false;
-            $scope.fnEditHandbook = function () {
+            $scope.fnEditHandbook = function() {
                 return $scope.isEditHandbook = !$scope.isEditHandbook;
             };
             $scope.isEditClients = false;
             $scope.isCreateHandbook = false;
-            $scope.createNewVersion = function () {
+            $scope.createNewVersion = function() {
                 return $scope.isCreateHandbook = !$scope.isCreateHandbook;
             };
-            
-            $scope.addNewCategory = function (category) {
+
+            $scope.addNewCategory = function(category) {
 
                 var data = {
                     "category": {
@@ -91,11 +91,11 @@
             };
 
 
-            $scope.removeCategory = function(category){
+            $scope.removeCategory = function(category) {
                 var r;
                 r = confirm("Would you like to remove this category ?");
-                if(r) {
-                    Users.delete(config.path.baseURL + '/organisations/' + $routeParams.clientId + '/categories/' + category.id ).then(function (results) {
+                if (r) {
+                    Users.delete(config.path.baseURL + '/organisations/' + $routeParams.clientId + '/categories/' + category.id).then(function(results) {
                         if (results.status === 204) {
                             $scope.infoUpdated = 'Remove category successfully.';
                             return location.reload();
@@ -106,7 +106,7 @@
                 }
             }
 
-            $scope.changePublished = function (handbook, clientId) {
+            $scope.changePublished = function(handbook, clientId) {
                 var desc, r, title, updateData;
                 r = confirm("Do you want to change this Handbook ?");
                 if (!r) {
@@ -137,28 +137,28 @@
                 return handbookService.update({
                     org_id: clientId,
                     hand_id: handbook.id
-                }, updateData, function (res) {
+                }, updateData, function(res) {
                     if (res.status === 204) {
-                        $timeout(function () {
+                        $timeout(function() {
                             return location.reload();
                         }, 300);
                     }
-                }, function (error) {
+                }, function(error) {
                     return alert(error.status + ': Error, refresh & try again !');
                 });
             };
 
-            $scope.reloadRouterHandbook = function () {
+            $scope.reloadRouterHandbook = function() {
                 $route.reload();
             }
 
             $scope.isCreateCategory = false;
-            $scope.createNewCategory = function () {
+            $scope.createNewCategory = function() {
                 return $scope.isCreateCategory = !$scope.isCreateCategory;
             }
 
             $scope.showAllHandbook = false;
-            $scope.magicShowCategoryHandbook = function () {
+            $scope.magicShowCategoryHandbook = function() {
                 return $scope.showAllHandbook = !$scope.showAllHandbook;
 
             }
@@ -210,7 +210,7 @@
             //
             // }
 
-            $scope.categoryShow = function () {
+            $scope.categoryShow = function() {
                 $scope.isHandbookShow = false;
                 console.log($scope.isHandbookShow);
             }
@@ -218,26 +218,27 @@
             $scope.ClientPage = {
                 tabUrls: {}
             };
+
             if ($routeParams.clientId) {
                 clientService.get({
                     org_id: $routeParams.clientId
-                }, function (data, getResponseHeaders) {
-                    if(data._links.handbooks) {
-                        fetchHandbook.get(data._links.handbooks.href).then(function (res) {
+                }, function(data, getResponseHeaders) {
+                    if (data._links.handbooks) {
+                        fetchHandbook.get(data._links.handbooks.href).then(function(res) {
                             if (typeof res.data._embedded !== 'object' || !res.data._embedded.items) {
                                 $scope.isCreateHandbook = true;
                                 return;
                             }
                             $scope.handbookAll = res.data._embedded.items;
-                            angular.forEach($scope.handbookAll, function (item, i) {
-                                Clients.get(item._links.translations.href).then(function (res) {
+                            angular.forEach($scope.handbookAll, function(item, i) {
+                                Clients.get(item._links.translations.href).then(function(res) {
                                     if (res.status !== 200 || typeof res !== 'object') {
                                         return;
                                     }
                                     $scope.handbookAll[i]['translations'] = res.data;
-                                    $scope.handbookAll[i]['EDIT'] = item._links.self.actions.join().indexOf('OPERATE') > -1 ||  item._links.self.actions.join().indexOf('EDIT') > -1 ? true : false ;
-                                    $scope.handbookAll[i]['DELETE'] = item._links.self.actions.join().indexOf('OPERATE') > -1 ||  item._links.self.actions.join().indexOf('DELETE') > -1 ? true : false ;
-                                }, function (error) {
+                                    $scope.handbookAll[i]['EDIT'] = item._links.self.actions.join().indexOf('OPERATE') > -1 || item._links.self.actions.join().indexOf('EDIT') > -1 ? true : false;
+                                    $scope.handbookAll[i]['DELETE'] = item._links.self.actions.join().indexOf('OPERATE') > -1 || item._links.self.actions.join().indexOf('DELETE') > -1 ? true : false;
+                                }, function(error) {
                                     console.log(error);
                                 });
                             });
@@ -256,19 +257,34 @@
                             "imerchant": '#/clients/' + data.id + '/imerchant',
                             "notifications": '#/clients/' + data.id + '/notifications'
                         };
-                        fetchCategory.get(data._links.categories.href).then(function (res) {
-                            if (typeof res.data._embedded !== 'object' || !res.data._embedded.items) {
-                                return;
-                            }
-                            $scope.categories = res.data._embedded.items;
-                            $scope.categories.unshift({ name : "Uncategories" , uncategory : true ,enabled : true});
-                            window.handb = $scope.categories;
-                        })
+                        $scope.loadFolder = function(url) {
+                            fetchCategory.get(url).then(function(res) {
+                                if (typeof res.data._embedded !== 'object' || !res.data._embedded.items) {
+                                    return;
+                                }
+                                $scope.categories = res.data._embedded.items;
+                                $scope.categories.unshift({ name: "Uncategories", uncategory: true, enabled: true });
+                                window.handb = $scope.categories;
+                            });
+                        }
+                        $scope.loadFolder(data._links.categories.href);
+
+
                     }
+                    $scope.searchk = '';
+                    $scope.searchFolder = function() {
+                        var keyword = $scope.searchk;
+                        if (keyword === undefined) {
+                            keyword = '';
+                        }
+                        var url = data._links.categories.href + '?search=category.name:%' + keyword + '%';
+                        $scope.loadFolder(url);
+                    }
+
 
                     $scope.clientDetail = data;
                     if (typeof data._links.logo === 'object' && data._links.logo != undefined) {
-                        Images.get(data._links.logo.href).then(function (res) {
+                        Images.get(data._links.logo.href).then(function(res) {
                             var logo_id_arr;
                             if (res.status !== 200 || typeof res !== 'object') {
                                 return;
@@ -278,16 +294,16 @@
                             $scope.urlUpload = $scope.clientDetail._links.logo.href;
                             $scope.clientDetail['logo'] = res.data;
                             if (typeof res.data._links.url === 'object' && res.data._links.url.href) {
-                                Images.get(data._links.logo.href + '/url').then(function (url) {
+                                Images.get(data._links.logo.href + '/url').then(function(url) {
                                     if (url.status !== 200 || typeof url !== 'object') {
                                         return;
                                     }
                                     return $scope.clientDetail['logo_url'] = url.data.url;
-                                }, function (error) {
+                                }, function(error) {
                                     return console.log(error);
                                 });
                             }
-                        }, function (error) {
+                        }, function(error) {
                             return console.log(error);
                         });
                     } else {
@@ -296,29 +312,29 @@
 
                     }
                     if (typeof data._links.banners === 'object' && data._links.banners != undefined) {
-                        Images.get(data._links.banners.href).then(function (res) {
+                        Images.get(data._links.banners.href).then(function(res) {
                             if (res.status !== 200 || typeof res !== 'object') {
                                 return;
                             }
                             $scope.urlUploadBanner = $scope.clientDetail._links['banners'].href;
                             $scope.clientDetail['banners'] = [];
                             if (res.data._embedded.items.length > 0) {
-                                angular.forEach(res.data._embedded.items, function (itm) {
+                                angular.forEach(res.data._embedded.items, function(itm) {
                                     var b;
                                     b = itm;
                                     if (typeof b._links.url === 'object' && b._links.url.href) {
-                                        return Images.get(config.path.baseURL + b._links.url.href).then(function (bn) {
+                                        return Images.get(config.path.baseURL + b._links.url.href).then(function(bn) {
                                             if (bn.status === 200 || typeof bn === 'object') {
                                                 b['banner_url'] = bn.data.url;
                                                 return $scope.clientDetail['banners'].push(b);
                                             }
-                                        }, function (error) {
+                                        }, function(error) {
                                             return console.log(error);
                                         });
                                     }
                                 });
                             }
-                        }, function (error) {
+                        }, function(error) {
                             return console.log(error);
                         });
                     } else {
@@ -328,13 +344,13 @@
                 });
             }
             $scope.isEditUser = false;
-            $scope.fnEditUser = function () {
+            $scope.fnEditUser = function() {
                 return $scope.isEditUser = !$scope.isEditUser;
             };
             $scope.isNewUser = false;
             $scope.isUserUpload = false;
             $scope.isDetailUpload = false;
-            $scope.enabClient = function (client, i) {
+            $scope.enabClient = function(client, i) {
                 var banners_id_arr, logo_id_arr, r, sm_client_data;
                 r = confirm("Do you want to change this company?");
                 if (!r) {
@@ -367,18 +383,18 @@
                 };
                 banners_id_arr = null;
                 if (client._links.banners) {
-                    return Images.get(client._links.banners.href).then(function (res) {
+                    return Images.get(client._links.banners.href).then(function(res) {
                         if (res.status === 200 && typeof res === 'object') {
                             banners_id_arr = [];
-                            angular.forEach(res.data._embedded.items, function (banner) {
+                            angular.forEach(res.data._embedded.items, function(banner) {
                                 return banners_id_arr.push(banner.id);
                             });
                             sm_client_data.organisation.banners = banners_id_arr;
                             return clientService.update({
                                 org_id: client.id
-                            }, sm_client_data, function (res) {
+                            }, sm_client_data, function(res) {
                                 return $scope.clients_list[i].enabled = sm_client_data.organisation.enabled;
-                            }, function (error) {
+                            }, function(error) {
                                 return alert(error.status + ' : Try later after refreshing!');
                             });
                         }
@@ -386,22 +402,22 @@
                 } else {
                     return clientService.update({
                         org_id: client.id
-                    }, sm_client_data, function (res) {
+                    }, sm_client_data, function(res) {
                         return $scope.clients_list[i].enabled = sm_client_data.organisation.enabled;
-                    }, function (error) {
+                    }, function(error) {
                         return alert(error.status + ' : Try later after refreshing!');
                     });
                 }
             };
             $scope.clients_edit = false;
-            $scope.editClient = function (clients_edit) {
+            $scope.editClient = function(clients_edit) {
                 $scope.isDisable = !$scope.isDisable;
                 $scope.clients_edit = !clients_edit;
                 if ($scope.clients_edit === false && $scope.clientDetail.id) {
                     return $scope.updateClient("", null);
                 }
             };
-            $scope.updateClient = function (task, obj) {
+            $scope.updateClient = function(task, obj) {
                 var banner_id, logo_id, sm_client_data;
                 if ($scope.clientDetail.redemption_password && $scope.clientDetail.redemption_password.length !== 4) {
                     alert('Please entry 4 chars in Redemption password');
@@ -437,7 +453,7 @@
                 sm_client_data.organisation['logo'] = logo_id;
                 banner_id = [];
                 if ($scope.clientDetail.banners && $scope.clientDetail.banners.length > 0) {
-                    angular.forEach($scope.clientDetail.banners, function (bn) {
+                    angular.forEach($scope.clientDetail.banners, function(bn) {
                         if (task !== "delete_banner" || bn.id !== obj.id) {
                             return banner_id.push(bn.id);
                         }
@@ -452,27 +468,27 @@
                 console.log(sm_client_data);
                 return clientService.update({
                     org_id: $scope.clientDetail.id
-                }, sm_client_data, function (res) {
+                }, sm_client_data, function(res) {
                     if (typeof res.organisation === 'object') {
                         if (task === "delete_logo") {
-                            return Images["delete"]($scope.clientDetail._links.logo.href).then(function (res) {
+                            return Images["delete"]($scope.clientDetail._links.logo.href).then(function(res) {
                                 if (res.status === 204) {
                                     location.reload();
                                 }
-                            }, function (error) {
+                            }, function(error) {
                                 console.log(error);
                                 if (error.status === 500) {
                                     return $scope.clientDetail.logo = null;
                                 }
                             });
                         } else if (task === "delete_banner" && typeof obj === 'object') {
-                            return Images["delete"](config.path.baseURL + obj._links.self.href).then(function (res) {
+                            return Images["delete"](config.path.baseURL + obj._links.self.href).then(function(res) {
                                 if (res.status === 204) {
-                                    $timeout(function () {
+                                    $timeout(function() {
                                         return location.reload();
                                     }, 300);
                                 }
-                            }, function (error) {
+                            }, function(error) {
                                 console.log(error);
                                 if (error.status === 500) {
                                     return $scope.clientDetail.logo = null;
@@ -481,49 +497,49 @@
                         } else {
                             console.log(sm_client_data);
                             return;
-                            return $timeout(function () {
+                            return $timeout(function() {
                                 return location.reload();
                             }, 300);
                         }
                     }
-                }, function (error) {
+                }, function(error) {
                     return alert(error.status + ' : Try later and new company code');
                 });
             };
-            $scope.isActive = function (path) {
+            $scope.isActive = function(path) {
                 if ($location.path().search(path) >= 0) {
                     return 'active';
                 }
             };
-            $scope.deleteHandbook = function (handbook) {
+            $scope.deleteHandbook = function(handbook) {
                 var r;
                 r = confirm("Do you want to delete \"" + handbook.title + "\"?");
                 if (r === true) {
-                    return fetchHandbook["delete"](handbook._links.self.href).then(function (res) {
+                    return fetchHandbook["delete"](handbook._links.self.href).then(function(res) {
                         return $route.reload();
                     });
                 }
             };
             $scope.urlUpload = config.path.baseURL + config.path.upload + 'image/media';
             $scope.uploadButtonLabel = 'Upload file';
-            $scope.delLogo = function () {
+            $scope.delLogo = function() {
                 if (typeof $scope.clientDetail._links.logo === 'object' && $scope.clientDetail._links.logo.href) {
                     return $scope.updateClient("delete_logo", null);
                 }
             };
-            $scope.delBanner = function (banner) {
+            $scope.delBanner = function(banner) {
                 if (typeof $scope.clientDetail._links.banners === 'object' && $scope.clientDetail._links.banners.href) {
                     return $scope.updateClient("delete_banner", banner);
                 }
             };
-            $scope.deleteClient = function (client) {
+            $scope.deleteClient = function(client) {
                 var r;
                 r = confirm("Do you want to delete this client \"" + client.name + "\"?");
                 if (r === true) {
-                    ClientAPI.go('DELETE', client._links.self.href).then(function (res) {
+                    ClientAPI.go('DELETE', client._links.self.href).then(function(res) {
                         location.reload();
                         return true;
-                    }, function (error) {
+                    }, function(error) {
                         return alert(error.status + ' : Try later');
                     });
                 }
@@ -533,9 +549,9 @@
                 validMail: /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i,
                 noSpace: /[^\s\\]/
             };
-            return $scope.submitNewClient = function () {
+            return $scope.submitNewClient = function() {
                 var co_data;
-                angular.forEach($scope.frm_create_clients.$error.required, function (field) {
+                angular.forEach($scope.frm_create_clients.$error.required, function(field) {
                     return field.$dirty = true;
                 });
                 if ($scope.frm_create_clients.$error.required) {
@@ -545,7 +561,7 @@
                 co_data = {
                     organisation: $scope.co
                 };
-                Companies.post(config.path.baseURL + config.path.clients, co_data).then(function (res) {
+                Companies.post(config.path.baseURL + config.path.clients, co_data).then(function(res) {
                     console.log(res);
                     if (typeof res === 'object' && res.status === 201) {
                         console.log("OK, SAVED");
@@ -554,35 +570,35 @@
                     }
                     location.reload();
                     return true;
-                }, function (error) {
+                }, function(error) {
                     return alert(error.status + ' : Try later and new company code');
                 });
             };
         }
     ]).controller('CategoryCtrl', [
-        '$scope', '$routeParams', 'fetchCategory','categoryService' , 'clientService', 'sectionService', '$location', '$timeout', 'authHandler','config','Users',
-        function($scope, $routeParams, fetchCategory, categoryService, clientService, sectionService, $location, $timeout, authHandler,config,Users) {
+        '$scope', '$routeParams', 'fetchCategory', 'categoryService', 'clientService', 'sectionService', '$location', '$timeout', 'authHandler', 'config', 'Users',
+        function($scope, $routeParams, fetchCategory, categoryService, clientService, sectionService, $location, $timeout, authHandler, config, Users) {
             authHandler.checkLoggedIn();
             $scope.clientId = $routeParams.clientId;
             $scope.categoryId = $routeParams.categoryId;
             $scope.isCreateCategory = false;
             $scope.infoUpdated = null;
             $scope.ClientPage = {
-                tabUrls : {
-                "info": '#/clients/' +  $scope.clientId + '/info',
-                "user": '#/clients/' +  $scope.clientId + '/user',
-                "categories": '#/clients/' +  $scope.clientId + '/categories/handbooks',
-                "categoriesList": '#/clients/' +  $scope.clientId + '/categories/list',
-                "policies": '#/clients/' +  $scope.clientId + '/policies',
-                "insurance": '#/clients/' +  $scope.clientId + '/insurance',
-                "healthcare": '#/clients/' +  $scope.clientId + '/healthcare',
-                "imerchant": '#/clients/' +  $scope.clientId + '/imerchant',
-                "notifications": '#/clients/' +  $scope.clientId + '/notifications'
+                tabUrls: {
+                    "info": '#/clients/' + $scope.clientId + '/info',
+                    "user": '#/clients/' + $scope.clientId + '/user',
+                    "categories": '#/clients/' + $scope.clientId + '/categories/handbooks',
+                    "categoriesList": '#/clients/' + $scope.clientId + '/categories/list',
+                    "policies": '#/clients/' + $scope.clientId + '/policies',
+                    "insurance": '#/clients/' + $scope.clientId + '/insurance',
+                    "healthcare": '#/clients/' + $scope.clientId + '/healthcare',
+                    "imerchant": '#/clients/' + $scope.clientId + '/imerchant',
+                    "notifications": '#/clients/' + $scope.clientId + '/notifications'
                 }
             };
 
 
-            
+
             var _URL = {
                 handbooks: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/categories/' + $routeParams.categoryId + '/handbooks',
                 postHandbookToCategory: config.path.baseURL + '/organisations/' + $routeParams.clientId + '/categories/' + $routeParams.categoryId
@@ -604,7 +620,7 @@
 
                 });
             }
-            $scope.submitCategory = function () {
+            $scope.submitCategory = function() {
                 var updateData = {
                     "category": {
                         "name": $scope.category.name,
@@ -628,11 +644,11 @@
 
             }
 
-            $scope.removeHandbook = function(handbook){
+            $scope.removeHandbook = function(handbook) {
                 var r;
                 r = confirm("Would you like to remove this handbook out of category ?");
-                if(r) {
-                    Users.delete(_URL.postHandbookToCategory + '/handbooks/' + handbook.id).then(function (results) {
+                if (r) {
+                    Users.delete(_URL.postHandbookToCategory + '/handbooks/' + handbook.id).then(function(results) {
                         if (results.status === 204) {
                             $scope.infoUpdated = 'Updated Successfully.';
                             loadList();
@@ -644,12 +660,12 @@
             }
 
             var loadList = function() {
-                Users.get(_URL.handbooks).then(function (results) {
+                Users.get(_URL.handbooks).then(function(results) {
                     if (results.status !== 200 || typeof results !== 'object') {
                         return;
                     }
                     $scope.handbooks = results.data._embedded.items;
-                    angular.forEach($scope.handbooks, function (handbook) {
+                    angular.forEach($scope.handbooks, function(handbook) {
                         handbook.locale = 'en_us';
                         Users.get(handbook._links.translations.href).then(function(res) {
                             if (res.status !== 200 || typeof res !== 'object') {
@@ -673,8 +689,8 @@
             loadList();
         }
     ]).controller('CategoryHandbookCtrl', [
-        '$scope' , '$routeParams', '$location', '$timeout', 'authHandler', 'config','Users','categoryService' , 'clientService',
-        function ($scope ,$routeParams , $location , $timeout , authHandler, config,Users,categoryService ,clientService) {
+        '$scope', '$routeParams', '$location', '$timeout', 'authHandler', 'config', 'Users', 'categoryService', 'clientService',
+        function($scope, $routeParams, $location, $timeout, authHandler, config, Users, categoryService, clientService) {
             authHandler.checkLoggedIn();
             $scope.clientId = $routeParams.clientId;
             $scope.categoryId = $routeParams.categoryId;
@@ -706,11 +722,10 @@
             $scope.modelHandbook = '';
             $scope.allowAdd = false;
 
-            $scope.handbookChange = function (handbook) {
+            $scope.handbookChange = function(handbook) {
                 var id = handbook.id;
-                if(handbook.inGroup == false)
-                {
-                    Users.delete(_URL.postHandbookToCategory + '/handbooks/' + id).then(function (results) {
+                if (handbook.inGroup == false) {
+                    Users.delete(_URL.postHandbookToCategory + '/handbooks/' + id).then(function(results) {
                         if (results.status === 204) {
                             $scope.infoUpdated = 'Updated Successfully.';
                             loadList();
@@ -719,7 +734,7 @@
                         }
                     });
                 } else if (handbook.inGroup == true) {
-                    Users.post(_URL.postHandbookToCategory + '/handbooks/' + id, {}).then(function (results) {
+                    Users.post(_URL.postHandbookToCategory + '/handbooks/' + id, {}).then(function(results) {
                         if (results.status === 204) {
                             $scope.infoUpdated = 'Updated Successfully.';
                             $scope.handbooks.push(handbook);
@@ -730,31 +745,29 @@
                 }
             };
 
-            var loadList = function () {
-                Users.get(_URL.handbooks).then(function (results) {
+            var loadList = function() {
+                Users.get(_URL.handbooks).then(function(results) {
                     if (results.status !== 200 || typeof results !== 'object') {
                         return;
                     }
                     $scope.handbooks = results.data._embedded.items;
 
-                    Users.get(_URL.handbooksAutocomplete).then(function ( results ) {
-                        if(results.status !== 200 || typeof results !== 'object')
-                        {
+                    Users.get(_URL.handbooksAutocomplete).then(function(results) {
+                        if (results.status !== 200 || typeof results !== 'object') {
                             return;
                         }
 
                         var handbookAll = [];
-                        angular.forEach(results.data._embedded.items,function (item) {
-                            if(item.enabled == true)
-                            {
+                        angular.forEach(results.data._embedded.items, function(item) {
+                            if (item.enabled == true) {
                                 handbookAll.push(item);
                             }
                         });
 
-                        angular.forEach(handbookAll, function (handbook) {
+                        angular.forEach(handbookAll, function(handbook) {
 
-                            $scope.handbooks.map(function (item) {
-                                if(item.id == handbook.id) {
+                            $scope.handbooks.map(function(item) {
+                                if (item.id == handbook.id) {
                                     handbook.inGroup = true;
                                 }
                             });
