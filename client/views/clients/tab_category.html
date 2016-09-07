@@ -17,21 +17,20 @@
                 <li class="active">Folders</li>
             </ol>
             <!-- END : MENU -->
-            <form>
-                <div style="margin-top: 20px" class="form-group">
-                    <div class="input-group">
-                        <div class="input-group-addon" ng-click="searchFolder()"><i class="fa fa-search"></i></div>
+            <div class="t-r marg-bot" data-ng-show="!isCreateCategory">
+                <div class="btn btn-brown" ng-show="!isNormalUser" ng-click="createNewCategory()">Create Folder</div>
+            </div>
+            <div style="margin-top: 20px" class="form-group" data-ng-show="!isCreateCategory">
+                <div class="input-group">
+                    <div class="input-group-addon" ng-click="searchFolder()"><i class="fa fa-search"></i></div>
 
-                        <input type="text" value="" class="form-control" placeholder="Search Folder" ng-model="searchk">
-                        <!--<h1>{{searchk}}</h1>-->
-                    </div>
+                    <input type="text" value="" class="form-control" placeholder="Search Folder" ng-model="searchk">
+                    <!--<h1>{{searchk}}</h1>-->
                 </div>
-            </form>
+            </div>
             <div data-ng-show="!isCreateCategory" data-ng-if="!isCreateCategory" class="handbook_list">
 
-                <div class="t-r marg-bot">
-                    <div class="btn btn-brown" ng-show="!isNormalUser" ng-click="createNewCategory()">Create Folder</div>
-                </div>
+
 
 
                 <table class="table tbl table-hover table-striped">

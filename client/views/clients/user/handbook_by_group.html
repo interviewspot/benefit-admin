@@ -19,7 +19,14 @@
                 <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
             </a>
         </div>
+        <div style="margin-top: 10px;" class="t-r form-group">
+            <div class="input-group">
+                <div class="input-group-addon" ng-click="searchHandbook()"><i class="fa fa-search"></i></div>
 
+                <input type="text" class="form-control" placeholder="Search User" ng-model="searchHandbookKey">
+
+            </div>
+        </div>
         <div class="table-responsive">
             <table class="table tbl tbl-bg table-hover table-striped tbl-w1000">
                 <tbody>
@@ -27,7 +34,7 @@
                         <th class="text-left">Title</th>
                         <th class="text-center">Include</th>
                     </tr>
-                    <tr ng-repeat="(i, handbook) in listHandbook">
+                    <tr ng-repeat="(i, handbook) in listHandbook | filter:searchHandbookKey">
                         <td class="text-left">
                             <a href="">
                                   {{ handbook.translations['en_us'].title ? handbook.translations['en_us'].title : handbook.title}}
