@@ -8,62 +8,45 @@
             <form name="frm_section" class="modal_frm" ng-submit="submitSection()" novalidate>
                 <table class="table tbl table-striped">
                     <tbody>
-                    <tr>
-                        <td class="td-20 td-bold">Section Title:</td>
-                        <td>
-                            <input type="text"
-                                   name="sec_title"
-                                   ng-model="formSection.title"
-                                   required=""
-                                   class="txt-ipt ipt"
-                                   ng-class='{txt_err : (frm_section.sec_title.$invalid && frm_section.sec_title.$dirty)}'/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="td-20 td-bold">Status:</td>
-                        <td>
-                            <!-- <input type="text" ng-model="formSection.active" class="txt-ipt"/> -->
-                            <label>
+                        <tr>
+                            <td class="td-20 td-bold">Section Title:</td>
+                            <td>
+                                <input type="text" name="sec_title" ng-model="formSection.title" required="" class="txt-ipt ipt" ng-class='{txt_err : (frm_section.sec_title.$invalid && frm_section.sec_title.$dirty)}' />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td-20 td-bold">Status:</td>
+                            <td>
+                                <!-- <input type="text" ng-model="formSection.active" class="txt-ipt"/> -->
+                                <label>
                                 <input type="checkbox" ng-model="formSection.enabled"> Active / Deactive
                             </label>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="td-20 td-bold">Section No:</td>
-                        <td>
-                            <input
-                                    type="text"
-                                    ng-model="formSection.ordering"
-                                    class="txt-ipt ipt"
-                                    required=""
-                                    name="sec_no"
-                                    ng-class='{txt_err : (frm_section.sec_no.$invalid && frm_section.sec_no.$dirty)}'
-                            />
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="td-20 td-bold">Section Parent:</td>
-                        <td>
-                            <select
-                                    ng-model="parentSelect"
-                                    ng-change="changedValue(parentSelect)"
-                                    ng-options="option.id as option.translations['en_us'].title ? option.translations['en_us'].title : option.title for option in parentSection">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td-20 td-bold">Section No:</td>
+                            <td>
+                                <input type="text" ng-model="formSection.ordering" class="txt-ipt ipt" required="" name="sec_no" ng-class='{txt_err : (frm_section.sec_no.$invalid && frm_section.sec_no.$dirty)}' />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td-20 td-bold">Section Parent:</td>
+                            <td>
+                                <select ng-model="parentSelect" ng-change="changedValue(parentSelect)" ng-options="option.id as option.translations['en_us'].title ? option.translations['en_us'].title : option.title for option in parentSection">
                                 <option value="">-- Parent section --</option>
                             </select>
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
 
                     </tbody>
                 </table>
                 <!-- END : TBL -->
                 <span>Description</span>
-                <div text-angular
-                     ng-model="formSection.description"></div>
+                <div text-angular ng-model="formSection.description"></div>
                 <!-- <textarea ui-tinymce data-ng-model="formSection.description"></textarea> -->
                 <!-- END : EDITOR -->
                 <p class="tp-20" data-ng-show="handbook.EDITHANBOOK">
-                    <button type="submit"
-                            class="save btn-brown">
+                    <button type="submit" class="save btn-brown">
                         <i class="fa fa-save"></i>&nbsp;&nbsp;SAVE SECTION
                     </button>
                     <span class="msg-update">
@@ -107,73 +90,45 @@
                                 No Contents
                             </div>
                             <ul dnd-list="contents">
-                                    <li ng-repeat="content in contents"
-                                    dnd-draggable="content"
-                                    dnd-moved="contents.splice($index, 1)"
-                                    dnd-effect-allowed="move"
-                                >
-                                    <form ng-show="content != 'undefined' && content.html_text!='none' && content.html_text!='none_pdf'"
-                                          name="frm_section_content" class="modal_frm"
-                                          ng-submit="submitContent(content,$index)" novalidate>
-                                        <div class="content-only" data-ng-click="editContent($index)"
-                                             data-ng-show="!content.isShow" ng-bind-html="content.html_text"></div>
+                                <li ng-repeat="content in contents">
+                                    <!--dnd-draggable="content"-->
+                                    <!--dnd-moved="contents.splice($index, 1)"-->
+                                    <!--dnd-effect-allowed="move"-->
+                                    <form ng-show="content != 'undefined' && content.html_text!='none' && content.html_text!='none_pdf'" name="frm_section_content" class="modal_frm" ng-submit="submitContent(content,$index)" novalidate>
+                                        <div class="content-only" data-ng-click="editContent($index)" data-ng-show="!content.isShow" ng-bind-html="content.html_text"></div>
                                         <div data-ng-show="content.isShow">
                                             <div text-angular ng-model="content.html_text"></div>
                                             <p></p>
-                                            <button data-ng-show="permissionHandbook.EDIT" type="submit"
-                                                    class="save btn-brown">
+                                            <button data-ng-show="permissionHandbook.EDIT" type="submit" class="save btn-brown">
                                                 <i class="fa fa-save"></i>&nbsp;&nbsp;Save Content
                                             </button>
-                                            <button data-ng-show="permissionHandbook.EDIT" data-ng-click="closeEditContent($index)" type="button"
-                                                    class="btn-brown">
+                                            <button data-ng-show="permissionHandbook.EDIT" data-ng-click="closeEditContent($index)" type="button" class="btn-brown">
                                                 &nbsp;&nbsp;Close
                                             </button>
                                         </div>
                                     </form>
-                                    <img ng-show="content != 'undefined' && content.html_text=='none'" width="60px"
-                                         ng-src="{{content.url}}"/>
-                                    <a ng-show="content != 'undefined' && content.html_text=='none_pdf'"
-                                       href="{{content.pdf_binary}}?locale=en_us&x-session={{user.user.session_key}}">{{content.pdf_name}}</a>
+                                    <img ng-show="content != 'undefined' && content.html_text=='none'" width="60px" ng-src="{{content.url}}" />
+                                    <a ng-show="content != 'undefined' && content.html_text=='none_pdf'" href="{{content.pdf_binary}}?locale=en_us&x-session={{user.user.session_key}}">{{content.pdf_name}}</a>
                                     <!--<pdf-download ng-show="content != 'undefined' && content.html_text=='none_pdf'" url="{{content.pdf_binary}}?locale=en_us" filename="{{content.pdf_name}}"></pdf-download>-->
                                     <!--<pdf-download ng-show="content != 'undefined' && content.html_text=='none_pdf'" url="http://localhost/tb455-tk1-ts.pdf" filename="{{content.pdf_name}}"></pdf-download>-->
                                     <br>
-                                    <a href="javascript:void(0)"
-                                       data-ng-click="deleteContent(content,$index)" data-ng-show="permissionHandbook.EDIT">remove</a>
+                                    <a href="javascript:void(0)" data-ng-click="deleteContent(content,$index)" data-ng-show="permissionHandbook.EDIT">remove</a>
                                 </li>
                             </ul>
 
                             <hr>
-                            <button type="button" ng-show="!readyToUpload && permissionHandbook.EDIT"
-                                    ng-click="addNewImage()" class="btn-brown">Add
+                            <button type="button" ng-show="!readyToUpload && permissionHandbook.EDIT" ng-click="addNewImage()" class="btn-brown">Add
                                 new image
                             </button>
 
-                            <upload-file
-                                    ng-show="readyToUpload"
-                                    upload-url="urlUpload"
-                                    content-image="contentImage"
-                                    content-image-link="contentImageLink"
-                                    upload-url="urlUpload"
-                                    ng-uploadresponse="uploadResponse"
-                                    ng-label="uploadButtonLabel"
-                                    ng-progress-color="'#CFAE79'">
+                            <upload-file ng-show="readyToUpload" upload-url="urlUpload" content-image="contentImage" content-image-link="contentImageLink" upload-url="urlUpload" ng-uploadresponse="uploadResponse" ng-label="uploadButtonLabel" ng-progress-color="'#CFAE79'">
                             </upload-file>
-                            <button type="button" ng-show="!readyToUploadPdf && permissionHandbook.EDIT"
-                                    ng-click="addNewPdf()" class="btn-brown">Add
+                            <button type="button" ng-show="!readyToUploadPdf && permissionHandbook.EDIT" ng-click="addNewPdf()" class="btn-brown">Add
                                 new pdf
                             </button>
-                            <upload-file
-                                    ng-show="readyToUploadPdf"
-                                    upload-url="urlUpload"
-                                    content-pdf="contentPdf"
-                                    content-pdf-link="contentPdfLink"
-                                    upload-url="urlUpload"
-                                    ng-uploadresponse="uploadResponse"
-                                    ng-label="uploadButtonLabelPdf"
-                                    ng-progress-color="'#CFAE79'">
+                            <upload-file ng-show="readyToUploadPdf" upload-url="urlUpload" content-pdf="contentPdf" content-pdf-link="contentPdfLink" upload-url="urlUpload" ng-uploadresponse="uploadResponse" ng-label="uploadButtonLabelPdf" ng-progress-color="'#CFAE79'">
                             </upload-file>
-                            <button data-ng-show="readyToAddContent && permissionHandbook.EDIT" ng-click="addContent()" type="button"
-                                    class="btn-brown">
+                            <button data-ng-show="readyToAddContent && permissionHandbook.EDIT" ng-click="addContent()" type="button" class="btn-brown">
                                 Add new content
                             </button>
                         </div>
@@ -197,23 +152,17 @@
                 </div>
             </div>
 
-            <div class="tbl-r sc-itm"
-                 ng-repeat="section in sections.items"
-                 ng-class="{active: section.id == selectedSec}">
+            <div class="tbl-r sc-itm" ng-repeat="section in sections.items" ng-class="{active: section.id == selectedSec}">
                 <div class="t-tr">
                     <div class="t-td t-3">Section {{section.ordering}}</div>
-                    <div class="t-td t-ct"
-                         ng-bind-html="section.translations['en_us'].title ? section.translations['en_us'].title : section.title"></div>
-                    <span ng-show="section.children.total > 0" title="Show all children" class="tbl-show-children"
-                          ng-click="showChildren(section)">
+                    <div class="t-td t-ct" ng-bind-html="section.translations['en_us'].title ? section.translations['en_us'].title : section.title"></div>
+                    <span ng-show="section.children.total > 0" title="Show all children" class="tbl-show-children" ng-click="showChildren(section)">
                         <i class="fa fa-sign-in"></i>
                     </span>
-                    <span data-ng-show="allowShowActionSections" title="Edit this section" class="tbl-edit"
-                          ng-click="editSection(section)">
+                    <span data-ng-show="allowShowActionSections" title="Edit this section" class="tbl-edit" ng-click="editSection(section)">
                         <i class="fa fa-edit"></i>
                     </span>
-                    <span data-ng-show="permissionHandbook.EDIT" data-ng-show="allowShowActionSections" title="Remove this section" class="tbl-remove"
-                          ng-click="deleteSection(section)">
+                    <span data-ng-show="permissionHandbook.EDIT" data-ng-show="allowShowActionSections" title="Remove this section" class="tbl-remove" ng-click="deleteSection(section)">
                         <i class="fa fa-trash-o"></i>
                     </span>
                     <span data-ng-show="!allowShowActionSections">
@@ -222,23 +171,18 @@
 
                 </div>
                 <div ng-show="section.children.total > 0 && section.children.show">
-                    <div class="tbl-r sc-itm"
-                         ng-repeat="child_sec in section.children.items"
-                         ng-class="{active: child_sec.id == selectedSec}">
+                    <div class="tbl-r sc-itm" ng-repeat="child_sec in section.children.items" ng-class="{active: child_sec.id == selectedSec}">
                         <div class="t-tr">
                             <div class="t-td t-3">Sub</div>
                             <div class="t-td t-2">{{section.ordering}}.{{child_sec.ordering}}</div>
-                            <div class="t-td t-ct"
-                                 ng-bind-html="child_sec.translations['en_us'].title ? child_sec.translations['en_us'].title : child_sec.title"></div>
-                            <span data-ng-show="allowShowActionSections" title="Edit this section" class="tbl-edit"
-                                  ng-click="editSection(child_sec)">
+                            <div class="t-td t-ct" ng-bind-html="child_sec.translations['en_us'].title ? child_sec.translations['en_us'].title : child_sec.title"></div>
+                            <span data-ng-show="allowShowActionSections" title="Edit this section" class="tbl-edit" ng-click="editSection(child_sec)">
                                 <i class="fa fa-edit"></i>
                             </span>
-                            <span data-ng-show="permissionHandbook.EDIT" data-ng-show="allowShowActionSections" title="Remove this section" class="tbl-remove"
-                                  ng-click="deleteSection(child_sec)">
+                            <span data-ng-show="permissionHandbook.EDIT" data-ng-show="allowShowActionSections" title="Remove this section" class="tbl-remove" ng-click="deleteSection(child_sec)">
                                 <i class="fa fa-trash-o"></i>
                             </span>
-                             <span data-ng-show="!allowShowActionSections">
+                            <span data-ng-show="!allowShowActionSections">
                                 <i class="fa fa-spinner"></i>
                             </span>
                         </div>
@@ -248,14 +192,7 @@
             <footer class="table-footer" ng-show="sections.pages >= 2">
                 <div class="row">
                     <div class="col-md-12  pagination-container">
-                        <pagination class="pagination-sm"
-                                    ng-model="currentPage"
-                                    total-items="sections.total"
-                                    max-size="4"
-                                    ng-change="gotoPage(currentPage)"
-                                    items-per-page="numPerPage"
-                                    rotate="false"
-                                    boundary-links="true"></pagination>
+                        <pagination class="pagination-sm" ng-model="currentPage" total-items="sections.total" max-size="4" ng-change="gotoPage(currentPage)" items-per-page="numPerPage" rotate="false" boundary-links="true"></pagination>
                     </div>
                     <div class="col-md-12 page-num-info text-center">
                         <span>
@@ -270,7 +207,8 @@
 
                 </div>
             </footer>
-        </div><!-- END: TBL-div -->
+        </div>
+        <!-- END: TBL-div -->
 
         <div class="section-control" data-ng-show="hanbook.EDITHANBOOK">
             <a ng-click="createSubSction(true)">
@@ -314,41 +252,41 @@
  * For the correct positioning of the placeholder element, the dnd-list and
  * it's children must have position: relative
  */
+    
     .simpleDemo ul[dnd-list],
     .simpleDemo ul[dnd-list] > li {
         position: relative;
     }
-
     /**
      * The dnd-list should always have a min-height,
      * otherwise you can't drop to it once it's empty
      */
+    
     .simpleDemo ul[dnd-list] {
         min-height: 42px;
         padding-left: 0px;
     }
-
     /**
      * The dndDraggingSource class will be applied to
      * the source element of a drag operation. It makes
      * sense to hide it to give the user the feeling
      * that he's actually moving it.
      */
+    
     .simpleDemo ul[dnd-list] .dndDraggingSource {
         display: none;
     }
-
     /**
      * An element with .dndPlaceholder class will be
      * added to the dnd-list while the user is dragging
      * over it.
      */
+    
     .simpleDemo ul[dnd-list] .dndPlaceholder {
         display: block;
         background-color: #ddd;
         min-height: 42px;
     }
-
     /**
      * The dnd-lists's child elements currently MUST have
      * position: relative. Otherwise we can not determine
@@ -356,6 +294,7 @@
      * half of the element we are dragging over. In other
      * browsers we can use event.offsetY for this.
      */
+    
     .simpleDemo ul[dnd-list] li {
         background-color: #fff;
         border: 1px solid #ddd;
@@ -365,15 +304,15 @@
         padding: 10px 15px;
         margin-bottom: -1px;
     }
-
     /**
      * Show selected elements in green
      */
+    
     .simpleDemo ul[dnd-list] li.selected {
         background-color: #dff0d8;
         color: #3c763d;
     }
-
+    
     .content-only:hover {
         background-color: #8abeb7;
         cursor: pointer;
