@@ -5,8 +5,7 @@
             return {
                 path: {
                     // 'baseURL': 'https://api.sg-benefits.com',
-                    // 'baseURL': 'http://api-live.sg-benefits.com',
-                    'baseURL': 'http://mac.api.com',
+                    'baseURL': 'http://api-live.sg-benefits.com',
                     'clients': '/organisations',
                     'client': '/organisations/:org_id',
                     'handbooks': '/organisations/:org_id/handbooks',
