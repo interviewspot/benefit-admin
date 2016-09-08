@@ -43,7 +43,7 @@
                     <div ng-show="content != 'undefined' && content.html_text!='none' && content.html_text!='none_pdf'">
                         <p ng-bind-html="content.html_text"></p>
                     </div>
-                    <img ng-show="content != 'undefined' && content.html_text=='none'" width="90px" ng-src="{{content.url}}" />
+                    <img ng-show="content != 'undefined' && content.html_text=='none'" ng-src="{{content.url}}" />
                     <a ng-show="content != 'undefined' && content.html_text=='none_pdf'" href="{{content.pdf_binary}}?locale=en_us&x-session={{user.user.session_key}}" target="_blank">{{content.pdf_name}}</a>
                 </div>
             </div>
