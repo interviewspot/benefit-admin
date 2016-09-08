@@ -21,8 +21,14 @@
                                     $scope.contacts[i]['user'] = res.data;
                                     $scope.contacts[i]['alphabet'] = res.data.first_name ? res.data.first_name.charAt(0).toLowerCase() : res.data.username.charAt(0).toLowerCase();
                                     console.log($scope.contacts[i]['position']);
-                                    return fetchContact.get(itemInstance._links.tags.href).then(function(res) {
-                                        return $scope.contacts[i]['tags'] = res.data;
+                                    fetchContact.get(itemInstance._links.tags.href).then(function(res) {
+                                        $scope.contacts[i]['tags'] = res.data;
+                                    });
+                                    fetchContact.get(itemInstance._links.employee_classes.href).then(function(res) {
+                                        $scope.contacts[i]['employee_classes'] = res.data;
+                                    });
+                                    fetchContact.get(itemInstance._links.employee_functions.href).then(function(res) {
+                                        $scope.contacts[i]['employee_functions'] = res.data;
                                     });
                                 });
                             })(item);
