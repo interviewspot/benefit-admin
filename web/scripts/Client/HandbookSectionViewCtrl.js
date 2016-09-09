@@ -12,7 +12,7 @@
             };
 
 
-            var translateSection, _URL_sections, _loadAllParent;
+            var translateSection, _URL_sections, _URL_section_search, _loadAllParent;
             translateSection = function(item) {
                 var newItem;
                 newItem = item;
@@ -49,14 +49,17 @@
                 });
             });
 
-
             _URL_sections = {
                 list: config.path.baseURL + config.path.sections.replace(':org_id', $scope.clientId).replace(':hand_id', $scope.handbookId)
             };
+            _URL_section_search = {
+                list: config.path.baseURL + config.path.sections_search.replace(':org_id', $scope.clientId).replace(':hand_id', $scope.handbookId)
+            };
 
             $scope.allowShowActionSections = false;
+            $scope.searchKeyWord = '';
             $scope.loadSections = function(limit, goPage) {
-                return fetchHandbook.get(_URL_sections.list + '?search=section.parent{null}1', +'&limit=' + limit, +'&page=' + goPage, +'&sort=section.ordering:asc').then(function(res) {
+                return fetchHandbook.get(_URL_section_search.list + '?keyword=' + $scope.searchKeyWord, +'&limit=' + limit, +'&page=' + goPage, +'&sort=section.ordering:asc').then(function(res) {
                     $scope.sections = {};
                     if (res.data._embedded.items.length > 0) {
                         $scope.sections.pages = res.data.pages;
@@ -103,6 +106,9 @@
             $scope.currentPage = 1;
             $scope.filteredUsers = [];
             $scope.currentPageUsers = [];
+            $scope.searchContent = function() {
+                return $scope.loadSections($scope.numPerPage, $scope.currentPage);
+            };
             $scope.onNPPChange = function() {
                 return $scope.loadSections($scope.numPerPage, $scope.currentPage);
             };
