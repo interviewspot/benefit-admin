@@ -8,23 +8,28 @@
                 authHandler.checkLoggedIn();
                 $scope.clientId = $routeParams.clientId;
 
-                // $scope.sortType     = 'email'; // set the default sort type
-                // $scope.sortReverse  = false;  // set the default sort order
+                $scope.sortType = 'email'; // set the default sort type
+                $scope.sortReverse = false; // set the default sort order
                 // $scope.searchFish   = '';     // set the default search/filter term
                 _URL_users = {
-                    list: config.path.baseURL + config.path.contacts.replace(":org_id", $routeParams.clientId)
+                    list: config.path.baseURL + config.path.contacts.replace(":org_id", $routeParams.clientId),
+                    sendMail: config.path.baseURL + config.path.send_information_login.replace(":org_id", $routeParams.clientId),
+
                 };
                 $scope.getTime = function(ndate) {
                     var dateAsDateObject;
                     dateAsDateObject = new Date(Date.parse(ndate));
                     return dateAsDateObject.getTime();
                 };
-                $scope.sortQuery = 'position.employee.firstName:asc';
+                $scope.sortQuery = '';
                 // $scope.sortReverse = false;
                 $scope.searchUserKey = '';
 
                 _getUsers = function(limit, goPage) {
                     var searchQuery = 'position.employee.firstName:%' + $scope.searchUserKey + '%';
+                    var field = $scope.sortType;
+                    var type = $scope.sortReverse == false ? 'asc' : 'desc';
+                    $scope.sortQuery = 'position.employee.' + field + ':' + type;
                     var url = _URL_users.list + '?limit=' + limit + '&page=' + goPage + '&sort=' + $scope.sortQuery + '&search=' + searchQuery;
                     return fetchContact.get(url).then(function(res) {
 
@@ -37,12 +42,13 @@
                             $scope.users.items = [];
                             console.log($scope.users);
                             _ref = res.data._embedded.items;
-                            _fn = function(itemInstance) {
+                            _fn = function(itemInstance, i) {
                                 return Users.get(itemInstance._links.employee.href).then(function(res) {
                                     if (res.status !== 200 || typeof res !== 'object') {
                                         return;
                                     }
                                     res.data.position_data = itemInstance;
+                                    res.data.ordering = parseInt(i);
                                     $scope.users.items.push(res.data);
                                     Users.get(_URL_users.list + '/' + itemInstance.id + '/classes').then(function(tag) {
                                         var tag_lst;
@@ -65,7 +71,7 @@
                             };
                             for (i in _ref) {
                                 item = _ref[i];
-                                _fn(item);
+                                _fn(item, i);
                             }
                         }
                     });
@@ -82,7 +88,58 @@
                     return _getUsers($scope.numPerPage, $scope.currentPage);
                 };
 
-                $scope.sorting = function(field, type) {
+                $scope.typeSendMail = '';
+                $scope.dataSendMail = {};
+                $scope.dataSendMailRaw = [];
+                $scope.setDataSendMail = function(user, isTrue) {
+                    if (isTrue) {
+                        console.log(user);
+                        $scope.dataSendMailRaw.push(user);
+                    } else {
+                        console.log('no');
+                        var index = $scope.dataSendMailRaw.indexOf(user);
+                        $scope.dataSendMailRaw.splice(index, 1);
+                    }
+
+                }
+                $scope.sendInformationLogin = function() {
+                    if ($scope.typeSendMail != '' && $scope.dataSendMailRaw.length) {
+                        $scope.dataSendMail.data = {};
+                        $scope.dataSendMail.data.type = $scope.typeSendMail;
+                        $scope.dataSendMail.data.users = [];
+                        angular.forEach($scope.dataSendMailRaw, function(user) {
+                            var data = {
+                                "email": user.email,
+                                "full_name": user.first_name + ' ' + user.last_name,
+                                "web_username": user.username,
+                                "web_password": "N/A",
+                                "app_username": "N/A",
+                                "app_password": user.code
+                            }
+                            $scope.dataSendMail.data.users.push(data);
+                        });
+                        console.log($scope.dataSendMail);
+                        Users.post(_URL_users.sendMail, $scope.dataSendMail).then(function(res) {
+                            if (res.status === 204) {
+                                $scope.infoUpdated = 'Send information successfully!'
+                                $scope.checkall = false;
+                                $scope.typeSendMail = '';
+                                $timeout(function() {
+                                    $scope.infoUpdated = '';
+                                }, 2000);
+                            }
+                        }, function(error) {
+                            $scope.infoUpdated = error.status + ': Error API, refresh & try again!';
+                        });
+
+
+
+                    }
+                }
+
+                $scope.sorting = function() {
+                    var field = $scope.sortType;
+                    var type = $scope.sortReverse == false ? 'asc' : 'desc';
                     $scope.sortQuery = 'position.employee.' + field + ':' + type;
                     return _getUsers($scope.numPerPage, $scope.currentPage)
                 }
