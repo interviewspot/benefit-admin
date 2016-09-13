@@ -13,63 +13,61 @@
         <div class="t-r clearfix">
             <span class="f-l msg-update" ng-show="infoUpdated">{{infoUpdated}}</span>
             <a href="#/clients/{{clientId}}/new-user" class="btn btn-brown btn-add-user">Add new user</a>
-    
-                <div style="margin-top: 10px;" class="t-r form-group">
-                    <div class="input-group">
-                        <div class="input-group-addon" ng-click="searchUser()"><i class="fa fa-search"></i></div>
 
-                        <input type="text" class="form-control" placeholder="Search User" ng-model="searchUserKey">
+            <div style="margin-top: 10px;" class="t-r form-group">
+                <div class="input-group">
+                    <div class="input-group-addon" ng-click="searchUser()"><i class="fa fa-search"></i></div>
 
-                    </div>
+                    <input type="text" class="form-control" placeholder="Search User" ng-model="searchUserKey">
+
                 </div>
+            </div>
         </div>
 
         <div class="table-responsive" ng-show="users.items.length">
             <table class="table tbl tbl-w1000 tbl-bg table-hover table-striped">
                 <tbody>
                     <tr>
+                        <th>
+                            <input type="checkbox" ng-model="checkall">
+                        </th>
                         <th class="text-center">
-                            <a href="">Email
-                                <span ng-click="sorting('email' ,'desc')" class="fa fa-caret-down"></span>
-                                <span ng-click="sorting('email', 'asc')" class="fa fa-caret-up"></span>
+                            <a href="" ng-click="sortType = 'email'; sortReverse = !sortReverse;sorting()">Email
+                                <span ng-show="sortType == 'email'&& !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'email'&& sortReverse" class="fa fa-caret-up"></span>
                             </a>
                         </th>
                         <th class="text-center td-15">
-                            <a href="">First Name
-                                <span ng-click="sorting('firstName' ,'desc')" class="fa fa-caret-down"></span>
-                                <span ng-click="sorting('firstName' ,'asc')" class="fa fa-caret-up"></span>
+                            <a href="" ng-click="sortType = 'firstName'; sortReverse = !sortReverse;sorting()">First Name
+                                <span ng-show="sortType == 'firstName'&& !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'firstName'&& sortReverse" class="fa fa-caret-up"></span>
                             </a>
                         </th>
                         <th class="text-center td-15">
-                            <a href="">Last Name
-                                <span ng-click="sorting('lastName' ,'desc')" class="fa fa-caret-down"></span>
-                                <span ng-click="sorting('firstName' ,'asc')" class="fa fa-caret-up"></span>
+                            <a href="" ng-click="sortType = 'lastName'; sortReverse = !sortReverse;sorting()">Last Name
+                                <span ng-show="sortType == 'lastName'&& !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'lastName'&& sortReverse" class="fa fa-caret-up"></span>
                             </a>
                         </th>
                         <th class="text-center">Contact No.</th>
                         <th class="text-center">
-                            <a href="" ng-click="sortType = 'code'; sortReverse = !sortReverse">Verification Code
-                                <span ng-show="sortType == 'code'&& !sortReverse" class="fa fa-caret-down"></span>
-                                <span ng-show="sortType == 'code'&& sortReverse" class="fa fa-caret-up"></span>
-                            </a>
+                            Verification Code
                         </th>
                         <th class="text-center">
-                            <a href="" ng-click="sortType = 'class'; sortReverse = !sortReverse">Employee Class
-                                <span ng-show="sortType == 'class'&& !sortReverse" class="fa fa-caret-down"></span>
-                                <span ng-show="sortType == 'class'&& sortReverse" class="fa fa-caret-up"></span>
-                            </a>
+                            Employee Class
                         </th>
                         <th class="text-center td-18">
-                            <a href="" ng-click="sortType = 'date'; sortReverse = !sortReverse">Date Added
-                                <span ng-show="sortType == 'date'&& !sortReverse" class="fa fa-caret-down"></span>
-                                <span ng-show="sortType == 'date'&& sortReverse" class="fa fa-caret-up"></span>
+                            <a href="" ng-click="sortType = 'dateAdded'; sortReverse = !sortReverse;sorting()">Date Added
+                                <span ng-show="sortType == 'dateAdded'&& !sortReverse" class="fa fa-caret-down"></span>
+                                <span ng-show="sortType == 'dateAdded'&& sortReverse" class="fa fa-caret-up"></span>
                             </a>
                         </th>
                         <th class="text-center">Active</th>
                         <th class="text-center">CloudBook</th>
                         <th class="text-center">Actions</th>
                     </tr>
-                    <tr ng-repeat="(i, user) in users.items">
+                    <tr ng-repeat="(i, user) in users.items | orderBy:'ordering'">
+                        <td class="text-center"><input type="checkbox" ng-checked="checkall" ng-model="isTrue" ng-click="setDataSendMail(user,isTrue)"></td>
                         <td><a href="#/clients/{{clientId}}/user/{{user.position_data.id}}">{{user.email ? user.email : user.email_canonical }}</a></td>
                         <td class="text-center">{{user.first_name}}</td>
                         <td class="text-center">{{user.last_name}}</td>
@@ -101,6 +99,19 @@
                 </tbody>
             </table>
         </div>
+
+        <div class="row">
+            <div class="col-md-6 page-num-info">
+                <select data-ng-model="typeSendMail" data-ng-change="sendInformationLogin()">
+                    <option value="">--Select action send information--</option>
+                    <option value="CODE_CLOUDBOOK_LOGIN_APP">Send information for login app</option>
+                    <option value="CODE_CLOUDBOOK_LOGIN_WEB">Send information login website</option>
+                    <option value="CODE_CLOUDBOOK_LOGIN_ALL">Send all inforomation</option>
+                </select>
+                <span class="msg-update">{{infoUpdated}} </span>
+            </div>
+        </div>
+
         <footer class="table-footer" ng-show="users.pages >= 2">
             <div class="row">
                 <div class="col-md-6 page-num-info">

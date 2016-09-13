@@ -9,6 +9,7 @@
                     // 'baseURL': 'http://mac.api.com',
                     'clients': '/organisations',
                     'client': '/organisations/:org_id',
+                    'send_information_login': '/organisations/:org_id/information/logins',
                     'handbooks': '/organisations/:org_id/handbooks',
                     'handbook': '/organisations/:org_id/handbooks/:hand_id',
                     'sections': '/organisations/:org_id/handbooks/:hand_id/sections',
