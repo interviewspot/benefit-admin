@@ -121,15 +121,12 @@
                         console.log($scope.dataSendMail);
                         Users.post(_URL_users.sendMail, $scope.dataSendMail).then(function(res) {
                             if (res.status === 204) {
-                                $scope.infoUpdated = 'Send information successfully!'
+                                alert('Send information successfully!');
                                 $scope.checkall = false;
                                 $scope.typeSendMail = '';
-                                $timeout(function() {
-                                    $scope.infoUpdated = '';
-                                }, 2000);
                             }
                         }, function(error) {
-                            $scope.infoUpdated = error.status + ': Error API, refresh & try again!';
+                            alert(error.status + ': Error API, refresh & try again!');
                         });
 
 
