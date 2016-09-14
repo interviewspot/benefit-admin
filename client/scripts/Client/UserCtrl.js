@@ -121,7 +121,7 @@
                         console.log($scope.dataSendMail);
                         Users.post(_URL_users.sendMail, $scope.dataSendMail).then(function(res) {
                             if (res.status === 204) {
-                                alert('Send information successfully!');
+                                alert('Information sent successfully!');
                                 $scope.checkall = false;
                                 $scope.typeSendMail = '';
                             }
