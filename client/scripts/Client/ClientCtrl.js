@@ -290,8 +290,8 @@
                                 return;
                             }
                             logo_id_arr = php.explode('/media/', data._links.logo.href);
-                            // $scope.urlUpload = $scope.clientDetail._links['logo.post'].href;
-                            $scope.urlUpload = $scope.clientDetail._links.logo.href;
+                            $scope.urlUpload = $scope.clientDetail._links['logo.post'].href;
+                            // $scope.urlUpload = $scope.clientDetail._links.logo.href;
                             $scope.clientDetail['logo'] = res.data;
                             if (typeof res.data._links.url === 'object' && res.data._links.url.href) {
                                 Images.get(data._links.logo.href + '/url').then(function(url) {
