@@ -29,7 +29,7 @@
                 <tbody>
                     <tr>
                         <th>
-                            <input type="checkbox" ng-model="checkall">
+                            <input type="checkbox" ng-model="checkallUser" ng-click="checkAll()">
                         </th>
                         <th class="text-center">
                             <a href="" ng-click="sortType = 'email'; sortReverse = !sortReverse;sorting()">Email
@@ -67,7 +67,7 @@
                         <th class="text-center">Actions</th>
                     </tr>
                     <tr ng-repeat="(i, user) in users.items | orderBy:'ordering'">
-                        <td class="text-center"><input type="checkbox" ng-checked="checkall" ng-model="isTrue" ng-click="setDataSendMail(user,isTrue)"></td>
+                        <td class="text-center"><input type="checkbox" ng-checked="isCheckedSendmail(user.id)" ng-model="isTrue" ng-click="setDataSendMail(user,isTrue)"></td>
                         <td><a href="#/clients/{{clientId}}/user/{{user.position_data.id}}">{{user.email ? user.email : user.email_canonical }}</a></td>
                         <td class="text-center">{{user.first_name}}</td>
                         <td class="text-center">{{user.last_name}}</td>
@@ -102,13 +102,17 @@
 
         <div class="row">
             <div class="col-md-6 page-num-info">
-                <select data-ng-model="typeSendMail" data-ng-change="sendInformationLogin()">
+                <select data-ng-model="typeSendMail">
                     <option value="">--Select action send information--</option>
                     <option value="CODE_CLOUDBOOK_LOGIN_APP">Send information for login app</option>
                     <option value="CODE_CLOUDBOOK_LOGIN_WEB">Send information login website</option>
-                    <option value="CODE_CLOUDBOOK_LOGIN_ALL">Send all inforomation</option>
+                    <option value="CODE_CLOUDBOOK_LOGIN_ALL">Send all information</option>
                 </select>
+                <button class="btn btn-brown btn-add-user" ng-disabled="typeSendMail==='' " style="height: 25px;line-height: 15px;margin-left: 5px;" ng-click="sendInformationLogin()">Send</button>
             </div>
+            <!--<div class="col-md-6">-->
+                <!--<a href="#/clients/{{clientId}}/new-user" class="btn btn-brown btn-add-user">Send</a>-->
+            <!--</div>-->
         </div>
 
         <footer class="table-footer" ng-show="users.pages >= 2">
