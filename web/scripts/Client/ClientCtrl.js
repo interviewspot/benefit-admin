@@ -290,7 +290,9 @@
                                 return;
                             }
                             logo_id_arr = php.explode('/media/', data._links.logo.href);
-                            $scope.urlUpload = $scope.clientDetail._links['logo.post'].href;
+                            if($scope.clientDetail._links['logo.post'] != undefined){
+                                $scope.urlUpload = $scope.clientDetail._links['logo.post'].href;
+                            }
                             // $scope.urlUpload = $scope.clientDetail._links.logo.href;
                             $scope.clientDetail['logo'] = res.data;
                             if (typeof res.data._links.url === 'object' && res.data._links.url.href) {
@@ -307,7 +309,9 @@
                             return console.log(error);
                         });
                     } else {
-                        $scope.urlUpload = $scope.clientDetail._links['logo.post'].href;
+                        if($scope.clientDetail._links['logo.post'] != undefined){
+                            $scope.urlUpload = $scope.clientDetail._links['logo.post'].href;
+                        }
                         // $scope.urlUpload = $scope.clientDetail._links.logo.href;
 
                     }
