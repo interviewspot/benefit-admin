@@ -87,7 +87,7 @@
                     <b>0:</b> {{contact.user.office_no}}
                 </p>
                 <p ng-if="contact.user.email">
-                    <b>E:</b> {{contact.position.email_address}}
+                    <b>E:</b> {{contact.position.email_address != undefined ? contact.position.email_address : contact.user.email}}
                 </p>
             </div>
         </div>

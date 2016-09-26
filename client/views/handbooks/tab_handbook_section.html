@@ -80,7 +80,10 @@
                         </div>
                         <div class="panel-body">
                             <div data-ng-show="contents.length > 0">
-                                <button data-ng-show="permissionHandbook.EDIT" ng-click="updateOrderingContent()" class="btn-brown">
+                                <button data-ng-show="permissionHandbook.EDIT" ng-click="enableSortContent()" class="btn-brown">
+                                {{ enabledSort == true ? 'Disable Sort':'Enable Sort' }}
+                                </button>
+                                <button data-ng-show="permissionHandbook.EDIT && enabledSort" ng-click="updateOrderingContent()" class="btn-brown">
                                     Update Ordering
                                 </button>
                                 <hr>
@@ -89,15 +92,17 @@
                             <div data-ng-show="contents.length == 0">
                                 No Contents
                             </div>
-                            <ul dnd-list="contents">
-                                <li ng-repeat="content in contents">
-                                    <!--dnd-draggable="content"-->
-                                    <!--dnd-moved="contents.splice($index, 1)"-->
-                                    <!--dnd-effect-allowed="move"-->
-                                    <form ng-show="content != 'undefined' && content.html_text!='none' && content.html_text!='none_pdf'" name="frm_section_content" class="modal_frm" ng-submit="submitContent(content,$index)" novalidate>
+
+                            <ul dnd-list="contents" ng-show="enabledSort">
+                                <li ng-repeat="content in contents"
+                                    dnd-draggable="content"
+                                    dnd-moved="contents.splice($index, 1)"
+                                    dnd-effect-allowed="move"
+                                    >
+                                    <form ng-show="content != 'undefined' && content.html_text!='none' && content.html_text!='none_pdf' && content.title!='link'" name="frm_section_content" class="modal_frm" ng-submit="submitContent(content,$index)">
                                         <div class="content-only" data-ng-click="editContent($index)" data-ng-show="!content.isShow" ng-bind-html="content.html_text"></div>
                                         <div data-ng-show="content.isShow">
-                                            <div text-angular ng-model="content.html_text"></div>
+                                            <div text-angular ng-model="content.html_text" required></div>
                                             <p></p>
                                             <button data-ng-show="permissionHandbook.EDIT" type="submit" class="save btn-brown">
                                                 <i class="fa fa-save"></i>&nbsp;&nbsp;Save Content
@@ -107,10 +112,58 @@
                                             </button>
                                         </div>
                                     </form>
+
+                                    <form ng-show="content != 'undefined' && content.title=='link'" name="frm_section_content" class="modal_frm" ng-submit="submitContent(content,$index)">
+                                        <div class="content-only" data-ng-click="editContent($index)" data-ng-show="!content.isShow" ng-bind-html="content.html_text"></div>
+                                        <div data-ng-show="content.isShow">
+                                            <input type="url" ng-model="content.html_text" class="txt-ipt ipt" required>
+                                            <p></p>
+                                            <button data-ng-show="permissionHandbook.EDIT" type="submit" class="save btn-brown">
+                                                <i class="fa fa-save"></i>&nbsp;&nbsp;Save Link
+                                            </button>
+                                            <button data-ng-show="permissionHandbook.EDIT" data-ng-click="closeEditContent($index)" type="button" class="btn-brown">
+                                                &nbsp;&nbsp;Close
+                                            </button>
+                                        </div>
+                                    </form>
+
                                     <img ng-show="content != 'undefined' && content.html_text=='none'" width="60px" ng-src="{{content.url}}" />
                                     <a ng-show="content != 'undefined' && content.html_text=='none_pdf'" href="{{content.pdf_binary}}?locale=en_us&x-session={{user.user.session_key}}">{{content.pdf_name}}</a>
-                                    <!--<pdf-download ng-show="content != 'undefined' && content.html_text=='none_pdf'" url="{{content.pdf_binary}}?locale=en_us" filename="{{content.pdf_name}}"></pdf-download>-->
-                                    <!--<pdf-download ng-show="content != 'undefined' && content.html_text=='none_pdf'" url="http://localhost/tb455-tk1-ts.pdf" filename="{{content.pdf_name}}"></pdf-download>-->
+                                    <br>
+                                    <a href="javascript:void(0)" data-ng-click="deleteContent(content,$index)" data-ng-show="permissionHandbook.EDIT">remove</a>
+                                </li>
+                            </ul>
+                            <ul dnd-list="contents" ng-show="!enabledSort">
+                                <li ng-repeat="content in contents">
+                                    <form ng-show="content != 'undefined' && content.html_text!='none' && content.html_text!='none_pdf' && content.title!='link'" name="frm_section_content" class="modal_frm" ng-submit="submitContent(content,$index)">
+                                        <div class="content-only" data-ng-click="editContent($index)" data-ng-show="!content.isShow" ng-bind-html="content.html_text"></div>
+                                        <div data-ng-show="content.isShow">
+                                            <div text-angular ng-model="content.html_text" required></div>
+                                            <p></p>
+                                            <button data-ng-show="permissionHandbook.EDIT" type="submit" class="save btn-brown">
+                                                <i class="fa fa-save"></i>&nbsp;&nbsp;Save Content
+                                            </button>
+                                            <button data-ng-show="permissionHandbook.EDIT" data-ng-click="closeEditContent($index)" type="button" class="btn-brown">
+                                                &nbsp;&nbsp;Close
+                                            </button>
+                                        </div>
+                                    </form>
+                                    <form ng-show="content != 'undefined' && content.title=='link'" name="frm_section_content" class="modal_frm" ng-submit="submitContent(content,$index)">
+                                        <div class="content-only" data-ng-click="editContent($index)" data-ng-show="!content.isShow" ng-bind-html="content.html_text"></div>
+                                        <div data-ng-show="content.isShow">
+                                            <input type="url" ng-model="content.html_text" class="txt-ipt ipt" required>
+                                            <p></p>
+                                            <button data-ng-show="permissionHandbook.EDIT" type="submit" class="save btn-brown">
+                                                <i class="fa fa-save"></i>&nbsp;&nbsp;Save Link
+                                            </button>
+                                            <button data-ng-show="permissionHandbook.EDIT" data-ng-click="closeEditContent($index)" type="button" class="btn-brown">
+                                                &nbsp;&nbsp;Close
+                                            </button>
+                                        </div>
+                                    </form>
+
+                                    <img ng-show="content != 'undefined' && content.html_text=='none'" width="60px" ng-src="{{content.url}}" />
+                                    <a ng-show="content != 'undefined' && content.html_text=='none_pdf'" href="{{content.pdf_binary}}?locale=en_us&x-session={{user.user.session_key}}">{{content.pdf_name}}</a>
                                     <br>
                                     <a href="javascript:void(0)" data-ng-click="deleteContent(content,$index)" data-ng-show="permissionHandbook.EDIT">remove</a>
                                 </li>
@@ -130,6 +183,9 @@
                             </upload-file>
                             <button data-ng-show="readyToAddContent && permissionHandbook.EDIT" ng-click="addContent()" type="button" class="btn-brown">
                                 Add new content
+                            </button>
+                            <button data-ng-show="readyToAddContent && permissionHandbook.EDIT" ng-click="addContentLink()" type="button" class="btn-brown">
+                                Add new link
                             </button>
                         </div>
                     </div>
