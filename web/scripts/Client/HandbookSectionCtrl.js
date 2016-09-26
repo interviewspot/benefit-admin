@@ -499,14 +499,32 @@
                     $rootScope.contents.splice(index, 1);
                 }
             }
-            $scope.addContent = function () {
+            $scope.addContentLink = function () {
                 var newContent;
+                $scope.content.title = 'link';
                 newContent = $scope.content;
                 newContent.ordering = $rootScope.contents.length;
                 var order = $scope.contents.length;
                 $rootScope.contents.push(newContent);
                 return $scope.content = {
-                    "title": "Image of " + $scope.formSection.title,
+                    "title": "link",
+                    "image_id": "",
+                    "html_text": '',
+                    "enabled": "1",
+                    "section": $scope.formSection.id,
+                    "locale": "en_us",
+                    "isShow": true
+                };
+            };
+            $scope.addContent = function () {
+                var newContent;
+                $scope.content.title = 'content';
+                newContent = $scope.content;
+                newContent.ordering = $rootScope.contents.length;
+                var order = $scope.contents.length;
+                $rootScope.contents.push(newContent);
+                return $scope.content = {
+                    "title": "content",
                     "image_id": "",
                     "html_text": '',
                     "enabled": "1",
@@ -521,6 +539,7 @@
             $scope.closeEditContent = function (index) {
                 $rootScope.contents[index].isShow = false;
             };
+
 
             $scope.$watch('contents', function (contents) {
                 angular.forEach(contents, function (content, key) {
@@ -558,6 +577,14 @@
                         });
                     }
                 });
+            }
+            $scope.enabledSort = true;
+            $scope.enableSortContent = function () {
+                if($scope.enabledSort){
+                    $scope.enabledSort = false
+                }else{
+                    $scope.enabledSort = true;
+                }
             }
 
 

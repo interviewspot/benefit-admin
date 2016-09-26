@@ -49,11 +49,12 @@
 
             <div data-ng-show="contents.length > 0">
                 <div ng-repeat="content in contents">
-                    <div ng-show="content != 'undefined' && content.html_text!='none' && content.html_text!='none_pdf'">
+                    <div ng-show="content != 'undefined' && content.html_text!='none' && content.html_text!='none_pdf' && content.title!='link'">
                         <p ng-bind-html="content.html_text"></p>
                     </div>
                     <img ng-show="content != 'undefined' && content.html_text=='none'" ng-src="{{content.url}}" />
                     <a ng-show="content != 'undefined' && content.html_text=='none_pdf'" href="{{content.pdf_binary}}?locale=en_us&x-session={{user.user.session_key}}" target="_blank">{{content.pdf_name}}</a>
+                    <a ng-show="content != 'undefined' && content.title=='link'" href="{{content.html_text}}?locale=en_us&x-session={{user.user.session_key}}" target="_blank">{{content.html_text}}</a>
                 </div>
             </div>
             <!-- END : FORWARD -->
