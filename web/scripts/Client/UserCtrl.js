@@ -665,8 +665,8 @@
                                 numTag = 1;
 
                                 if($scope.isExcel === false){
-                                    var employeeClass = $scope.user_tags.employee_class;
-                                    var employeeFunction =$scope.user_tags.employee_function;
+                                    var employeeClass =  $scope.user_tags != undefined && $scope.user_tags.employee_class != undefined ? $scope.user_tags.employee_class : [];
+                                    var employeeFunction =$scope.user_tags != undefined && $scope.user_tags.employee_function != undefined ? $scope.user_tags.employee_function: [];
                                 }else{
                                     var employeeClass = $scope.user_tags_excel[user.email].employee_class;
                                     var employeeFunction =$scope.user_tags_excel[user.email].employee_function;
@@ -740,8 +740,8 @@
                                     newContact.position.employee_functions = {};
                                     numTag = 1;
                                     if($scope.isExcel === false){
-                                        var employeeClass = $scope.user_tags.employee_class;
-                                        var employeeFunction =$scope.user_tags.employee_function;
+                                        var employeeClass = $scope.user_tags != undefined && $scope.user_tags.employee_class != undefined ? $scope.user_tags.employee_class : [];
+                                        var employeeFunction =$scope.user_tags != undefined && $scope.user_tags.employee_function != undefined ? $scope.user_tags.employee_function: [];
                                     }else{
                                         var employeeClass = $scope.user_tags_excel[user.email].employee_class;
                                         var employeeFunction =$scope.user_tags_excel[user.email].employee_function;
