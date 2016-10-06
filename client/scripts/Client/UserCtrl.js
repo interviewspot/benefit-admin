@@ -612,6 +612,7 @@
             authHandler.checkLoggedIn();
             $scope.clientId = $routeParams.clientId;
             $scope.isExcel = false;
+            $scope.user = {};
             $scope.user.handbook_contact = true;
             $scope.user.enabled = true;
             _URL = {
