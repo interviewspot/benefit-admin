@@ -10,7 +10,7 @@
             <div class="input-group" style="margin-left: 15px;">
                 <div class="input-group-addon" ng-click="searchContent()"><i class="fa fa-search"></i></div>
 
-                <input type="text" class="form-control" placeholder="Search Cloudbook Content" ng-model="searchKeyWord">
+                <input type="text" ng-enter="searchContent()" class="form-control" placeholder="Search Cloudbook Content" ng-model="searchKeyWord">
 
             </div>
         </div>
