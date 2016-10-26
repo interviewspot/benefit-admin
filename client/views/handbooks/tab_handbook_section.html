@@ -208,7 +208,7 @@
                 </div>
             </div>
 
-            <div class="tbl-r sc-itm" ng-repeat="section in sections.items" ng-class="{active: section.id == selectedSec}">
+            <div class="tbl-r sc-itm" ng-repeat="section in sections.items | orderBy:'ordering'" ng-class="{active: section.id == selectedSec}">
                 <div class="t-tr">
                     <div class="t-td t-3">Section {{section.ordering}}</div>
                     <div class="t-td t-ct" ng-bind-html="section.translations['en_us'].title ? section.translations['en_us'].title : section.title"></div>
@@ -227,7 +227,7 @@
 
                 </div>
                 <div ng-show="section.children.total > 0 && section.children.show">
-                    <div class="tbl-r sc-itm" ng-repeat="child_sec in section.children.items" ng-class="{active: child_sec.id == selectedSec}">
+                    <div class="tbl-r sc-itm" ng-repeat="child_sec in section.children.items | orderBy:'ordering'" ng-class="{active: child_sec.id == selectedSec}">
                         <div class="t-tr">
                             <div class="t-td t-3">Sub</div>
                             <div class="t-td t-2">{{section.ordering}}.{{child_sec.ordering}}</div>
