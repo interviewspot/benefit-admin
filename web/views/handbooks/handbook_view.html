@@ -23,13 +23,13 @@
                     </div>
                 </div>
 
-                <div class="tbl-r sc-itm" ng-repeat="section in sections.items" ng-class="{active: section.id == selectedSec}">
+                <div class="tbl-r sc-itm" ng-repeat="section in sections.items | orderBy:'ordering'" ng-class="{active: section.id == selectedSec}">
                     <div class="t-tr" ng-click="showChildren(section);editSection(section ,true)">
                         <div id="sec_title" class="t-td t-3"><i class="fa fa-plus-square-o"></i><span>{{section.ordering}}</span></div>
                         <div class="t-td t-ct" ng-bind-html="section.translations['en_us'].title ? section.translations['en_us'].title : section.title"></div>
                     </div>
                     <div ng-show="section.children.total > 0 && section.children.show && section.id == currentParent">
-                        <div class="tbl-r sc-itm" ng-repeat="child_sec in section.children.items" ng-class="{active: child_sec.id == selectedSec}">
+                        <div class="tbl-r sc-itm" ng-repeat="child_sec in section.children.items | orderBy:'ordering'" ng-class="{active: child_sec.id == selectedSec}">
                             <div class="t-tr" ng-click="showChildren(child_sec); editSection(child_sec ,false)">
                                 <div id="sec_title" class="t-td t-3"><i class="fa fa-long-arrow-right"></i><span> {{section.ordering}}.{{child_sec.ordering}} </span></div>
                                 <div class="t-td t-ct" ng-bind-html="child_sec.translations['en_us'].title ? child_sec.translations['en_us'].title : child_sec.title"></div>
